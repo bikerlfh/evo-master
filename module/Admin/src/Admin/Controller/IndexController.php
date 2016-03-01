@@ -1,6 +1,5 @@
 <?php
-
-/**
+/** esto es una prueba
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/ZendSkeletonModule for the canonical source repository
