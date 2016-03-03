@@ -8,19 +8,11 @@ class Marca extends AbstractTableGateway
     private $idMarca;
     private $codigo;
     private $descripcion;
-    private $idUsuarioCreacion;
     
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('Marca', 'Producto');
-    }
-
-    public function getidUsuarioCreacion(){
-        return $this->idUsuarioCreacion;
-    }
-    public function setidUsuarioCreacion($idUsuarioCreacion){
-        $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
     public function getdescripcion(){
         return $this->descripcion;
@@ -41,10 +33,9 @@ class Marca extends AbstractTableGateway
         $this->idMarca=$idMarca;
     }
 
-    public function insertMarca($codigo,$descripcion,$idUsuarioCreacion)
+    public function insertMarca($codigo,$descripcion)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'descripcion'=> $descripcion,
                 'codigo'=> $codigo
         );
@@ -54,10 +45,9 @@ class Marca extends AbstractTableGateway
         return false;
     }
 
-    public function modificarMarca($idMarca,$codigo,$descripcion,$idUsuarioCreacion)
+    public function modificarMarca($idMarca,$codigo,$descripcion)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'descripcion'=> $descripcion,
                 'codigo'=> $codigo
         );
@@ -79,7 +69,6 @@ class Marca extends AbstractTableGateway
             $this->idMarca=$result['idmarca'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
-            $this->idUsuarioCreacion=$result['idusuariocreacion'];
             return true;
         }
         return false;
@@ -92,7 +81,6 @@ class Marca extends AbstractTableGateway
             $this->idMarca=$result['idmarca'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
-            $this->idUsuarioCreacion=$result['idusuariocreacion'];
             return true;
         }
         return false;

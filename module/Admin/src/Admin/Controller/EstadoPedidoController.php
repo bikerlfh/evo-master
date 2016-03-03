@@ -20,7 +20,7 @@ class EstadoPedidoController extends AbstractActionController
             $this->EstadoPedido = new EstadoPedido($this->dbAdapter);
             // Si se envia el id del estado pedido,
             // se debe modificar esta.
-            if (isset($datos["idEstadoPedido"])) 
+            if (!isset($datos["idEstadoPedido"])) 
             {
                 $returnCrud="errorSave";
                 if($this->EstadoPedido->modificarEstadoPedido($datos['idEstadoPedido'],$datos['codigo'],$datos['descripcion']))

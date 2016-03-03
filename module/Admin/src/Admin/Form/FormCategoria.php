@@ -10,11 +10,9 @@ use Zend\Form\Form;
 class FormCategoria extends Form
 {
     
-    private $adapter;
     private $cssClass;
     public function __construct($name,$serviceLocator)
     {
-     	$this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         parent::__construct($name);
         $this->setAttributes(array(
             'method' => 'post'

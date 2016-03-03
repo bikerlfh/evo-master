@@ -18,40 +18,40 @@ class Cliente extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('Cliente', 'Tercero');
     }
 
-    public function gettelefono(){
+    public function getTelefono(){
         return $this->telefono;
     }
-    public function settelefono($telefono){
+    public function setTelefono($telefono){
         $this->telefono=$telefono;
     }
-    public function getdireccion(){
+    public function getDireccion(){
         return $this->direccion;
     }
-    public function setdireccion($direccion){
+    public function setDireccion($direccion){
         $this->direccion=$direccion;
     }
-    public function getemail(){
+    public function getEmail(){
         return $this->email;
     }
-    public function setemail($email){
+    public function setEmail($email){
         $this->email=$email;
     }
-    public function getidMunicipio(){
+    public function getIdMunicipio(){
         return $this->idMunicipio;
     }
-    public function setidMunicipio($idMunicipio){
+    public function setIdMunicipio($idMunicipio){
         $this->idMunicipio=$idMunicipio;
     }
-    public function getidDatoBasicoTercero(){
+    public function getIdDatoBasicoTercero(){
         return $this->idDatoBasicoTercero;
     }
-    public function setidDatoBasicoTercero($idDatoBasicoTercero){
+    public function setIdDatoBasicoTercero($idDatoBasicoTercero){
         $this->idDatoBasicoTercero=$idDatoBasicoTercero;
     }
-    public function getidCliente(){
+    public function getIdCliente(){
         return $this->idCliente;
     }
-    public function setidCliente($idCliente){
+    public function setIdCliente($idCliente){
         $this->idCliente=$idCliente;
     }
 
@@ -90,7 +90,7 @@ class Cliente extends AbstractTableGateway
     {
         return $this->select()->toArray();
     }
-    public function consultarClientePoridCliente($idCliente)
+    public function consultarClientePorIdCliente($idCliente)
     {
         $result=$this->select(array('idcliente'=>$idCliente))->current();
         if($result)
@@ -100,7 +100,7 @@ class Cliente extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarClientePoridDatoBasicoTercero($idDatoBasicoTercero)
+    public function consultarClientePorIdDatoBasicoTercero($idDatoBasicoTercero)
     {
         $result=$this->select(array('iddatobasicotercero'=>$idDatoBasicoTercero))->current();
         if($result)
@@ -110,7 +110,7 @@ class Cliente extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarClientePoridMunicipio($idMunicipio)
+    public function consultarClientePorIdMunicipio($idMunicipio)
     {
         $result=$this->select(array('idmunicipio'=>$idMunicipio))->current();
         if($result)

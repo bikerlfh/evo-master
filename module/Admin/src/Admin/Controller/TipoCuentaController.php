@@ -20,7 +20,7 @@ class TipoCuentaController extends AbstractActionController
             $this->TipoCuenta = new TipoCuenta($this->dbAdapter);
             // Si se envia el id de la tipo cuenta,
             // se debe modificar esta.
-            if (isset($datos["idTipoCuenta"])) 
+            if (!isset($datos["idTipoCuenta"])) 
             {
                 $returnCrud="errorSave";
                 if($this->TipoCuenta->modificarTipoCuenta($datos['idTipoCuenta'],$datos['codigo'],$datos['descripcion']))

@@ -40,10 +40,10 @@ class TipoUsuario extends AbstractTableGateway
         return false;
     }
     
-    public function modificarTipoUsuario($descripcion)
+    public function modificarTipoUsuario($idTipoUsuario,$codigo,$descripcion)
     {
-        $datos=array('descripcion'=> $descripcion);
-        $result=$this->update($datos,array('idTipoUsuario'=>$this->idTipoUsuario));
+        $datos=array('codigo'=> $codigo,'descripcion'=> $descripcion);
+        $result=$this->update($datos,array('idTipoUsuario'=>$idTipoUsuario));
         if ($result > 0) {
             return true;
         }
@@ -60,11 +60,19 @@ class TipoUsuario extends AbstractTableGateway
     
     public function consultarTodoTipoUsuario()
     {
-        $result=$this->select()->toArray();
-        if($result>0){
-            return $result;
+        return $this->select()->toArray();
+    }
+    public function consultarTipoUsuarioPorIdTipoUsuario($idTipoUsuario)
+    {
+        $result=$this->select(array('idTipoUsuario'=>$idTipoUsuario))->current();
+        if($result)
+        {
+            $this->idTipoUsuario=$result['idTipoUsuario'];
+            $this->codigo=$result['codigo'];
+            $this->descripcion=$result['descripcion'];
+            return true;
         }
-        return null;
+        return false;
     }
     
 

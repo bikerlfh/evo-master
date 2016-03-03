@@ -9,33 +9,55 @@ use Application\Model\Entity\Categoria;
 class CategoriaController extends AbstractActionController
 {
     private $Categoria;
+    private $form;
     public function indexAction()
     {
+        // se asigna el layout admin
         $this->layout('layout/admin'); 
+        // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $from = new FormCategoria("categoria",$this->getServiceLocator());
+        // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
+        $id=$this->params()->fromQuery('id',null);
+        
+        $this->Categoria = new Categoria($this->dbAdapter);
+        $this->form = new FormCategoria("frmcategoria",$this->getServiceLocator());
+        
+        // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
             $datos=$this->request->getPost();
-            $this->Categoria = new Categoria($this->dbAdapter);
-            // Si se envia el id de la categoria,
-            // se debe modificar esta.
-            if (isset($datos["idCategoria"])) 
+            // Si se envia el id de la categoria se modifica este.
+            if ($datos["idCategoria"] != null) 
             {
-                $returnCrud="errorSave";
-                if($this->Categoria->modificarCategoria($datos['idCategoria'],$datos['codigo'],
-                                                        $datos['descripcion'],1))
-                    $returnCrud="okSave";
+                $returnCrud=$this->consultarMessage("errorUpdate");
+                if($this->Categoria->modificarCategoria($datos['idCategoria'],$datos['codigo'],$datos['descripcion']))
+                    $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
-                $returnCrud="errorSave";
+                $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva categoria
-                if($this->Categoria->guardarCategoria($datos['codigo'],$datos['descripcion'],1))
-                    $returnCrud="okSave";           
+                if($this->Categoria->guardarCategoria($datos['codigo'],$datos['descripcion']))
+                    $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$from,'msg'=>$returnCrud));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'categorias'=>$this->Categoria->consultarTodoCategoria()));
         }
-        return new ViewModel(array('form'=>$from));
+        // si existe el parametro $id  se consulta la categoria y se carga el formulario.
+        else if(isset($id))
+        {
+            $this->Categoria->consultarCategoriaPorIdCategoria($this->params()->fromQuery('id'));
+            $this->form->get("idCategoria")->setValue($this->Categoria->getIdCategoria());
+            $this->form->get("codigo")->setValue($this->Categoria->getCodigo());
+            $this->form->get("descripcion")->setValue($this->Categoria->getDescripcion());
+        }
+        return new ViewModel(array('form'=>$this->form,'categorias'=>$this->Categoria->consultarTodoCategoria()));
+    }
+    
+    private function consultarMessage($nameMensaje)
+    {
+        $serviceLocator=$this->getServiceLocator()->get('Config');
+        $mensaje=$serviceLocator['MsgCrud'];
+        $mensaje= $mensaje[$nameMensaje];
+        return $mensaje['function']."('".$mensaje['title']."','".$mensaje['message']."');";
     }
 }

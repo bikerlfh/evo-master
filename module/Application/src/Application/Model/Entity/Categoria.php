@@ -5,62 +5,52 @@ use Zend\Db\Adapter\Adapter;
 
 class Categoria extends AbstractTableGateway
 {
-    private $idUsuarioCreacion;
-    private $descripcion;
-    private $codigo;
     private $idCategoria;
+    private $codigo;
+    private $descripcion;
+    
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('Categoria', 'Producto');
     }
-
-    public function getidUsuarioCreacion(){
-        return $this->idUsuarioCreacion;
-    }
-    public function setidUsuarioCreacion($idUsuarioCreacion){
-        $this->idUsuarioCreacion=$idUsuarioCreacion;
-    }
-    public function getdescripcion(){
+    public function getDescripcion(){
         return $this->descripcion;
     }
-    public function setdescripcion($descripcion){
+    public function setDescripcion($descripcion){
         $this->descripcion=$descripcion;
     }
-    public function getcodigo(){
+    public function getCodigo(){
         return $this->codigo;
     }
-    public function setcodigo($codigo){
+    public function setCodigo($codigo){
         $this->codigo=$codigo;
     }
-    public function getidCategoria(){
+    public function getIdCategoria(){
         return $this->idCategoria;
     }
-    public function setidCategoria($idCategoria){
+    public function setIdCategoria($idCategoria){
         $this->idCategoria=$idCategoria;
     }
 
-    public function guardarCategoria($codigo,$descripcion,$idUsuarioCreacion)
+    public function guardarCategoria($codigo,$descripcion)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'descripcion'=> $descripcion,
-                'codigo'=> $codigo,
-        );
+                'codigo'=> $codigo);
         $result=$this->insert($datos);
         if($result>0)
             return true;
         return false;
     }
 
-    public function modificarCategoria($idCategoria,$codigo,$descripcion,$idUsuarioCreacion)
+    public function modificarCategoria($idCategoria,$codigo,$descripcion)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'descripcion'=> $descripcion,
                 'codigo'=> $codigo
         );
-        $result=$this->update($datos,array('idCategoria'=>$$idCategoria));
+        $result=$this->update($datos,array('idCategoria'=>$idCategoria));
         if ($result > 0) {
             return true;
         }
@@ -71,7 +61,7 @@ class Categoria extends AbstractTableGateway
     {
         return $this->select()->toArray();
     }
-    public function consultarategoriaPoridCategoria($idCategoria)
+    public function consultarCategoriaPorIdCategoria($idCategoria)
     {
         $result=$this->select(array('idcategoria'=>$idCategoria))->current();
         if($result)
@@ -79,7 +69,6 @@ class Categoria extends AbstractTableGateway
             $this->idCategoria=$result['idCategoria'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
-            $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
             return true;
         }
         return false;
@@ -92,7 +81,6 @@ class Categoria extends AbstractTableGateway
             $this->idCategoria=$result['idCategoria'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
-            $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
             return true;
         }
         return false;

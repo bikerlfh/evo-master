@@ -20,7 +20,7 @@ class TipoDocumentoController extends AbstractActionController
             $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
             // Si se envia el id de la viapago,
             // se debe modificar esta.
-            if (isset($datos["idTipoDocumento"])) 
+            if (!isset($datos["idTipoDocumento"])) 
             {
                 $returnCrud="errorSave";
                 if($this->TipoDocumento->modificarTipoDocumento($datos['idTipoDocumento'],$datos['codigo'],$datos['descripcion']))

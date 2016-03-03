@@ -21,7 +21,7 @@ class ViaPagoController extends AbstractActionController
             $this->ViaPago = new ViaPago($this->dbAdapter);
             // Si se envia el id de la viapago,
             // se debe modificar esta.
-            if (isset($datos["idViaPago"])) 
+            if (!isset($datos["idViaPago"])) 
             {
                 $returnCrud="errorSave";
                 if($this->ViaPago->modificarViaPago($datos['idViaPago'],$datos['codigo'],$datos['descripcion']))
