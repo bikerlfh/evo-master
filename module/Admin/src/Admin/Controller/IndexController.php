@@ -18,11 +18,4 @@ class IndexController extends AbstractActionController
         $this->layout('layout/admin');
         return array();
     }
-
-    public function fooAction()
-    {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /module-specific-root/skeleton/foo
-        return array();
-    }
 }

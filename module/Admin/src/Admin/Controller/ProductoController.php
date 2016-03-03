@@ -18,24 +18,5 @@ class ProductoController extends AbstractActionController
 {
     private $Categoria;
     
-    public function categoriaAction()
-    {
-        $this->layout('layout/admin'); 
-        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $from = new FormCategoria("categoria",$this->getServiceLocator());
-        if(count($this->request->getPost())>0)
-        {
-            $datos=$this->request->getPost();
-            if (isset($datos['idCategoria'])) 
-            {
-                $this->Categoria = new Categoria($this->dbAdapter);
-                if($this->Categoria->guardarCategoria($datos['codigo'],$datos['descripcion'],1))
-                    $returnCrud="okSave";
-                else
-                    $returnCrud="errorSave";            
-                return new ViewModel(array('form'=>$from,'msg'=>$returnCrud));
-            }     
-        }
-        return new ViewModel(array('form'=>$from));
-    }  
+    
 }
