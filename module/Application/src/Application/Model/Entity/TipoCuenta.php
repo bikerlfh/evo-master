@@ -57,17 +57,22 @@ class TipoCuenta extends AbstractTableGateway
             return true;
         return false;
     }
-
-    public function consultarTipocuenta()
+    public function eliminarTipoCuenta($idTipoCuenta)
+    {
+        if ($this->delete(array('idTipoCuenta'=>$idTipoCuenta)) > 0)
+            return true;
+        return false;
+    }
+    public function consultarTodoTipocuenta()
     {
         return $this->select()->toArray();
     }
-    public function consultarTipocuentaPoridTipoCuenta($idTipoCuenta)
+    public function consultarTipoCuentaPorIdTipoCuenta($idTipoCuenta)
     {
         $result=$this->select(array('idtipocuenta'=>$idTipoCuenta))->current();
         if($result)
         {
-            $this->idTipoCuenta=$result['idtipocuenta'];
+            $this->idTipoCuenta=$result['idTipoCuenta'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;
@@ -79,7 +84,7 @@ class TipoCuenta extends AbstractTableGateway
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
         {
-            $this->idTipoCuenta=$result['idtipocuenta'];
+            $this->idTipoCuenta=$result['idTipoCuenta'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;

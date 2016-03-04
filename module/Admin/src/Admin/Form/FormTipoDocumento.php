@@ -9,10 +9,13 @@ use Zend\Form\Form;
 
 class FormTipoDocumento extends Form
 {
+    
     private $cssClass;
-    public function __construct($name,$serviceLocator)
+    private $baseUrl;
+    public function __construct($serviceLocator,$baseUrl = null)
     {
-        parent::__construct($name);
+        parent::__construct("frmviapago");
+        $this->baseUrl = $baseUrl;
         $this->setAttributes(array(
             'method' => 'post'
         ));
@@ -70,6 +73,7 @@ class FormTipoDocumento extends Form
                         'type'=>'submit',
                         'value'=>'Modificar',
                         'title'=>'Modificar',
+                        'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnModificar']
                 )
         ));
@@ -77,12 +81,26 @@ class FormTipoDocumento extends Form
                 'name'=>'btnEliminar',			
                 'attributes'=>array(
                         'id'=>'btnEliminar',
-                        'type'=>'submit',
+                        'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
+                        'onClick'=>"$(location).attr('href','".$this->baseUrl."/admin/tipodocumento/eliminar?id='+$('#idTipoDocumento').val());",
+                        'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )
-        ));       
+        )); 
+        $this->add(array(
+                'name'=>'btnCancelar',			
+                'attributes'=>array(
+                        'id'=>'btnCancelar',
+                        'type'=>'button',
+                        'value'=>'Cancelar',
+                        'title'=>'Cancelar',
+                        'onClick'=>"limpiarformulario(".$this->getAttribute("name").");",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnCancelar']
+                )
+        )); 
     }
 }
 ?>

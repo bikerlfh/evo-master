@@ -40,7 +40,7 @@ class CategoriaController extends AbstractActionController
                 if($this->Categoria->guardarCategoria($datos['codigo'],$datos['descripcion']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'categorias'=>$this->Categoria->consultarTodoCategoria()));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Categoria->consultarTodoCategoria()));
         }
         // si existe el parametro $id  se consulta la categoria y se carga el formulario.
         else if(isset($id))
@@ -51,7 +51,7 @@ class CategoriaController extends AbstractActionController
             $this->form->get("descripcion")->setValue($this->Categoria->getDescripcion());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'categorias'=>$this->Categoria->consultarTodoCategoria()));
+        return new ViewModel(array('form'=>$this->form,'registros'=>$this->Categoria->consultarTodoCategoria()));
     }
     
     public function eliminarAction()

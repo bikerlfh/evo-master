@@ -56,7 +56,12 @@ class TipoDocumento extends AbstractTableGateway
             return true;
         return false;
     }
-
+    public function eliminarTipoDocumento($idTipoDocumento)
+    {
+        if ($this->delete(array('idTipoDocumento'=>$idTipoDocumento)) > 0)
+            return true;
+        return false;
+    }
     public function consultarTodoTipodocumento()
     {
         return $this->select()->toArray();
@@ -66,7 +71,7 @@ class TipoDocumento extends AbstractTableGateway
         $result=$this->select(array('idtipodocumento'=>$idTipoDocumento))->current();
         if($result)
         {
-            $this->idTipoDocumento=$result['idtipodocumento'];
+            $this->idTipoDocumento=$result['idTipoDocumento'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;
@@ -78,7 +83,7 @@ class TipoDocumento extends AbstractTableGateway
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
         {
-            $this->idTipoDocumento=$result['idtipodocumento'];
+            $this->idTipoDocumento=$result['idTipoDocumento'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;

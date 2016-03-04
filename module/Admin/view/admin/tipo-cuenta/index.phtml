@@ -3,7 +3,7 @@ $form=$this->form;
 $form->prepare();
 
 $form->setAttributes(array(
-    'action' => $this->basePath().'/admin/tipousuario/index',
+    'action' => $this->basePath().'/admin/tipocuenta/index',
     'method' => 'post',
     'class'=>'form-horizontal',
     'role'=>'form'
@@ -18,11 +18,11 @@ if ($this->msg != null)
     <div class="col-lg-12">
         <div class="box">
             <div class="box-head">
-                <header><h4 class="text-light">Formulario <strong>Tipo Usuario</strong></h4></header>
+                <header><h4 class="text-light">Formulario <strong>Tipo Cuenta</strong></h4></header>
             </div>
             <div class="box-body">
                 <?php echo $this->form()->openTag($form); ?>
-                    <?php echo $this->formInput($form->get('idTipoUsuario'));?>
+                    <?php echo $this->formInput($form->get('idTipoCuenta'));?>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Código</label>
@@ -55,7 +55,7 @@ if ($this->msg != null)
             <div class="col-lg-12">
                 <div class="box box-bordered">
                     <div class="box-head">
-                        <header><h4 class="text-light"><strong>Tipo Usuario</strong> <small>Todas</small></h4></header>
+                        <header><h4 class="text-light"><strong>Tipo Cuenta</strong> <small>Todas</small></h4></header>
                     </div>
                     <div class="box"> 
                         <div class="box-body table-responsive">
@@ -71,7 +71,7 @@ if ($this->msg != null)
                                          <?php 
                                         foreach ($this->registros as $obj) {
                                             echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/tipousuario/index?id=".$obj['idTipoUsuario']."')\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/tipocuenta/index?id=".$obj['idTipoCuenta']."')\">
                                                     <td>".$obj['codigo']."</td>
                                                     <td>".$obj['descripcion']."</td>
                                                 </tr>";

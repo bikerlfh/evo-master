@@ -57,17 +57,22 @@ class ViaPago extends AbstractTableGateway
             return true;
         return false;
     }
-
+    public function eliminarViapago($idViaPago)
+    {
+        if ($this->delete(array('idViaPago'=>$idViaPago)) > 0)
+            return true;
+        return false;
+    }
     public function getViapago()
     {
         return $this->select()->toArray();
     }
     public function consutlarViapagoPoridViaPago($idViaPago)
     {
-        $result=$this->select(array('idviapago'=>$idViaPago))->current();
+        $result=$this->select(array('idViaPago'=>$idViaPago))->current();
         if($result)
         {
-            $this->idViaPago=$result['idviapago'];
+            $this->idViaPago=$result['idViaPago'];
             $this->descripcion=$result['descripcion'];
             $this->codigo=$result['codigo'];
             return true;
@@ -79,11 +84,16 @@ class ViaPago extends AbstractTableGateway
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
         {
-            $this->idViaPago=$result['idviapago'];
+            $this->idViaPago=$result['idViaPago'];
             $this->descripcion=$result['descripcion'];
             $this->codigo=$result['codigo'];
             return true;
         }
         return false;
+    }
+    
+    public function consultarTodoViaPago()
+    {
+        return $this->select()->toArray();
     }
 }

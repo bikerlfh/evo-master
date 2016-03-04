@@ -1,40 +1,91 @@
 <?php
-
 namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\FormTipoDocumento;
 use Application\Model\Entity\TipoDocumento;
+
 class TipoDocumentoController extends AbstractActionController
 {
     private $TipoDocumento;
+    private $form;
     public function indexAction()
     {
+        // se asigna el layout admin
         $this->layout('layout/admin'); 
+        // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $from = new FormTipoDocumento("tipodocumento",$this->getServiceLocator());
+        // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
+        $id=$this->params()->fromQuery('id',null);
+        
+        $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
+        $this->form = new FormTipoDocumento($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->configurarBotonesFormulario(false);
+        // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
             $datos=$this->request->getPost();
-            $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
-            // Si se envia el id de la viapago,
-            // se debe modificar esta.
-            if (!isset($datos["idTipoDocumento"])) 
+            // Si se envia el id de la viapago se modifica este.
+            if ($datos["idTipoDocumento"] != null) 
             {
-                $returnCrud="errorSave";
+                $returnCrud=$this->consultarMessage("errorUpdate");
                 if($this->TipoDocumento->modificarTipoDocumento($datos['idTipoDocumento'],$datos['codigo'],$datos['descripcion']))
-                    $returnCrud="okSave";
+                    $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
-                $returnCrud="errorSave";
-                // se guarda la nueva tipo documento
+                $returnCrud=$this->consultarMessage("errorSave");
+                // se guarda la nueva viapago
                 if($this->TipoDocumento->guardarTipoDocumento($datos['codigo'],$datos['descripcion']))
-                    $returnCrud="okSave";           
+                    $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$from,'msg'=>$returnCrud));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->TipoDocumento->consultarTodoTipoDocumento()));
         }
-        return new ViewModel(array('form'=>$from));
+        // si existe el parametro $id  se consulta la viapago y se carga el formulario.
+        else if(isset($id))
+        {
+            $this->TipoDocumento->consultarTipodocumentoPoridTipoDocumento($this->params()->fromQuery('id'));
+            $this->form->get("idTipoDocumento")->setValue($this->TipoDocumento->getIdTipoDocumento());
+            $this->form->get("codigo")->setValue($this->TipoDocumento->getCodigo());
+            $this->form->get("descripcion")->setValue($this->TipoDocumento->getDescripcion());
+            $this->configurarBotonesFormulario(true);
+        }
+        return new ViewModel(array('form'=>$this->form,'registros'=>$this->TipoDocumento->consultarTodoTipoDocumento()));
+    }
+    
+    public function eliminarAction()
+    {
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
+        $id=$this->params()->fromQuery('id',null);
+        if($id != null)
+        {
+            $this->TipoDocumento->eliminarTipoDocumento($id);
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/viapago');
+        }
+    }
+    private function consultarMessage($nameMensaje)
+    {
+        $serviceLocator=$this->getServiceLocator()->get('Config');
+        $mensaje=$serviceLocator['MsgCrud'];
+        $mensaje= $mensaje[$nameMensaje];
+        return $mensaje['function']."('".$mensaje['title']."','".$mensaje['message']."');";
+    }
+    private function configurarBotonesFormulario($modificarBool)
+    {
+        if ($modificarBool == true)
+        {
+            $this->form->get("btnGuardar")->setAttribute("type", "hidden");
+            $this->form->get("btnModificar")->setAttribute("type", "submit");
+            $this->form->get("btnEliminar")->setAttribute("type", "button");
+          
+        }
+        else
+        {
+            $this->form->get("btnGuardar")->setAttribute("type", "submit");
+            $this->form->get("btnModificar")->setAttribute("type", "hidden");
+            $this->form->get("btnEliminar")->setAttribute("type", "hidden");
+        }
     }
 }
