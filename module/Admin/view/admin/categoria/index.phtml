@@ -40,10 +40,12 @@ if ($this->msg != null)
                         </div>
                     </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
-                        <?php   echo $this->formElement($form->get('btnGuardar'));
-                                echo "<button type='button' class='btn btn-default' onClick=\"limpiarformulario('#frmtipousuario');\">Reset</button>";
+                        <?php   
+                            echo $this->formElement($form->get('btnGuardar'));
+                            echo $this->formElement($form->get('btnModificar'));
+                            echo $this->formElement($form->get('btnEliminar'));
+                            echo $this->formElement($form->get('btnCancelar'));
                         ?>
-                        
                     </div>
                 <?php echo $this->form()->closeTag(); ?>
             </div>
@@ -62,7 +64,7 @@ if ($this->msg != null)
                                     <thead>
                                         <tr role="row">
                                             <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Código</th>
-                                            <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Descripción</th>
+                                            <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Descripción</th>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -11,9 +11,11 @@ class FormCategoria extends Form
 {
     
     private $cssClass;
-    public function __construct($name,$serviceLocator)
+    private $baseUrl;
+    public function __construct($serviceLocator,$baseUrl = null)
     {
-        parent::__construct($name);
+        parent::__construct("frmcategoria");
+        $this->baseUrl = $baseUrl;
         $this->setAttributes(array(
             'method' => 'post'
         ));
@@ -71,6 +73,7 @@ class FormCategoria extends Form
                         'type'=>'submit',
                         'value'=>'Modificar',
                         'title'=>'Modificar',
+                        'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnModificar']
                 )
         ));
@@ -78,12 +81,26 @@ class FormCategoria extends Form
                 'name'=>'btnEliminar',			
                 'attributes'=>array(
                         'id'=>'btnEliminar',
-                        'type'=>'submit',
+                        'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
+                        'onClick'=>"$(location).attr('href','".$this->baseUrl."/admin/categoria/eliminar?id='+$('#idCategoria').val());",
+                        'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )
-        ));       
+        )); 
+        $this->add(array(
+                'name'=>'btnCancelar',			
+                'attributes'=>array(
+                        'id'=>'btnCancelar',
+                        'type'=>'button',
+                        'value'=>'Cancelar',
+                        'title'=>'Cancelar',
+                        'onClick'=>"limpiarformulario(".$this->getAttribute("name").");",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnCancelar']
+                )
+        )); 
     }
 }
 ?>

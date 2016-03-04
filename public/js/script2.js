@@ -2,18 +2,32 @@
  * script ajax y validaciones 
  * Hecho por Luis Fernando Henriquez Arcinegas
  * */
+
 function limpiarformulario(formulario){
+    $("#btnGuardar").attr("type","submit");
+    $("#btnModificar").attr("type","hidden");
+    $("#btnEliminar").attr("type","hidden");
    /* Se encarga de leer todas las etiquetas input del formulario*/
    $(formulario).find('input').each(function() {
       switch(this.type) {
-         case 'password':
-         case 'text':
-         case 'hidden':
-              $(this).val('');
-              break;
-         case 'checkbox':
-         case 'radio':
-              this.checked = false;
+        case 'password':
+        case 'text':
+        case 'hidden':
+            $(this).val('');
+            break;
+        case 'checkbox':
+        case 'radio':
+            this.checked = false;
+            break;
+        case 'number':
+            $(this).val('0');
+            break;
+        case 'date':
+            $(this).val('dd/mm/aaaa');
+        break; 
+        case 'time':
+            $(this).val('--:--');
+        break;
       }
    });
  
@@ -35,38 +49,6 @@ function seleccionarObjetoBusqueda(campoid,campotext,Value,Text)
         $("#"+campotext).val(Text.replace(/_/g,' '));
         $("#btnCerrar").click();
     }
-}
-//<=========================================================>
-//------------ REGION ADMINISTRADOR VISTA PROMOCION -------->
-//<=========================================================>
-//<==== valida que en las promociones solo se tomo un objeto ejm, si selecciona accesorios debe borrar todos los demas ===>
-function limpiarObjetosVistaPromocion()
-{
-    $('#equipo').val("");
-    $('#idequipo').val("");
-    $('#planpostpago').val("");
-    $('#idplanpostpago').val("");
-    $('#planlinea').val("");
-    $('#idplanlinea').val("");
-    $('#accesorio').val("");
-    $('#idaccesorio').val("");
-}
-//<=========================================================>
-//------------ REGION ADMINISTRADOR VISTA CLIENTE -------->
-//<=========================================================>
-//<==== valida que en las promociones solo se tomo un objeto ejm, si selecciona accesorios debe borrar todos los demas ===>
-function limpiarObjetosVistaCliente()
-{
-    $('#equipo').val("");
-    $('#idequipo').val("");
-    $('#planpostpago').val("");
-    $('#idplanpostpago').val("");
-    $('#planlinea').val("");
-    $('#idplanlinea').val("");
-    $('#accesorio').val("");
-    $('#idaccesorio').val("");
-    $('#promocion').val("");
-    $('#idpromocion').val("");
 }
 //<=========================================================>
 function usar_ajax(URL,objeto,datos)
@@ -140,33 +122,6 @@ function showMessageSuccess(title,menssage)
     toastr.success(menssage, title);
 }
 
-function clearForm(formulario){
-   /* Se encarga de leer todas las etiquetas input del formulario*/
-   $("#"+formulario).find('input').each(function() {
-      switch(this.type) {
-         case 'password':
-         case 'text':
-         case 'hidden':
-              $(this).val('');
-              break;
-		 case 'number':
-		 	$(this).val('0');
-			break;
-		 case 'date':
-		 	$(this).val('dd/mm/aaaa');
-		 break; 
-		 case 'time':
-		 	$(this).val('--:--');
-		 break;
-         case 'checkbox':
-         case 'radio':
-              this.checked = false;
-      }
-   });
-   $('#'+formulario).find('select').each(function() {    	
-        $(this).prop('selectedIndex',0);
-    });
-}
 
 function ajax_2form(form,datos2)//funcion hecha para vincular los usuarios
 {

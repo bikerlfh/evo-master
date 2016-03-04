@@ -28,9 +28,9 @@ return array(
         'select'=>'form-control',
         'date'=>'form-control',
         'radio'=>'',
-        'btnGuardar'=>'btn btn-rounded btn-primary',
-        'btnModificar'=>'btn btn-rounded btn-success',
-        'btnEliminar'=>'btn btn-rounded btn-danger',
+        'btnGuardar'=>'btn btn-primary',
+        'btnModificar'=>'btn btn-success',
+        'btnEliminar'=>'btn btn-danger',
         'btnCancelar'=>'btn btn-default',
         'btnSeleccionar'=>'btn btn-success'
     ),

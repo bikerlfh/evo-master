@@ -56,6 +56,12 @@ class Categoria extends AbstractTableGateway
         }
         return false;
     }
+    public function eliminarCategoria($idCategoria)
+    {
+        if ($this->delete(array('idCategoria'=>$idCategoria)) > 0)
+            return true;
+        return false;
+    }
 
     public function consultarTodoCategoria()
     {
