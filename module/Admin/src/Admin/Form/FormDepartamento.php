@@ -42,8 +42,9 @@ class FormDepartamento extends Form
         $pais= new Pais($this->adapter);
         $select = new Element\Select('idPais');
         $select->setValueOptions($pais->generarOptionsSelect());
-        $select->setAttribute('class',$this->cssClass['select']);
-        $select->setAttribute('id','idPais');
+        $select->setAttributes(array('id' => 'idPais',
+                                     'class' => $this->cssClass['select'],
+                                     'required' => "required"));
         $this->add($select);
         /************* select idPais ***********/
        
