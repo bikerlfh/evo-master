@@ -77,10 +77,7 @@ class Departamento extends AbstractTableGateway
     }
     public function consultarTodoDepartamento()
     {
-
-        //return $this->select()->toArray();
-        $sql = new Sql($this->adapter,array('d'=>$this->table));
-        $select = $sql->select();
+        $sql = new Sql($this->adapter);
         // join($table,ON,arrayCampos('alias'=>'nombreCampo'))
         // en el arreglo campos se pueden usar Expresiones para realizar concatenaciones,count etc.
         /*
@@ -89,9 +86,10 @@ class Departamento extends AbstractTableGateway
                             'p.idPais=d.idPais',
                             array('codigoPais'=>'codigo','descripcionPais'=>'descripcion'));*/
         $select = $sql->select()->
-                        join(array('p'=> new TableIdentifier("Pais", "Tercero")),
-                                   'p.idPais=d.idPais', 
-                                    array('descripcionPais' => new Expression("p.codigo+' - '+p.descripcion")));
+                            from(array('d'=>$this->table))->
+                            join(array('p'=> new TableIdentifier("Pais", "Tercero")),
+                                       'p.idPais=d.idPais', 
+                                       array('descripcionPais' => new Expression("p.codigo+' - '+p.descripcion")));
 
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
