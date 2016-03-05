@@ -80,7 +80,7 @@ class TipoCuenta extends AbstractTableGateway
         return false;
     }
     
-    public function getTipocuentaPorcodigo($codigo)
+    public function consultarTipocuentaPorcodigo($codigo)
     {
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
@@ -91,5 +91,15 @@ class TipoCuenta extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    public function generarOptionsSelect($where = null)
+    {
+        $objs=$this->select($where)->toArray();
+        $options=array(null,'');
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idTipoCuenta']]=$objs[$i]['codigo']." - ".$objs[$i]['descripcion'];
+        }
+        return $options;
     }
 }

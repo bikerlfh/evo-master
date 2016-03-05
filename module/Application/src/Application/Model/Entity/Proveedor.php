@@ -1,7 +1,12 @@
 <?php
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
-use Zend\Db\Adapter\Adapter;;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
+
 class Proveedor extends AbstractTableGateway
 {
     private $idProveedor;
@@ -36,22 +41,22 @@ class Proveedor extends AbstractTableGateway
     public function setidTipoCuenta($idTipoCuenta){
         $this->idTipoCuenta=$idTipoCuenta;
     }
-    public function getnumCuentaBancaria(){
+    public function getNumCuentaBancaria(){
         return $this->numCuentaBancaria;
     }
-    public function setnumCuentaBancaria($numCuentaBancaria){
+    public function setNumCuentaBancaria($numCuentaBancaria){
         $this->numCuentaBancaria=$numCuentaBancaria;
     }
-    public function getemail(){
+    public function getEmail(){
         return $this->email;
     }
-    public function setemail($email){
+    public function setEmail($email){
         $this->email=$email;
     }
-    public function getidDatoBasicoTercero(){
+    public function getIdDatoBasicoTercero(){
         return $this->idDatoBasicoTercero;
     }
-    public function setidDatoBasicoTercero($idDatoBasicoTercero){
+    public function setIdDatoBasicoTercero($idDatoBasicoTercero){
         $this->idDatoBasicoTercero=$idDatoBasicoTercero;
     }
     public function getidProveedor(){
@@ -77,10 +82,9 @@ class Proveedor extends AbstractTableGateway
         return false;
     }
 
-    public function modificarProveedor($idProveedor,$idDatoBasicoTercero,$email,$numCuentaBancaria,$idTipoCuenta,$idViaPago,$idUsuarioCreacion)
+    public function modificarProveedor($idProveedor,$idDatoBasicoTercero,$email,$numCuentaBancaria,$idTipoCuenta,$idViaPago)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'idViaPago'=> $idViaPago,
                 'idTipoCuenta'=> $idTipoCuenta,
                 'numCuentaBancaria'=> $numCuentaBancaria,
@@ -92,14 +96,34 @@ class Proveedor extends AbstractTableGateway
             return true;
         return false;
     }
-
+    public function eliminarProveedor($idProveedor)
+    {
+        if ($this->delete(array('idProveedor'=>$idProveedor))>0)
+            return true;
+        return false;
+    }
     public function consultarTodoProveedor()
     {
-        return $this->select()->toArray();
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                from(array('p'=>  $this->table))->
+                join(array("d"=> new TableIdentifier("DatoBasicoTercero","Tercero")),
+                                    "p.idDatoBasicoTercero = d.idDatoBasicoTercero",
+                                    array("descripcionTercero"=> new Expression("convert(varchar,d.nit) + ' - ' + d.descripcion")))->
+                join(array("tc"=> new TableIdentifier("TipoCuenta","Compra")),
+                                    "p.idTipoCuenta = tc.idTipoCuenta",
+                                    array("descripcionTipoCuenta"=> new Expression("tc.codigo + ' - ' + tc.descripcion")))->
+                join(array("v"=> new TableIdentifier("ViaPago","Compra")),
+                                    "p.idViaPago = v.idViaPago",
+                                    array("descripcionViaPago"=> new Expression("v.codigo + ' - ' + v.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
     }
     public function consultarProveedorPoridProveedor($idProveedor)
     {
-        $result=$this->select(array('idproveedor'=>$idProveedor))->current();
+        $result=$this->select(array('idProveedor'=>$idProveedor))->current();
         if($result)
         {
             $this->LlenarEntidad($result);

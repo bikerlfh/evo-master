@@ -136,7 +136,6 @@ class DatoBasicoTercero extends AbstractTableGateway
     public function consultarTodoDatobasicotercero()
     {
         $sql = new Sql($this->adapter);
-        
         $select = $sql->select()->
                 from(array('t'=>  $this->table))->
                 join(array("td"=> new TableIdentifier("TipoDocumento","Tercero")),
@@ -145,9 +144,7 @@ class DatoBasicoTercero extends AbstractTableGateway
         
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
-        return $resultsSet->initialize($results)->toArray();   
-        
-        return $this->select()->toArray();
+        return $resultsSet->initialize($results)->toArray();
     }
     public function consultarDatoBasicoTerceroPoridDatoBasicoTercero($idDatoBasicoTercero)
     {
