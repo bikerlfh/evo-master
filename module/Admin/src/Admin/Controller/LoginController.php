@@ -33,7 +33,7 @@ class LoginController extends AbstractActionController
             if ($this->Usuario->logIn($datos['email'],$datos['pass']))
             {
                 // Se crea la sesion
-                
+                $this->createSession();
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/index');
             }
         }
