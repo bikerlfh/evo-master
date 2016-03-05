@@ -57,8 +57,14 @@ class Pais extends AbstractTableGateway
             return true;
         return false;
     }
+    public function eliminarPais($idPais)
+    {
+        if ($this->delete(array('idPais'=>$idPais))>0)
+            return true;
+        return false;
+    }
 
-    public function consultarPais()
+    public function consultarTodoPais()
     {
         return $this->select()->toArray();
     }
