@@ -81,7 +81,7 @@ class TipoDocumento extends AbstractTableGateway
     public function generarOptionsSelect($where = null)
     {
         $objs=$this->select($where)->toArray();
-        $options=array(null,'');
+        $options=array(null);
         for($i=0;$i<count($objs);$i++)
         {
             $options[$objs[$i]['idTipoDocumento']]=$objs[$i]['codigo']." - ".$objs[$i]['descripcion'];
