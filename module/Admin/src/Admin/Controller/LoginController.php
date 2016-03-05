@@ -51,10 +51,11 @@ class LoginController extends AbstractActionController
         $user_session->username =  $this->Usuario->DatoBasicoTercero->getDescripcion();
         $user_session->tipousuario = $this->Usuario->TipoUsuario->getDescripcion(); 
         /*
-        $this->ValoresSesion = \Application\Model\Clases\ValoresSesion::obtenerInstancia();
+        $this->ValoresSesion = ValoresSesion::obtenerInstancia();
         $this->ValoresSesion->idUsuarioSesion =$user_session->idUsuario;
         $this->ValoresSesion->username =$user_session->username;
-        $this->ValoresSesion->tipousuario =$user_session->tipousuario;*/
+        $this->ValoresSesion->tipousuario =$user_session->tipousuario;
+        $this->ValoresSesion->Container = $user_session;*/
     }
     private function destroySession()
     {
