@@ -2,6 +2,11 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
+
 
 class Municipio extends AbstractTableGateway
 {
@@ -75,7 +80,16 @@ class Municipio extends AbstractTableGateway
 
     public function consultarTodoMunicipio()
     {
-        return $this->select()->toArray();
+        $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                         from(array('m'=> $this->table))->
+                         join(array("d"=> new TableIdentifier("Departamento","Tercero")),
+                                    "m.idDepartamento = d.idDepartamento",
+                                    array("descripcionDepartamento"=> new Expression("d.codigo + ' - ' + d.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();   
     }
     public function consultarMunicipioPoridMunicipio($idMunicipio)
     {

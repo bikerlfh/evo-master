@@ -54,11 +54,10 @@ class Usuario extends AbstractTableGateway
     public function guardarUsuario($clave,$email,$idDatoBasicoTercero,$idTipoUsuario)
     {
         $datos=array(
-                'clave'=> $clave,
+                'clave'=> md5($clave),
                 'email'=> $email,
                 'idDatoBasicoTercero'=> $idDatoBasicoTercero,
                 'idTipoUsuario'=> $idTipoUsuario,
-                'idUsuario'=> $idUsuario
         );
         $result=$this->insert($datos);
         if($result>0)
@@ -69,19 +68,25 @@ class Usuario extends AbstractTableGateway
     public function modificarUsuario($clave,$email,$idDatoBasicoTercero,$idTipoUsuario,$idUsuario)
     {
         $datos=array(
-                'clave'=> $clave,
+                'clave'=> md5($clave),
                 'email'=> $email,
                 'idDatoBasicoTercero'=> $idDatoBasicoTercero,
                 'idTipoUsuario'=> $idTipoUsuario,
-                'idUsuario'=> $idUsuario
         );
+        //al modificar si no ingresa la pass, se remueve la pos de la clave
+        if($clave == "")
+        {
+            unset($datos['clave']);
+            $datos = array_values($datos); 
+        }
+        
         $result=$this->update($datos,array('idUsuario'=>$idUsuario));
         if($result>0)
             return true;
         return false;
     }
 
-    public function consutlarTodoUsuario()
+    public function consultarTodoUsuario()
     {
         return $this->select()->toArray();
     }

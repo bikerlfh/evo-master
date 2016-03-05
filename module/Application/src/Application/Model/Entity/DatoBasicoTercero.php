@@ -154,6 +154,17 @@ class DatoBasicoTercero extends AbstractTableGateway
         return false;
     }
     
+     public function generarOptionsSelect($where = null)
+    {
+        $objs=$this->select($where)->toArray();
+        $options=array(null,'');
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idDatoBasicoTercero']]=$objs[$i]['nit']." - ".$objs[$i]['descripcion'];
+        }
+        return $options;
+    }
+    
     private function LlenarEntidad($result)
     {
         $this->telefono=$result['telefono'];
