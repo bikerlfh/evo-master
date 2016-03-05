@@ -2,6 +2,11 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
 
 class Departamento extends AbstractTableGateway
 {
@@ -12,7 +17,7 @@ class Departamento extends AbstractTableGateway
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
-        $this->table =  new \Zend\Db\Sql\TableIdentifier('Departamento', 'Tercero');
+        $this->table =  new TableIdentifier('Departamento', 'Tercero');
     }
 
     public function getdescripcion(){
@@ -73,7 +78,35 @@ class Departamento extends AbstractTableGateway
     }
     public function consultarTodoDepartamento()
     {
-        return $this->select()->toArray();
+        try
+        {
+        //return $this->select()->toArray();
+        
+        $sql = new Sql($this->adapter,array('d'=>$this->table));
+
+        $select = $sql->select();
+        // join($table,ON,arrayCampos('alias'=>'nombreCampo'))
+        // en el arreglo campos se pueden usar Expresiones para realizar concatenaciones,count etc.
+        /*
+        $select = $sql->select()->
+                  join(array('p'=> new TableIdentifier("Pais", "Tercero")),
+                            'p.idPais=d.idPais',
+                            array('codigoPais'=>'codigo','descripcionPais'=>'codigo+'-'+descripcion'));*/
+        
+        $select = $sql->select()->
+                        join(array('p'=> new TableIdentifier("Pais", "Tercero")),
+                                   'p.idPais=d.idPais', 
+                                    array('descripcionPais' => new Expression("p.codigo+' - '+p.descripcion")));
+     
+
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
+        }
+        catch (Exception $e)
+        {
+            var_dump($e->getPrevious());
+        }
     }
     public function consultarDepartamentoPoridDepartamento($idDepartamento)
     {
