@@ -31,7 +31,7 @@ class UsuarioController extends AbstractActionController
             if ($datos["idUsuario"] != null) 
             {
                 $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->Usuario->modificarUsuario($datos['clave'],$datos['email'],$datos['idDatoBasicoTercero'],$datos['idTipoUsuario'],$datos['idUsuario']))
+                if($this->Usuario->modificarUsuario($datos['idUsuario'],$datos['email'],$datos['idDatoBasicoTercero'],$datos['idTipoUsuario'],$datos["clave"]))
                     $returnCrud=$this->consultarMessage("okUpdate");
             }
             else

@@ -65,19 +65,15 @@ class Usuario extends AbstractTableGateway
         return false;
     }
 
-    public function modificarUsuario($clave,$email,$idDatoBasicoTercero,$idTipoUsuario,$idUsuario)
+    public function modificarUsuario($idUsuario,$email,$idDatoBasicoTercero,$idTipoUsuario,$clave = null)
     {
         $datos=array(
-                'clave'=> md5($clave),
                 'email'=> $email,
                 'idDatoBasicoTercero'=> $idDatoBasicoTercero,
                 'idTipoUsuario'=> $idTipoUsuario,
         );
-        //al modificar si no ingresa la pass, se remueve la pos de la clave
-        if($clave == "")
-        {
-            unset($datos['clave']);
-            $datos = array_values($datos); 
+        if ($clave!=null) {
+            $datos["clave"] = md5($clave);
         }
         
         $result=$this->update($datos,array('idUsuario'=>$idUsuario));
