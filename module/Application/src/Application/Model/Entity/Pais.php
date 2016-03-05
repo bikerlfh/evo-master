@@ -88,6 +88,16 @@ class Pais extends AbstractTableGateway
         }
         return false;
     }
+    public function generarOptionsSelect($where = null)
+    {
+        $objs=$this->select($where)->toArray();
+        $options=array('','');
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idPais']]=$objs[$i]['codigo']." - ".$objs[$i]['descripcion'];
+        }
+        return $options;
+    }
     private function LlenarEntidad($result)
     {
         $this->idPais=$result['idPais'];
