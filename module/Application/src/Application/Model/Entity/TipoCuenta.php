@@ -79,6 +79,7 @@ class TipoCuenta extends AbstractTableGateway
         }
         return false;
     }
+    
     public function getTipocuentaPorcodigo($codigo)
     {
         $result=$this->select(array('codigo'=>$codigo))->current();

@@ -122,13 +122,20 @@ class DatoBasicoTercero extends AbstractTableGateway
         return false;
     }
 
+    public function eliminarDatoBasicoTercero($idDatoBasicoTercero)
+    {
+        if($this->delete(array('idDatoBasicoTercero'=>$idDatoBasicoTercero)))
+            return true;
+        return false;
+    }
+    
     public function consultarTodoDatobasicotercero()
     {
         return $this->select()->toArray();
     }
     public function consultarDatoBasicoTerceroPoridDatoBasicoTercero($idDatoBasicoTercero)
     {
-        $result=$this->select(array('iddatobasicotercero'=>$idDatoBasicoTercero))->current();
+        $result=$this->select(array('idDatoBasicoTercero'=>$idDatoBasicoTercero))->current();
         if($result)
         {
             $this->LlenarEntidad($result);

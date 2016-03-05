@@ -1,0 +1,155 @@
+<?php
+$form = $this->form;
+$form->prepare();
+//<====Si se envía un mensaje este se muestra=====> 
+if ($this->msg != null) {
+    echo "<script type='text/javascript'>" . $this->msg . "</script>";
+}
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box">
+            <div class="box-head">
+                <header><h4 class="text-light">Formulario <strong>Dato Basico Tercero</strong></h4></header>
+            </div>
+            <div class="box-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <?php echo $this->formInput($form->get('idDatoBasicoTercero')); ?>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Tipo Documento</label>
+                    </div>
+                    <div class="col-lg-3 col-md-11 col-sm-9">
+                        <?php echo $this->formElement($form->get('idTipoDocumento')); ?>                          
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Nit</label>
+                    </div>
+                    <div class="col-lg-3 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('nit')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Descripción</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('descripcion')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Primer Nombre</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('primerNombre')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Segundo Nombre</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('segundoNombre')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Primer Apellido</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('primerApellido')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Segundo Apellido</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('segundoApellido')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Dirección</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('direccion')); ?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Teléfono</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('telefono')); ?>                            
+                    </div>
+                </div>
+
+
+                <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
+                    <?php
+                    echo $this->formElement($form->get('btnGuardar'));
+                    echo $this->formElement($form->get('btnModificar'));
+                    echo $this->formElement($form->get('btnEliminar'));
+                    echo $this->formElement($form->get('btnCancelar'));
+                    ?>
+                </div>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div><!--end .box -->
+        <?php if (count($this->registros) > 0) { ?>       
+            <div class="row">  
+                <div class="col-lg-12">
+                    <div class="box box-bordered">
+                        <div class="box-head">
+                            <header><h4 class="text-light"><strong>Dato Basico Terceros</strong> <small>Todas</small></h4></header>
+                        </div>
+                        <div class="box"> 
+                            <div class="box-body table-responsive">
+                                <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
+                                    <table id="dtbuscar" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Tipo Documento</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Nif</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Descripción</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Primer Nombre</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Segundo Nombre</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Primer Apellido</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Segundo Apellido</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Dirección</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Teléfono</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            foreach ($this->registros as $obj) {
+                                                echo "
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '" . $this->basePath() . "/admin/dato-basico-tercero/index?id=" . $obj['idDatoBasicoTercero'] . "')\">
+                                                    <td>Soy el tipo Doc</td>
+                                                    <td>" . $obj['nit'] . "</td>
+                                                    <td>" . $obj['descripcion'] . "</td>
+                                                    <td>" . $obj['primerNombre'] . "</td>
+                                                    <td>" . $obj['segundoNombre'] . "</td>
+                                                    <td>" . $obj['primerApellido'] . "</td>
+                                                    <td>" . $obj['segundoApellido'] . "</td>
+                                                    <td>" . $obj['direccion'] . "</td>
+                                                    <td>" . $obj['telefono'] . "</td>
+                                                </tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
