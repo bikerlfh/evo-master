@@ -70,7 +70,7 @@ class Pais extends AbstractTableGateway
     }
     public function consultarPaisPoridPais($idPais)
     {
-        $result=$this->select(array('idpais'=>$idPais))->current();
+        $result=$this->select(array('idPais'=>$idPais))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
