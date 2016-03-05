@@ -78,12 +78,9 @@ class Departamento extends AbstractTableGateway
     }
     public function consultarTodoDepartamento()
     {
-        try
-        {
-        //return $this->select()->toArray();
-        
-        $sql = new Sql($this->adapter,array('d'=>$this->table));
 
+        //return $this->select()->toArray();
+        $sql = new Sql($this->adapter,array('d'=>$this->table));
         $select = $sql->select();
         // join($table,ON,arrayCampos('alias'=>'nombreCampo'))
         // en el arreglo campos se pueden usar Expresiones para realizar concatenaciones,count etc.
@@ -102,11 +99,7 @@ class Departamento extends AbstractTableGateway
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
         return $resultsSet->initialize($results)->toArray();
-        }
-        catch (Exception $e)
-        {
-            var_dump($e->getPrevious());
-        }
+        
     }
     public function consultarDepartamentoPoridDepartamento($idDepartamento)
     {
