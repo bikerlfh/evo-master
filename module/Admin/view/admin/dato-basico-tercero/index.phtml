@@ -129,7 +129,7 @@ if ($this->msg != null) {
                                             <?php
                                             foreach ($this->registros as $obj) {
                                                 echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '" . $this->basePath() . "/admin/dato-basico-tercero/index?id=" . $obj['idDatoBasicoTercero'] . "')\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '" . $this->basePath() . "/admin/datobasicotercero/index?id=" . $obj['idDatoBasicoTercero'] . "')\">
                                                     <td>Soy el tipo Doc</td>
                                                     <td>" . $obj['nit'] . "</td>
                                                     <td>" . $obj['descripcion'] . "</td>

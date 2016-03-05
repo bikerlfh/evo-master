@@ -71,7 +71,7 @@ class DatoBasicoTerceroController extends AbstractActionController
         if($id != null)
         {
             $this->DatoBasicoTercero->eliminarDatoBasicoTercero($id);
-            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/dato-basico-tercero');
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/datobasicotercero');
         }
     }
     private function consultarMessage($nameMensaje)

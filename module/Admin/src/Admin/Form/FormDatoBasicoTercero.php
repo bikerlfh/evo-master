@@ -20,7 +20,7 @@ class FormDatoBasicoTercero extends Form
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
         $this->setAttributes(array(
-            'action' => $this->basePath.'/admin/dato-basico-tercero/index',
+            'action' => $this->basePath.'/admin/datobasicotercero/index',
             'method' => 'post',
             'class'=>'form-horizontal',
             'role'=>'form'
@@ -165,7 +165,7 @@ class FormDatoBasicoTercero extends Form
                         'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
-                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/dato-basico-tercero/eliminar?id='+$('#idDatoBasicoTercero').val());",
+                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/datobasicotercero/eliminar?id='+$('#idDatoBasicoTercero').val());",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )
