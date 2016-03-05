@@ -1,13 +1,6 @@
 <?php
 $form=$this->form;
 $form->prepare();
-
-$form->setAttributes(array(
-    'action' => $this->basePath().'/admin/tipousuario/index',
-    'method' => 'post',
-    'class'=>'form-horizontal',
-    'role'=>'form'
-));
 //<====Si se envía un mensaje este se muestra=====> 
 if ($this->msg != null) 
 {

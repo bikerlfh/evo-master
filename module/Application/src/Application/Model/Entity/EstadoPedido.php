@@ -34,7 +34,7 @@ class EstadoPedido extends AbstractTableGateway
         $this->idEstadoPedido=$idEstadoPedido;
     }
 
-    public function insertEstadoPedido($codigo,$descripcion)
+    public function guardarEstadoPedido($codigo,$descripcion)
     {
         $datos=array(
                 'descripcion'=> $descripcion,
@@ -57,17 +57,22 @@ class EstadoPedido extends AbstractTableGateway
             return true;
         return false;
     }
-
-    public function consultarEstadoPedido()
+    public function eliminarEstadoPedido($idEstadoPedido)
+    {
+        if ($this->delete(array('idEstadoPedido'=>$idEstadoPedido))) 
+            return true;
+        return false;
+    }
+    public function consultarTodoEstadoPedido()
     {
         return $this->select()->toArray();
     }
     public function consultarEstadoPedidoPoridEstadoPedido($idEstadoPedido)
     {
-        $result=$this->select(array('idestadopedido'=>$idEstadoPedido))->current();
+        $result=$this->select(array('idEstadoPedido'=>$idEstadoPedido))->current();
         if($result)
         {
-            $this->idEstadoPedido=$result['idestadopedido'];
+            $this->idEstadoPedido=$result['idEstadoPedido'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;
@@ -79,7 +84,7 @@ class EstadoPedido extends AbstractTableGateway
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
         {
-            $this->idEstadoPedido=$result['idestadopedido'];
+            $this->idEstadoPedido=$result['idEstadoPedido'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;

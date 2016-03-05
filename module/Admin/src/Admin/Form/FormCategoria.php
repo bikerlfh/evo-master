@@ -11,13 +11,16 @@ class FormCategoria extends Form
 {
     
     private $cssClass;
-    private $baseUrl;
-    public function __construct($serviceLocator,$baseUrl = null)
+    private $basePath;
+    public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmcategoria");
-        $this->baseUrl = $baseUrl;
+        $this->basePath = $basePath;
         $this->setAttributes(array(
-            'method' => 'post'
+            'action' => $this->basePath.'/admin/categoria/index',
+            'method' => 'post',
+            'class'=>'form-horizontal',
+            'role'=>'form'
         ));
         $this->cssClass = $serviceLocator->get('Config');
         $this->cssClass = $this->cssClass['cssClass'];
@@ -84,7 +87,7 @@ class FormCategoria extends Form
                         'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
-                        'onClick'=>"$(location).attr('href','".$this->baseUrl."/admin/categoria/eliminar?id='+$('#idCategoria').val());",
+                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/categoria/eliminar?id='+$('#idCategoria').val());",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )

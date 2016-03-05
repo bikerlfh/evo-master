@@ -11,13 +11,16 @@ class FormTipoUsuario extends Form
 {
     
     private $cssClass;
-    private $baseUrl;
-    public function __construct($serviceLocator,$baseUrl = null)
+    private $basePath;
+    public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmtipousuario");
-        $this->baseUrl = $baseUrl;
+        $this->basePath = $basePath;
         $this->setAttributes(array(
-            'method' => 'post'
+            'action' => $this->basePath.'/admin/tipousuario/index',
+            'method' => 'post',
+            'class'=>'form-horizontal',
+            'role'=>'form'
         ));
         $this->cssClass = $serviceLocator->get('Config');
         $this->cssClass = $this->cssClass['cssClass'];
@@ -84,7 +87,7 @@ class FormTipoUsuario extends Form
                         'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
-                        'onClick'=>"$(location).attr('href','".$this->baseUrl."/admin/tipousuario/eliminar?id='+$('#idTipoUsuario').val());",
+                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/tipousuario/eliminar?id='+$('#idTipoUsuario').val());",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )

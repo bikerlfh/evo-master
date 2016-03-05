@@ -9,12 +9,18 @@ use Zend\Form\Form;
 
 class FormEstadoPedido extends Form
 {
+    
     private $cssClass;
-    public function __construct($name,$serviceLocator)
+    private $basePath;
+    public function __construct($serviceLocator,$basePath = null)
     {
-        parent::__construct($name);
+        parent::__construct("frmestadopedido");
+        $this->basePath = $basePath;
         $this->setAttributes(array(
-            'method' => 'post'
+            'action' => $this->basePath.'/admin/estadopedido/index',
+            'method' => 'post',
+            'class'=>'form-horizontal',
+            'role'=>'form'
         ));
         $this->cssClass = $serviceLocator->get('Config');
         $this->cssClass = $this->cssClass['cssClass'];
@@ -70,6 +76,7 @@ class FormEstadoPedido extends Form
                         'type'=>'submit',
                         'value'=>'Modificar',
                         'title'=>'Modificar',
+                        'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnModificar']
                 )
         ));
@@ -77,12 +84,26 @@ class FormEstadoPedido extends Form
                 'name'=>'btnEliminar',			
                 'attributes'=>array(
                         'id'=>'btnEliminar',
-                        'type'=>'submit',
+                        'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
+                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/estadopedido/eliminar?id='+$('#idEstadoPedido').val());",
+                        'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )
-        ));       
+        )); 
+        $this->add(array(
+                'name'=>'btnCancelar',			
+                'attributes'=>array(
+                        'id'=>'btnCancelar',
+                        'type'=>'button',
+                        'value'=>'Cancelar',
+                        'title'=>'Cancelar',
+                        'onClick'=>"limpiarformulario(".$this->getAttribute("name").");",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnCancelar']
+                )
+        )); 
     }
 }
 ?>
