@@ -12,7 +12,7 @@ class CategoriaController extends AbstractActionController
     private $form;
     public function indexAction()
     {
-        $this->validarSession();
+        //$this->validarSession();
         // se asigna el layout admin
         $this->layout('layout/admin'); 
         // se obtiene el adapter
@@ -57,7 +57,7 @@ class CategoriaController extends AbstractActionController
     
     public function eliminarAction()
     {
-        $this->validarSession();
+        //$this->validarSession();
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Categoria = new Categoria($this->dbAdapter);
         $id=$this->params()->fromQuery('id',null);
