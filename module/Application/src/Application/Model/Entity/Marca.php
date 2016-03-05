@@ -33,7 +33,7 @@ class Marca extends AbstractTableGateway
         $this->idMarca=$idMarca;
     }
 
-    public function insertMarca($codigo,$descripcion)
+    public function guardarMarca($codigo,$descripcion)
     {
         $datos=array(
                 'descripcion'=> $descripcion,
@@ -56,17 +56,22 @@ class Marca extends AbstractTableGateway
             return true;
         return false;
     }
-
-    public function consultarMarca()
+    public function eliminarMarca($idMarca)
+    {
+        if ($this->delete(array('idMarca'=>$idMarca))>0)
+            return true;
+        return false;
+    }
+    public function consultarTodoMarca()
     {
         return $this->select()->toArray();
     }
     public function consultarMarcaPoridMarca($idMarca)
     {
-        $result=$this->select(array('idmarca'=>$idMarca))->current();
+        $result=$this->select(array('idMarca'=>$idMarca))->current();
         if($result)
         {
-            $this->idMarca=$result['idmarca'];
+            $this->idMarca=$result['idMarca'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;
@@ -78,7 +83,7 @@ class Marca extends AbstractTableGateway
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
         {
-            $this->idMarca=$result['idmarca'];
+            $this->idMarca=$result['idMarca'];
             $this->codigo=$result['codigo'];
             $this->descripcion=$result['descripcion'];
             return true;
