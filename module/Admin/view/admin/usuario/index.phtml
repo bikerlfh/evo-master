@@ -83,8 +83,8 @@ if ($this->msg != null)
                                         foreach ($this->registros as $obj) {
                                             echo "
                                                 <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/usuario/index?id=".$obj['idUsuario']."')\">
-                                                    <td>Tipo Documento</td>
-                                                    <td>Tercero</td>
+                                                    <td>". $obj['descripcionTipoUsuario'] ."</td>
+                                                    <td>". $obj['descripcionTercero'] ."</td>
                                                     <td>".$obj['email']."</td>
                                                 </tr>";
                                         }

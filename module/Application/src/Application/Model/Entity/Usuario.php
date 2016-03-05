@@ -2,6 +2,11 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
+
 
 class Usuario extends AbstractTableGateway
 {
@@ -81,10 +86,28 @@ class Usuario extends AbstractTableGateway
             return true;
         return false;
     }
+    public function eliminarUsuario($idUsuario)
+    {
+        if($this->delete(array("idUsuario"=> $idUsuario)) > 0)
+            return true;
+        return false;
+    }
 
     public function consultarTodoUsuario()
     {
-        return $this->select()->toArray();
+         $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                         from(array('u'=> $this->table))->
+                         join(array("tu"=> new TableIdentifier("TipoUsuario","Seguridad")),
+                                    "u.idTipoUsuario = tu.idTipoUsuario",
+                                    array("descripcionTipoUsuario"=> new Expression("tu.codigo + ' - ' + tu.descripcion")))->
+                         join(array("dbt"=> new TableIdentifier("DatoBasicoTercero","Tercero")),
+                                 "dbt.idDatoBasicoTercero = u.idDatoBasicoTercero",
+                                 array("descripcionTercero"=> new Expression("Convert(varchar(20),dbt.nit) + ' - ' + dbt.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();   
     }
     
     public function consultarUsuarioPoridUsuario($idUsuario)

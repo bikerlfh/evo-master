@@ -112,7 +112,7 @@ class FormUsuario extends Form
                         'type'=>'button',
                         'value'=>'Eliminar',
                         'title'=>'Eliminar',
-                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/tipocuenta/eliminar?id='+$('#idUsuario').val());",
+                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/usuario/eliminar?id='+$('#idUsuario').val());",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )
