@@ -2,6 +2,24 @@
  * script ajax y validaciones 
  * Hecho por Luis Fernando Henriquez Arcinegas
  * */
+// Se activa del menu el formulario que este visible
+$(document).ready(function()
+{
+    $(document).find('a').each(function() 
+    {
+        //alert($(this).attr("href"));
+        if($(this).attr("href") == ("/evo-master"+$(location).attr("href").valueOf().toString().split("evo-master")[1]))
+        {
+            $(this).parents("li").each(function()
+            {
+                $(this).children("ul").attr("style","display: block;");
+                $(this).attr("class","expanded");
+            });
+            $(this).attr("class","active");
+        }
+    })
+});
+
 
 function limpiarformulario(formulario){
     $("#btnGuardar").attr("type","submit");
