@@ -5,11 +5,17 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\FormTipoUsuario;
 use Application\Model\Entity\TipoUsuario;
+use Zend\Session\Container;
 
 class TipoUsuarioController extends AbstractActionController
 {
     private $TipoUsuario;
     private $form;
+    
+    private $user_session;
+    public function __construct() {
+        $this->user_session = new Container();
+    }
     public function indexAction()
     {
         $this->validarSession();
@@ -97,5 +103,6 @@ class TipoUsuarioController extends AbstractActionController
         if (!isset($_SESSION['user'])) {
             return $this->redirect()->toUrl(str_replace("/public","", $this->getRequest()->getBaseUrl()).'/admin/login'); 
         }
+        $this->user_session = $_SESSION['user'];
     }
 }
