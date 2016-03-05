@@ -65,7 +65,12 @@ class Departamento extends AbstractTableGateway
             return true;
         return false;
     }
-
+    public function eliminarDepartamento($idDepartamento)
+    {
+        if ($this->delete(array('idDepartamento'=>$idDepartamento))>0) 
+            return true;
+        return false;
+    }
     public function consultarTodoDepartamento()
     {
         return $this->select()->toArray();
