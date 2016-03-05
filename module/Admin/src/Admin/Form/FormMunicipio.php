@@ -38,14 +38,17 @@ class FormMunicipio extends Form
                 'type' => 'hidden',
             ),
         ));
-        /************* select idPais ***********/
+        /************* select idDepartamento ***********/
         $departamento= new Departamento($this->adapter);
         $select = new Element\Select('idDepartamento');
         $select->setValueOptions($departamento->generarOptionsSelect());
-        $select->setAttribute('class',$this->cssClass['select']);
-        $select->setAttribute('id','idDepartamento');
+        $select->setAttributes(array(
+                                    'class'=>$this->cssClass['select'],
+                                    'id'=>'idDepartamento',
+                                    'required'=>'required'
+                                ));
         $this->add($select);
-        /************* select idPais ***********/
+        /************* select idDepartamento ***********/
        
         
         $this->add(array(
