@@ -66,6 +66,12 @@ class Municipio extends AbstractTableGateway
             return true;
         return false;
     }
+    public function eliminarMunicipio($idMunicipio)
+    {
+        if($this->delete(array('idMunicipio'=>$idMunicipio))> 0)
+           return true;
+        return false;
+    }
 
     public function consultarTodoMunicipio()
     {
@@ -73,7 +79,7 @@ class Municipio extends AbstractTableGateway
     }
     public function consultarMunicipioPoridMunicipio($idMunicipio)
     {
-        $result=$this->select(array('idmunicipio'=>$idMunicipio))->current();
+        $result=$this->select(array('idMunicipio'=>$idMunicipio))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -83,7 +89,7 @@ class Municipio extends AbstractTableGateway
     }
     public function consultarMunicipioPoridDepartamento($idDepartamento)
     {
-        $result=$this->select(array('iddepartamento'=>$idDepartamento))->current();
+        $result=$this->select(array('idDepartamento'=>$idDepartamento))->current();
         if($result)
         {
             $this->LlenarEntidad($result);

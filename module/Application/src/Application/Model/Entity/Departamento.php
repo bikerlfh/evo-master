@@ -77,7 +77,7 @@ class Departamento extends AbstractTableGateway
     }
     public function consultarDepartamentoPoridDepartamento($idDepartamento)
     {
-        $result=$this->select(array('iddepartamento'=>$idDepartamento))->current();
+        $result=$this->select(array('idDepartamento'=>$idDepartamento))->current();
         if($result)
         {
             $this->LlenarEntidad($result);           
@@ -87,7 +87,7 @@ class Departamento extends AbstractTableGateway
     }
     public function consultarDepartamentoPoridPais($idPais)
     {
-        $result=$this->select(array('idpais'=>$idPais))->current();
+        $result=$this->select(array('idPais'=>$idPais))->current();
         if($result)
         {
             $this->LlenarEntidad($result);       
@@ -104,6 +104,17 @@ class Departamento extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    
+    public function generarOptionsSelect($where = null)
+    {
+        $objs=$this->select($where)->toArray();
+        $options=array('','');
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idDepartamento']]=$objs[$i]['codigo']." - ".$objs[$i]['descripcion'];
+        }
+        return $options;
     }
     
     private function LlenarEntidad($result)
