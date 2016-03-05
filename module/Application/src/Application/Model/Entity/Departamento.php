@@ -88,18 +88,15 @@ class Departamento extends AbstractTableGateway
         $select = $sql->select()->
                   join(array('p'=> new TableIdentifier("Pais", "Tercero")),
                             'p.idPais=d.idPais',
-                            array('codigoPais'=>'codigo','descripcionPais'=>'codigo+'-'+descripcion'));*/
-        
+                            array('codigoPais'=>'codigo','descripcionPais'=>'descripcion'));*/
         $select = $sql->select()->
                         join(array('p'=> new TableIdentifier("Pais", "Tercero")),
                                    'p.idPais=d.idPais', 
                                     array('descripcionPais' => new Expression("p.codigo+' - '+p.descripcion")));
-     
 
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
-        return $resultsSet->initialize($results)->toArray();
-        
+        return $resultsSet->initialize($results)->toArray();   
     }
     public function consultarDepartamentoPoridDepartamento($idDepartamento)
     {
