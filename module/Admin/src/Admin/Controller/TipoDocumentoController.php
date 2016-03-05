@@ -12,6 +12,7 @@ class TipoDocumentoController extends AbstractActionController
     private $form;
     public function indexAction()
     {
+        $this->validarSession();
         // se asigna el layout admin
         $this->layout('layout/admin'); 
         // se obtiene el adapter
@@ -56,6 +57,7 @@ class TipoDocumentoController extends AbstractActionController
     
     public function eliminarAction()
     {
+        $this->validarSession();
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
         $id=$this->params()->fromQuery('id',null);
@@ -86,6 +88,14 @@ class TipoDocumentoController extends AbstractActionController
             $this->form->get("btnGuardar")->setAttribute("type", "submit");
             $this->form->get("btnModificar")->setAttribute("type", "hidden");
             $this->form->get("btnEliminar")->setAttribute("type", "hidden");
+        }
+    }
+    
+    private function validarSession()
+    {
+        //<== Si no existe la session se redirge al login ==>
+        if (!isset($_SESSION['user'])) {
+            return $this->redirect()->toUrl(str_replace("/public","", $this->getRequest()->getBaseUrl()).'/admin/login'); 
         }
     }
 }

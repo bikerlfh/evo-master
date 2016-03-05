@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => 'Admin\Controller\IndexController',
+            'Admin\Controller\Login' => 'Admin\Controller\LoginController',
             'Admin\Controller\Categoria' => 'Admin\Controller\CategoriaController',
             'Admin\Controller\Cliente' => 'Admin\Controller\ClienteController',
             'Admin\Controller\DatoBasicoTercero' => 'Admin\Controller\DatoBasicoTerceroController',

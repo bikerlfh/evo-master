@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Evo Project</title>
+
+        <!-- BEGIN META -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="your,keywords">
+        <meta name="description" content="Short explanation about this website">
+        <!-- END META -->
+
+        <!-- BEGIN STYLESHEETS -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700,800' rel='stylesheet' type='text/css'/>
+        <link type="text/css" rel="stylesheet" href="<?php echo $this->basePath(); ?>/public/admin/assets/css/theme-default/bootstrap.css?1400695306" />
+        <link type="text/css" rel="stylesheet" href="<?php echo $this->basePath(); ?>/public/admin/assets/css/theme-default/boostbox.css?1401297311" />
+        <link type="text/css" rel="stylesheet" href="<?php echo $this->basePath(); ?>/public/admin/assets/css/theme-default/boostbox_responsive.css?1400695309" />
+        <link type="text/css" rel="stylesheet" href="<?php echo $this->basePath(); ?>/public/admin/assets/css/theme-default/font-awesome.min.css?1400333030" />
+        <!-- END STYLESHEETS -->
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="../../admin/assets/js/libs/utils/html5shiv.js?1400333019"></script>
+        <script type="text/javascript" src="../../admin/assets/js/libs/utils/respond.min.js?1400333017"></script>
+        <![endif]-->
+    </head>
+    <body class="body-dark">
+        <!-- START LOGIN BOX -->
+        <div class="box-type-login">
+            <div class="box text-center">
+                <div class="box-head">
+                    <h2 class="text-light text-white">Evo <strong>Project</strong> <i class="fa fa-rocket fa-fw"></i></h2>
+                    <h4 class="text-light text-inverse-alt">Solo para Administradores</h4>
+                </div>
+                <div class="box-body box-centered style-inverse">
+                    <h2 class="text-light">Entra con tu cuenta</h2>
+                    <br/>
+                    <form name="login" action="<?php echo $this->basePath(); ?>/admin/login/login"  method="post">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" class="form-control" name="email" placeholder="Correo">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <input type="password" class="form-control" name="pass" placeholder="Clave">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 text-left">
+                                <div data-toggle="buttons">
+                                    <label class="btn checkbox-inline btn-checkbox-primary-inverse">
+                                        <input type="checkbox" value="default-inverse1"> Recordarme
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-key"></i> Sign in</button>
+                            </div>
+                        </div>
+                    </form>
+                </div><!--end .box-body
+                <!--<div class="box-footer force-padding text-white">
+                    <a class="text-primary-alt" href="../../html/pages/login.html">No account yet?</a> Or did you
+                    <a class="text-primary-alt" href="../../html/pages/login.html">forgot your password?</a>
+                </div> -->
+            </div>
+        </div>
+        <!-- END LOGIN BOX -->
+
+        <!-- BEGIN JAVASCRIPT -->
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/libs/jquery/jquery-1.11.0.min.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/core/BootstrapFixed.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/libs/bootstrap/bootstrap.min.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/libs/spin.js/spin.min.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/libs/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/core/App.js"></script>
+        <script src="<?php echo $this->basePath(); ?>/public/admin/assets/js/core/demo/Demo.js"></script>
+        <!-- END JAVASCRIPT -->
+
+    </body>
+</html>

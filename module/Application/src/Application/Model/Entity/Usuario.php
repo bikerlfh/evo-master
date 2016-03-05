@@ -10,6 +10,10 @@ class Usuario extends AbstractTableGateway
     Private $idDatoBasicoTercero;
     private $clave;
     private $email;
+    // Objetos Embebidos
+    public $TipoUsuario;
+    public $DatoBasicoTercero;
+
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
@@ -81,6 +85,7 @@ class Usuario extends AbstractTableGateway
     {
         return $this->select()->toArray();
     }
+    
     public function consultarUsuarioPoridUsuario($idUsuario)
     {
         $result=$this->select(array('idusuario'=>$idUsuario))->current();
@@ -94,5 +99,33 @@ class Usuario extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    
+    public function logIn($email,$pass)
+    {
+        $result=$this->select(array('email'=>$email,'clave'=>md5($pass)))->current();
+        if($result)
+        {
+            $this->LlenarEntidad($result);
+            $this->cargarEmbebidos();
+            return true;
+        }
+        return false;
+    }
+    private function cargarEmbebidos()
+    {
+        $this->TipoUsuario = new TipoUsuario(parent::getAdapter());
+        $this->TipoUsuario->consultarTipoUsuarioPorIdTipoUsuario($this->idTipoUsuario);
+        
+        $this->DatoBasicoTercero = new DatoBasicoTercero(parent::getAdapter());
+        $this->DatoBasicoTercero->consultarDatoBasicoTerceroPoridDatoBasicoTercero($this->idDatoBasicoTercero);
+    }
+    private function LlenarEntidad($result)
+    {
+        $this->clave=$result['clave'];
+        $this->email=$result['email'];
+        $this->idDatoBasicoTercero=$result['idDatoBasicoTercero'];
+        $this->idTipoUsuario=$result['idTipoUsuario'];
+        $this->idUsuario=$result['idUsuario'];
     }
 }
