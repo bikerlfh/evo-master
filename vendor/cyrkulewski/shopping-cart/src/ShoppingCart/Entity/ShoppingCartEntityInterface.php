@@ -1,0 +1,36 @@
+<?php
+/**
+ *
+ * @package ShoppingCart
+ * @subpackage Entity
+ * @author Aleksander Cyrkulewski
+ */
+namespace ShoppingCart\Entity;
+
+interface ShoppingCartEntityInterface
+{
+
+    public function getId();
+
+    public function getProduct();
+
+    public function getQty();
+
+    public function getPrice();
+    
+    public function getTipoPedido();
+    
+    public function getCodigoTipoPedido();
+
+    public function setId($id);
+
+    public function setProduct($product);
+
+    public function setQty($qty);
+
+    public function setPrice($price);
+    
+    public function setTipoPedido($tipoPedido);
+    
+    public function setCodigoTipoPedido($codigoTipoPedido);
+}
