@@ -79,7 +79,7 @@ class ImagenProductoController extends AbstractActionController
         $this->layout('layout/admin');
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->ImagenProducto = new ImagenProducto($this->dbAdapter);
-        
+        $returnCrud="errorDelete";
         $id=$this->params()->fromQuery('id',null);
         if (isset($id)) 
         {   
@@ -89,13 +89,10 @@ class ImagenProductoController extends AbstractActionController
             {
                 unlink($nombre);
                 array_map('unlink', glob($nombre));
-                $returnCrud=$this->consultarMessage("okDelete");
+                $returnCrud="okDelete";
             }
-            else
-                $returnCrud=$this->consultarMessage("errorDelete");
-            
         }
-        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/imagenproducto');
+        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/imagenproducto/index?msg='.$returnCrud);
     }
     
     private function consultarMessage($nameMensaje)
