@@ -55,7 +55,23 @@ class FormBase extends Form
                         'class'=>$this->cssClass['btnBuscar']
                 )
         ));
-        /*************** btn Buscar Producto********************************/
+        /*************** btn Buscar Producto ********************************/
+        /*************** btn Buscar Tercero ********************************/
+        $this->add(array(
+                'name'=>'btnBuscarTercero',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarTercero',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/datobasicotercero/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        /*************** btn Buscar Tercero********************************/
     }
 }
 ?>

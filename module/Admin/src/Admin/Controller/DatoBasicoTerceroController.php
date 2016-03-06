@@ -68,7 +68,17 @@ class DatoBasicoTerceroController extends AbstractActionController
         }
         return new ViewModel(array('form'=>$this->form,'registros'=>$this->DatoBasicoTercero->consultarTodoDatoBasicoTercero()));
     }
-    
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->DatoBasicoTercero = new DatoBasicoTercero($this->dbAdapter);
+        // consultamos todos los terceros y los devolvemos a la vista    
+        $view = new ViewModel(array('registros'=>$this->DatoBasicoTercero->consultarTodoDatoBasicoTercero()));
+        $view->setTerminal(true);
+        return $view;
+    }
     public function eliminarAction()
     {
         //$this->validarSession();
