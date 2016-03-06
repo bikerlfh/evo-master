@@ -15,7 +15,6 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        $this->layout('layout/admin');
-        return array();
+        return $this->redirect()->toUrl(str_replace("/public","", $this->getRequest()->getBaseUrl()).'/admin/producto'); 
     }
 }
