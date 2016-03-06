@@ -2,6 +2,11 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Application\Model\Entity\Proveedor;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
 
 class ProveedorOficina extends AbstractTableGateway
 {
@@ -13,50 +18,52 @@ class ProveedorOficina extends AbstractTableGateway
     private $direccion;
     private $telefono;
     
+    public $Proveedor;
+
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('ProveedorOficina', 'Tercero');
     }
 
-    public function gettelefono(){
+    public function getTelefono(){
         return $this->telefono;
     }
-    public function settelefono($telefono){
+    public function setTelefono($telefono){
         $this->telefono=$telefono;
     }
-    public function getdireccion(){
+    public function getDireccion(){
         return $this->direccion;
     }
-    public function setdireccion($direccion){
+    public function setDireccion($direccion){
         $this->direccion=$direccion;
     }
-    public function getemail(){
+    public function getEmail(){
         return $this->email;
     }
-    public function setemail($email){
+    public function setEmail($email){
         $this->email=$email;
     }
-    public function getidMunicipio(){
+    public function getIdMunicipio(){
         return $this->idMunicipio;
     }
-    public function setidMunicipio($idMunicipio){
+    public function setIdMunicipio($idMunicipio){
         $this->idMunicipio=$idMunicipio;
     }
-    public function getidProveedor(){
+    public function getIdProveedor(){
         return $this->idProveedor;
     }
-    public function setidProveedor($idProveedor){
+    public function setIdProveedor($idProveedor){
         $this->idProveedor=$idProveedor;
     }
-    public function getidProveedorOficina(){
+    public function getIdProveedorOficina(){
         return $this->idProveedorOficina;
     }
-    public function setidProveedorOficina($idProveedorOficina){
+    public function setIdProveedorOficina($idProveedorOficina){
         $this->idProveedorOficina=$idProveedorOficina;
     }
 
-    public function guardarProveedoroficina($idProveedor,$idMunicipio,$email,$direccion,$telefono)
+    public function guardarProveedorOficina($idProveedor,$idMunicipio,$email,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
@@ -71,7 +78,7 @@ class ProveedorOficina extends AbstractTableGateway
         return false;
     }
 
-    public function modificarProveedoroficina($idProveedorOficina,$idProveedor,$idMunicipio,$email,$direccion,$telefono)
+    public function modificarProveedorOficina($idProveedorOficina,$idProveedor,$idMunicipio,$email,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
@@ -85,14 +92,34 @@ class ProveedorOficina extends AbstractTableGateway
             return true;
         return false;
     }
-
-    public function consultarProveedoroficina()
+    public function eliminarProveedorOficina($idProveedorOficina)
     {
-        return $this->select()->toArray();
+        if ($this->delete(array('idProveedorOficina'=>$idProveedorOficina))>0) 
+            return true;
+        return false;
     }
-    public function consultarroveedoroficinaPoridProveedorOficina($idProveedorOficina)
+    
+    public function consultarTodoProveedorOficina()
     {
-        $result=$this->select(array('idproveedoroficina'=>$idProveedorOficina))->current();
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                from(array('po'=>  $this->table))->
+                join(array("p"=> new TableIdentifier("Proveedor","Tercero")),
+                                    "p.idProveedor = po.idProveedor")->
+                join(array("d"=> new TableIdentifier("DatoBasicoTercero","Tercero")),
+                                    "p.idDatoBasicoTercero = d.idDatoBasicoTercero",
+                                    array("descripcionTercero"=> new Expression("convert(varchar,d.nit) + ' - ' + d.descripcion")))->
+                join(array("m"=> new TableIdentifier("Municipio","Tercero")),
+                                    "po.idMunicipio = m.idMunicipio",
+                                    array("descripcionMunicipio"=> new Expression("m.codigo + ' - ' + m.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
+    }
+    public function consultarProveedorOficinaPorIdProveedorOficina($idProveedorOficina)
+    {
+        $result=$this->select(array('idProveedorOficina'=>$idProveedorOficina))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -100,9 +127,9 @@ class ProveedorOficina extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarProveedoroficinaPoridProveedor($idProveedor)
+    public function consultarProveedorOficinaPorIdProveedor($idProveedor)
     {
-        $result=$this->select(array('idproveedor'=>$idProveedor))->current();
+        $result=$this->select(array('idProveedor'=>$idProveedor))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -118,5 +145,11 @@ class ProveedorOficina extends AbstractTableGateway
         $this->idMunicipio=$result['idMunicipio'];
         $this->idProveedor=$result['idProveedor'];
         $this->idProveedorOficina=$result['idProveedorOficina'];
+    }
+    
+    private function cargarEmbebidos()
+    {
+        $this->Proveedor = new Proveedor($this->adapter);
+        $this->Proveedor->consultarProveedorPorIdProveedor($this->idProveedor);
     }
 }

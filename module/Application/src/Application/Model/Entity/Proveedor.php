@@ -141,7 +141,16 @@ class Proveedor extends AbstractTableGateway
         }
         return false;
     }
-    
+    public function generarOptionsSelect()
+    {
+        $objs=$this->consultarTodoProveedor();
+        $options=array(null);
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idProveedor']]=$objs[$i]['descripcionTercero'];
+        }
+        return $options;
+    }
     private function LlenarEntidad($result)
     {
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
