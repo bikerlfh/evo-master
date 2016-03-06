@@ -7,8 +7,7 @@ $(document).ready(function()
 {
     $(document).find('a').each(function() 
     {
-        //alert($(this).attr("href"));
-        if($(this).attr("href") == ("/evo-master"+$(location).attr("href").valueOf().toString().split("evo-master")[1]))
+        if($(location).attr("href").indexOf($(this).attr("href"))>-1)
         {
             $(this).parents("li").each(function()
             {
