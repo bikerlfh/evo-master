@@ -61,7 +61,17 @@ class MunicipioController extends AbstractActionController
         }
         return new ViewModel(array('form'=>$this->form,'registros'=>$this->Municipio->consultarTodoMunicipio()));
     }
-    
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Municipio = new Municipio($this->dbAdapter);
+        // consultamos todos los municipio y los devolvemos a la vista    
+        $view = new ViewModel(array('registros'=>$this->Municipio->consultarTodoMunicipio()));
+        $view->setTerminal(true);
+        return $view;
+    }
     public function eliminarAction()
     {
         //$this->validarSession();

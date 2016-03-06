@@ -60,7 +60,17 @@ class MarcaController extends AbstractActionController
         }
         return new ViewModel(array('form'=>$this->form,'registros'=>$this->Marca->consultarTodoMarca()));
     }
-    
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Marca = new Marca($this->dbAdapter);
+        // consultamos todas las marcas y los devolvemos a la vista    
+        $view = new ViewModel(array('registros'=>$this->Marca->consultarTodoMarca()));
+        $view->setTerminal(true);
+        return $view;
+    }
     public function eliminarAction()
     {
         //$this->validarSession();

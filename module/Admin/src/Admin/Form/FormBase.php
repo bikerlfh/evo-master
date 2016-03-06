@@ -72,6 +72,54 @@ class FormBase extends Form
                 )
         ));
         /*************** btn Buscar Tercero********************************/
+        /*************** btn Buscar Categoria ********************************/
+        $this->add(array(
+                'name'=>'btnBuscarCategoria',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarCategoria',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/categoria/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        /*************** btn Buscar Categoria********************************/
+        /*************** btn Buscar Marca ********************************/
+        $this->add(array(
+                'name'=>'btnBuscarMarca',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarMarca',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/marca/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        /*************** btn Buscar Marca********************************/
+         /*************** btn Buscar Municipio ********************************/
+        $this->add(array(
+                'name'=>'btnBuscarMunicipio',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarMunicipio',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/municipio/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        /*************** btn Buscar Municipio********************************/
     }
 }
 ?>
