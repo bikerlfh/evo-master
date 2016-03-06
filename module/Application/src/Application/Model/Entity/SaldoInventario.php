@@ -1,7 +1,12 @@
 <?php
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
-use Zend\Db\Adapter\Adapter;;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
+
 class SaldoInventario extends AbstractTableGateway
 {
     private $idSaldoInventario;
@@ -21,73 +26,73 @@ class SaldoInventario extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('SaldoInventario', 'Inventario');
     }
 
-    public function getfechaModificacion(){
+    public function getFechaModificacion(){
         return $this->fechaModificacion;
     }
-    public function setfechaModificacion($fechaModificacion){
+    public function setFechaModificacion($fechaModificacion){
         $this->fechaModificacion=$fechaModificacion;
     }
-    public function getfechaCreacion(){
+    public function getFechaCreacion(){
         return $this->fechaCreacion;
     }
-    public function setfechaCreacion($fechaCreacion){
+    public function setFechaCreacion($fechaCreacion){
         $this->fechaCreacion=$fechaCreacion;
     }
-    public function getidUsuarioModificacion(){
+    public function getIdUsuarioModificacion(){
         return $this->idUsuarioModificacion;
     }
-    public function setidUsuarioModificacion($idUsuarioModificacion){
+    public function setIdUsuarioModificacion($idUsuarioModificacion){
         $this->idUsuarioModificacion=$idUsuarioModificacion;
     }
-    public function getidUsuarioCreacion(){
+    public function getIdUsuarioCreacion(){
         return $this->idUsuarioCreacion;
     }
-    public function setidUsuarioCreacion($idUsuarioCreacion){
+    public function setIdUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
-    public function getvalorVenta(){
+    public function getValorVenta(){
         return $this->valorVenta;
     }
-    public function setvalorVenta($valorVenta){
+    public function setValorVenta($valorVenta){
         $this->valorVenta=$valorVenta;
     }
-    public function getvalorCompra(){
+    public function getValorCompra(){
         return $this->valorCompra;
     }
-    public function setvalorCompra($valorCompra){
+    public function setValorCompra($valorCompra){
         $this->valorCompra=$valorCompra;
     }
-    public function getcantidad(){
+    public function getCantidad(){
         return $this->cantidad;
     }
-    public function setcantidad($cantidad){
+    public function setCantidad($cantidad){
         $this->cantidad=$cantidad;
     }
-    public function getidProveedor(){
+    public function getIdProveedor(){
         return $this->idProveedor;
     }
-    public function setidProveedor($idProveedor){
+    public function setIdProveedor($idProveedor){
         $this->idProveedor=$idProveedor;
     }
-    public function getidProducto(){
+    public function getIdProducto(){
         return $this->idProducto;
     }
-    public function setidProducto($idProducto){
+    public function setIdProducto($idProducto){
         $this->idProducto=$idProducto;
     }
-    public function getidSaldoInventario(){
+    public function getIdSaldoInventario(){
         return $this->idSaldoInventario;
     }
-    public function setidSaldoInventario($idSaldoInventario){
+    public function setIdSaldoInventario($idSaldoInventario){
         $this->idSaldoInventario=$idSaldoInventario;
     }
 
-    public function guardarSaldoinventario($idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioCreacion,$idUsuarioModificacion,$fechaCreacion,$fechaModificacion)
+    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioCreacion,$fechaCreacion)
     {
         $datos=array(
-                'fechaModificacion'=> $fechaModificacion,
+                'fechaModificacion'=> $fechaCreacion,
                 'fechaCreacion'=> $fechaCreacion,
-                'idUsuarioModificacion'=> $idUsuarioModificacion,
+                'idUsuarioModificacion'=> $idUsuarioCreacion,
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'valorVenta'=> $valorVenta,
                 'valorCompra'=> $valorCompra,
@@ -101,13 +106,11 @@ class SaldoInventario extends AbstractTableGateway
         return false;
     }
 
-    public function modificarSaldoinventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioCreacion,$idUsuarioModificacion,$fechaCreacion,$fechaModificacion)
+    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioModificacion,$fechaModificacion)
     {
         $datos=array(
                 'fechaModificacion'=> $fechaModificacion,
-                'fechaCreacion'=> $fechaCreacion,
                 'idUsuarioModificacion'=> $idUsuarioModificacion,
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'valorVenta'=> $valorVenta,
                 'valorCompra'=> $valorCompra,
                 'cantidad'=> $cantidad,
@@ -119,14 +122,34 @@ class SaldoInventario extends AbstractTableGateway
             return true;
         return false;
     }
-
-    public function consultarTodotSaldoinventario()
+    public function eliminarSaldoInventario($idSaldoInventario)
     {
-        return $this->select()->toArray();
+        if ($this->delete(array('idSaldoInventario'=>$idSaldoInventario))>0) {
+            return true;
+        }
+        return false;
     }
-    public function consultarSaldoinventarioPoridSaldoInventario($idSaldoInventario)
+    public function consultarTodoSaldoInventario()
     {
-        $result=$this->select(array('idsaldoinventario'=>$idSaldoInventario))->current();
+        $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                        from(array('s'=> $this->table))->
+                        join(array("p"=> new TableIdentifier("Producto","Producto")),
+                                    "s.idProducto = p.idProducto",
+                                    array("nombreProducto"=> new Expression("p.codigo + ' - ' + p.nombre")))->
+                        join(array("proveedor"=> new TableIdentifier("Proveedor","Tercero")),
+                                    "s.idProveedor = proveedor.idProveedor")->
+                        join(array("dbt"=> new TableIdentifier("DatoBasicoTercero","tercero")),
+                                   "proveedor.idDatoBasicoTercero = dbt.idDatoBasicoTercero",
+                                    array("descripcionProveedor"=> new Expression("convert(varchar,dbt.nit) + ' - ' + dbt.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
+    }
+    public function consultarSaldoInventarioPorIdSaldoInventario($idSaldoInventario)
+    {
+        $result=$this->select(array('idSaldoInventario'=>$idSaldoInventario))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -134,25 +157,13 @@ class SaldoInventario extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarSaldoinventarioPoridProducto($idProducto)
+    public function consultarSaldoInventarioPorIdProducto($idProducto)
     {
-        $result=$this->select(array('idproducto'=>$idProducto))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        return $this->select(array('idProducto'=>$idProducto))->toArray();
     }
-    public function consultarSaldoinventarioPoridProveedor($idProveedor)
+    public function consultarSaldoInventarioPorIdProveedor($idProveedor)
     {
-        $result=$this->select(array('idproveedor'=>$idProveedor))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        return $this->select(array('idProveedor'=>$idProveedor))->toArray();
     }
     private function LlenarEntidad($result)
     {

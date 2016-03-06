@@ -135,7 +135,7 @@ function usar_ajax(URL,objeto,datos)
 }
 function validarTecla(elEvento,permitidos)
 {
-    var numeros="0123456789";
+    var numeros="0123456789.";
     var caracteres="abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ_+-. ";
     var numeros_caracteres=numeros+caracteres;
     switch(permitidos)
