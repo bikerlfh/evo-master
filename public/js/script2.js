@@ -15,6 +15,7 @@ $(document).ready(function()
                 $(this).attr("class","expanded");
             });
             $(this).attr("class","active");
+            return;
         }
     })
 });
