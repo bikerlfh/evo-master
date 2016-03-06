@@ -66,6 +66,18 @@ class ProveedorController extends AbstractActionController
         return new ViewModel(array('form'=>$this->form,'registros'=>$this->Proveedor->consultarTodoProveedor()));
     }
     
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Proveedor = new Proveedor($this->dbAdapter);
+        // consultamos todos los Proveedores y los devolvemos a la vista    
+        $view = new ViewModel(array('registros'=>$this->Proveedor->consultarTodoProveedor()));
+        $view->setTerminal(true);
+        return $view;
+    }
+    
     public function eliminarAction()
     {
         //$this->validarSession();
