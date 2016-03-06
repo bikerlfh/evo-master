@@ -148,6 +148,26 @@ if (defined('RUNNING_FROM_ROOT')) {
                         <!-- Menu UI -->
                         <li>
                             <a href="javascript:void(0);">
+                                <i class="fa fa-building-o fa-fw"></i><span class="title">División Territorial</span> <span class="expand-sign">+</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pais">Pais</a></li>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/departamento">Departamento</a></li>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/municipio">Municipio</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-book fa-fw"></i><span class="title">Inventario</span> <span class="expand-sign">+</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/saldoinventario" >Saldo Inventario</a></li>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/movimientoinventario" >Movimiento de Inventarios</a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-item -->
+                        <li>
+                            <a href="javascript:void(0);">
                                 <i class="fa fa-desktop fa-fw"></i><span class="title">Producto</span> <span class="expand-sign">+</span>
                             </a>
                             <!--start submenu -->
@@ -164,30 +184,12 @@ if (defined('RUNNING_FROM_ROOT')) {
                                 
                             </ul><!--end /submenu -->
                         </li><!--end /menu-item -->
-                         <li>
-                            <a href="javascript:void(0);">
-                                <i class="fa fa-book fa-fw"></i><span class="title">Inventario</span> <span class="expand-sign">+</span>
-                            </a>
-                            <!--start submenu -->
-                            <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/saldoinventario" >Saldo Inventario</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/movimientoinventario" >Movimiento de Inventarios</a></li>
-                            </ul><!--end /submenu -->
-                        </li><!--end /menu-item -->
                         <li>
                             <a href="javascript:void(0);">
                                 <i class="fa  fa-users fa-fw"></i><span class="title">Tercero</span> <span class="expand-sign">+</span>
                             </a>
                             <!--start submenu -->
                             <ul>
-                                <li>
-                                    <a href="javascript:void(0);"> <span class="expand-sign">+</span>División Territorial</a>
-                                    <ul style="display: none;">
-                                        <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pais">Pais</a></li>
-                                        <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/departamento">Departamento</a></li>
-                                        <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/municipio">Municipio</a></li>
-                                    </ul>
-                                </li>
                                 <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/datobasicotercero" >Dato Basico Tercero</a></li>
                                 <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedor" >Proveedor</a></li>
                                 <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedoroficina" >Proveedor Oficina</a></li>
