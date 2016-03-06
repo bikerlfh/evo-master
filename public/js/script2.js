@@ -44,7 +44,9 @@ $(document).ready(function()
             case "errorDelete":
                 showMessageError('Operación sin resultado','No se logro eliminar');
                 break;
-
+            case "errorDesconocido":
+                showMessageWarning('Erro desconocido','Ha ocurrido un error desconocido');
+                break;
         }
     }
     

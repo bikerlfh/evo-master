@@ -43,11 +43,13 @@ class ImagenProductoController extends AbstractActionController
                 $data = $this->form->getData();
                 foreach ($data['image-file'] as $imagen) 
                 {
+                    $path = $this->getRequest()->getBaseUrl().$imagen['tmp_name'];
+                    $path = str_replace($this->getRequest()->getBaseUrl().".", $this->getRequest()->getBaseUrl(), $path);
                     $returnCrud = $this->consultarMessage("errorSave");
                     // Validamos que la imagen subida no se este guardada en la db
                     if(!$this->ImagenProducto->consultarImagenProductoPorUrl($imagen['tmp_name']))
                     {
-                        if ($this->ImagenProducto->guardarImagenProducto($data['idProducto'],$imagen['tmp_name'],$this->user_session->idUsuario)) 
+                        if ($this->ImagenProducto->guardarImagenProducto($data['idProducto'], $path,$this->user_session->idUsuario)) 
                         {
                             $returnCrud = $this->consultarMessage("okSave");
                         }
@@ -74,25 +76,33 @@ class ImagenProductoController extends AbstractActionController
     
     public function eliminarAction()
     {
-        $this->validarSession();
-        //asignamos el layout
-        $this->layout('layout/admin');
-        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->ImagenProducto = new ImagenProducto($this->dbAdapter);
-        $returnCrud="errorDelete";
-        $id=$this->params()->fromQuery('id',null);
-        if (isset($id)) 
-        {   
-            $this->ImagenProducto->consultarImagenProductoPorIdImagenProducto($id);    
-            $nombre=$this->ImagenProducto->getUrl();
-            if($this->ImagenProducto->eliminarImagenProducto($id))
-            {
+        try 
+        {
+            $this->validarSession();
+            //asignamos el layout
+            $this->layout('layout/admin');
+            $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+            $this->ImagenProducto = new ImagenProducto($this->dbAdapter);
+            $returnCrud="errorDelete";
+            $id=$this->params()->fromQuery('id',null);
+            if (isset($id)) 
+            {   
+                $this->ImagenProducto->consultarImagenProductoPorIdImagenProducto($id);    
+                $nombre=str_replace($this->getRequest()->getBaseUrl(),".", $this->ImagenProducto->getUrl());
+                
                 unlink($nombre);
                 array_map('unlink', glob($nombre));
-                $returnCrud="okDelete";
+                if($this->ImagenProducto->eliminarImagenProducto($id))
+                {
+                    $returnCrud="okDelete";
+                }
             }
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/imagenproducto/index?msg='.$returnCrud);
+        } 
+        catch (Exception $ex) 
+        {
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/imagenproducto/index?msg=errorDesconocido');
         }
-        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/imagenproducto/index?msg='.$returnCrud);
     }
     
     private function consultarMessage($nameMensaje)

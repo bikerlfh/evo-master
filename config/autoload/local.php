@@ -41,7 +41,8 @@ return array(
         'errorUpdate'=>array('title'=>'Operación sin resultado','message'=>'No se logro Modificar','function'=>'showMessageError'),
         'okDelete'=>array('title'=>'Operación Exitosa','message'=>'Se ha eliminado exitosamente','function'=>'showMessageSuccess'),
         'errorDelete'=>array('title'=>'Operación sin resultado','message'=>'No se logro Eliminar','function'=>'showMessageError'),
-        'updateDisable'=>array('title'=>'Districell','message'=>'Este módulo no esta habilitado para modificar','function'=>'showMessaginfo'),
+        'updateDisable'=>array('title'=>'Información','message'=>'Este módulo no esta habilitado para modificar','function'=>'showMessaginfo'),
+        'errorDesconocido'=>array('title'=>'Erro desconocido','message'=>'Ha ocurrido un error desconocido','function'=>'showMessageWarning'),
         
     ),
     );
