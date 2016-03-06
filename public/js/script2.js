@@ -3,8 +3,10 @@
  * Hecho por Luis Fernando Henriquez Arcinegas
  * */
 // Se activa del menu el formulario que este visible
+// y muestra mensajes del crud que se pasan por get
 $(document).ready(function()
 {
+    //********** activa el menu del formulario q esta visible************/
     $(document).find('a').each(function() 
     {
         if($(location).attr("href").indexOf($(this).attr("href"))>-1)
@@ -18,6 +20,34 @@ $(document).ready(function()
             return;
         }
     })
+    //******************************************************************/
+    // visualizamos el mensaje del crud que se envió por get
+    if ($.get("msg") != null) 
+    {
+        switch($.get("msg"))
+        {
+            case "okSave":
+                showMessageSuccess("Operación Exitosa",'Se ha guardado con Exito');
+                break;
+            case "okUpdate":
+                showMessageSuccess("Operación Exitosa",'Se ha modificado con Exito');
+                break;
+            case "okDelete":
+                showMessageSuccess("Operación Exitosa",'Se ha eliminado con Exito');
+                break;
+            case "errorSave":
+                showMessageError('Operación sin resultado','No se logro guardar');
+                break;
+            case "errorUpdate":
+                showMessageError('Operación sin resultado','No se logro modificar');
+                break;
+            case "errorDelete":
+                showMessageError('Operación sin resultado','No se logro eliminar');
+                break;
+
+        }
+    }
+    
 });
 
 
@@ -25,6 +55,9 @@ function limpiarformulario(formulario){
     $("#btnGuardar").attr("type","submit");
     $("#btnModificar").attr("type","hidden");
     $("#btnEliminar").attr("type","hidden");
+    // estos dos campos son para el formulario de imagen
+    $('#image-file').attr('type','file');
+    $('#url').attr('type','hidden');
    /* Se encarga de leer todas las etiquetas input del formulario*/
    $(formulario).find('input').each(function() {
       switch(this.type) {
