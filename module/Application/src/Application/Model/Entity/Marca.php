@@ -56,16 +56,19 @@ class Marca extends AbstractTableGateway
             return true;
         return false;
     }
+    
     public function eliminarMarca($idMarca)
     {
         if ($this->delete(array('idMarca'=>$idMarca))>0)
             return true;
         return false;
     }
+    
     public function consultarTodoMarca()
     {
         return $this->select()->toArray();
     }
+    
     public function consultarMarcaPoridMarca($idMarca)
     {
         $result=$this->select(array('idMarca'=>$idMarca))->current();
@@ -78,6 +81,7 @@ class Marca extends AbstractTableGateway
         }
         return false;
     }
+    
     public function consultarMarcaPorcodigo($codigo)
     {
         $result=$this->select(array('codigo'=>$codigo))->current();
@@ -89,5 +93,15 @@ class Marca extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    public function generarOptionsSelect($where = null)
+    {
+        $objs=$this->select($where)->toArray();
+        $options=array(null);
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idMarca']]=$objs[$i]['codigo']." - ".$objs[$i]['descripcion'];
+        }
+        return $options;
     }
 }

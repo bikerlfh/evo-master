@@ -2,6 +2,10 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
 
 class Producto extends AbstractTableGateway
 {
@@ -15,70 +19,71 @@ class Producto extends AbstractTableGateway
     private $especificacion;
     private $idUsuarioCreacion;
     private $fechaCreacion;
+    
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('Producto', 'Producto');
     }
 
-    public function getfechaCreacion(){
+    public function getFechaCreacion(){
         return $this->fechaCreacion;
     }
-    public function setfechaCreacion($fechaCreacion){
+    public function setFechaCreacion($fechaCreacion){
         $this->fechaCreacion=$fechaCreacion;
     }
-    public function getidUsuarioCreacion(){
+    public function getIdUsuarioCreacion(){
         return $this->idUsuarioCreacion;
     }
-    public function setidUsuarioCreacion($idUsuarioCreacion){
+    public function setIdUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
-    public function getespecificacion(){
+    public function getEspecificacion(){
         return $this->especificacion;
     }
-    public function setespecificacion($especificacion){
+    public function setEspecificacion($especificacion){
         $this->especificacion=$especificacion;
     }
-    public function getdescripcion(){
+    public function getDescripcion(){
         return $this->descripcion;
     }
-    public function setdescripcion($descripcion){
+    public function setDescripcion($descripcion){
         $this->descripcion=$descripcion;
     }
-    public function getreferencia(){
+    public function getReferencia(){
         return $this->referencia;
     }
-    public function setreferencia($referencia){
+    public function setReferencia($referencia){
         $this->referencia=$referencia;
     }
-    public function getnombre(){
+    public function getNombre(){
         return $this->nombre;
     }
-    public function setnombre($nombre){
+    public function setNombre($nombre){
         $this->nombre=$nombre;
     }
-    public function getcodigo(){
+    public function getCodigo(){
         return $this->codigo;
     }
-    public function setcodigo($codigo){
+    public function setCodigo($codigo){
         $this->codigo=$codigo;
     }
-    public function getidCategoria(){
+    public function getIdCategoria(){
         return $this->idCategoria;
     }
-    public function setidCategoria($idCategoria){
+    public function setIdCategoria($idCategoria){
         $this->idCategoria=$idCategoria;
     }
-    public function getidMarca(){
+    public function getIdMarca(){
         return $this->idMarca;
     }
-    public function setidMarca($idMarca){
+    public function setIdMarca($idMarca){
         $this->idMarca=$idMarca;
     }
-    public function getidProducto(){
+    public function getIdProducto(){
         return $this->idProducto;
     }
-    public function setidProducto($idProducto){
+    public function setIdProducto($idProducto){
         $this->idProducto=$idProducto;
     }
 
@@ -101,11 +106,9 @@ class Producto extends AbstractTableGateway
         return false;
     }
 
-    public function modificarProducto($idProducto,$idMarca,$idCategoria,$codigo,$nombre,$referencia,$descripcion,$especificacion,$idUsuarioCreacion,$fechaCreacion)
+    public function modificarProducto($idProducto,$idMarca,$idCategoria,$codigo,$nombre,$referencia,$descripcion,$especificacion)
     {
         $datos=array(
-                'fechaCreacion'=> $fechaCreacion,
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'especificacion'=> $especificacion,
                 'descripcion'=> $descripcion,
                 'referencia'=> $referencia,
@@ -119,12 +122,31 @@ class Producto extends AbstractTableGateway
             return true;
         return false;
     }
-
+    
+    public function eliminarProducto($idProducto)
+    {
+        if($this->delete(array('idProducto'=>$idProducto))>0)
+            return true;
+        return false;
+    }
+    
     public function consultarTodoProducto()
     {
-        return $this->select()->toArray();
+        $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                        from(array('p'=> $this->table))->
+                        join(array("m"=> new TableIdentifier("Marca","Producto")),
+                                    "m.idMarca = p.idMarca",
+                                    array("descripcionMarca"=> new Expression("m.codigo + ' - ' + m.descripcion")))->
+                        join(array("c"=> new TableIdentifier("Categoria","Producto")),
+                                    "c.idCategoria = p.idCategoria",
+                                    array("descripcionCategoria"=> new Expression("c.codigo + ' - ' + c.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
     }
-    public function consultarProductoPoridProducto($idProducto)
+    public function consultarProductoPorIdProducto($idProducto)
     {
         $result=$this->select(array('idproducto'=>$idProducto))->current();
         if($result)
@@ -134,27 +156,15 @@ class Producto extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarProductoPoridMarca($idMarca)
+    public function consultarProductoPorIdMarca($idMarca)
     {
-        $result=$this->select(array('idmarca'=>$idMarca))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        return $this->select(array('idMarca'=>$idMarca))->toArray();
     }
-    public function consultarProductoPoridCategoria($idCategoria)
+    public function consultarProductoPorIdCategoria($idCategoria)
     {
-        $result=$this->select(array('idcategoria'=>$idCategoria))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        return $this->select(array('idCategoria'=>$idCategoria))->toArray();
     }
-    public function consultarProductoPorcodigo($codigo)
+    public function consultarProductoPorCodigo($codigo)
     {
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
@@ -164,7 +174,16 @@ class Producto extends AbstractTableGateway
         }
         return false;
     }
-    
+    public function generarOptionsSelect($where = null)
+    {
+        $objs=$this->select($where)->toArray();
+        $options=array(null);
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idProducto']]=$objs[$i]['codigo']." - ".$objs[$i]['nombre'];
+        }
+        return $options;
+    }
     private function LlenarEntidad($result)
     {
         $this->fechaCreacion=$result['fechaCreacion'];
