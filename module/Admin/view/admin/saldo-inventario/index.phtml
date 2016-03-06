@@ -21,7 +21,11 @@ if ($this->msg != null)
                             <label for="email1" class="control-label">Producto </label>
                         </div>
                         <div class="col-lg-4 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idProducto'));?>                            
+                             <?php echo $this->formElement($form->get('idProducto'));?> 
+                            
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                             <?php echo $this->formElement($form->get('btnBuscarProducto'));?> 
                         </div>
                     </div>
                     <div class="form-group">
@@ -30,6 +34,9 @@ if ($this->msg != null)
                         </div>
                         <div class="col-lg-4 col-md-11 col-sm-9">
                              <?php echo $this->formElement($form->get('idProveedor'));?>                            
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                             <?php echo $this->formElement($form->get('btnBuscarProveedor'));?> 
                         </div>
                     </div>
                     <div class="form-group">

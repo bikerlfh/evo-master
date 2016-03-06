@@ -3,6 +3,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\FormBase;
 use Admin\Form\FormSaldoInventario;
 use Application\Model\Entity\SaldoInventario;
 use Zend\Session\Container;
@@ -30,6 +31,13 @@ class SaldoInventarioController extends AbstractActionController
         
         $this->SaldoInventario = new SaldoInventario($this->dbAdapter);
         $this->form = new FormSaldoInventario($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /**************************************************************************************/
+        // Se agregan los botones de buscar producto y proveedor al formualrio saldo inventario
+        /**************************************************************************************/
+        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->add($formBase->get("btnBuscarProducto"));
+        $this->form->add($formBase->get("btnBuscarProveedor"));
+        /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
