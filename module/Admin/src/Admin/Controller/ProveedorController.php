@@ -3,6 +3,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\FormBase;
 use Admin\Form\FormProveedor;
 use Application\Model\Entity\Proveedor;
 use Zend\Session\Container;
@@ -30,6 +31,12 @@ class ProveedorController extends AbstractActionController
         
         $this->Proveedor = new Proveedor($this->dbAdapter);
         $this->form = new FormProveedor($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /**************************************************************************************/
+        // Se agregan el boton de buscar Tercero al formualrio saldo inventario
+        /**************************************************************************************/
+        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->add($formBase->get("btnBuscarTercero"));
+        /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
