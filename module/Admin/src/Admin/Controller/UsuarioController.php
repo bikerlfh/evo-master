@@ -3,6 +3,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\FormBase;
 use Admin\Form\FormUsuario;
 use Application\Model\Entity\Usuario;
 use Zend\Session\Container;
@@ -28,6 +29,13 @@ class UsuarioController extends AbstractActionController
         
         $this->Usuario = new Usuario($this->dbAdapter);
         $this->form = new FormUsuario($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /**************************************************************************************/
+        // Se agregan los botones de buscar tercer
+        /**************************************************************************************/
+        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->add($formBase->get("btnBuscarTercero"));
+        /**************************************************************************************/
+        
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
