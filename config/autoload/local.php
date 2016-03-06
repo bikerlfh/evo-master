@@ -32,7 +32,8 @@ return array(
         'btnModificar'=>'btn btn-success',
         'btnEliminar'=>'btn btn-danger',
         'btnCancelar'=>'btn btn-default',
-        'btnSeleccionar'=>'btn btn-success'
+        'btnSeleccionar'=>'btn btn-success',
+        'btnBuscar'=>'btn btn-support2'
     ),
     'MsgCrud'=> array(
         'okSave'=> array('title'=>'Operación Exitosa','message'=>'Se ha guardado con Exito','function'=>'showMessageSuccess'),
