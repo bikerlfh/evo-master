@@ -67,7 +67,17 @@ class ProductoController extends AbstractActionController
         }
         return new ViewModel(array('form'=>$this->form,'registros'=>$this->Producto->consultarTodoProducto()));
     }
-    
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Producto = new Producto($this->dbAdapter);
+        // consultamos todos los productos y los devolvemos a la vista    
+        $view = new ViewModel(array('registros'=>$this->Producto->consultarTodoProducto()));
+        $view->setTerminal(true);
+        return $view;
+    }
     public function eliminarAction()
     {
         //$this->validarSession();
