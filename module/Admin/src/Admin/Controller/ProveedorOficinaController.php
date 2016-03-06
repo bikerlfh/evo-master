@@ -3,6 +3,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\FormBase;
 use Admin\Form\FormProveedorOficina;
 use Application\Model\Entity\ProveedorOficina;
 use Zend\Session\Container;
@@ -30,6 +31,12 @@ class ProveedorOficinaController extends AbstractActionController
         
         $this->ProveedorOficina = new ProveedorOficina($this->dbAdapter);
         $this->form = new FormProveedorOficina($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /**************************************************************************************/
+        // Se agregan el boton de buscar  proveedor al formualrio saldo inventario
+        /**************************************************************************************/
+        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->add($formBase->get("btnBuscarProveedor"));
+        /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
