@@ -98,6 +98,7 @@ class FormProducto extends Form
                 'placeholder'=>'Descripción',
                 'required'=>'required',
                 'maxlength'=>'100000',
+                'rows'=>'5',
                 'style'=>'width:100%; height: 100%'
         ));
         $this->add($textDescripcion);
@@ -107,6 +108,7 @@ class FormProducto extends Form
                 'id'=>'especificacion',
                 'placeholder'=>'Especificación  ',
                 'maxlength'=>'100000',
+                'rows'=>'5',
                 'style'=>'width:100%; height: 100%'
         ));
         $this->add($textEspecificacion);
