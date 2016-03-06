@@ -32,9 +32,17 @@ if ($this->msg != null)
                             <?php echo $this->formInput($form->get('descripcion'));?>                            
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                            <label for="email1" class="control-label">Categoria Central</label>
+                        </div>
+                        <div class="col-lg-3 col-md-11 col-sm-9">
+                             <?php echo $this->formElement($form->get('idCategoriaCentral'));?>                          
+                        </div>
+                    </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                         <?php   
-                            echo $this->formElement($form->get('btnGuardar'));
+                            echo $this->formElement($form->get('btnGuardar')); 
                             echo $this->formElement($form->get('btnModificar'));
                             echo $this->formElement($form->get('btnEliminar'));
                             echo $this->formElement($form->get('btnCancelar'));

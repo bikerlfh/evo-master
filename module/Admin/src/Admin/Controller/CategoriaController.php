@@ -39,14 +39,14 @@ class CategoriaController extends AbstractActionController
             if ($datos["idCategoria"] != null) 
             {
                 $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->Categoria->modificarCategoria($datos['idCategoria'],$datos['codigo'],$datos['descripcion']))
+                if($this->Categoria->modificarCategoria($datos['idCategoria'],$datos['idCategoriaCentral'],$datos['codigo'],$datos['descripcion']))
                     $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva categoria
-                if($this->Categoria->guardarCategoria($datos['codigo'],$datos['descripcion']))
+                if($this->Categoria->guardarCategoria($datos['idCategoriaCentral'],$datos['codigo'],$datos['descripcion']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Categoria->consultarTodoCategoria()));
@@ -56,6 +56,7 @@ class CategoriaController extends AbstractActionController
         {
             $this->Categoria->consultarCategoriaPorIdCategoria($this->params()->fromQuery('id'));
             $this->form->get("idCategoria")->setValue($this->Categoria->getIdCategoria());
+            $this->form->get("idCategoriaCentral")->setValue($this->Categoria->getIdCategoriaCentral());
             $this->form->get("codigo")->setValue($this->Categoria->getCodigo());
             $this->form->get("descripcion")->setValue($this->Categoria->getDescripcion());
             $this->configurarBotonesFormulario(true);

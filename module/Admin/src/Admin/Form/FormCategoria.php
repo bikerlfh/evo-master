@@ -6,15 +6,18 @@
 
 namespace Admin\Form;
 use Zend\Form\Form;
+use Zend\Form\Element;
+use Application\Model\Entity\Categoria;
 
 class FormCategoria extends Form
 {
-    
+    private $adapter;
     private $cssClass;
     private $basePath;
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmcategoria");
+        $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/categoria/index',
@@ -35,7 +38,16 @@ class FormCategoria extends Form
                 'type' => 'hidden',
             ),
         ));
-
+        
+        /************* select Categoria ***********/
+        $categoria = new Categoria($this->adapter);
+        $select2 = new Element\Select('idCategoriaCentral');
+        $select2->setValueOptions($categoria->generarOptionsSelect());
+        $select2->setAttributes(array('id' => 'idCategoriaCentral',
+                                     'class' => $this->cssClass['select']));
+        $this->add($select2);
+        /************* select Categoria ***********/ 
+        
         $this->add(array(
             'name' => 'codigo',                       
             'attributes' => array(
