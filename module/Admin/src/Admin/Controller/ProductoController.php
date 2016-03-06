@@ -3,6 +3,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\FormBase;
 use Admin\Form\FormProducto;
 use Application\Model\Entity\Producto;
 use Zend\Session\Container;
@@ -30,6 +31,13 @@ class ProductoController extends AbstractActionController
         
         $this->Producto = new Producto($this->dbAdapter);
         $this->form = new FormProducto($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /**************************************************************************************/
+        // Se agregan el botones de buscar  marca y categoria al formualrio saldo inventario
+        /**************************************************************************************/
+        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->add($formBase->get("btnBuscarMarca"));
+        $this->form->add($formBase->get("btnBuscarCategoria"));
+        /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)

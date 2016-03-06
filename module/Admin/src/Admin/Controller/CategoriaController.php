@@ -70,7 +70,7 @@ class CategoriaController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Categoria = new Categoria($this->dbAdapter);
         // consultamos todas las categorias y los devolvemos a la vista    
-        $view = new ViewModel(array('registros'=>$this->Marca->consultarTodoCategoria()));
+        $view = new ViewModel(array('registros'=>$this->Categoria->consultarTodoCategoria()));
         $view->setTerminal(true);
         return $view;
     }

@@ -32,10 +32,11 @@ class ProveedorOficinaController extends AbstractActionController
         $this->ProveedorOficina = new ProveedorOficina($this->dbAdapter);
         $this->form = new FormProveedorOficina($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         /**************************************************************************************/
-        // Se agregan el boton de buscar  proveedor al formualrio saldo inventario
+        // Se agregan el botones de buscar  proveedor y municipio al formualrio saldo inventario
         /**************************************************************************************/
         $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         $this->form->add($formBase->get("btnBuscarProveedor"));
+        $this->form->add($formBase->get("btnBuscarMunicipio"));
         /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
