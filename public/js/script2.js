@@ -60,6 +60,8 @@ function limpiarformulario(formulario){
     // estos dos campos son para el formulario de imagen
     $('#image-file').attr('type','file');
     $('#url').attr('type','hidden');
+    $('#imgAdminProducto').attr('src','');
+    
    /* Se encarga de leer todas las etiquetas input del formulario*/
    $(formulario).find('input').each(function() {
       switch(this.type) {
@@ -83,11 +85,10 @@ function limpiarformulario(formulario){
         break;
       }
    });
- 
    /* Se encarga de leer todas las etiquetas select del formulario */
-   $(formulario).find('select').each(function() {
-       $("#"+this.id + " option[value=0]").attr("selected",true);
-   });
+    $(formulario).find('select').each(function() {    	
+        $(this).prop('selectedIndex',0);
+    });
    /* Se encarga de leer todas las etiquetas textarea del formulario */
    $(formulario).find('textarea').each(function(){
       $(this).val('');

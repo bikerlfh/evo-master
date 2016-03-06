@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Admin\Form\FormBase;
 use Admin\Form\FormImagenProducto;
 use Zend\Session\Container;
 use Application\Model\Entity\ImagenProducto;
@@ -27,6 +28,12 @@ class ImagenProductoController extends AbstractActionController
         $id=$this->params()->fromQuery('id',null);
         $this->ImagenProducto = new ImagenProducto($this->dbAdapter);
         $this->form = new FormImagenProducto($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /**************************************************************************************/
+        // Se agregan el botones del formulario base
+        /**************************************************************************************/
+        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->add($formBase->get("btnBuscarProducto"));
+        /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         $request = $this->getRequest();
         if ($request->isPost()) 

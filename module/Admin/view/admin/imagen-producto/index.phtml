@@ -20,8 +20,11 @@ if ($this->msg != null)
                         <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Producto</label>
                         </div>
-                        <div class="col-lg-8 col-md-11 col-sm-9">
+                        <div class="col-lg-5 col-md-11 col-sm-9">
                              <?php echo $this->formElement($form->get('idProducto'));?>                           
+                        </div>
+                        <div class="col-lg-1">
+                             <?php echo $this->formElement($form->get('btnBuscarProducto'));?>                           
                         </div>
                     </div>
                     <div class="form-group">
@@ -48,7 +51,7 @@ if ($this->msg != null)
     
     <div class="col-sm-2 style-inverse">
           <div class="holder">
-                <img class="img-rounded img-responsive" src="<?php echo $form->get('url')->getValue() ?>" alt="">
+                <img class="img-rounded img-responsive" id='imgAdminProducto' src="<?php echo $form->get('url')->getValue() ?>" alt="">
                 <!--<div class="stick-bottom-left">
                         <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Contact me"><i class="fa fa-envelope"></i></a>
                         <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Follow me"><i class="fa fa-twitter"></i></a>
