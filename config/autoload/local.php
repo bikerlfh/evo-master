@@ -22,6 +22,13 @@ return array(
     'username'  => 'sa',
     'password'  => '123'
     ),
+    /*
+    'db'=> array(
+    'driver'    => 'pdo',
+    'dsn'       => 'sqlsrv:database=DB_9EB44A_evo;Server=SQL5024.Smarterasp.net',
+    'username'  => 'DB_9EB44A_evo_admin',
+    'password'  => 'laurame123'
+    ),*/
     //<== clases css Formularios ==>
     'cssClass' => array(
         'text'=>'form-control',
