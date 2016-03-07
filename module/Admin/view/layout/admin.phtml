@@ -148,6 +148,15 @@ if (defined('RUNNING_FROM_ROOT')) {
                         <!-- Menu UI -->
                         <li>
                             <a href="javascript:void(0);">
+                                <i class="fa fa-building-o fa-fw"></i><span class="title">Compras</span> <span class="expand-sign">+</span>
+                            </a>
+                            <ul>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/estadocompra">Estado Compra</a></li>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pedidocompra">Pedido</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">
                                 <i class="fa fa-building-o fa-fw"></i><span class="title">División Territorial</span> <span class="expand-sign">+</span>
                             </a>
                             <ul>
