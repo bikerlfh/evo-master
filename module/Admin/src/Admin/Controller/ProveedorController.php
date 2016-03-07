@@ -46,14 +46,14 @@ class ProveedorController extends AbstractActionController
             if ($datos["idProveedor"] != null) 
             {
                 $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->Proveedor->modificarProveedor($datos['idProveedor'],$datos['idDatoBasicoTercero'],$datos['email'],$datos['numCuentaBancaria'],$datos['idTipoCuenta'],$datos['idViaPago']))
+                if($this->Proveedor->modificarProveedor($datos['idProveedor'],$datos['idDatoBasicoTercero'],$datos['email'],$datos['webSite']))
                     $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva proveedor
-                if($this->Proveedor->guardarProveedor($datos['idDatoBasicoTercero'],$datos['email'],$datos['numCuentaBancaria'],$datos['idTipoCuenta'],$datos['idViaPago'], $this->user_session->idUsuario))
+                if($this->Proveedor->guardarProveedor($datos['idDatoBasicoTercero'],$datos['email'],$datos['webSite'],$this->user_session->idUsuario))
                     $returnCrud=$this->consultarMessage("okSave");
             }
                 return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Proveedor->consultarTodoProveedor()));
@@ -64,10 +64,8 @@ class ProveedorController extends AbstractActionController
             $this->Proveedor->consultarProveedorPorIdProveedor($this->params()->fromQuery('id'));
             $this->form->get("idProveedor")->setValue($this->Proveedor->getIdProveedor());
             $this->form->get("idDatoBasicoTercero")->setValue($this->Proveedor->getIdDatoBasicoTercero());
-            $this->form->get("idViaPago")->setValue($this->Proveedor->getIdViaPago());
-            $this->form->get("idTipoCuenta")->setValue($this->Proveedor->getIdTipoCuenta());
             $this->form->get("email")->setValue($this->Proveedor->getEmail());
-            $this->form->get("numCuentaBancaria")->setValue($this->Proveedor->getNumCuentaBancaria());
+            $this->form->get("webSite")->setValue($this->Proveedor->getWebSite());
             $this->configurarBotonesFormulario(true);
         }
         return new ViewModel(array('form'=>$this->form,'registros'=>$this->Proveedor->consultarTodoProveedor()));

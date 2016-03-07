@@ -78,6 +78,16 @@ class FormProveedorOficina extends Form
             ),
         ));
         $this->add(array(
+            'name' => 'webSite',                       
+            'attributes' => array(
+                'id'=>'webSite', 
+                'type' => 'text',
+                'placeholder'=>'Web Site',
+                'maxlength'=>'150',
+                'class' => $this->cssClass['text']
+            ),
+        ));
+        $this->add(array(
             'name' => 'direccion',                       
             'attributes' => array(
                 'id'=>'direccion', 

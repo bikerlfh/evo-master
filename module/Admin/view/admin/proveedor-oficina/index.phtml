@@ -40,6 +40,14 @@ if ($this->msg != null)
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
+                            <label for="email1" class="control-label">Web Site</label>
+                        </div>
+                        <div class="col-lg-3 col-md-11 col-sm-9">
+                            <?php echo $this->formInput($form->get('webSite'));?>                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Email</label>
                         </div>
                         <div class="col-lg-3 col-md-11 col-sm-9">
@@ -88,9 +96,10 @@ if ($this->msg != null)
                                         <tr role="row">
                                             <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Proveedor</th>
                                             <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Municipio</th>
-                                            <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Email</th>
-                                            <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Dirección</th>
-                                            <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Telefono</th>
+                                            <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Web Site</th>
+                                            <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Email</th>
+                                            <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Dirección</th>
+                                            <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Telefono</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,6 +109,7 @@ if ($this->msg != null)
                                                 <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/proveedoroficina/index?id=".$obj['idProveedorOficina']."')\">
                                                     <td>".$obj['descripcionTercero']."</td>
                                                     <td>".$obj['descripcionMunicipio']."</td>
+                                                    <td>".$obj['webSite']."</td>
                                                     <td>".$obj['email']."</td>
                                                     <td>".$obj['direccion']."</td>
                                                     <td>".$obj['telefono']."</td>

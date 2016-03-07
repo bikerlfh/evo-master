@@ -41,23 +41,23 @@ class FormProveedor extends Form
             ),
         ));
         /************* select TipoCuenta ***********/
-        $tipoCuenta= new TipoCuenta($this->adapter);
+        /*$tipoCuenta= new TipoCuenta($this->adapter);
         $select = new Element\Select('idTipoCuenta');
         $select->setValueOptions($tipoCuenta->generarOptionsSelect());
         $select->setAttributes(array('id' => 'idTipoCuenta',
                                      'class' => $this->cssClass['select'],
                                      'required' => true));
-        $this->add($select);
+        $this->add($select);*/
         /************* select TipoCuenta ***********/ 
         
         /************* select ViaPago ***********/
-        $viaPago= new ViaPago($this->adapter);
+        /*$viaPago= new ViaPago($this->adapter);
         $select2 = new Element\Select('idViaPago');
         $select2->setValueOptions($viaPago->generarOptionsSelect());
         $select2->setAttributes(array('id' => 'idViaPago',
                                      'class' => $this->cssClass['select'],
                                      'required' => true));
-        $this->add($select2);
+        $this->add($select2);*/
         /************* select TipoCuenta ***********/ 
         
         /************* select datobasicoTercero ***********/
@@ -81,12 +81,12 @@ class FormProveedor extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'numCuentaBancaria',                       
+            'name' => 'webSite',                       
             'attributes' => array(
-                'id'=>'numCuentaBancaria', 
+                'id'=>'webSite', 
                 'type' => 'text',
-                'placeholder'=>'numero Cuenta',
-                'maxlength'=>'50',
+                'placeholder'=>'Web Site',
+                'maxlength'=>'150',
                 'class' => $this->cssClass['text']
             ),
         ));

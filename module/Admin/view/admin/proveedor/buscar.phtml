@@ -19,10 +19,8 @@
                                     <thead>
                                         <tr role="row">
                                             <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Tercero</th>
+                                            <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Web Site</th>
                                             <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Email</th>
-                                            <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Numero Cuenta</th>
-                                            <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Tipo Cuenta</th>
-                                            <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Via Pago</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -31,10 +29,8 @@
                                             echo "
                                                 <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idProveedor').val(".$obj['idProveedor'].");$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
                                                     <td>".$obj['descripcionTercero']."</td>
+                                                    <td>".$obj['webSite']."</td>
                                                     <td>".$obj['email']."</td>
-                                                    <td>".$obj['numCuentaBancaria']."</td>
-                                                    <td>".$obj['descripcionTipoCuenta']."</td>
-                                                    <td>".$obj['descripcionViaPago']."</td>
                                                 </tr>";
                                         }
                                         ?>

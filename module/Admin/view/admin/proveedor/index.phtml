@@ -29,34 +29,18 @@ if ($this->msg != null)
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Email</label>
+                            <label for="email1" class="control-label">Web Site</label>
                         </div>
                         <div class="col-lg-4 col-md-11 col-sm-9">
-                            <?php echo $this->formInput($form->get('email'));?>                            
+                            <?php echo $this->formInput($form->get('webSite'));?>                            
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Numero Cuenta Bancaria</label>
+                            <label for="email1" class="control-label">Email</label>
                         </div>
                         <div class="col-lg-4 col-md-11 col-sm-9">
-                            <?php echo $this->formInput($form->get('numCuentaBancaria'));?>                            
-                        </div>
-                    </div>
-                     <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Tipo Cuenta </label>
-                        </div>
-                        <div class="col-lg-3 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idTipoCuenta'));?>                            
-                        </div>
-                    </div>
-                     <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Via Pago</label>
-                        </div>
-                        <div class="col-lg-3 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idViaPago'));?>                            
+                            <?php echo $this->formInput($form->get('email'));?>                            
                         </div>
                     </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
@@ -84,10 +68,8 @@ if ($this->msg != null)
                                     <thead>
                                         <tr role="row">
                                             <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Tercero</th>
+                                            <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Web Site</th>
                                             <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Email</th>
-                                            <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Numero Cuenta</th>
-                                            <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Tipo Cuenta</th>
-                                            <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Via Pago</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,10 +78,8 @@ if ($this->msg != null)
                                             echo "
                                                 <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/proveedor/index?id=".$obj['idProveedor']."')\">
                                                     <td>".$obj['descripcionTercero']."</td>
+                                                    <td>".$obj['webSite']."</td>
                                                     <td>".$obj['email']."</td>
-                                                    <td>".$obj['numCuentaBancaria']."</td>
-                                                    <td>".$obj['descripcionTipoCuenta']."</td>
-                                                    <td>".$obj['descripcionViaPago']."</td>
                                                 </tr>";
                                         }
                                         ?>

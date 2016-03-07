@@ -47,14 +47,14 @@ class ProveedorOficinaController extends AbstractActionController
             if ($datos["idProveedorOficina"] != null) 
             {
                 $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->ProveedorOficina->modificarProveedorOficina($datos['idProveedorOficina'],$datos['idProveedor'],$datos['idMunicipio'],$datos['email'],$datos['direccion'],$datos['telefono']))
+                if($this->ProveedorOficina->modificarProveedorOficina($datos['idProveedorOficina'],$datos['idProveedor'],$datos['idMunicipio'],$datos['email'],$datos['webSite'],$datos['direccion'],$datos['telefono']))
                     $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva proveedoroficina
-                if($this->ProveedorOficina->guardarProveedorOficina($datos['idProveedor'],$datos['idMunicipio'],$datos['email'],$datos['direccion'],$datos['telefono']))
+                if($this->ProveedorOficina->guardarProveedorOficina($datos['idProveedor'],$datos['idMunicipio'],$datos['email'],$datos['webSite'],$datos['direccion'],$datos['telefono']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
                 return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->ProveedorOficina->consultarTodoProveedorOficina()));
@@ -67,6 +67,7 @@ class ProveedorOficinaController extends AbstractActionController
             $this->form->get("idProveedor")->setValue($this->ProveedorOficina->getIdProveedor());
             $this->form->get("idMunicipio")->setValue($this->ProveedorOficina->getIdMunicipio());
             $this->form->get("email")->setValue($this->ProveedorOficina->getEmail());
+            $this->form->get("webSite")->setValue($this->ProveedorOficina->getWebSite());
             $this->form->get("direccion")->setValue($this->ProveedorOficina->getDireccion());
             $this->form->get("telefono")->setValue($this->ProveedorOficina->getTelefono());
             $this->configurarBotonesFormulario(true);
