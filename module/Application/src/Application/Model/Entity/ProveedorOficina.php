@@ -15,6 +15,7 @@ class ProveedorOficina extends AbstractTableGateway
     private $idProveedor;
     private $idMunicipio;
     private $email;
+    private $webSite;
     private $direccion;
     private $telefono;
     
@@ -38,6 +39,14 @@ class ProveedorOficina extends AbstractTableGateway
     public function setDireccion($direccion){
         $this->direccion=$direccion;
     }
+    function getWebSite() {
+        return $this->webSite;
+    }
+
+    function setWebSite($webSite) {
+        $this->webSite = $webSite;
+    }
+
     public function getEmail(){
         return $this->email;
     }
@@ -63,11 +72,12 @@ class ProveedorOficina extends AbstractTableGateway
         $this->idProveedorOficina=$idProveedorOficina;
     }
 
-    public function guardarProveedorOficina($idProveedor,$idMunicipio,$email,$direccion,$telefono)
+    public function guardarProveedorOficina($idProveedor,$idMunicipio,$email,$webSite,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
                 'direccion'=> $direccion,
+                'webSite'=> $webSite,
                 'email'=> $email,
                 'idMunicipio'=> $idMunicipio,
                 'idProveedor'=> $idProveedor
@@ -78,11 +88,12 @@ class ProveedorOficina extends AbstractTableGateway
         return false;
     }
 
-    public function modificarProveedorOficina($idProveedorOficina,$idProveedor,$idMunicipio,$email,$direccion,$telefono)
+    public function modificarProveedorOficina($idProveedorOficina,$idProveedor,$idMunicipio,$email,$webSite,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
                 'direccion'=> $direccion,
+                'webSite'=> $webSite,
                 'email'=> $email,
                 'idMunicipio'=> $idMunicipio,
                 'idProveedor'=> $idProveedor
@@ -141,6 +152,7 @@ class ProveedorOficina extends AbstractTableGateway
     {
         $this->telefono=$result['telefono'];
         $this->direccion=$result['direccion'];
+        $this->webSite=$result['webSite'];
         $this->email=$result['email'];
         $this->idMunicipio=$result['idMunicipio'];
         $this->idProveedor=$result['idProveedor'];

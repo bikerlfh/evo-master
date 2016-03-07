@@ -12,9 +12,7 @@ class Proveedor extends AbstractTableGateway
     private $idProveedor;
     private $idDatoBasicoTercero;
     private $email;
-    private $numCuentaBancaria;
-    private $idTipoCuenta;
-    private $idViaPago;
+    private $webSite;
     private $idUsuarioCreacion;
     
     public function __construct(Adapter $adapter = null)
@@ -29,24 +27,14 @@ class Proveedor extends AbstractTableGateway
     public function setidUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
-    public function getidViaPago(){
-        return $this->idViaPago;
+    function getWebSite() {
+        return $this->webSite;
     }
-    public function setidViaPago($idViaPago){
-        $this->idViaPago=$idViaPago;
+
+    function setWebSite($webSite) {
+        $this->webSite = $webSite;
     }
-    public function getidTipoCuenta(){
-        return $this->idTipoCuenta;
-    }
-    public function setidTipoCuenta($idTipoCuenta){
-        $this->idTipoCuenta=$idTipoCuenta;
-    }
-    public function getNumCuentaBancaria(){
-        return $this->numCuentaBancaria;
-    }
-    public function setNumCuentaBancaria($numCuentaBancaria){
-        $this->numCuentaBancaria=$numCuentaBancaria;
-    }
+
     public function getEmail(){
         return $this->email;
     }
@@ -66,13 +54,11 @@ class Proveedor extends AbstractTableGateway
         $this->idProveedor=$idProveedor;
     }
 
-    public function guardarProveedor($idDatoBasicoTercero,$email,$numCuentaBancaria,$idTipoCuenta,$idViaPago,$idUsuarioCreacion)
+    public function guardarProveedor($idDatoBasicoTercero,$email,$webSite,$idUsuarioCreacion)
     {
         $datos=array(
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
-                'idViaPago'=> $idViaPago,
-                'idTipoCuenta'=> $idTipoCuenta,
-                'numCuentaBancaria'=> $numCuentaBancaria,
+                'webSite'=> $webSite,
                 'email'=> $email,
                 'idDatoBasicoTercero'=> $idDatoBasicoTercero
         );
@@ -82,12 +68,10 @@ class Proveedor extends AbstractTableGateway
         return false;
     }
 
-    public function modificarProveedor($idProveedor,$idDatoBasicoTercero,$email,$numCuentaBancaria,$idTipoCuenta,$idViaPago)
+    public function modificarProveedor($idProveedor,$idDatoBasicoTercero,$email,$webSite)
     {
         $datos=array(
-                'idViaPago'=> $idViaPago,
-                'idTipoCuenta'=> $idTipoCuenta,
-                'numCuentaBancaria'=> $numCuentaBancaria,
+                'webSite'=> $webSite,
                 'email'=> $email,
                 'idDatoBasicoTercero'=> $idDatoBasicoTercero
         );
@@ -109,13 +93,7 @@ class Proveedor extends AbstractTableGateway
                 from(array('p'=>  $this->table))->
                 join(array("d"=> new TableIdentifier("DatoBasicoTercero","Tercero")),
                                     "p.idDatoBasicoTercero = d.idDatoBasicoTercero",
-                                    array("descripcionTercero"=> new Expression("convert(varchar,d.nit) + ' - ' + d.descripcion")))->
-                join(array("tc"=> new TableIdentifier("TipoCuenta","Compra")),
-                                    "p.idTipoCuenta = tc.idTipoCuenta",
-                                    array("descripcionTipoCuenta"=> new Expression("tc.codigo + ' - ' + tc.descripcion")))->
-                join(array("v"=> new TableIdentifier("ViaPago","Compra")),
-                                    "p.idViaPago = v.idViaPago",
-                                    array("descripcionViaPago"=> new Expression("v.codigo + ' - ' + v.descripcion")));
+                                    array("descripcionTercero"=> new Expression("convert(varchar,d.nit) + ' - ' + d.descripcion")));
         
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
@@ -154,9 +132,7 @@ class Proveedor extends AbstractTableGateway
     private function LlenarEntidad($result)
     {
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
-        $this->idViaPago=$result['idViaPago'];
-        $this->idTipoCuenta=$result['idTipoCuenta'];
-        $this->numCuentaBancaria=$result['numCuentaBancaria'];
+        $this->webSite=$result['webSite'];        
         $this->email=$result['email'];
         $this->idDatoBasicoTercero=$result['idDatoBasicoTercero'];
         $this->idProveedor=$result['idProveedor'];
