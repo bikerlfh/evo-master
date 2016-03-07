@@ -120,6 +120,22 @@ class FormBase extends Form
                 )
         ));
         /*************** btn Buscar Municipio********************************/
+        /*************** btn Buscar Proveedor Oficina ********************************/
+        $this->add(array(
+                'name'=>'btnBuscarProveedorOficina',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarProveedorOficina',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedoroficina/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        /*************** btn Buscar Municipio********************************/
     }
 }
 ?>

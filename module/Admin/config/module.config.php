@@ -18,6 +18,7 @@ return array(
             'Admin\Controller\Producto' => 'Admin\Controller\ProductoController',
             'Admin\Controller\Proveedor' => 'Admin\Controller\ProveedorController',
             'Admin\Controller\ProveedorOficina' => 'Admin\Controller\ProveedorOficinaController',
+            'Admin\Controller\ProveedorCuenta' => 'Admin\Controller\ProveedorCuentaController',
             'Admin\Controller\SaldoInventario' => 'Admin\Controller\SaldoInventarioController',
             'Admin\Controller\TipoCuenta' => 'Admin\Controller\TipoCuentaController',
             'Admin\Controller\TipoDocumento' => 'Admin\Controller\TipoDocumentoController',

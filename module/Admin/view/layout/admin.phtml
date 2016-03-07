@@ -195,13 +195,22 @@ if (defined('RUNNING_FROM_ROOT')) {
                         </li><!--end /menu-item -->
                         <li>
                             <a href="javascript:void(0);">
+                                <i class="fa fa-book fa-fw"></i><span class="title">Proveedores</span> <span class="expand-sign">+</span>
+                            </a>
+                            <!--start submenu -->
+                            <ul>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedor" >Proveedor</a></li>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedoroficina" >Proveedor Oficina</a></li>
+                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedorcuenta" >Proveedor Cuenta</a></li>
+                            </ul><!--end /submenu -->
+                        </li><!--end /menu-item -->
+                        <li>
+                            <a href="javascript:void(0);">
                                 <i class="fa  fa-users fa-fw"></i><span class="title">Tercero</span> <span class="expand-sign">+</span>
                             </a>
                             <!--start submenu -->
                             <ul>
                                 <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/datobasicotercero" >Dato Basico Tercero</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedor" >Proveedor</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedoroficina" >Proveedor Oficina</a></li>
                                 <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/cliente" >Cliente</a></li>
                                 <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/tipodocumento" >Tipo Documento</a></li>
                             </ul><!--end /submenu -->

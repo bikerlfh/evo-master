@@ -122,7 +122,8 @@ class ProveedorOficina extends AbstractTableGateway
                                     array("descripcionTercero"=> new Expression("convert(varchar,d.nit) + ' - ' + d.descripcion")))->
                 join(array("m"=> new TableIdentifier("Municipio","Tercero")),
                                     "po.idMunicipio = m.idMunicipio",
-                                    array("descripcionMunicipio"=> new Expression("m.codigo + ' - ' + m.descripcion")));
+                                    array("descripcionMunicipio"=> new Expression("m.codigo + ' - ' + m.descripcion"),
+                                          "descripcionMunicioSencilla"=>"descripcion"));
         
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
@@ -148,6 +149,17 @@ class ProveedorOficina extends AbstractTableGateway
         }
         return false;
     }
+    public function generarOptionsSelect()
+    {
+        $objs=$this->consultarTodoProveedorOficina();
+        $options=array(null);
+        for($i=0;$i<count($objs);$i++)
+        {
+            $options[$objs[$i]['idProveedorOficina']]="(".$objs[$i]['descripcionMunicioSencilla'].")  -   ".$objs[$i]['descripcionTercero'];
+        }
+        return $options;
+    }
+    
     private function LlenarEntidad($result)
     {
         $this->telefono=$result['telefono'];
