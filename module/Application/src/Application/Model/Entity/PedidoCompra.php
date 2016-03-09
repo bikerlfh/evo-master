@@ -29,7 +29,7 @@ class PedidoCompra extends AbstractTableGateway
     function getUrlDocumentoPago() {
         return $this->urlDocumentoPago;
     }
-
+    
     function setUrlDocumentoPago($urlDocumentoPago) {
         $this->urlDocumentoPago = $urlDocumentoPago;
     }
@@ -59,12 +59,12 @@ class PedidoCompra extends AbstractTableGateway
         $this->idPedidoCompra=$idPedidoCompra;
     }
 
-    public function guardarPedidoCompra($idEstadoPedido,$idProveedor,$fechaPedido,$urlDocumentoPago,$idUsuarioCreacion)
+    public function guardarPedidoCompra($idEstadoPedido,$idProveedor,$urlDocumentoPago,$idUsuarioCreacion)
     {
         $datos=array(
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'urlDocumentoPago' => $urlDocumentoPago,
-                'fechaPedido'=> $fechaPedido,
+                'fechaPedido'=> date('d-m-Y h:i:s'),
                 'idProveedor'=> $idProveedor,
                 'idEstadoPedido'=> $idEstadoPedido
         );
