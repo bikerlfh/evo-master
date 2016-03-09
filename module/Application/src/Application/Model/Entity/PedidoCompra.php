@@ -1,7 +1,7 @@
 <?php
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
-use Zend\Db\Adapter\Adapter;
+use Zend\Db\Adapter\Adapter; 
 
 class PedidoCompra extends AbstractTableGateway
 {
@@ -9,7 +9,10 @@ class PedidoCompra extends AbstractTableGateway
     private $idEstadoPedido;
     private $idProveedor;
     private $fechaPedido;
+    private $urlDocumentoPago;
     private $idUsuarioCreacion;
+    
+    public $PedidoCompraPosicion;
     
     public function __construct(Adapter $adapter = null)
     {
@@ -17,41 +20,50 @@ class PedidoCompra extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('PedidoCompra', 'Compra');
     }
 
-    public function getidUsuarioCreacion(){
+    public function getIdUsuarioCreacion(){
         return $this->idUsuarioCreacion;
     }
-    public function setidUsuarioCreacion($idUsuarioCreacion){
+    public function setIdUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
-    public function getfechaPedido(){
+    function getUrlDocumentoPago() {
+        return $this->urlDocumentoPago;
+    }
+
+    function setUrlDocumentoPago($urlDocumentoPago) {
+        $this->urlDocumentoPago = $urlDocumentoPago;
+    }
+    
+    public function getFechaPedido(){
         return $this->fechaPedido;
     }
-    public function setfechaPedido($fechaPedido){
+    public function setFechaPedido($fechaPedido){
         $this->fechaPedido=$fechaPedido;
     }
-    public function getidProveedor(){
+    public function getIdProveedor(){
         return $this->idProveedor;
     }
-    public function setidProveedor($idProveedor){
+    public function setIdProveedor($idProveedor){
         $this->idProveedor=$idProveedor;
     }
-    public function getidEstadoPedido(){
+    public function getIdEstadoPedido(){
         return $this->idEstadoPedido;
     }
-    public function setidEstadoPedido($idEstadoPedido){
+    public function setIdEstadoPedido($idEstadoPedido){
         $this->idEstadoPedido=$idEstadoPedido;
     }
-    public function getidPedidoCompra(){
+    public function getIdPedidoCompra(){
         return $this->idPedidoCompra;
     }
-    public function setidPedidoCompra($idPedidoCompra){
+    public function setIdPedidoCompra($idPedidoCompra){
         $this->idPedidoCompra=$idPedidoCompra;
     }
 
-    public function guardarPedidocompra($idEstadoPedido,$idProveedor,$fechaPedido,$idUsuarioCreacion)
+    public function guardarPedidoCompra($idEstadoPedido,$idProveedor,$fechaPedido,$urlDocumentoPago,$idUsuarioCreacion)
     {
         $datos=array(
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
+                'urlDocumentoPago' => $urlDocumentoPago,
                 'fechaPedido'=> $fechaPedido,
                 'idProveedor'=> $idProveedor,
                 'idEstadoPedido'=> $idEstadoPedido
@@ -62,11 +74,10 @@ class PedidoCompra extends AbstractTableGateway
         return false;
     }
 
-    public function modificarPedidocompra($idPedidoCompra,$idEstadoPedido,$idProveedor,$fechaPedido,$idUsuarioCreacion)
+    public function modificarPedidoCompra($idPedidoCompra,$idEstadoPedido,$idProveedor,$urlDocumentoPago)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
-                'fechaPedido'=> $fechaPedido,
+                'urlDocumentoPago' => $urlDocumentoPago,
                 'idProveedor'=> $idProveedor,
                 'idEstadoPedido'=> $idEstadoPedido
         );
@@ -75,42 +86,50 @@ class PedidoCompra extends AbstractTableGateway
             return true;
         return false;
     }
-
-    public function consultarTodoPedidocompra()
+    public function modificarEstadoPedidoCompra($idPedidoCompra,$idEstadoPedido)
+    {
+        $datos=array('idEstadoPedido'=> $idEstadoPedido);
+        $result=$this->update($datos,array('idPedidoCompra'=>$idPedidoCompra));
+        if($result>0)
+            return true;
+        return false;
+    }
+    public  function eliminarPedidoCompra($idPedidoCompra)
+    {
+        if ($this->delete(array('idPedidoCompra'=>$idPedidoCompra))>0) {
+            return true;
+        }
+        return false;
+    }
+    public function consultarTodoPedidoCompra()
     {
         return $this->select()->toArray();
     }
-    public function consultarPedidocompraPoridPedidoCompra($idPedidoCompra)
+    public function consultarPedidoCompraPorIdPedidoCompra($idPedidoCompra)
     {
         $result=$this->select(array('idpedidocompra'=>$idPedidoCompra))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
+            $this->LlenarPedidoCompraPosicion();
             return true;
         }
         return false;
     }
-    public function consultarPedidocompraPoridEstadoPedido($idEstadoPedido)
+    public function consultarPedidoCompraPorIdEstadoPedido($idEstadoPedido)
     {
-        $result=$this->select(array('idestadopedido'=>$idEstadoPedido))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        return $this->select(array('idestadopedido'=>$idEstadoPedido))->toArray();
     }
-    public function consultarPedidocompraPoridProveedor($idProveedor)
+    public function consultarPedidoCompraPorIdProveedor($idProveedor)
     {
-        $result=$this->select(array('idproveedor'=>$idProveedor))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        return $this->select(array('idproveedor'=>$idProveedor))->toArray();
     }
-    
+    private function LlenarPedidoCompraPosicion()
+    {
+        $PedidoCompraPosicion = new PedidoCompraPosicion($this->adapter);
+        $this->PedidoCompraPosicion = $PedidoCompraPosicion->consultarPedidoCompraPosicionPorIdPedidoCompra($this->idPedidoCompra);
+        
+    }
     private function LlenarEntidad($result)
     {
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];

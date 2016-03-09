@@ -1,7 +1,8 @@
 <?php
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
-use Zend\Db\Adapter\Adapter;;
+use Zend\Db\Adapter\Adapter;
+
 class PedidoCompraPosicion extends AbstractTableGateway
 {
     private $idPedidoCompraPosicion;
@@ -15,10 +16,10 @@ class PedidoCompraPosicion extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('PedidoCompraPosicion', 'Compra');
     }
 
-    public function getidUsuarioCreacion(){
+    public function getIdUsuarioCreacion(){
         return $this->idUsuarioCreacion;
     }
-    public function setidUsuarioCreacion($idUsuarioCreacion){
+    public function setIdUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
     public function getcantidad(){
@@ -27,26 +28,26 @@ class PedidoCompraPosicion extends AbstractTableGateway
     public function setcantidad($cantidad){
         $this->cantidad=$cantidad;
     }
-    public function getidProducto(){
+    public function getIdProducto(){
         return $this->idProducto;
     }
-    public function setidProducto($idProducto){
+    public function setIdProducto($idProducto){
         $this->idProducto=$idProducto;
     }
-    public function getidPedidoCompra(){
+    public function getIdPedidoCompra(){
         return $this->idPedidoCompra;
     }
-    public function setidPedidoCompra($idPedidoCompra){
+    public function setIdPedidoCompra($idPedidoCompra){
         $this->idPedidoCompra=$idPedidoCompra;
     }
-    public function getidPedidoCompraPosicion(){
+    public function getIdPedidoCompraPosicion(){
         return $this->idPedidoCompraPosicion;
     }
-    public function setidPedidoCompraPosicion($idPedidoCompraPosicion){
+    public function setIdPedidoCompraPosicion($idPedidoCompraPosicion){
         $this->idPedidoCompraPosicion=$idPedidoCompraPosicion;
     }
 
-    public function guardarPedidocompraposicion($idPedidoCompra,$idProducto,$cantidad,$idUsuarioCreacion)
+    public function guardarPedidoCompraPosicion($idPedidoCompra,$idProducto,$cantidad,$idUsuarioCreacion)
     {
         $datos=array(
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
@@ -60,10 +61,9 @@ class PedidoCompraPosicion extends AbstractTableGateway
         return false;
     }
 
-    public function modificarPedidocompraposicion($idPedidoCompraPosicion,$idPedidoCompra,$idProducto,$cantidad,$idUsuarioCreacion)
+    public function modificarPedidoCompraPosicion($idPedidoCompraPosicion,$idPedidoCompra,$idProducto,$cantidad)
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'cantidad'=> $cantidad,
                 'idProducto'=> $idProducto,
                 'idPedidoCompra'=> $idPedidoCompra
@@ -74,13 +74,13 @@ class PedidoCompraPosicion extends AbstractTableGateway
         return false;
     }
 
-    public function consultarPedidocompraposicion()
+    public function consultarPedidoCompraPosicion()
     {
         return $this->select()->toArray();
     }
-    public function consultarPedidocompraposicionPoridPedidoCompraPosicion($idPedidoCompraPosicion)
+    public function consultarPedidoCompraPosicionPorIdPedidoCompraPosicion($idPedidoCompraPosicion)
     {
-        $result=$this->select(array('idpedidocompraposicion'=>$idPedidoCompraPosicion))->current();
+        $result=$this->select(array('idPedidoCompraPosicion'=>$idPedidoCompraPosicion))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -88,15 +88,17 @@ class PedidoCompraPosicion extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarPedidocompraposicionPoridPedidoCompra($idPedidoCompra)
+    public function consultarPedidoCompraPosicionPorIdPedidoCompra($idPedidoCompra)
     {
-        $result=$this->select(array('idpedidocompra'=>$idPedidoCompra))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
+        $result = $this->select(array('idPedidoCompra'=>$idPedidoCompra))->toArray();
+        $objects = null;
+      
+        foreach ($result as $value) {
+            $this->consultarPedidoCompraPosicionPorIdPedidoCompraPosicion($value['idPedidoCompraPosicion']);
+            $tmp = $this;
+            $objects[]=$tmp;
         }
-        return false;
+        return $objects; 
     }
     private function LlenarEntidad($result)
     {
