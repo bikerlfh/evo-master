@@ -59,6 +59,7 @@ function limpiarformulario(formulario){
     $("#btnEliminar").attr("type","hidden");
     // estos dos campos son para el formulario de imagen
     $('#image-file').attr('type','file');
+    $('#image-file').attr('multiple','multiple');
     $('#url').attr('type','hidden');
     $('#imgAdminProducto').attr('src','');
     
