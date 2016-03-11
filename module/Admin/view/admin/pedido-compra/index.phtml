@@ -7,6 +7,28 @@ if ($this->msg != null)
     echo "<script type='text/javascript'>".$this->msg."</script>";    
 }
 ?>
+<script type="text/javascript">
+    var numRows=0;
+
+    function AddRow()
+    {
+        numRows++;
+        var onClick="onclick=\"usar_ajax('/evo-master/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','#modal-dialog-display','')\"";
+        var cantidad ="<td><input name=\"cantidad"+numRows+"\" id=\"cantidad"+numRows+"\" type='text' placeholder='cantidad' maxlength='9' class='form-control' onkeypress=\"return validarTecla(event,'num')\"></td>";
+        var cadena ="<tr>";
+        cadena += "<td>"+numRows+"</td>";
+        cadena += " <td><div class='col-lg-5 col-md-4 col-sm-4'>";
+        cadena += "<input class='form-control' id='idProducto"+numRows+"' type='hidden'>";
+        cadena += "<input class='form-control' id='nombreProducto"+numRows+"' type='text' readonly='true'></div>";
+        cadena += "<input type='button' "+onClick+" data-target='#textModal' data-toggle='modal' style='margin:2px' class='btn btn-support2' value='Buscar'><td>";
+        cadena += cantidad+"<tr>;"
+        $('#tBodyPedido').append(cadena);
+    }
+     $(document).ready(function() {
+        AddRow();
+    });
+</script>
+ 
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-bordered style-primary">
@@ -85,7 +107,7 @@ if ($this->msg != null)
                                         <header><h4 class="text-light"><i class="fa fa-fw  fa-list"></i> Pedido <strong>Detalle</strong></h4></header>
                                         <div class="tools">
                                             <div class="btn-group btn-group-transparent">
-                                                <a class="btn btn-equal btn-sm " title="Agregar nuevo detalle"><i class="fa fa-plus"></i></a>
+                                                <a class="btn btn-equal btn-sm " onclick="AddRow()" title="Agregar nuevo detalle"><i class="fa fa-plus"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -100,24 +122,37 @@ if ($this->msg != null)
 
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="tBodyPedido">
+                                                    <!--
                                                     <tr>
                                                         <td>1</td>
                                                         <td>
                                                             <div class="col-lg-5 col-md-4 col-sm-4">
-                                                                <input class="form-control" type="text" readonly="true">
+                                                                <input class="form-control" id="idProducto1" type="hidden" readonly="true">
+                                                                <input class="form-control" id="nombreProducto1" type="text" readonly="true">
+                                                            </div>
+                                                            <input type="button" data-target="#textModal" 
+                                                                   data-toggle="modal" style="margin:2px" class="btn btn-support2" 
+                                                                   value="Buscar" 
+                                                                   onclick="usar_ajax('/evo-master/admin/producto/buscar?campoId=idProducto1&campoNombre=nombreProducto1','#modal-dialog-display','')">
+                                                        </td>
+                                                        <td><?php echo $this->formInput($form->get('cantidad'));?> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>
+                                                            <div class="col-lg-5 col-md-4 col-sm-4">
+                                                                <input class="form-control" id="idProducto2" type="text" readonly="true">
                                                             </div>
                                                             <?php echo $this->formInput($form->get('btnBuscarProducto'));?> </td>
                                                         <td><?php echo $this->formInput($form->get('cantidad'));?> </td>
-                                                    </tr>
+                                                    </tr>-->
                                                 </tbody>
                                             </table>
                                     </div>
                                     </div>
                                 </div>
                         </div><!--end .col-lg-6 -->
-
-
                     </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                         <button type="submit" class="btn btn-primary">Submit</button>
