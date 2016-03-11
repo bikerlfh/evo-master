@@ -6,6 +6,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
+use Application\Model\Clases;
 
 class Producto extends AbstractTableGateway
 {
@@ -173,6 +174,14 @@ class Producto extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    //public function consultaAvanzadaProducto($referencia,$codigo,$nombre,$idMarca,$idCategoria)
+    public function consultaAvanzadaProducto($idMarca,$idCategoria,$referencia,$codigo,$nombre)
+    {
+        $idMarca = $idMarca > 0? $idMarca:null;
+        $idCategoria = $idCategoria > 0? $idCategoria:null;
+        $stored = new Clases\StoredProcedure("Producto",$this->adapter);
+        return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaProducto ?,?,?,?,?",array($idMarca,$idCategoria,$referencia,$codigo,$nombre));
     }
     public function generarOptionsSelect($where = null)
     {
