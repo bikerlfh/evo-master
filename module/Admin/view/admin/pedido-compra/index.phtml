@@ -14,14 +14,13 @@ if ($this->msg != null)
     {
         numRows++;
         var onClick="onclick=\"usar_ajax('/evo-master/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','#modal-dialog-display','')\"";
-        var cantidad ="<td><input name=\"cantidad"+numRows+"\" id=\"cantidad"+numRows+"\" type='text' placeholder='cantidad' maxlength='9' class='form-control' onkeypress=\"return validarTecla(event,'num')\"></td>";
         var cadena ="<tr>";
         cadena += "<td>"+numRows+"</td>";
         cadena += " <td><div class='col-lg-5 col-md-4 col-sm-4'>";
         cadena += "<input class='form-control' id='idProducto"+numRows+"' type='hidden'>";
         cadena += "<input class='form-control' id='nombreProducto"+numRows+"' type='text' readonly='true'></div>";
-        cadena += "<input type='button' "+onClick+" data-target='#textModal' data-toggle='modal' style='margin:2px' class='btn btn-support2' value='Buscar'><td>";
-        cadena += cantidad+"<tr>;"
+        cadena += "<input type='button' "+onClick+" data-target='#textModal' data-toggle='modal' style='margin:2px' class='btn btn-support2' value='Buscar'></td>";
+        cadena += "<td><input name=\"cantidad"+numRows+"\" id=\"cantidad"+numRows+"\" type='text' placeholder='cantidad' maxlength='9' class='form-control' onkeypress=\"return validarTecla(event,'num')\"></td></tr>;"
         $('#tBodyPedido').append(cadena);
     }
      $(document).ready(function() {
@@ -137,15 +136,6 @@ if ($this->msg != null)
                                                                    onclick="usar_ajax('/evo-master/admin/producto/buscar?campoId=idProducto1&campoNombre=nombreProducto1','#modal-dialog-display','')">
                                                         </td>
                                                         <td><?php echo $this->formInput($form->get('cantidad'));?> </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            <div class="col-lg-5 col-md-4 col-sm-4">
-                                                                <input class="form-control" id="idProducto2" type="text" readonly="true">
-                                                            </div>
-                                                            <?php echo $this->formInput($form->get('btnBuscarProducto'));?> </td>
-                                                        <td><?php echo $this->formInput($form->get('cantidad'));?> </td>
                                                     </tr>-->
                                                 </tbody>
                                             </table>
@@ -156,7 +146,7 @@ if ($this->msg != null)
                     </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="submit" class="btn btn-default">Reset</button>
+                        <button type="reset" class="btn btn-default">Reset</button>
                     </div>
                 <?php echo $this->form()->closeTag(); ?>
             </div>
