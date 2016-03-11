@@ -59,8 +59,18 @@ class FormProducto extends Form
         $this->add($select2);
         /************* select Categoria ***********/ 
         
+        $this->add(array(
+            'name' => 'nombreProducto',                       
+            'attributes' => array(
+                'id'=>'nombreProducto', 
+                'type' => 'text',
+                'placeholder'=>'Producto',
+                'readonly'=>true,
+                'class' => $this->cssClass['text']
+            ),
+        ));
         
-         $this->add(array(
+        $this->add(array(
             'name' => 'codigo',                       
             'attributes' => array(
                 'id'=>'codigo', 

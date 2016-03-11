@@ -7,7 +7,6 @@
 namespace Admin\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Application\Model\Entity\Producto;
 use Application\Model\Entity\Proveedor;
 
 class FormSaldoInventario extends Form
@@ -15,11 +14,15 @@ class FormSaldoInventario extends Form
     private $adapter;
     private $cssClass;
     private $basePath;
+    
+    /*Formularios*/
+    private $FormProducto;
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmsaldoinventario");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
+        $this->FormProducto = new FormProducto($serviceLocator,$basePath);
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/saldoinventario/index',
             'method' => 'post',
@@ -39,15 +42,10 @@ class FormSaldoInventario extends Form
                 'type' => 'hidden',
             ),
         ));
-        /************* select Producto ***********/
-        $producto = new Producto($this->adapter);
-        $select = new Element\Select('idProducto');
-        $select->setValueOptions($producto->generarOptionsSelect());
-        $select->setAttributes(array('id' => 'idProducto',
-                                     'class' => $this->cssClass['select'],
-                                     'required' => true));
-        $this->add($select);
-        /************* select Producto ***********/ 
+        /*************  Producto ***********/ 
+        $this->add($this->FormProducto->get("idProducto"));
+        $this->add($this->FormProducto->get("nombreProducto"));
+        /************* Producto  ***********/ 
         
         /************* select Proveedor ***********/
         $proveedor = new Proveedor($this->adapter);
