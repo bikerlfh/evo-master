@@ -48,10 +48,12 @@
                                 <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Tipo Documento</th>
                                 <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Nif</th>
                                 <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Descripción</th>
+                                <!--
                                 <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Primer Nombre</th>
                                 <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Segundo Nombre</th>
                                 <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Primer Apellido</th>
                                 <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Segundo Apellido</th>
+                                -->
                                 <th lass="sorting" role="columnheader" tabindex="7" aria-controls="dtcrudindex" rowspan="1" colspan="1">Dirección</th>
                                 <th lass="sorting" role="columnheader" tabindex="8" aria-controls="dtcrudindex" rowspan="1" colspan="1">Teléfono</th>
                             </tr>
@@ -60,14 +62,14 @@
                             <?php
                             foreach ($this->registros as $obj) {
                                 echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idDatoBasicoTercero'].");$('#".$this->campoNombre."').val('".$obj["descripcion"]."');$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idDatoBasicoTercero'].");$('#".$this->campoNombre."').val('".$obj['nit'].' - '.$obj["descripcion"]."');$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
                                                     <td>" . $obj['descripcionTipoDocumento'] . "</td>
                                                     <td>" . $obj['nit'] . "</td>
                                                     <td>" . $obj['descripcion'] . "</td>
-                                                    <td>" . $obj['primerNombre'] . "</td>
+                                                    <!--<td>" . $obj['primerNombre'] . "</td>
                                                     <td>" . $obj['segundoNombre'] . "</td>
                                                     <td>" . $obj['primerApellido'] . "</td>
-                                                    <td>" . $obj['segundoApellido'] . "</td>
+                                                    <td>" . $obj['segundoApellido'] . "</td>-->
                                                     <td>" . $obj['direccion'] . "</td>
                                                     <td>" . $obj['telefono'] . "</td>
                                                 </tr>";
