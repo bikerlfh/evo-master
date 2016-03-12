@@ -48,7 +48,6 @@
                     <?php echo $this->formInput($form->get('nombre'));?>                            
                 </div>
             </div>
-
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
                        onclick="usar_ajax('<?php echo $this->basePath()?>/admin/producto/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>','#modal-dialog-display','idMarca='+$('#idMarca').val()+'&amp;idCategoria='+$('#idCategoria').val()+'&amp;referencia='+$('#referencia').val()+'&amp;codigo='+$('#codigo').val()+'&amp;nombre='+$('#nombre').val());">
