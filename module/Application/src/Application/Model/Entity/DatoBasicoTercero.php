@@ -7,6 +7,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
+use Application\Model\Clases;
 
 class DatoBasicoTercero extends AbstractTableGateway
 {
@@ -165,6 +166,13 @@ class DatoBasicoTercero extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    
+    public function consultaAvanzadaDatoBasicoTercero($nit, $descripcion)
+    {
+        $nit = $nit > 0? $nit:null;
+        $stored = new Clases\StoredProcedure("DatoBasicoTercero",$this->adapter);
+        return $stored->execProcedureReturnDatos("Tercero.ConsultaAvanzadaTercero ?,?",array($nit, $descripcion));
     }
     
      public function generarOptionsSelect($where = null)

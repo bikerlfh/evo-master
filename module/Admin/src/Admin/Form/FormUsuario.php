@@ -15,10 +15,14 @@ class FormUsuario extends Form
     
     private $cssClass;
     private $basePath;
+    
+    private $FormDatoBasicoTercero;
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmusuario");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
+        $this->FormDatoBasicoTercero = new FormDatoBasicoTercero($serviceLocator, $basePath);
+        
         $this->basePath = $basePath;
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/usuario/index',
@@ -50,8 +54,12 @@ class FormUsuario extends Form
         $this->add($select);
         /************* select tipoUsuario ***********/ 
         
-        /************* select datobasicoTercero ***********/
-        $datoBasicoTercero= new DatoBasicoTercero($this->adapter);
+        /************* datobasicoTercero ***********/
+        
+        $this->add($this->FormDatoBasicoTercero->get("idDatoBasicoTercero"));
+        $this->add($this->FormDatoBasicoTercero->get("nombreTercero"));
+        
+        /*$datoBasicoTercero= new DatoBasicoTercero($this->adapter);
         $select1 = new Element\Select('idDatoBasicoTercero');
         $select1->setValueOptions($datoBasicoTercero->generarOptionsSelect());
         $select1->setAttributes(array('id' => 'idDatoBasicoTercero',

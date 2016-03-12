@@ -64,7 +64,11 @@ class UsuarioController extends AbstractActionController
             $this->form->get("idUsuario")->setValue($this->Usuario->getIdUsuario());
             $this->form->get("email")->setValue($this->Usuario->getemail());
             $this->form->get("clave")->setAttribute("required", false);
+            //campos Tercero
             $this->form->get("idDatoBasicoTercero")->setValue($this->Usuario->getidDatoBasicoTercero());
+            $descripcionTercero = $this->Usuario->DatoBasicoTercero->getnit(). ' - ' . $this->Usuario->DatoBasicoTercero->getdescripcion();
+            $this->form->get("nombreTercero")->setValue($descripcionTercero);
+            
             $this->form->get("idTipoUsuario")->setValue($this->Usuario->getidTipoUsuario());
             $this->configurarBotonesFormulario(true);
         }

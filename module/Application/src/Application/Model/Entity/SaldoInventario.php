@@ -6,6 +6,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
+use Application\Model\Entity;
 
 class SaldoInventario extends AbstractTableGateway
 {
@@ -19,6 +20,10 @@ class SaldoInventario extends AbstractTableGateway
     private $idUsuarioModificacion;
     private $fechaCreacion;
     private $fechaModificacion;
+    
+    
+    public $Producto;
+    public $Proveedor;
     
     public function __construct(Adapter $adapter = null)
     {
@@ -86,7 +91,7 @@ class SaldoInventario extends AbstractTableGateway
     public function setIdSaldoInventario($idSaldoInventario){
         $this->idSaldoInventario=$idSaldoInventario;
     }
-
+    
     public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioCreacion,$fechaCreacion)
     {
         $datos=array(
@@ -177,5 +182,19 @@ class SaldoInventario extends AbstractTableGateway
         $this->idProveedor=$result['idProveedor'];
         $this->idProducto=$result['idProducto'];
         $this->idSaldoInventario=$result['idSaldoInventario'];
+        
+        $this->CargarEmbebidos();
+    }
+    //<===============================================================>
+    //<--- Carga los objetos completos relacionados a este objeto ====>
+    //<===============================================================>
+    private function CargarEmbebidos()
+    {
+        $this->Producto =new Entity\Producto(parent::getAdapter());
+        $this->Producto->consultarProductoPorIdProducto($this->idProducto);
+        
+        $this->Proveedor =new Entity\Proveedor(parent::getAdapter());
+        $this->Proveedor->consultarProveedorPoridProveedor($this->idProveedor);
+       
     }
 }

@@ -115,11 +115,7 @@ class Usuario extends AbstractTableGateway
         $result=$this->select(array('idusuario'=>$idUsuario))->current();
         if($result)
         {
-            $this->clave=$result['clave'];
-            $this->email=$result['email'];
-            $this->idDatoBasicoTercero=$result['idDatoBasicoTercero'];
-            $this->idTipoUsuario=$result['idTipoUsuario'];
-            $this->idUsuario=$result['idUsuario'];
+            $this->LlenarEntidad($result);
             return true;
         }
         return false;
@@ -151,5 +147,7 @@ class Usuario extends AbstractTableGateway
         $this->idDatoBasicoTercero=$result['idDatoBasicoTercero'];
         $this->idTipoUsuario=$result['idTipoUsuario'];
         $this->idUsuario=$result['idUsuario'];
+        
+        $this->cargarEmbebidos();
     }
 }

@@ -7,6 +7,7 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
 use Application\Model\Clases;
+use Application\Model\Entity;
 
 class Proveedor extends AbstractTableGateway
 {
@@ -15,6 +16,9 @@ class Proveedor extends AbstractTableGateway
     private $email;
     private $webSite;
     private $idUsuarioCreacion;
+    
+    
+    public $DatoBasicoTercero;
     
     public function __construct(Adapter $adapter = null)
     {
@@ -54,7 +58,7 @@ class Proveedor extends AbstractTableGateway
     public function setidProveedor($idProveedor){
         $this->idProveedor=$idProveedor;
     }
-
+    
     public function guardarProveedor($idDatoBasicoTercero,$email,$webSite,$idUsuarioCreacion)
     {
         $datos=array(
@@ -145,5 +149,16 @@ class Proveedor extends AbstractTableGateway
         $this->email=$result['email'];
         $this->idDatoBasicoTercero=$result['idDatoBasicoTercero'];
         $this->idProveedor=$result['idProveedor'];
+        
+        $this->CargarEmbebidos();
+    }
+    //<===============================================================>
+    //<--- Carga los objetos completos relacionados a este objeto ====>
+    //<===============================================================>
+    private function CargarEmbebidos()
+    {
+        $this->DatoBasicoTercero =new Entity\DatoBasicoTercero(parent::getAdapter());
+        $this->DatoBasicoTercero->consultarDatoBasicoTerceroPoridDatoBasicoTercero($this->idDatoBasicoTercero);
+       
     }
 }

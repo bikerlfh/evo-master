@@ -21,7 +21,8 @@ if ($this->msg != null)
                             <label for="email1" class="control-label">Tercero </label>
                         </div>
                         <div class="col-lg-4 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idDatoBasicoTercero'));?>                            
+                             <?php echo $this->formElement($form->get('idDatoBasicoTercero'));?>
+                            <?php echo $this->formElement($form->get('nombreTercero'));?>  
                         </div>
                         <div class="col-lg-1">
                              <?php echo $this->formElement($form->get('btnBuscarTercero'));?>                            

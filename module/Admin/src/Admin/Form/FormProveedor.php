@@ -58,9 +58,13 @@ class FormProveedor extends Form
         ));
         
         /******** campos Tercero******************/
-        
+        //campo Modal
         $this->add($this->FormDatoBasicoTercero->get("nit"));
         $this->add($this->FormDatoBasicoTercero->get("descripcion"));
+        
+        //campo Formulario
+        $this->add($this->FormDatoBasicoTercero->get("idDatoBasicoTercero"));
+        $this->add($this->FormDatoBasicoTercero->get("nombreTercero"));
          
         /***************Campos tercero **************************/
        
@@ -84,15 +88,15 @@ class FormProveedor extends Form
         $this->add($select2);*/
         /************* select TipoCuenta ***********/ 
         
-        /************* select datobasicoTercero ***********/
-        $datoBasicoTercero= new DatoBasicoTercero($this->adapter);
-        $select1 = new Element\Select('idDatoBasicoTercero');
-        $select1->setValueOptions($datoBasicoTercero->generarOptionsSelect());
-        $select1->setAttributes(array('id' => 'idDatoBasicoTercero',
-                                     'class' => $this->cssClass['select'],
-                                     'required' => true));
-        $this->add($select1);
-        /************* select datobasicoTercero ***********/ 
+//        /************* select datobasicoTercero ***********/
+//        $datoBasicoTercero= new DatoBasicoTercero($this->adapter);
+//        $select1 = new Element\Select('idDatoBasicoTercero');
+//        $select1->setValueOptions($datoBasicoTercero->generarOptionsSelect());
+//        $select1->setAttributes(array('id' => 'idDatoBasicoTercero',
+//                                     'class' => $this->cssClass['select'],
+//                                     'required' => true));
+//        $this->add($select1);
+//        /************* select datobasicoTercero ***********/ 
          $this->add(array(
             'name' => 'email',                       
             'attributes' => array(

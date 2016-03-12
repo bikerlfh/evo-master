@@ -73,9 +73,26 @@ class DatoBasicoTerceroController extends AbstractActionController
         $this->validarSession();
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->DatoBasicoTercero = new DatoBasicoTercero($this->dbAdapter);
+        
+        $this->form = new FormDatoBasicoTercero($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /** Campos para saber en donde se deben devolver los valores de la busqueda **/
+        $campoId=$this->params()->fromQuery('campoId',null) == null? 'idDatoBasicoTercero':$this->params()->fromQuery('campoId',null);
+        $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreTercero':$this->params()->fromQuery('campoNombre',null);
+        
+        $registros = array();
+        if(count($this->request->getPost()) > 0)
+        {
+            $this->DatoBasicoTercero = new DatoBasicoTercero($this->dbAdapter);
+            $datos = $this->request->getPost();
+            
+            $this->form->get("nit")->setValue($datos['nit']);
+            $this->form->get("descripcion")->setValue($datos['descripcion']);
+            
+            $registros = $this->DatoBasicoTercero->consultaAvanzadaDatoBasicoTercero($datos['nit'], $datos['descripcion']);
+        }
+        
         // consultamos todos los terceros y los devolvemos a la vista    
-        $view = new ViewModel(array('registros'=>$this->DatoBasicoTercero->consultarTodoDatoBasicoTercero()));
+        $view = new ViewModel(array('form'=> $this->form,'campoId'=>$campoId, 'campoNombre'=> $campoNombre ,'registros'=> $registros));
         $view->setTerminal(true);
         return $view;
     }

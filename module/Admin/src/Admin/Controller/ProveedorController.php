@@ -64,7 +64,12 @@ class ProveedorController extends AbstractActionController
         {
             $this->Proveedor->consultarProveedorPorIdProveedor($this->params()->fromQuery('id'));
             $this->form->get("idProveedor")->setValue($this->Proveedor->getIdProveedor());
+            
+            //campos Tercero
             $this->form->get("idDatoBasicoTercero")->setValue($this->Proveedor->getIdDatoBasicoTercero());
+            $descripcionTercero = $this->Proveedor->DatoBasicoTercero->getnit() . ' - ' . $this->Proveedor->DatoBasicoTercero->getdescripcion();
+            $this->form->get("nombreTercero")->setValue($descripcionTercero);
+            
             $this->form->get("email")->setValue($this->Proveedor->getEmail());
             $this->form->get("webSite")->setValue($this->Proveedor->getWebSite());
             $this->configurarBotonesFormulario(true);

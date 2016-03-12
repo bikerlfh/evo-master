@@ -38,6 +38,18 @@ class FormDatoBasicoTercero extends Form
                 'type' => 'hidden',
             ),
         ));
+        
+        $this->add(array(
+            'name'=> 'nombreTercero',
+            'attributes' => array(
+                'id'=>'nombreTercero', 
+                'type' => 'text',
+                'placeholder'=>'Tercero',
+                'readonly'=>true,
+                'class' => $this->cssClass['text']
+            ),
+        ));
+        
         /************* select idTipoDocumento ***********/
         $tipoDocumento= new TipoDocumento($this->adapter);
         $select = new Element\Select('idTipoDocumento');

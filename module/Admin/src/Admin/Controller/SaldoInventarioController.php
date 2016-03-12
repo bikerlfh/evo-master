@@ -64,8 +64,15 @@ class SaldoInventarioController extends AbstractActionController
         {
             $this->SaldoInventario->consultarSaldoInventarioPorIdSaldoInventario($this->params()->fromQuery('id'));
             $this->form->get("idSaldoInventario")->setValue($this->SaldoInventario->getIdSaldoInventario());
+            //Campos Producto
             $this->form->get("idProducto")->setValue($this->SaldoInventario->getIdProducto());
+            $descripcionProducto = $this->SaldoInventario->Producto->getCodigo(). ' - ' . $this->SaldoInventario->Producto->getNombre(); 
+            $this->form->get("nombreProducto")->setValue($descripcionProducto);
+            //Campo Proveedor
             $this->form->get("idProveedor")->setValue($this->SaldoInventario->getIdProveedor());
+            $descripcionProveedor = $this->SaldoInventario->Proveedor->DatoBasicoTercero->getnit() . ' - ' .$this->SaldoInventario->Proveedor->DatoBasicoTercero->getdescripcion();
+            $this->form->get("nombreProveedor")->setValue($descripcionProveedor);
+            
             $this->form->get("cantidad")->setValue($this->SaldoInventario->getCantidad());
             $this->form->get("valorCompra")->setValue($this->SaldoInventario->getValorCompra());
             $this->form->get("valorVenta")->setValue($this->SaldoInventario->getValorVenta());
