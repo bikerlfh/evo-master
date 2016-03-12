@@ -6,6 +6,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
+use Application\Model\Clases;
 
 class Proveedor extends AbstractTableGateway
 {
@@ -118,6 +119,14 @@ class Proveedor extends AbstractTableGateway
             return true;
         }
         return false;
+    }
+    
+    public function consultaAvanzadaProveedor($nit, $descripcion)
+    {
+        $nit = $nit > 0? $nit:null;
+        $stored = new Clases\StoredProcedure("Proveedor",$this->adapter);
+        return $stored->execProcedureReturnDatos("Tercero.ConsultaAvanzadaProveedor ?,?",array($nit, $descripcion));
+        
     }
     public function generarOptionsSelect()
     {

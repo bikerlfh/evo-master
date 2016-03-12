@@ -7,6 +7,7 @@ use Admin\Form\FormBase;
 use Admin\Form\FormProveedor;
 use Application\Model\Entity\Proveedor;
 use Zend\Session\Container;
+use Admin\Form\FormDatoBasicoTercero;
 
 
 class ProveedorController extends AbstractActionController
@@ -76,9 +77,26 @@ class ProveedorController extends AbstractActionController
         $this->validarSession();
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->Proveedor = new Proveedor($this->dbAdapter);
+        
+        $this->form = new FormDatoBasicoTercero($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /** Campos para saber en donde se deben devolver los valores de la busqueda **/
+        $campoId=$this->params()->fromQuery('campoId',null) == null? 'idProveedor':$this->params()->fromQuery('campoId',null);
+        $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreProveedor':$this->params()->fromQuery('campoNombre',null);
+        
+        $registros = array();
+        if(count($this->request->getPost()) > 0)
+        {
+            $this->Proveedor = new Proveedor($this->dbAdapter);
+            $datos = $this->request->getPost();
+            
+            $this->form->get("nit")->setValue($datos["nit"]);
+            $this->form->get("descripcion")->setValue($datos["descripcion"]);
+            
+            $registros = $this->Proveedor->consultaAvanzadaProveedor($datos["nit"],$datos["descripcion"]);
+        }
+        
         // consultamos todos los Proveedores y los devolvemos a la vista    
-        $view = new ViewModel(array('registros'=>$this->Proveedor->consultarTodoProveedor()));
+        $view = new ViewModel(array('form'=>$this->form,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
         $view->setTerminal(true);
         return $view;
     }

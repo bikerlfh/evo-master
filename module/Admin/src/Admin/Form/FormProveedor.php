@@ -7,8 +7,6 @@
 namespace Admin\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Application\Model\Entity\TipoCuenta;
-use Application\Model\Entity\ViaPago;
 use Application\Model\Entity\DatoBasicoTercero;
 
 class FormProveedor extends Form
@@ -16,11 +14,18 @@ class FormProveedor extends Form
     private $adapter;
     private $cssClass;
     private $basePath;
+    
+    //Formulario
+    private $FormDatoBasicoTercero;
+    
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmproveedor");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
+        
+        $this->FormDatoBasicoTercero = new FormDatoBasicoTercero($serviceLocator, $basePath);
+        
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/proveedor/index',
             'method' => 'post',
@@ -40,6 +45,25 @@ class FormProveedor extends Form
                 'type' => 'hidden',
             ),
         ));
+        
+        $this->add(array(
+            'name'=> 'nombreProveedor',
+            'attributes' => array(
+                'id'=>'nombreProveedor', 
+                'type' => 'text',
+                'placeholder'=>'Proveedor',
+                'readonly'=>true,
+                'class' => $this->cssClass['text']
+            ),
+        ));
+        
+        /******** campos Tercero******************/
+        
+        $this->add($this->FormDatoBasicoTercero->get("nit"));
+        $this->add($this->FormDatoBasicoTercero->get("descripcion"));
+         
+        /***************Campos tercero **************************/
+       
         /************* select TipoCuenta ***********/
         /*$tipoCuenta= new TipoCuenta($this->adapter);
         $select = new Element\Select('idTipoCuenta');
