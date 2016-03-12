@@ -180,7 +180,7 @@ class Producto extends AbstractTableGateway
     {
         $idMarca = $idMarca > 0? $idMarca:null;
         $idCategoria = $idCategoria > 0? $idCategoria:null;
-        $stored = new Clases\StoredProcedure("Producto",$this->adapter);
+        $stored = new Clases\StoredProcedure($this->adapter);
         return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaProducto ?,?,?,?,?",array($idMarca,$idCategoria,$referencia,$codigo,$nombre));
     }
     public function generarOptionsSelect($where = null)

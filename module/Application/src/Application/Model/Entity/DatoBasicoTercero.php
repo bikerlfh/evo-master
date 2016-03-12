@@ -171,7 +171,7 @@ class DatoBasicoTercero extends AbstractTableGateway
     public function consultaAvanzadaDatoBasicoTercero($nit, $descripcion)
     {
         $nit = $nit > 0? $nit:null;
-        $stored = new Clases\StoredProcedure("DatoBasicoTercero",$this->adapter);
+        $stored = new Clases\StoredProcedure($this->adapter);
         return $stored->execProcedureReturnDatos("Tercero.ConsultaAvanzadaTercero ?,?",array($nit, $descripcion));
     }
     

@@ -22,10 +22,10 @@ class PedidoCompraPosicion extends AbstractTableGateway
     public function setIdUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
     }
-    public function getcantidad(){
+    public function getCantidad(){
         return $this->cantidad;
     }
-    public function setcantidad($cantidad){
+    public function setCantidad($cantidad){
         $this->cantidad=$cantidad;
     }
     public function getIdProducto(){
@@ -47,13 +47,13 @@ class PedidoCompraPosicion extends AbstractTableGateway
         $this->idPedidoCompraPosicion=$idPedidoCompraPosicion;
     }
 
-    public function guardarPedidoCompraPosicion($idPedidoCompra,$idProducto,$cantidad,$idUsuarioCreacion)
+    public function guardarPedidoCompraPosicion()
     {
         $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
-                'cantidad'=> $cantidad,
-                'idProducto'=> $idProducto,
-                'idPedidoCompra'=> $idPedidoCompra
+                'idUsuarioCreacion'=> $this->idUsuarioCreacion,
+                'cantidad'=> $this->cantidad,
+                'idProducto'=> $this->idProducto,
+                'idPedidoCompra'=> $this->idPedidoCompra
         );
         $result=$this->insert($datos);
         if($result>0)

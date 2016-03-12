@@ -136,6 +136,27 @@ class FormBase extends Form
                 )
         ));
         /*************** btn Buscar Municipio********************************/
+        $this->add(array(
+                'name'=>'btnGuardar',			
+                'attributes'=>array(
+                        'id'=>'btnGuardar',
+                        'type'=>'submit',
+                        'value'=>'Guardar',
+                        'title'=>'Guardar',
+                        'class'=>$this->cssClass['btnGuardar']
+                )
+        ));
+        $this->add(array(
+                'name'=>'btnModificar',			
+                'attributes'=>array(
+                        'id'=>'btnModificar',
+                        'type'=>'submit',
+                        'value'=>'Modificar',
+                        'title'=>'Modificar',
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnModificar']
+                )
+        ));
     }
 }
 ?>

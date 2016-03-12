@@ -2,6 +2,7 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter; 
+use Application\Model\Clases\StoredProcedure;
 
 class PedidoCompra extends AbstractTableGateway
 {
@@ -18,6 +19,7 @@ class PedidoCompra extends AbstractTableGateway
     {
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('PedidoCompra', 'Compra');
+        $this->PedidoCompraPosicion = array();
     }
 
     public function getIdUsuarioCreacion(){
@@ -61,16 +63,21 @@ class PedidoCompra extends AbstractTableGateway
 
     public function guardarPedidoCompra($idEstadoPedido,$idProveedor,$urlDocumentoPago,$idUsuarioCreacion)
     {
-        $datos=array(
-                'idUsuarioCreacion'=> $idUsuarioCreacion,
-                'urlDocumentoPago' => $urlDocumentoPago,
-                'fechaPedido'=> date('d-m-Y h:i:s'),
-                'idProveedor'=> $idProveedor,
-                'idEstadoPedido'=> $idEstadoPedido
-        );
-        $result=$this->insert($datos);
-        if($result>0)
+        $stored = new StoredProcedure($this->adapter);
+        // Compra.GuardarPedidoCompra @idEstadoPedido smallint,	@idProveedor bigint,@urlDocumentoPago varchar,@idUsuarioCreacion bigint
+        $idPedidoCompra = $stored->execProcedureReturnDatos("Compra.GuardarPedidoCompra ?,?,?,?",array($idEstadoPedido,$idProveedor,$urlDocumentoPago,$idUsuarioCreacion))->current();
+        if ($idPedidoCompra['idPedidoCompra'] > 0) 
+        {
+            foreach ($this->PedidoCompraPosicion as $posicion) 
+            {
+                $posicion->setIdPedidoCompra($idPedidoCompra['idPedidoCompra']);
+                if (!$posicion->guardarPedidoCompraPosicion()) 
+                {
+                    return false;
+                }
+            }
             return true;
+        }
         return false;
     }
 
@@ -79,8 +86,7 @@ class PedidoCompra extends AbstractTableGateway
         $datos=array(
                 'urlDocumentoPago' => $urlDocumentoPago,
                 'idProveedor'=> $idProveedor,
-                'idEstadoPedido'=> $idEstadoPedido
-        );
+                'idEstadoPedido'=> $idEstadoPedido);
         $result=$this->update($datos,array('idPedidoCompra'=>$idPedidoCompra));
         if($result>0)
             return true;

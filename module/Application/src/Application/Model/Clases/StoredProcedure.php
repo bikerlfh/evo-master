@@ -15,7 +15,7 @@ use Zend\Db\Adapter\ParameterContainer as ParameterContainer;
 class StoredProcedure 
 {
     private $adapter;
-    public function __construct($table,Adapter $adapter = null)
+    public function __construct(Adapter $adapter = null)
     {    	
         $this->adapter=$adapter;
         //return parent::__construct($table, $adapter, $databaseSchema,$selectResultPrototype);		

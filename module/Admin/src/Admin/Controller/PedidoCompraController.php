@@ -3,15 +3,16 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Admin\Form\FormBase;
 use Admin\Form\FormPedidoCompra;
 use Application\Model\Entity\PedidoCompra;
+use Application\Model\Entity\PedidoCompraPosicion;
 use Zend\Session\Container;
 
 
 class PedidoCompraController extends AbstractActionController
 {
     private $PedidoCompra;
+    //private $PedidoCompraPosicion;
     private $form;
     
     private $user_session;
@@ -31,13 +32,6 @@ class PedidoCompraController extends AbstractActionController
         
         $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
         $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
-        /**************************************************************************************/
-        // Se agregan el botones de buscar  marca y categoria al formualrio saldo inventario
-        /**************************************************************************************/
-        $formBase = new FormBase($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
-        $this->form->add($formBase->get("btnBuscarProveedor"));
-        $this->form->add($formBase->get("btnBuscarProducto"));
-        /**************************************************************************************/
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
@@ -52,28 +46,42 @@ class PedidoCompraController extends AbstractActionController
             }
             else
             {
+                // Este ciclo muestra todas las claves del array asociativo
+                $i = 0;
+                foreach($datos as $key => $value)
+                {
+                    // Se evalua si la clave es un idProducto
+                    if (strpos($key, 'idProducto') !== FALSE)
+                    {
+                        $indice =  split('idProducto',$key)[1];
+                        $PedidoCompraPosicion = new PedidoCompraPosicion($this->dbAdapter);
+                        $PedidoCompraPosicion->setIdProducto($datos[$key]);
+                        $PedidoCompraPosicion->setCantidad($datos['cantidad'.$indice]);
+                        $PedidoCompraPosicion->setIdUsuarioCreacion($this->user_session->idUsuario);                        
+                        $this->PedidoCompra->PedidoCompraPosicion[$i] = $PedidoCompraPosicion;
+                        $i++;
+                    }
+                }
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva pedidocompra
-                if($this->PedidoCompra->guardarPedidoCompra($datos['idMarca'],$datos['idCategoria'],$datos['codigo'],$datos['nombre'],$datos['referencia'],$datos['descripcion'],$datos['especificacion'], $this->user_session->idUsuario,  date('d-m-Y H:i:s')))
+                if($this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$datos['urlDocumentoPago'], $this->user_session->idUsuario))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->PedidoCompra->consultarTodoPedidoCompra()));
+                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la pedidocompra y se carga el formulario.
         else if(isset($id))
         {
             $this->PedidoCompra->consultarPedidoCompraPorIdPedidoCompra($this->params()->fromQuery('id'));
             $this->form->get("idPedidoCompra")->setValue($this->PedidoCompra->getIdPedidoCompra());
-            $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getIdMarca());
-            $this->form->get("idCategoria")->setValue($this->PedidoCompra->getIdCategoria());
-            $this->form->get("codigo")->setValue($this->PedidoCompra->getCodigo());
-            $this->form->get("nombre")->setValue($this->PedidoCompra->getNombre());
-            $this->form->get("referencia")->setValue($this->PedidoCompra->getReferencia());
-            $this->form->get("descripcion")->setValue($this->PedidoCompra->getDescripcion());
-            $this->form->get("especificacion")->setValue($this->PedidoCompra->getEspecificacion());
+            $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
+            $this->form->get("idEstadoPedido")->setValue($this->PedidoCompra->getIdEstadoPedido());
+            $this->form->get("idProveedor")->setValue($this->PedidoCompra->getIdProveedor());
+            $this->form->get("fechaPedido")->setValue($this->PedidoCompra->getFechaPedido());
+            $this->form->get("urlDocumentoPago")->setValue($this->PedidoCompra->getUrlDocumentoPago());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->PedidoCompra->consultarTodoPedidoCompra()));
+        return new ViewModel(array('form'=>$this->form));
     }
     public function buscarAction()
     {

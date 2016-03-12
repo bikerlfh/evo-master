@@ -7,8 +7,6 @@
 namespace Admin\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Application\Model\Entity\Producto;
-use Application\Model\Entity\Proveedor;
 use Application\Model\Entity\EstadoPedido;
 use Zend\InputFilter;
 
@@ -17,11 +15,15 @@ class FormPedidoCompra extends Form
     private $adapter;
     private $cssClass;
     private $basePath;
+    private $FormProveedor;
+    private $FormBase;
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmpedidocompra");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
+        $this->FormProveedor = new FormProveedor($serviceLocator,$basePath);
+        $this->FormBase = new FormBase($serviceLocator,$basePath);
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/pedidocompra/index',
             'method' => 'post',
@@ -42,31 +44,20 @@ class FormPedidoCompra extends Form
                 'type' => 'hidden',
             ),
         ));
-        $this->add(array(
-            'name' => 'idProveedor',                       
-            'attributes' => array(
-                'id'=>'idProveedor', 
-                'type' => 'hidden',
-            ),
-        ));
+        
+        /************ CAMPOS DEL PROVEEDOR *****************/
+        $this->add($this->FormProveedor->get('idProveedor'));
+        $this->add($this->FormProveedor->get('nombreProveedor'));
+        $this->add($this->FormBase->get('btnBuscarProveedor'));
+        /************ CAMPOS DEL PROVEEDOR *****************/
+        
         $file = new Element\File('file-documentoPago');
         $file->setLabel('Imagen')
              ->setAttribute('id', 'file-documentoPago')
              ->setAttributes(array('multiple' => false));
         $this->add($file);
         
-        
-        /************* select Producto ***********/
-        $producto = new Producto($this->adapter);
-        $select = new Element\Select('idProducto');
-        $select->setValueOptions($producto->generarOptionsSelect());
-        $select->setAttributes(array('id' => 'idProducto',
-                                     'class' => $this->cssClass['select'],
-                                     'required' => true));
-        $this->add($select);
-        /************* select Producto ***********/ 
-        
-        /************* select Producto ***********/
+        /************* EstadoPedido ***********/
         $EstadoPedido = new EstadoPedido($this->adapter);
         $select = new Element\Select('idEstadoPedido');
         $select->setValueOptions($EstadoPedido->generarOptionsSelect());
@@ -74,7 +65,7 @@ class FormPedidoCompra extends Form
                                      'class' => $this->cssClass['select'],
                                      'required' => true));
         $this->add($select);
-        /************* select Producto ***********/ 
+        /************* EstadoPedido ***********/ 
         
         
          $this->add(array(
@@ -109,27 +100,9 @@ class FormPedidoCompra extends Form
             ),
         ));
         
-        $this->add(array(
-                'name'=>'btnGuardar',			
-                'attributes'=>array(
-                        'id'=>'btnGuardar',
-                        'type'=>'submit',
-                        'value'=>'Guardar',
-                        'title'=>'Guardar',
-                        'class'=>$this->cssClass['btnGuardar']
-                )
-        ));
-        $this->add(array(
-                'name'=>'btnModificar',			
-                'attributes'=>array(
-                        'id'=>'btnModificar',
-                        'type'=>'submit',
-                        'value'=>'Modificar',
-                        'title'=>'Modificar',
-                        'style'=>'margin:2px',
-                        'class'=>$this->cssClass['btnModificar']
-                )
-        ));
+        $this->add($this->FormBase->get('btnGuardar'));
+        $this->add($this->FormBase->get('btnModificar'));
+        
         $this->add(array(
                 'name'=>'btnEliminar',			
                 'attributes'=>array(
@@ -164,10 +137,10 @@ class FormPedidoCompra extends Form
         $fileInput->getFilterChain()->attachByName(
             'filerenameupload',
             array(
-                'target'    => './public/imguploads/',
+                'target'    => './public/imguploads/compra',
                 //'randomize' => true,
-                'overwrite'       => true,
-                'use_upload_name' => true,
+                'overwrite'       => false,
+                'use_upload_name' => true,  
             )
         );
         $inputFilter->add($fileInput);
