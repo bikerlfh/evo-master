@@ -126,9 +126,14 @@ class PedidoCompra extends AbstractTableGateway
     {
         return $this->select(array('idestadopedido'=>$idEstadoPedido))->toArray();
     }
-    public function consultarPedidoCompraPorIdProveedor($idProveedor)
+   
+    public function consultaAvanzadaPedidoCompra($numeroPedido,$idProveedor,$idEstadoPedido)
     {
-        return $this->select(array('idproveedor'=>$idProveedor))->toArray();
+        $numeroPedido = $numeroPedido > 0? $numeroPedido:null;
+        $idProveedor = $idProveedor > 0? $idProveedor:null;
+        $idEstadoPedido = $idEstadoPedido > 0? $idEstadoPedido:null;
+        $stored = new StoredProcedure($this->adapter);
+        return $stored->execProcedureReturnDatos("Compra.ConsultaAvanzadaPedidoCompra ?,?,?",array($numeroPedido, $idProveedor,$idEstadoPedido));
     }
     private function LlenarPedidoCompraPosicion()
     {
