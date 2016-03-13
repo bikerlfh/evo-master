@@ -7,7 +7,6 @@
 namespace Admin\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Application\Model\Entity\Producto;
 use Zend\InputFilter;
 
 class FormImagenProducto extends Form
@@ -15,10 +14,12 @@ class FormImagenProducto extends Form
     private $adapter;
     private $cssClass;
     private $basePath;
+    private $formProducto;
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmimagenproducto");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
+        $this->formProducto = new FormProducto($serviceLocator,$basePath);
         $this->basePath = $basePath;
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/imagenproducto/index',
@@ -58,13 +59,15 @@ class FormImagenProducto extends Form
         $this->add($file);
         
         /************* select idProducto ***********/
-        $producto = new Producto($this->adapter);
+        $this->add($this->formProducto->get('idProducto'));
+        $this->add($this->formProducto->get('nombreProducto'));
+        /*$producto = new Producto($this->adapter);
         $select = new Element\Select('idProducto');
         $select->setValueOptions($producto->generarOptionsSelect());
         $select->setAttributes(array('id' => 'idProducto',
                                      'class' => $this->cssClass['select'],
                                      'required' => "required"));
-        $this->add($select);
+        $this->add($select);*/
         /************* select idProducto ***********/
         
         $this->add(array(

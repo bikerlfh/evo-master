@@ -21,7 +21,8 @@ if ($this->msg != null)
                             <label for="email1" class="control-label">Producto</label>
                         </div>
                         <div class="col-lg-5 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idProducto'));?>                           
+                            <?php echo $this->formElement($form->get('idProducto'));?>  
+                            <?php echo $this->formInput($form->get('nombreProducto'));?>  
                         </div>
                         <div class="col-lg-1">
                              <?php echo $this->formElement($form->get('btnBuscarProducto'));?>                           
@@ -88,7 +89,7 @@ if ($this->msg != null)
                                          <?php 
                                         foreach ($this->registros as $obj) {
                                             echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/imagenproducto/index?id=".$obj['idImagenProducto']."')\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/imagenproducto/index?id=".$obj['idImagenProducto']."&nombreProducto=".$obj['descripcionProducto']."')\">
                                                     <td>".$obj['descripcionProducto']."</td>
                                                     <td>".$obj['url']."</td>
                                                 </tr>";

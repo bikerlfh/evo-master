@@ -77,9 +77,10 @@ class PedidoCompra extends AbstractTableGateway
         $idPedidoCompra = $stored->execProcedureReturnDatos("Compra.GuardarPedidoCompra ?,?,?,?",array($idEstadoPedido,$idProveedor,$urlDocumentoPago,$idUsuarioCreacion))->current();
         if ($idPedidoCompra['idPedidoCompra'] > 0) 
         {
+            $this->idPedidoCompra = $idPedidoCompra['idPedidoCompra'];
             foreach ($this->PedidoCompraPosicion as $posicion) 
             {
-                $posicion->setIdPedidoCompra($idPedidoCompra['idPedidoCompra']);
+                $posicion->setIdPedidoCompra($this->idPedidoCompra);
                 if (!$posicion->guardarPedidoCompraPosicion()) 
                 {
                     return false;

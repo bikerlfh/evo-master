@@ -41,6 +41,24 @@ class PedidoCompraController extends AbstractActionController
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
+            $urlDocumentoPago = null;
+            // Guardamos la imagen, si esta viene.
+            $request = $this->getRequest();
+            if ($request->isPost()) 
+            {
+                // Make certain to merge the files info!
+                $data = array_merge_recursive(
+                    $request->getPost()->toArray(),
+                    $request->getFiles()->toArray()
+                );
+
+                $this->form->setData($data);
+                if ($this->form->isValid()) 
+                {
+                    $data = $this->form->getData();
+                    $urlDocumentoPago = $data['file-documentoPago']['tmp_name'];
+                }
+            }
             $datos=$this->request->getPost();
             // Este ciclo muestra todas las claves del array asociativo
             foreach($datos as $key => $value)
@@ -58,8 +76,8 @@ class PedidoCompraController extends AbstractActionController
                 }
             }
             $returnCrud=$this->consultarMessage("errorSave");
-            // se guarda la nueva pedidocompra
-            if($this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$datos['urlDocumentoPago'], $this->user_session->idUsuario))
+            // se guarda el nuevo pedido compra con sus posiciones.
+            if($this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$urlDocumentoPago, $this->user_session->idUsuario))
                 $returnCrud=$this->consultarMessage("okSave");
             
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));

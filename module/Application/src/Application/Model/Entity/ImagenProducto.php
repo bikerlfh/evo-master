@@ -99,15 +99,9 @@ class ImagenProducto extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarImagenProductoPoridProducto($idProducto)
+    public function consultarImagenProductoPorIdProducto($idProducto)
     {
-        $result=$this->select(array('idProducto'=>$idProducto))->current();
-        if($result)
-        {
-            $this->LlenarEntidad($result);
-            return true;
-        }
-        return false;
+        $result=$this->select(array('idProducto'=>$idProducto))->toArray();
     }
     public function consultarImagenProductoPorUrl($url)
     {

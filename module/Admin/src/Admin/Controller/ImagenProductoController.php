@@ -9,6 +9,7 @@ use Admin\Form\FormImagenProducto;
 use Zend\Session\Container;
 use Application\Model\Entity\ImagenProducto;
 
+
 class ImagenProductoController extends AbstractActionController
 {
     private $form;
@@ -43,7 +44,18 @@ class ImagenProductoController extends AbstractActionController
                 $request->getPost()->toArray(),
                 $request->getFiles()->toArray()
             );
-            
+            /***************** SE CAMBIA EL NOMBRE DE LA IMAGEN***************/
+            $numImgProducto = count($this->ImagenProducto->consultarImagenProductoPorIdProducto($data['idProducto']));
+            $referencia = str_replace(' ','_', str_replace('-','_',$data['nombreProducto'])).'_' ;
+            $i =0;
+            foreach ($data['image-file'] as $imagen)
+            {
+                $numImgProducto++;
+                $imagen['name'] = $referencia.($numImgProducto).'.'.explode ('.',$imagen['name'])[1];
+                $data['image-file'][$i] = $imagen;
+                $i++;
+            }
+             /******************************************************************/
             $this->form->setData($data);
             if ($this->form->isValid()) 
             {
@@ -75,6 +87,7 @@ class ImagenProductoController extends AbstractActionController
             $this->ImagenProducto->consultarImagenProductoPorIdImagenProducto($this->params()->fromQuery('id'));
             $this->form->get("idImagenProducto")->setValue($this->ImagenProducto->getIdImagenProducto());
             $this->form->get("idProducto")->setValue($this->ImagenProducto->getIdProducto());
+            $this->form->get("nombreProducto")->setValue($this->params()->fromQuery('nombreProducto'));
             $this->form->get("url")->setValue($this->ImagenProducto->getUrl());
             $this->configurarBotonesFormulario(true);
         }
