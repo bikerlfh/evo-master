@@ -46,7 +46,7 @@ class ImagenProductoController extends AbstractActionController
             );
             /***************** SE CAMBIA EL NOMBRE DE LA IMAGEN***************/
             $numImgProducto = count($this->ImagenProducto->consultarImagenProductoPorIdProducto($data['idProducto']));
-            $referencia = str_replace(' ','_', str_replace('-','_',$data['nombreProducto'])).'_' ;
+            $referencia = str_replace(' ','_', str_replace(' - ','_',$data['nombreProducto'])).'_' ;
             $i =0;
             foreach ($data['image-file'] as $imagen)
             {
