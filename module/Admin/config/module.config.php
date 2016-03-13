@@ -62,6 +62,7 @@ return array(
                     ),
                 ),
             ),
+            /*
             'buscarPedidoCompra' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -74,7 +75,7 @@ return array(
                         'action' => 'index',
                     ),
                 ),
-           ),
+           ),*/
         ),
     ),
     'view_manager' => array(

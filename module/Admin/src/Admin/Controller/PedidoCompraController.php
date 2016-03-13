@@ -62,6 +62,7 @@ class PedidoCompraController extends AbstractActionController
                         $PedidoCompraPosicion = new PedidoCompraPosicion($this->dbAdapter);
                         $PedidoCompraPosicion->setIdProducto($datos[$key]);
                         $PedidoCompraPosicion->setCantidad($datos['cantidad'.$indice]);
+                        $PedidoCompraPosicion->setValorCompra($datos['valorCompra'.$indice]);
                         $PedidoCompraPosicion->setIdUsuarioCreacion($this->user_session->idUsuario);                        
                         $this->PedidoCompra->PedidoCompraPosicion[$i] = $PedidoCompraPosicion;
                         $i++;

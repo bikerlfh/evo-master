@@ -9,6 +9,7 @@ class PedidoCompraPosicion extends AbstractTableGateway
     private $idPedidoCompra;
     private $idProducto;
     private $cantidad;
+    private $valorCompra;
     private $idUsuarioCreacion;   
     public function __construct(Adapter $adapter = null)
     {
@@ -21,6 +22,12 @@ class PedidoCompraPosicion extends AbstractTableGateway
     }
     public function setIdUsuarioCreacion($idUsuarioCreacion){
         $this->idUsuarioCreacion=$idUsuarioCreacion;
+    }
+    function getValorCompra() {
+        return $this->valorCompra;
+    }
+    function setValorCompra($valorCompra) {
+        $this->valorCompra = $valorCompra;
     }
     public function getCantidad(){
         return $this->cantidad;
@@ -51,6 +58,7 @@ class PedidoCompraPosicion extends AbstractTableGateway
     {
         $datos=array(
                 'idUsuarioCreacion'=> $this->idUsuarioCreacion,
+                'valorCompra'=> $this->valorCompra,
                 'cantidad'=> $this->cantidad,
                 'idProducto'=> $this->idProducto,
                 'idPedidoCompra'=> $this->idPedidoCompra
@@ -61,9 +69,10 @@ class PedidoCompraPosicion extends AbstractTableGateway
         return false;
     }
 
-    public function modificarPedidoCompraPosicion($idPedidoCompraPosicion,$idPedidoCompra,$idProducto,$cantidad)
+    public function modificarPedidoCompraPosicion($idPedidoCompraPosicion,$idPedidoCompra,$idProducto,$cantidad,$valorCompra)
     {
         $datos=array(
+                'valorCompra'=> $valorCompra,
                 'cantidad'=> $cantidad,
                 'idProducto'=> $idProducto,
                 'idPedidoCompra'=> $idPedidoCompra
@@ -104,6 +113,7 @@ class PedidoCompraPosicion extends AbstractTableGateway
     {
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
         $this->cantidad=$result['cantidad'];
+        $this->valorCompra=$result['valorCompra'];
         $this->idProducto=$result['idProducto'];
         $this->idPedidoCompra=$result['idPedidoCompra'];
         $this->idPedidoCompraPosicion=$result['idPedidoCompraPosicion'];
