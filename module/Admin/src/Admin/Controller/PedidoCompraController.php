@@ -22,13 +22,18 @@ class PedidoCompraController extends AbstractActionController
     
     public function indexAction()
     {
+        //$param = $this->getEvent()->getRouteMatch()->getParams();
+        /*
+        if ($this->getSessContainer()->idUsuario>0){
+            return $this->forward()->dispatch('Test\Controller\Auth', array('action'=>'loginpage'));
+         }*/
         $this->validarSession();
         // se asigna el layout admin
         $this->layout('layout/admin'); 
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idPedidoCompra',null);
         
         $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
         $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -77,7 +82,6 @@ class PedidoCompraController extends AbstractActionController
             $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
             $this->form->get("idEstadoPedido")->setValue($this->PedidoCompra->getIdEstadoPedido());
             $this->form->get("idProveedor")->setValue($this->PedidoCompra->getIdProveedor());
-            $this->form->get("fechaPedido")->setValue($this->PedidoCompra->getFechaPedido());
             $this->form->get("urlDocumentoPago")->setValue($this->PedidoCompra->getUrlDocumentoPago());
             $this->configurarBotonesFormulario(true);
         }
@@ -86,6 +90,12 @@ class PedidoCompraController extends AbstractActionController
     public function buscarAction()
     {
         $this->validarSession();
+        /*
+        $idPedidoCompra=$this->params()->fromQuery('idPedidoCompra',null);
+        if ($idPedidoCompra != null) {
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/pedidocompra/index?id='+$idPedidoCompra);
+            return $this->redirect()->toRoute('buscarPedidoCompra',array('idPedidoCompra'=>  $idPedidoCompra));
+        }*/
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         
@@ -97,15 +107,14 @@ class PedidoCompraController extends AbstractActionController
         $registros = array();
         if(count($this->request->getPost()) > 0)
         {
-            $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
             $datos = $this->request->getPost();
+            $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
             $this->form->get("numeroPedido")->setValue($datos["numeroPedido"]);
             //$this->form->get("idProveedor")->setValue($datos["idProveedor"]);
             //$this->form->get("nombreProveedor")->setValue($datos["nombreProveedor"]);
             $this->form->get("idEstadoPedido")->setValue($datos["idEstadoPedido"]);            
             $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],null,$datos["idEstadoPedido"]);
         }
-        
         // consultamos todos los Proveedores y los devolvemos a la vista    
         $view = new ViewModel(array('form'=>$this->form,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
         $view->setTerminal(true);

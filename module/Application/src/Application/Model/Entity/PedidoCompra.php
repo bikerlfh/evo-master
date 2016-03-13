@@ -7,6 +7,7 @@ use Application\Model\Clases\StoredProcedure;
 class PedidoCompra extends AbstractTableGateway
 {
     private $idPedidoCompra;
+    private $numeroPedido;
     private $idEstadoPedido;
     private $idProveedor;
     private $fechaPedido;
@@ -54,6 +55,14 @@ class PedidoCompra extends AbstractTableGateway
     public function setIdEstadoPedido($idEstadoPedido){
         $this->idEstadoPedido=$idEstadoPedido;
     }
+    function getNumeroPedido() {
+        return $this->numeroPedido;
+    }
+
+    function setNumeroPedido($numeroPedido) {
+        $this->numeroPedido = $numeroPedido;
+    }
+
     public function getIdPedidoCompra(){
         return $this->idPedidoCompra;
     }

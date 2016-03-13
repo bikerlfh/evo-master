@@ -62,6 +62,19 @@ return array(
                     ),
                 ),
             ),
+            'buscarPedidoCompra' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/admin/pedidocompra/index/:idPedidoCompra[/]',
+                    'constraints' => array(
+                        'idPedidoCompra' => '[0-9]*'
+                        ),
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\PedidoCompra',
+                        'action' => 'index',
+                    ),
+                ),
+           ),
         ),
     ),
     'view_manager' => array(
