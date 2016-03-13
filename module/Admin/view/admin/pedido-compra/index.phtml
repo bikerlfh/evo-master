@@ -12,20 +12,34 @@ if ($this->msg != null)
 
     function AddRow()
     {
+        //$("#btnGuardar").attr('type','button');
         numRows++;
         var onClick="onclick=\"usar_ajax('<?php echo $this->basePath()?>/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','#modal-dialog-display','')\"";
         var cadena ="<tr id='pedidoCompraPosicion"+numRows+"'>";
         cadena += "<td>"+numRows+"</td>";
         cadena += " <td><div class='col-lg-5 col-md-4 col-sm-4'>";
         cadena += "<input class='form-control' id='idProducto"+numRows+"' name='idProducto"+numRows+"' type='hidden'>";
-        cadena += "<input class='form-control' id='nombreProducto"+numRows+"' type='text' readonly='true'></div>";
+        cadena += "<input class='form-control' id='nombreProducto"+numRows+"' type='text' required='required' onkeypress='return false'></div>";
         cadena += "<input type='button' "+onClick+" data-target='#textModal' data-toggle='modal' style='margin:2px' class='btn btn-support2' value='Buscar'></td>";
         cadena += "<td><input name=\"cantidad"+numRows+"\" id=\"cantidad"+numRows+"\" type='text' required='required' placeholder='cantidad' maxlength='9' class='form-control' onkeypress=\"return validarTecla(event,'num')\"></td>";
         cadena += "<td><a class='btn btn-danger' onclick=\"$('#pedidoCompraPosicion"+numRows+"').remove()\"><i class='fa  fa-minus-square'></i></a></td></tr>";
         $('#tBodyPedido').append(cadena);
     }
-     $(document).ready(function() {
+    $(document).ready(function() {
         AddRow();
+        // Valida que el formulario no tenga ningun detalle con productos repeditos
+        $("#<?php echo $form->getName()?>").submit(function( event ) {
+            var productos = []
+            $("#<?php echo $form->getName()?>").find("input[name^='idProducto']").each(function() {
+                if (jQuery.inArray(productos[0], $(this).val() )>-1) 
+                {
+                    showMessageWarning('Productos Repetidos','En el detalle del pedido no se puede adicionar mas de una vez un producto')
+                    event.preventDefault();
+                    return;
+                }
+                productos.push($(this).val());
+            });
+        });
     });
 </script>
  

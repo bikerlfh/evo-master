@@ -52,7 +52,8 @@ class FormProveedor extends Form
                 'id'=>'nombreProveedor', 
                 'type' => 'text',
                 'placeholder'=>'Proveedor',
-                'readonly'=>true,
+                'required'=>'required',
+                'onkeypress'=>'return false',
                 'class' => $this->cssClass['text']
             ),
         ));

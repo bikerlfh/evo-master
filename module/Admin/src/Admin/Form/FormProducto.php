@@ -65,7 +65,8 @@ class FormProducto extends Form
                 'id'=>'nombreProducto', 
                 'type' => 'text',
                 'placeholder'=>'Producto',
-                'readonly'=>true,
+                'required'=>'required',
+                'onkeypress'=>'return false',
                 'class' => $this->cssClass['text']
             ),
         ));

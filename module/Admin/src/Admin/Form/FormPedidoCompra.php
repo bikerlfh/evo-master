@@ -78,28 +78,6 @@ class FormPedidoCompra extends Form
                 'class' => $this->cssClass['text']
             ),
         ));
-         
-        $this->add(array(
-            'name' => 'descripcionProveedor',                       
-            'attributes' => array(
-                'id'=>'descripcionProveedor', 
-                'type' => 'text',
-                'readonly'=>true,
-                'class' => $this->cssClass['text']
-            ),
-        ));
-         
-        $this->add(array(
-            'name' => 'cantidad',                       
-            'attributes' => array(
-                'id'=>'cantidad', 
-                'type' => 'text',
-                'placeholder'=>'cantidad',
-                'maxlength'=>'9',
-                'onKeyPress'=>"return validarTecla(event,'num')",
-                'class' => $this->cssClass['text']
-            ),
-        ));
         
         $this->add($this->FormBase->get('btnGuardar'));
         $this->add($this->FormBase->get('btnModificar'));

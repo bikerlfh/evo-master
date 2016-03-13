@@ -166,7 +166,7 @@ function showMessaginfo(title,menssage)
 }
 function showMessageWarning(title,menssage)
 {
-    toastr.info(menssage, title);
+    toastr.warning(menssage, title);
 }
 function showMessageError(title,menssage)
 {
