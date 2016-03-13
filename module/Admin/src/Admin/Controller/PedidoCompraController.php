@@ -42,49 +42,27 @@ class PedidoCompraController extends AbstractActionController
         if(count($this->request->getPost())>0)
         {
             $datos=$this->request->getPost();
-            // Si se envia el id de la pedidocompra se modifica este.
-            if ($datos["idPedidoCompra"] != null) 
+            // Este ciclo muestra todas las claves del array asociativo
+            foreach($datos as $key => $value)
             {
-                $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->PedidoCompra->modificarPedidoCompra($datos['idPedidoCompra'],$datos['idMarca'],$datos['idCategoria'],$datos['codigo'],$datos['nombre'],$datos['referencia'],$datos['descripcion'],$datos['especificacion']))
-                    $returnCrud=$this->consultarMessage("okUpdate");
-            }
-            else
-            {
-                // Este ciclo muestra todas las claves del array asociativo
-                $i = 0;
-                foreach($datos as $key => $value)
+                // Se evalua si la clave es un idProducto
+                if (strpos($key, 'idProducto') !== FALSE)
                 {
-                    // Se evalua si la clave es un idProducto
-                    if (strpos($key, 'idProducto') !== FALSE)
-                    {
-                        $indice =  split('idProducto',$key)[1];
-                        $PedidoCompraPosicion = new PedidoCompraPosicion($this->dbAdapter);
-                        $PedidoCompraPosicion->setIdProducto($datos[$key]);
-                        $PedidoCompraPosicion->setCantidad($datos['cantidad'.$indice]);
-                        $PedidoCompraPosicion->setValorCompra($datos['valorCompra'.$indice]);
-                        $PedidoCompraPosicion->setIdUsuarioCreacion($this->user_session->idUsuario);                        
-                        $this->PedidoCompra->PedidoCompraPosicion[$i] = $PedidoCompraPosicion;
-                        $i++;
-                    }
+                    $indice =  split('idProducto',$key)[1];
+                    $PedidoCompraPosicion = new PedidoCompraPosicion($this->dbAdapter);
+                    $PedidoCompraPosicion->setIdProducto($datos[$key]);
+                    $PedidoCompraPosicion->setCantidad($datos['cantidad'.$indice]);
+                    $PedidoCompraPosicion->setValorCompra($datos['valorCompra'.$indice]);
+                    $PedidoCompraPosicion->setIdUsuarioCreacion($this->user_session->idUsuario);                        
+                    array_push($this->PedidoCompra->PedidoCompraPosicion, $PedidoCompraPosicion);
                 }
-                $returnCrud=$this->consultarMessage("errorSave");
-                // se guarda la nueva pedidocompra
-                if($this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$datos['urlDocumentoPago'], $this->user_session->idUsuario))
-                    $returnCrud=$this->consultarMessage("okSave");
             }
-                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
-        }
-        // si existe el parametro $id  se consulta la pedidocompra y se carga el formulario.
-        else if(isset($id))
-        {
-            $this->PedidoCompra->consultarPedidoCompraPorIdPedidoCompra($this->params()->fromQuery('id'));
-            $this->form->get("idPedidoCompra")->setValue($this->PedidoCompra->getIdPedidoCompra());
-            $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
-            $this->form->get("idEstadoPedido")->setValue($this->PedidoCompra->getIdEstadoPedido());
-            $this->form->get("idProveedor")->setValue($this->PedidoCompra->getIdProveedor());
-            $this->form->get("urlDocumentoPago")->setValue($this->PedidoCompra->getUrlDocumentoPago());
-            $this->configurarBotonesFormulario(true);
+            $returnCrud=$this->consultarMessage("errorSave");
+            // se guarda la nueva pedidocompra
+            if($this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$datos['urlDocumentoPago'], $this->user_session->idUsuario))
+                $returnCrud=$this->consultarMessage("okSave");
+            
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         return new ViewModel(array('form'=>$this->form));
     }
