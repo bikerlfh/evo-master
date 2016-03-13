@@ -53,7 +53,8 @@ class FormImagenProducto extends Form
         $file = new Element\File('image-file');
         $file->setLabel('Imagen')
              ->setAttribute('id', 'image-file')
-             ->setAttributes(array('multiple' => true));
+             ->setAttributes(array('multiple' => true,
+                                   'accept'=>".gif,.jpg,.jpeg,.png"));
         $this->add($file);
         
         /************* select idProducto ***********/

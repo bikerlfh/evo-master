@@ -54,7 +54,8 @@ class FormPedidoCompra extends Form
         $file = new Element\File('file-documentoPago');
         $file->setLabel('Imagen')
              ->setAttribute('id', 'file-documentoPago')
-             ->setAttributes(array('multiple' => false));
+             ->setAttributes(array('multiple' => false,
+                                   'accept'=>".gif,.jpg,.jpeg,.png"));
         $this->add($file);
         
         /************* EstadoPedido ***********/
