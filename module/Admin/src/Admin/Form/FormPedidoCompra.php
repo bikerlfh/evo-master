@@ -68,6 +68,16 @@ class FormPedidoCompra extends Form
         $this->add($select);
         /************* EstadoPedido ***********/ 
         
+        /************* EstadoPedido ***********/
+        $EstadoPedido = new EstadoPedido($this->adapter);
+        $select = new Element\Select('idEstadoPedidoBusqueda');
+        $select->setValueOptions($EstadoPedido->generarOptionsSelect());
+        $select->setAttributes(array('id' => 'idEstadoPedidoBusqueda',
+                                     'class' => $this->cssClass['select'],
+                                     'required' => true));
+        $this->add($select);
+        /************* EstadoPedido ***********/ 
+        
         
          $this->add(array(
             'name' => 'numeroPedido',                       

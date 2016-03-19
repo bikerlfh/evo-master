@@ -2,6 +2,7 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Application\Model\Clases\StoredProcedure;
 
 class PedidoCompraPosicion extends AbstractTableGateway
 {
@@ -56,17 +57,10 @@ class PedidoCompraPosicion extends AbstractTableGateway
 
     public function guardarPedidoCompraPosicion()
     {
-        $datos=array(
-                'idUsuarioCreacion'=> $this->idUsuarioCreacion,
-                'valorCompra'=> $this->valorCompra,
-                'cantidad'=> $this->cantidad,
-                'idProducto'=> $this->idProducto,
-                'idPedidoCompra'=> $this->idPedidoCompra
-        );
-        $result=$this->insert($datos);
-        if($result>0)
-            return true;
-        return false;
+        $stored = new StoredProcedure($this->adapter);
+        // Compra.GuardarPedidoCompraPosicion @idPedidoCompra bigint,@idProducto bigint,@cantidad bigint,@valorCompra decimal(10,2),@idUsuarioCreacion bigint
+        $result = $stored->execProcedureReturnDatos("Compra.GuardarPedidoCompraPosicion ?,?,?,?,?",array($this->idPedidoCompra,$this->idProducto,$this->cantidad,$this->valorCompra,$this->idUsuarioCreacion))->current();
+        return $result['result'];
     }
 
     public function modificarPedidoCompraPosicion($idPedidoCompraPosicion,$idPedidoCompra,$idProducto,$cantidad,$valorCompra)

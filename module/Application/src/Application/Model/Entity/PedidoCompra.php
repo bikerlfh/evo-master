@@ -75,20 +75,23 @@ class PedidoCompra extends AbstractTableGateway
         $stored = new StoredProcedure($this->adapter);
         // Compra.GuardarPedidoCompra @idEstadoPedido smallint,	@idProveedor bigint,@urlDocumentoPago varchar,@idUsuarioCreacion bigint
         $idPedidoCompra = $stored->execProcedureReturnDatos("Compra.GuardarPedidoCompra ?,?,?,?",array($idEstadoPedido,$idProveedor,$urlDocumentoPago,$idUsuarioCreacion))->current();
+        unset($stored);
         if ($idPedidoCompra['idPedidoCompra'] > 0) 
         {
             $this->idPedidoCompra = $idPedidoCompra['idPedidoCompra'];
-            foreach ($this->PedidoCompraPosicion as $posicion) 
+            foreach ($this->PedidoCompraPosicion as $posicion)
             {
                 $posicion->setIdPedidoCompra($this->idPedidoCompra);
-                if (!$posicion->guardarPedidoCompraPosicion()) 
+                $resultado = $posicion->guardarPedidoCompraPosicion();
+                if ($resultado != 'true')
                 {
-                    return false;
+                    $this->eliminarPedidoCompra($idPedidoCompra);
+                    return $resultado;
                 }
             }
-            return true;
+            return 'true';
         }
-        return false;
+        return 'false';
     }
 
     public function modificarPedidoCompra($idPedidoCompra,$idEstadoPedido,$idProveedor,$urlDocumentoPago)
@@ -110,7 +113,7 @@ class PedidoCompra extends AbstractTableGateway
             return true;
         return false;
     }
-    public  function eliminarPedidoCompra($idPedidoCompra)
+    private function eliminarPedidoCompra($idPedidoCompra)
     {
         if ($this->delete(array('idPedidoCompra'=>$idPedidoCompra))>0) {
             return true;
@@ -143,7 +146,7 @@ class PedidoCompra extends AbstractTableGateway
         $idProveedor = $idProveedor > 0? $idProveedor:null;
         $idEstadoPedido = $idEstadoPedido > 0? $idEstadoPedido:null;
         $stored = new StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Compra.ConsultaAvanzadaPedidoCompra ?,?,?",array($numeroPedido, $idProveedor,$idEstadoPedido));
+        return $stored->execProcedureReturnDatos("Compra.ConsultaAvanzadaPedidoCompra ?,?,?",array($numeroPedido, $idProveedor,(int)$idEstadoPedido));
     }
     private function LlenarPedidoCompraPosicion()
     {

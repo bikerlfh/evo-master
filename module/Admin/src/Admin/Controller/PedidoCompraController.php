@@ -76,9 +76,11 @@ class PedidoCompraController extends AbstractActionController
                 }
             }
             $returnCrud=$this->consultarMessage("errorSave");
-            // se guarda el nuevo pedido compra con sus posiciones.
-            if($this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$urlDocumentoPago, $this->user_session->idUsuario))
+            // Se guarda el nuevo pedido compra con sus posiciones.
+            $resultado = $this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$urlDocumentoPago, $this->user_session->idUsuario);
+            if($resultado == 'true'){
                 $returnCrud=$this->consultarMessage("okSave");
+            }
             
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
@@ -97,6 +99,7 @@ class PedidoCompraController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         
         $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form->setAttribute('name' , 'frmBuscarPedidoCompra');
         /** Campos para saber en donde se deben devolver los valores de la busqueda **/
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idPedidoCompra':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'numeroPedido':$this->params()->fromQuery('campoNombre',null);
@@ -109,7 +112,7 @@ class PedidoCompraController extends AbstractActionController
             $this->form->get("numeroPedido")->setValue($datos["numeroPedido"]);
             //$this->form->get("idProveedor")->setValue($datos["idProveedor"]);
             //$this->form->get("nombreProveedor")->setValue($datos["nombreProveedor"]);
-            $this->form->get("idEstadoPedido")->setValue($datos["idEstadoPedido"]);            
+            $this->form->get("idEstadoPedidoBusqueda")->setValue($datos["idEstadoPedido"]);            
             $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],null,$datos["idEstadoPedido"]);
         }
         // consultamos todos los Proveedores y los devolvemos a la vista    
@@ -118,18 +121,6 @@ class PedidoCompraController extends AbstractActionController
         return $view;
     }
     
-    public function eliminarAction()
-    {
-        //$this->validarSession();
-        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
-        $id=$this->params()->fromQuery('id',null);
-        if($id != null)
-        {
-            $this->PedidoCompra->eliminarPedidoCompra($id);
-            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/pedidocompra');
-        }
-    }
     private function consultarMessage($nameMensaje)
     {
         $serviceLocator=$this->getServiceLocator()->get('Config');
