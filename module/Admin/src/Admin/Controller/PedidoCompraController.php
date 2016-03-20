@@ -35,9 +35,6 @@ class PedidoCompraController extends AbstractActionController
         $this->layout('layout/admin'); 
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('idPedidoCompra',null);
-        
         $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
         $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         $this->configurarBotonesFormulario(false);
