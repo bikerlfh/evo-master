@@ -25,6 +25,7 @@ return array(
             'Admin\Controller\TipoUsuario' => 'Admin\Controller\TipoUsuarioController',
             'Admin\Controller\Usuario' => 'Admin\Controller\UsuarioController',
             'Admin\Controller\ViaPago' => 'Admin\Controller\ViaPagoController',
+            'Admin\Controller\EstadoPedidoVenta' => 'Admin\Controller\EstadoPedidoVentaController',
         ),
     ),
     'router' => array(

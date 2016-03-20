@@ -72,7 +72,7 @@ class EstadoPedidoVenta extends AbstractTableGateway
         $result=$this->select(array('idEstadoPedidoVenta'=>$idEstadoPedidoVenta))->current();
         if($result)
         {
-            LlenarEntidad($result);
+            $this->LlenarEntidad($result);
             return true;
         }
         return false;
@@ -82,7 +82,7 @@ class EstadoPedidoVenta extends AbstractTableGateway
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
         {
-            LlenarEntidad($result);
+            $this->LlenarEntidad($result);
             return true;
         }
         return false;

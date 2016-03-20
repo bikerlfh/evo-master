@@ -177,7 +177,7 @@ class EstadoPedidoVenta extends AbstractTableGateway
         $this->urlDocumentoPago = $result['urlDocumentoPago'];
         $this->idUsuarioCreacion = $result['idUsuarioCreacion'];
         
-        CargarEmbebidos();
+        $this->CargarEmbebidos();
     }
     
     //<===============================================================>
