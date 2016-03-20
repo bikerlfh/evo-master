@@ -79,7 +79,7 @@ class EstadoPedido extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarEstadoPedidoPorcodigo($codigo)
+    public function consultarEstadoPedidoPorCodigo($codigo)
     {
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
