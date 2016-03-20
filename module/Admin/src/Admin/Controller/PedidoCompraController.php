@@ -20,7 +20,7 @@ class PedidoCompraController extends AbstractActionController
         $this->user_session = new Container();
     }
     
-    public function indexAction()
+    public function solicitudAction()
     {
         //$param = $this->getEvent()->getRouteMatch()->getParams();
         /*
