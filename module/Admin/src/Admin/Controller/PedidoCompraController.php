@@ -6,6 +6,8 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\FormPedidoCompra;
 use Application\Model\Entity\PedidoCompra;
 use Application\Model\Entity\PedidoCompraPosicion;
+use Application\Model\Entity\EstadoPedido;
+
 use Zend\Session\Container;
 
 
@@ -16,6 +18,7 @@ class PedidoCompraController extends AbstractActionController
     private $form;
     
     private $user_session;
+    
     public function __construct() {
         $this->user_session = new Container();
     }
@@ -32,9 +35,6 @@ class PedidoCompraController extends AbstractActionController
         $this->layout('layout/admin'); 
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('idPedidoCompra',null);
-        
         $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
         $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         $this->configurarBotonesFormulario(false);
@@ -76,8 +76,12 @@ class PedidoCompraController extends AbstractActionController
                 }
             }
             $returnCrud=$this->consultarMessage("errorSave");
+            /********************* Se consulta el estado Solicitado*****************************/
+            $estadoPedido = new EstadoPedido($this->dbAdapter);
+            $estadoPedido->consultarEstadoPedidoPorCodigo("01");
+            /**********************************************************************************/
             // Se guarda el nuevo pedido compra con sus posiciones.
-            $resultado = $this->PedidoCompra->guardarPedidoCompra($datos['idEstadoPedido'],$datos['idProveedor'],$urlDocumentoPago, $this->user_session->idUsuario);
+            $resultado = $this->PedidoCompra->guardarPedidoCompra($estadoPedido->getidEstadoPedido(),$datos['idProveedor'],$urlDocumentoPago, $this->user_session->idUsuario);
             if($resultado == 'true'){
                 $returnCrud=$this->consultarMessage("okSave");
             }
