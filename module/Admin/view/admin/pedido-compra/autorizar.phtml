@@ -1,0 +1,131 @@
+<?php
+$form=$this->form;
+$form->prepare();
+//<====Si se envía un mensaje este se muestra=====> 
+if ($this->msg != null) 
+{
+    echo "<script type='text/javascript'>".$this->msg."</script>";    
+}
+?>
+<script type="text/javascript">
+    $(document).ready(function() {
+    });
+</script>
+ 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="box box-bordered style-primary">
+            <div class="box-head">
+                <header>
+                    <h4 class="text-light">
+                        <i class="fa fa-fw fa-laptop"></i> Autorizar <strong>Pedido Compra</strong>
+                    </h4>
+                    
+                </header>
+                
+                <div class="tools">
+                    <div class="btn-group btn-group-transparent">
+                        <a class="btn btn-equal btn-sm " data-target="#textModal" data-toggle="modal" onclick="usar_ajax('<?php echo $this->basePath()?>/admin/pedidocompra/buscar','#modal-dialog-display','')"><i class="fa  fa-search"></i></a>
+                        <!--<a class="btn btn-equal btn-sm btn-collapse"><i class="fa fa-angle-down"></i></a>-->
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div class="box-body style-white" style="display: none;">
+                <div class="col-md-1">
+                    <a href="#" class="btn btn-default  btn-labeled">
+                        <span><i class="fa fa-envelope"></i></span>
+                    </a>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+    <div class="col-lg-12">
+        
+        <div class="box">
+            
+            <div class="box-body">
+                <?php echo $this->form()->openTag($form);
+                      echo $this->formElement($form->get('idProveedor'));?>
+                    <div class="form-group">
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                            <label for="email1" class="control-label">Número Pedído</label>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-4">
+                            <?php echo $this->formInput($form->get('numeroPedido'));?>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                            <label for="email1" class="control-label">Proveedor</label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-5">
+                            <?php echo $this->formInput($form->get('nombreProveedor'));?>  
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                            <label for="email1" class="control-label">Documento Pago</label>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-5">
+                             <?php echo $this->formElement($form->get('file-documentoPago'));?>   
+                            <p class="help-block">Escanee el documento de pago.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                                <div class="box box-outlined style-primary1">
+                                    <div class="box-head">
+                                        <header><h4 class="text-light"><i class="fa fa-fw  fa-list"></i> Pedido <strong>Detalle</strong></h4></header>
+                                    </div>
+                                    <div class="box-body" style="display: block;">
+                                        <div class="table-responsive no-margin">
+                                            <table class="table table-striped no-margin">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Producto</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Valor Compra</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    if (count($this->PedidoCompraPosicion) > 0) 
+                                                    {
+                                                        $i = 1;
+                                                        foreach ($this->PedidoCompraPosicion as $posicion) 
+                                                        {
+                                                            echo "<tr>"
+                                                            . "<td>$i</td>"
+                                                            . "<td>".$posicion->getNombreProducto()."</td>"
+                                                            . "<td>".$posicion->getCantidad()."</td>"
+                                                            . "<td>".$posicion->getValorCompra()."</td></tr>";
+                                                            $i++;
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div><!--end .col-lg-6 -->
+                    </div>
+                    <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
+                        <?php echo $this->formElement($form->get('btnGuardar'));?>  
+                        <?php echo $this->formElement($form->get('btnCancelar'));?> 
+                    </div>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div><!--end .box -->
+    </div><!--end .col-lg-12 -->
+    
+</div>
