@@ -41,24 +41,7 @@ class PedidoCompraController extends AbstractActionController
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
-            $urlDocumentoPago = null;
-            // Guardamos la imagen, si esta viene.
-            $request = $this->getRequest();
-            if ($request->isPost()) 
-            {
-                // Make certain to merge the files info!
-                $data = array_merge_recursive(
-                    $request->getPost()->toArray(),
-                    $request->getFiles()->toArray()
-                );
-
-                $this->form->setData($data);
-                if ($this->form->isValid()) 
-                {
-                    $data = $this->form->getData();
-                    $urlDocumentoPago = $data['file-documentoPago']['tmp_name'];
-                }
-            }
+            
             $datos=$this->request->getPost();
             // Este ciclo muestra todas las claves del array asociativo
             foreach($datos as $key => $value)
@@ -81,12 +64,60 @@ class PedidoCompraController extends AbstractActionController
             $estadoPedido->consultarEstadoPedidoPorCodigo("01");
             /**********************************************************************************/
             // Se guarda el nuevo pedido compra con sus posiciones.
-            $resultado = $this->PedidoCompra->guardarPedidoCompra($estadoPedido->getidEstadoPedido(),$datos['idProveedor'],$urlDocumentoPago, $this->user_session->idUsuario);
+            $resultado = $this->PedidoCompra->guardarPedidoCompra($estadoPedido->getidEstadoPedido(),$datos['idProveedor'],null, $this->user_session->idUsuario);
             if($resultado == 'true'){
                 $returnCrud=$this->consultarMessage("okSave");
             }
-            
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
+        }
+        return new ViewModel(array('form'=>$this->form));
+    }
+    public function autorizarAction()
+    {
+        $this->validarSession();
+        // se asigna el layout admin
+        $this->layout('layout/admin');
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        
+        $id=$this->params()->fromQuery('idPedidoCompra',null);
+        $request = $this->getRequest();
+        if ($request->isPost()) 
+        {
+            $this->form->remove('idEstadoPedido');
+            $urlDocumentoPago = null;
+            $returnCrud = $this->consultarMessage("errorSave");
+            // Make certain to merge the files info!
+            $data = array_merge_recursive(
+                $request->getPost()->toArray(),
+                $request->getFiles()->toArray()
+            );
+            /***************** SE CAMBIA EL NOMBRE DE LA IMAGEN***************/
+            $data['image-file']['name'] = "pedido_compra_".$data['numeroPedido'].'.'.explode ('.',$data['image-file']['name'])[1];
+            /******************************************************************/
+            $this->form->setData($data);
+            if ($this->form->isValid()) 
+            {
+                $data = $this->form->getData();
+                $urlDocumentoPago = $data['image-file']['tmp_name'];
+                $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
+                $result = $this->PedidoCompra->autorizarPedidoCompra($data['idPedidoCompra'],$urlDocumentoPago,$this->user_session->idUsuario);
+                if ($result == 'true') {
+                    $returnCrud = $this->consultarMessage("okSave");
+                }
+            }
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
+        }
+        else if (isset($id)) 
+        {
+            $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
+            if($this->PedidoCompra->consultarPedidoCompraPorIdPedidoCompra($id))
+            {
+                $this->form->get("idPedidoCompra")->setValue($this->PedidoCompra->getIdPedidoCompra());
+                $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
+                $this->form->get("nombreProveedor")->setValue($this->PedidoCompra->getNombreProveedor());
+                return new ViewModel(array('form'=>$this->form,'PedidoCompraPosicion'=>$this->PedidoCompra->PedidoCompraPosicion));
+            }
         }
         return new ViewModel(array('form'=>$this->form));
     }
@@ -107,6 +138,7 @@ class PedidoCompraController extends AbstractActionController
         /** Campos para saber en donde se deben devolver los valores de la busqueda **/
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idPedidoCompra':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'numeroPedido':$this->params()->fromQuery('campoNombre',null);
+        $vista=$this->params()->fromQuery('vista',null)== null?'autorizar':$this->params()->fromQuery('vista',null);
         
         $registros = array();
         if(count($this->request->getPost()) > 0)
@@ -116,11 +148,11 @@ class PedidoCompraController extends AbstractActionController
             $this->form->get("numeroPedido")->setValue($datos["numeroPedido"]);
             //$this->form->get("idProveedor")->setValue($datos["idProveedor"]);
             //$this->form->get("nombreProveedor")->setValue($datos["nombreProveedor"]);
-            $this->form->get("idEstadoPedidoBusqueda")->setValue($datos["idEstadoPedido"]);            
-            $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],null,$datos["idEstadoPedido"]);
+            $this->form->get("idEstadoPedido")->setValue($datos["idEstadoPedido"]);            
+            $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],0,$datos["idEstadoPedido"]);
         }
         // consultamos todos los Proveedores y los devolvemos a la vista    
-        $view = new ViewModel(array('form'=>$this->form,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
+        $view = new ViewModel(array('form'=>$this->form,'vista'=>$vista,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
         $view->setTerminal(true);
         return $view;
     }

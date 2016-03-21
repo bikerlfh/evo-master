@@ -28,64 +28,64 @@ class DatoBasicoTercero extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('DatoBasicoTercero', 'Tercero');
     }
 
-    public function gettelefono(){
+    public function getTelefono(){
         return $this->telefono;
     }
-    public function settelefono($telefono){
+    public function setTelefono($telefono){
         $this->telefono=$telefono;
     }
-    public function getdireccion(){
+    public function getDireccion(){
         return $this->direccion;
     }
-    public function setdireccion($direccion){
+    public function setDireccion($direccion){
         $this->direccion=$direccion;
     }
-    public function getsegundoApellido(){
+    public function getSegundoApellido(){
         return $this->segundoApellido;
     }
-    public function setsegundoApellido($segundoApellido){
+    public function setSegundoApellido($segundoApellido){
         $this->segundoApellido=$segundoApellido;
     }
-    public function getprimerApellido(){
+    public function getPrimerApellido(){
         return $this->primerApellido;
     }
-    public function setprimerApellido($primerApellido){
+    public function setPrimerApellido($primerApellido){
         $this->primerApellido=$primerApellido;
     }
-    public function getsegundoNombre(){
+    public function getSegundoNombre(){
         return $this->segundoNombre;
     }
-    public function setsegundoNombre($segundoNombre){
+    public function setSegundoNombre($segundoNombre){
         $this->segundoNombre=$segundoNombre;
     }
-    public function getprimerNombre(){
+    public function getPrimerNombre(){
         return $this->primerNombre;
     }
-    public function setprimerNombre($primerNombre){
+    public function setPrimerNombre($primerNombre){
         $this->primerNombre=$primerNombre;
     }
-    public function getdescripcion(){
+    public function getDescripcion(){
         return $this->descripcion;
     }
-    public function setdescripcion($descripcion){
+    public function setDescripcion($descripcion){
         $this->descripcion=$descripcion;
     }
-    public function getnit(){
+    public function getNit(){
         return $this->nit;
     }
-    public function setnit($nit){
+    public function setNit($nit){
         $this->nit=$nit;
     }
-    public function getidTipoDocumento(){
+    public function getIdTipoDocumento(){
         return $this->idTipoDocumento;
     }
-    public function setidTipoDocumento($idTipoDocumento){
+    public function setIdTipoDocumento($idTipoDocumento){
         $this->idTipoDocumento=$idTipoDocumento;
     }
-    public function getidDatoBasicoTercero(){
+    public function getIdDatoBasicoTercero(){
         return $this->idDatoBasicoTercero;
     }
-    public function setidDatoBasicoTercero($idDatoBasicoTercero){
+    public function setIdDatoBasicoTercero($idDatoBasicoTercero){
         $this->idDatoBasicoTercero=$idDatoBasicoTercero;
     }
 

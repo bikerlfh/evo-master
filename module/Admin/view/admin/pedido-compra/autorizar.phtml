@@ -1,5 +1,11 @@
 <?php
 $form=$this->form;
+$form->setAttributes(array(
+            'action' => $this->basePath().'/admin/pedidocompra/autorizar',
+            'method' => 'post',
+            'class'=>'form-horizontal',
+            'role'=>'form'
+        ));
 $form->prepare();
 //<====Si se envía un mensaje este se muestra=====> 
 if ($this->msg != null) 
@@ -8,38 +14,7 @@ if ($this->msg != null)
 }
 ?>
 <script type="text/javascript">
-    var numRows=0;
-
-    function AddRow()
-    {
-        numRows++;
-        var onClick="onclick=\"usar_ajax('<?php echo $this->basePath()?>/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','#modal-dialog-display','')\"";
-        var cadena ="<tr id='pedidoCompraPosicion"+numRows+"'>";
-        cadena += "<td>"+numRows+"</td>";
-        cadena += " <td><div class='col-lg-8 col-md-4 col-sm-4'>";
-        cadena += "<input class='form-control' id='idProducto"+numRows+"' name='idProducto"+numRows+"' type='hidden'>";
-        cadena += "<input class='form-control' id='nombreProducto"+numRows+"' type='text' required='required' onkeypress='return false'></div>";
-        cadena += "<input type='button' "+onClick+" data-target='#textModal' data-toggle='modal' style='margin:2px' class='btn btn-support2' value='Buscar'></td>";
-        cadena += "<td><input name=\"cantidad"+numRows+"\" id=\"cantidad"+numRows+"\" type='text' required='required' placeholder='cantidad' maxlength='9' class='form-control' onkeypress=\"return validarTecla(event,'num')\"></td>";
-        cadena += "<td><input name=\"valorCompra"+numRows+"\" id=\"valorCompra"+numRows+"\" type='text' required='required' placeholder='Valor Compra' maxlength='9' class='form-control' onkeypress=\"return validarTecla(event,'num')\"></td>";
-        cadena += "<td><a class='btn btn-danger' onclick=\"$('#pedidoCompraPosicion"+numRows+"').remove()\"><i class='fa  fa-minus-square'></i></a></td></tr>";
-        $('#tBodyPedido').append(cadena);
-    }
     $(document).ready(function() {
-        AddRow();
-        // Valida que el formulario no tenga ningun detalle con productos repeditos
-        $("#<?php echo $form->getName()?>").submit(function( event ) {
-            var productos = []
-            $("#<?php echo $form->getName()?>").find("input[name^='idProducto']").each(function() {
-                if (jQuery.inArray(productos[0], $(this).val() )>-1) 
-                {
-                    showMessageWarning('Productos Repetidos','En el detalle del pedido no se puede adicionar mas de una vez un producto')
-                    event.preventDefault();
-                    return;
-                }
-                productos.push($(this).val());
-            });
-        });
     });
 </script>
  
@@ -49,17 +24,17 @@ if ($this->msg != null)
             <div class="box-head">
                 <header>
                     <h4 class="text-light">
-                        <i class="fa fa-fw fa-laptop"></i> Solicitud <strong>Pedido Compra</strong>
+                        <i class="fa fa-fw fa-laptop"></i> Autorizar <strong>Pedido Compra</strong>
                     </h4>
                     
                 </header>
-                <!--
+                
                 <div class="tools">
                     <div class="btn-group btn-group-transparent">
                         <a class="btn btn-equal btn-sm " data-target="#textModal" data-toggle="modal" onclick="usar_ajax('<?php echo $this->basePath()?>/admin/pedidocompra/buscar','#modal-dialog-display','')"><i class="fa  fa-search"></i></a>
-                        <!--<a class="btn btn-equal btn-sm btn-collapse"><i class="fa fa-angle-down"></i></a>
+                        <!--<a class="btn btn-equal btn-sm btn-collapse"><i class="fa fa-angle-down"></i></a>-->
                     </div>
-                </div>-->
+                </div>
             </div>
             <!--
             <div class="box-body style-white" style="display: none;">
@@ -78,14 +53,14 @@ if ($this->msg != null)
             
             <div class="box-body">
                 <?php echo $this->form()->openTag($form);
-                      echo $this->formElement($form->get('idProveedor'));?>
+                      echo $this->formElement($form->get('idPedidoCompra'));?>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Número Pedído</label>
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-4">
                             <?php echo $this->formInput($form->get('numeroPedido'));?>
-                        </div>
+                        </div>  
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
@@ -93,32 +68,22 @@ if ($this->msg != null)
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-5">
                             <?php echo $this->formInput($form->get('nombreProveedor'));?>  
-                            
                         </div>
-                        <?php echo $this->formElement($form->get('btnBuscarProveedor'));?>  
                     </div>
-                    <!--
                      <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Documento Pago</label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-5">
-                               
+                             <?php echo $this->formElement($form->get('image-file'));?>   
                             <p class="help-block">Escanee el documento de pago.</p>
                         </div>
                     </div>
-                    -->
                     <div class="row">
-        
                         <div class="col-lg-12">
                                 <div class="box box-outlined style-primary1">
                                     <div class="box-head">
                                         <header><h4 class="text-light"><i class="fa fa-fw  fa-list"></i> Pedido <strong>Detalle</strong></h4></header>
-                                        <div class="tools">
-                                            <div class="btn-group btn-group-transparent">
-                                                <a class="btn btn-equal btn-sm " onclick="AddRow()" title="Agregar nuevo detalle"><i class="fa fa-plus"></i></a>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="box-body" style="display: block;">
                                         <div class="table-responsive no-margin">
@@ -129,11 +94,30 @@ if ($this->msg != null)
                                                         <th>Producto</th>
                                                         <th>Cantidad</th>
                                                         <th>Valor Compra</th>
-                                                        <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="tBodyPedido">
-                                                    <!--  -->
+                                                <tbody>
+                                                    <?php 
+                                                    if (count($this->PedidoCompraPosicion) > 0) 
+                                                    {
+                                                        $i = 1;
+                                                        foreach ($this->PedidoCompraPosicion as $posicion) 
+                                                        {
+                                                            echo "<tr>"
+                                                            . "<td>$i</td>"
+                                                            . "<td>".$posicion->getNombreProducto()."</td>"
+                                                            . "<td>".$posicion->getCantidad()."</td>"
+                                                            . "<td>".$posicion->getValorCompra()."</td></tr>";
+                                                            $i++;
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                     </div>
@@ -142,7 +126,7 @@ if ($this->msg != null)
                         </div><!--end .col-lg-6 -->
                     </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
-                        <?php echo $this->formElement($form->get('btnGuardar'));?>  
+                        <?php echo $this->formElement($form->get('btnAutorizar'));?>  
                         <?php echo $this->formElement($form->get('btnCancelar'));?> 
                     </div>
                 <?php echo $this->form()->closeTag(); ?>

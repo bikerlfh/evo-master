@@ -1,13 +1,11 @@
 <script type="text/javascript">
     $(document).ready(function() {
-         $('#numeroPedido').attr('readonly','');
+        $('#numeroPedido').attr('readonly','');
         $('#dtbuscarPedidoCompra').DataTable();
-       
-        
     });
     function btnBuscar_onclick()
     {
-        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>",'#modal-dialog-display',"'numeroPedido="+$('#numeroPedido').val()+"&idEstadoPedido="+$('#idEstadoPedidoBusqueda').val()+"'");
+        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>",'#modal-dialog-display',"numeroPedido="+$('#numeroPedido').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
     }
 </script>
   
@@ -45,7 +43,7 @@
                     <label for="select1" class="control-label">Estado Pedido</label>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-4">
-                    <?php echo $this->formElement($form->get('idEstadoPedidoBusqueda'));?>  
+                    <?php echo $this->formElement($form->get('idEstadoPedido'));?>  
 
                 </div>
             </div>
@@ -75,8 +73,8 @@
                              <?php 
                             foreach ($this->registros as $obj) {
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idPedidoCompra'].");$('#".$this->campoNombre."').val('".$obj['numeroPedido']."');$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
-                                        <!--<tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href','".$this->basePath()."/admin/pedidocompra/index?idPedidoCompra=".$obj['idPedidoCompra']."')\">-->
+                                    
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href','".$this->basePath()."/admin/pedidocompra/".$this->vista."?idPedidoCompra=".$obj['idPedidoCompra']."')\">
                                         <td>".$obj['numeroPedido']."</td>
                                         <td>".$obj['nombreProveedor']."</td>
                                         <td>".$obj['pedidoDetalle']."</td>

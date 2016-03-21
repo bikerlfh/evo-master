@@ -3,6 +3,10 @@ namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Application\Model\Clases\StoredProcedure;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
 
 class PedidoCompraPosicion extends AbstractTableGateway
 {
@@ -11,50 +15,30 @@ class PedidoCompraPosicion extends AbstractTableGateway
     private $idProducto;
     private $cantidad;
     private $valorCompra;
-    private $idUsuarioCreacion;   
+    private $idUsuarioCreacion;
+    
+    private $nombreProducto;
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('PedidoCompraPosicion', 'Compra');
     }
 
-    public function getIdUsuarioCreacion(){
-        return $this->idUsuarioCreacion;
-    }
-    public function setIdUsuarioCreacion($idUsuarioCreacion){
-        $this->idUsuarioCreacion=$idUsuarioCreacion;
-    }
-    function getValorCompra() {
-        return $this->valorCompra;
-    }
-    function setValorCompra($valorCompra) {
-        $this->valorCompra = $valorCompra;
-    }
-    public function getCantidad(){
-        return $this->cantidad;
-    }
-    public function setCantidad($cantidad){
-        $this->cantidad=$cantidad;
-    }
-    public function getIdProducto(){
-        return $this->idProducto;
-    }
-    public function setIdProducto($idProducto){
-        $this->idProducto=$idProducto;
-    }
-    public function getIdPedidoCompra(){
-        return $this->idPedidoCompra;
-    }
-    public function setIdPedidoCompra($idPedidoCompra){
-        $this->idPedidoCompra=$idPedidoCompra;
-    }
-    public function getIdPedidoCompraPosicion(){
-        return $this->idPedidoCompraPosicion;
-    }
-    public function setIdPedidoCompraPosicion($idPedidoCompraPosicion){
-        $this->idPedidoCompraPosicion=$idPedidoCompraPosicion;
-    }
+    public function getIdPedidoCompraPosicion(){ return $this->idPedidoCompraPosicion; }
+    public function setIdPedidoCompraPosicion($idPedidoCompraPosicion){ $this->idPedidoCompraPosicion=$idPedidoCompraPosicion; }
+    public function getIdPedidoCompra(){ return $this->idPedidoCompra; }
+    public function setIdPedidoCompra($idPedidoCompra){ $this->idPedidoCompra=$idPedidoCompra; }
+    public function getIdProducto(){ return $this->idProducto; }
+    public function setIdProducto($idProducto){ $this->idProducto=$idProducto; }
+    public function getCantidad(){ return $this->cantidad; }
+    public function setCantidad($cantidad){ $this->cantidad=$cantidad; }
+    public function getValorCompra() { return $this->valorCompra; }
+    public function setValorCompra($valorCompra) { $this->valorCompra = $valorCompra; }
+    public function getIdUsuarioCreacion(){ return $this->idUsuarioCreacion; }
+    public function setIdUsuarioCreacion($idUsuarioCreacion){ $this->idUsuarioCreacion=$idUsuarioCreacion; }
 
+    public function getNombreProducto(){ return $this->nombreProducto; }
+    
     public function guardarPedidoCompraPosicion()
     {
         $stored = new StoredProcedure($this->adapter);
@@ -83,7 +67,16 @@ class PedidoCompraPosicion extends AbstractTableGateway
     }
     public function consultarPedidoCompraPosicionPorIdPedidoCompraPosicion($idPedidoCompraPosicion)
     {
-        $result=$this->select(array('idPedidoCompraPosicion'=>$idPedidoCompraPosicion))->current();
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                            from(array('pedido'=>$this->table))->
+                            join(array('p'=> new TableIdentifier("Producto", "Producto")),
+                                       'pedido.idProducto = p.idProducto', 
+                                       array('nombreProducto' => new Expression("p.codigo +' - '+ p.nombre")));
+
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        $result =  $resultsSet->initialize($results)->current();   
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -111,5 +104,8 @@ class PedidoCompraPosicion extends AbstractTableGateway
         $this->idProducto=$result['idProducto'];
         $this->idPedidoCompra=$result['idPedidoCompra'];
         $this->idPedidoCompraPosicion=$result['idPedidoCompraPosicion'];
+        $this->nombreProducto =  $result['nombreProducto'];
+        
+
     }
 }
