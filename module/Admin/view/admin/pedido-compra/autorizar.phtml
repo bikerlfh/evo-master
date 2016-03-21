@@ -1,5 +1,11 @@
 <?php
 $form=$this->form;
+$form->setAttributes(array(
+            'action' => $this->basePath().'/admin/pedidocompra/autorizar',
+            'method' => 'post',
+            'class'=>'form-horizontal',
+            'role'=>'form'
+        ));
 $form->prepare();
 //<====Si se envía un mensaje este se muestra=====> 
 if ($this->msg != null) 
@@ -47,7 +53,7 @@ if ($this->msg != null)
             
             <div class="box-body">
                 <?php echo $this->form()->openTag($form);
-                      echo $this->formElement($form->get('idProveedor'));?>
+                      echo $this->formElement($form->get('idPedidoCompra'));?>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Número Pedído</label>
@@ -69,7 +75,7 @@ if ($this->msg != null)
                             <label for="email1" class="control-label">Documento Pago</label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-5">
-                             <?php echo $this->formElement($form->get('file-documentoPago'));?>   
+                             <?php echo $this->formElement($form->get('image-file'));?>   
                             <p class="help-block">Escanee el documento de pago.</p>
                         </div>
                     </div>
@@ -120,7 +126,7 @@ if ($this->msg != null)
                         </div><!--end .col-lg-6 -->
                     </div>
                     <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
-                        <?php echo $this->formElement($form->get('btnGuardar'));?>  
+                        <?php echo $this->formElement($form->get('btnAutorizar'));?>  
                         <?php echo $this->formElement($form->get('btnCancelar'));?> 
                     </div>
                 <?php echo $this->form()->closeTag(); ?>
