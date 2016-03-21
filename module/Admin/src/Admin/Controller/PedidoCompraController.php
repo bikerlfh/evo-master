@@ -90,6 +90,31 @@ class PedidoCompraController extends AbstractActionController
         }
         return new ViewModel(array('form'=>$this->form));
     }
+    public function autorizarAction()
+    {
+        $this->validarSession();
+        // se asigna el layout admin
+        $this->layout('layout/admin');
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $id=$this->params()->fromQuery('idPedidoCompra',null);
+        
+        if(count($this->request->getPost())>0)
+        {
+            
+        }
+        else if (isset($id)) 
+        {
+            $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
+            if($this->PedidoCompra->consultarPedidoCompraPorIdPedidoCompra($id))
+            {
+                $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
+                $this->form->get("nombreProveedor")->setValue($this->PedidoCompra->getNombreProveedor());
+                return new ViewModel(array('form'=>$this->form,'PedidoCompraPosicion'=>$this->PedidoCompra->PedidoCompraPosicion));
+            }
+        }
+        return new ViewModel(array('form'=>$this->form));
+    }
     public function buscarAction()
     {
         $this->validarSession();
@@ -107,6 +132,7 @@ class PedidoCompraController extends AbstractActionController
         /** Campos para saber en donde se deben devolver los valores de la busqueda **/
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idPedidoCompra':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'numeroPedido':$this->params()->fromQuery('campoNombre',null);
+        $vista=$this->params()->fromQuery('vista',null)== null?'autorizar':$this->params()->fromQuery('vista',null);
         
         $registros = array();
         if(count($this->request->getPost()) > 0)
@@ -120,7 +146,7 @@ class PedidoCompraController extends AbstractActionController
             $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],null,$datos["idEstadoPedido"]);
         }
         // consultamos todos los Proveedores y los devolvemos a la vista    
-        $view = new ViewModel(array('form'=>$this->form,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
+        $view = new ViewModel(array('form'=>$this->form,'vista'=>$vista,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
         $view->setTerminal(true);
         return $view;
     }
