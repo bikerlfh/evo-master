@@ -3,6 +3,10 @@ namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter; 
 use Application\Model\Clases\StoredProcedure;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
 
 class PedidoCompra extends AbstractTableGateway
 {
@@ -14,6 +18,7 @@ class PedidoCompra extends AbstractTableGateway
     private $urlDocumentoPago;
     private $idUsuarioCreacion;
     
+    private $nombreProveedor;
     public $PedidoCompraPosicion;
     
     public function __construct(Adapter $adapter = null)
@@ -22,54 +27,24 @@ class PedidoCompra extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('PedidoCompra', 'Compra');
         $this->PedidoCompraPosicion = array();
     }
-
-    public function getIdUsuarioCreacion(){
-        return $this->idUsuarioCreacion;
-    }
-    public function setIdUsuarioCreacion($idUsuarioCreacion){
-        $this->idUsuarioCreacion=$idUsuarioCreacion;
-    }
-    function getUrlDocumentoPago() {
-        return $this->urlDocumentoPago;
-    }
     
-    function setUrlDocumentoPago($urlDocumentoPago) {
-        $this->urlDocumentoPago = $urlDocumentoPago;
-    }
+    public function getIdPedidoCompra(){ return $this->idPedidoCompra; }
+    public function setIdPedidoCompra($idPedidoCompra){ $this->idPedidoCompra=$idPedidoCompra; }
+    public function getNumeroPedido() { return $this->numeroPedido; }
+    public function setNumeroPedido($numeroPedido) { $this->numeroPedido = $numeroPedido; }
+    public function getIdEstadoPedido(){ return $this->idEstadoPedido; }
+    public function setIdEstadoPedido($idEstadoPedido){ $this->idEstadoPedido=$idEstadoPedido; }
+    public function getIdProveedor(){ return $this->idProveedor; }
+    public function setIdProveedor($idProveedor){ $this->idProveedor=$idProveedor; }
+    public function getFechaPedido(){ return $this->fechaPedido; }
+    public function setFechaPedido($fechaPedido){ $this->fechaPedido=$fechaPedido; }
+    public function getUrlDocumentoPago() { return $this->urlDocumentoPago; }
+    public function setUrlDocumentoPago($urlDocumentoPago) { $this->urlDocumentoPago = $urlDocumentoPago; }
+    public function getIdUsuarioCreacion(){ return $this->idUsuarioCreacion; }
+    public function setIdUsuarioCreacion($idUsuarioCreacion){ $this->idUsuarioCreacion=$idUsuarioCreacion; }
+
+    public function getNombreProveedor() { return $this->nombreProveedor; }
     
-    public function getFechaPedido(){
-        return $this->fechaPedido;
-    }
-    public function setFechaPedido($fechaPedido){
-        $this->fechaPedido=$fechaPedido;
-    }
-    public function getIdProveedor(){
-        return $this->idProveedor;
-    }
-    public function setIdProveedor($idProveedor){
-        $this->idProveedor=$idProveedor;
-    }
-    public function getIdEstadoPedido(){
-        return $this->idEstadoPedido;
-    }
-    public function setIdEstadoPedido($idEstadoPedido){
-        $this->idEstadoPedido=$idEstadoPedido;
-    }
-    function getNumeroPedido() {
-        return $this->numeroPedido;
-    }
-
-    function setNumeroPedido($numeroPedido) {
-        $this->numeroPedido = $numeroPedido;
-    }
-
-    public function getIdPedidoCompra(){
-        return $this->idPedidoCompra;
-    }
-    public function setIdPedidoCompra($idPedidoCompra){
-        $this->idPedidoCompra=$idPedidoCompra;
-    }
-
     public function guardarPedidoCompra($idEstadoPedido,$idProveedor,$urlDocumentoPago,$idUsuarioCreacion)
     {
         $stored = new StoredProcedure($this->adapter);
@@ -126,7 +101,17 @@ class PedidoCompra extends AbstractTableGateway
     }
     public function consultarPedidoCompraPorIdPedidoCompra($idPedidoCompra)
     {
-        $result=$this->select(array('idpedidocompra'=>$idPedidoCompra))->current();
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                        from(array('pedido'=>$this->table))->
+                        join(array('prov'=> new TableIdentifier('Proveedor','Tercero')),
+                                   'pedido.idProveedor = prov.idProveedor')->
+                        join(array('dbt'=>new TableIdentifier('DatoBasicoTercero','Tercero')),
+                                   'prov.idDatoBasicoTercero = dbt.idDatoBasicoTercero',
+                                   array('nombreProveedor' => new Expression("CONVERT(VARCHAR,dbt.nit )+' - '+ dbt.descripcion")));
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        $result =  $resultsSet->initialize($results)->current();   
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -156,10 +141,12 @@ class PedidoCompra extends AbstractTableGateway
     }
     private function LlenarEntidad($result)
     {
-        $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
-        $this->fechaPedido=$result['fechaPedido'];
-        $this->idProveedor=$result['idProveedor'];
-        $this->idEstadoPedido=$result['idEstadoPedido'];
         $this->idPedidoCompra=$result['idPedidoCompra'];
+        $this->idEstadoPedido=$result['idEstadoPedido'];
+        $this->numeroPedido = $result['numeroPedido'];
+        $this->idProveedor=$result['idProveedor'];
+        $this->fechaPedido=$result['fechaPedido'];
+        $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
+        $this->nombreProveedor = $result['nombreProveedor'];
     }
 }
