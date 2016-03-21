@@ -25,7 +25,7 @@ class FormPedidoCompra extends Form
         $this->FormProveedor = new FormProveedor($serviceLocator,$basePath);
         $this->FormBase = new FormBase($serviceLocator,$basePath);
         $this->setAttributes(array(
-            'action' => $this->basePath.'/admin/pedidocompra/index',
+            'action' => $this->basePath.'/admin/pedidocompra/solicitud',
             'method' => 'post',
             'class'=>'form-horizontal',
             'role'=>'form'
@@ -51,11 +51,12 @@ class FormPedidoCompra extends Form
         $this->add($this->FormBase->get('btnBuscarProveedor'));
         /************ CAMPOS DEL PROVEEDOR *****************/
         
-        $file = new Element\File('file-documentoPago');
+        $file = new Element\File('image-file');
         $file->setLabel('Imagen')
-             ->setAttribute('id', 'file-documentoPago')
+             ->setAttribute('id', 'image-file')
              ->setAttributes(array('multiple' => false,
-                                   'accept'=>".gif,.jpg,.jpeg,.png"));
+                                   'accept'=>".gif,.jpg,.jpeg,.png",
+                                    'required'=>true));
         $this->add($file);
         
         /************* EstadoPedido ***********/
@@ -67,17 +68,6 @@ class FormPedidoCompra extends Form
                                      'required' => true));
         $this->add($select);
         /************* EstadoPedido ***********/ 
-        
-        /************* EstadoPedido ***********/
-        $EstadoPedido = new EstadoPedido($this->adapter);
-        $select = new Element\Select('idEstadoPedidoBusqueda');
-        $select->setValueOptions($EstadoPedido->generarOptionsSelect());
-        $select->setAttributes(array('id' => 'idEstadoPedidoBusqueda',
-                                     'class' => $this->cssClass['select'],
-                                     'required' => true));
-        $this->add($select);
-        /************* EstadoPedido ***********/ 
-        
         
          $this->add(array(
             'name' => 'numeroPedido',                       
@@ -91,7 +81,17 @@ class FormPedidoCompra extends Form
         
         $this->add($this->FormBase->get('btnGuardar'));
         $this->add($this->FormBase->get('btnModificar'));
-        
+        $this->add(array(
+                'name'=>'btnAutorizar',			
+                'attributes'=>array(
+                        'id'=>'btnAutorizar',
+                        'type'=>'submit',
+                        'value'=>'Autorizar Pedído',
+                        'title'=>'Autorizar Pedído',
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnModificar']
+                )
+        ));
         $this->add(array(
                 'name'=>'btnEliminar',			
                 'attributes'=>array(
@@ -103,7 +103,7 @@ class FormPedidoCompra extends Form
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )
-        )); 
+        ));
         $this->add(array(
                 'name'=>'btnCancelar',			
                 'attributes'=>array(
@@ -121,15 +121,15 @@ class FormPedidoCompra extends Form
     {
         $inputFilter = new InputFilter\InputFilter();
         // File Input
-        $fileInput = new InputFilter\FileInput('file-documentoPago');
+        $fileInput = new InputFilter\FileInput('image-file');
         $fileInput->setRequired(true);
         $fileInput->getFilterChain()->attachByName(
             'filerenameupload',
             array(
-                'target'    => './public/imguploads/compra',
+                'target'    => './public/imguploads/compra/',
                 //'randomize' => true,
-                'overwrite'       => false,
-                'use_upload_name' => true,  
+                'overwrite'       => true,
+                'use_upload_name' => true,
             )
         );
         $inputFilter->add($fileInput);
