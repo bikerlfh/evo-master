@@ -2,6 +2,12 @@
 namespace Application\Model\Entity;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
+use Application\Model\Clases;
+use Application\Model\Entity;
 
 class Cliente extends AbstractTableGateway
 {
@@ -11,6 +17,9 @@ class Cliente extends AbstractTableGateway
     private $email;
     private $direccion;
     private $telefono;
+    
+    public $DatoBasicoTercero;
+    public $Municipio;
     
     public function __construct(Adapter $adapter = null)
     {
@@ -63,7 +72,6 @@ class Cliente extends AbstractTableGateway
                 'email'=> $email,
                 'idMunicipio'=> $idMunicipio,
                 'idDatoBasicoTercero'=> $idDatoBasicoTercero,
-                'idCliente'=> $idCliente
         );
         $result=$this->insert($datos);
         if($result>0)
@@ -85,14 +93,33 @@ class Cliente extends AbstractTableGateway
             return true;
         return false;
     }
+    
+    public function eliminarCliente($idCliente)
+    {
+        if ($this->delete(array('idCliente'=>$idCliente))>0)
+            return true;
+        return false;
+    }
 
     public function consultarTodoCliente()
     {
-        return $this->select()->toArray();
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                from(array('c'=>  $this->table))->
+                join(array("d"=> new TableIdentifier("DatoBasicoTercero","Tercero")),
+                                    "c.idDatoBasicoTercero = d.idDatoBasicoTercero",
+                                    array("descripcionTercero"=> new Expression("convert(varchar,d.nit) + ' - ' + d.descripcion")))->
+                join(array("m"=> new TableIdentifier("Municipio","Tercero")),
+                                    "c.idMunicipio = m.idMunicipio",
+                                    array("descripcionMunicipio"=> new Expression("m.codigo + ' - ' + m.descripcion")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
     }
     public function consultarClientePorIdCliente($idCliente)
     {
-        $result=$this->select(array('idcliente'=>$idCliente))->current();
+        $result=$this->select(array('idCliente'=>$idCliente))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -102,7 +129,7 @@ class Cliente extends AbstractTableGateway
     }
     public function consultarClientePorIdDatoBasicoTercero($idDatoBasicoTercero)
     {
-        $result=$this->select(array('iddatobasicotercero'=>$idDatoBasicoTercero))->current();
+        $result=$this->select(array('idDatobasicoTercero'=>$idDatoBasicoTercero))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -112,7 +139,7 @@ class Cliente extends AbstractTableGateway
     }
     public function consultarClientePorIdMunicipio($idMunicipio)
     {
-        $result=$this->select(array('idmunicipio'=>$idMunicipio))->current();
+        $result=$this->select(array('idMunicipio'=>$idMunicipio))->current();
         if($result)
         {
             $this->LlenarEntidad($result);
@@ -120,6 +147,14 @@ class Cliente extends AbstractTableGateway
         }
         return false;
     }
+    
+     public function consultaAvanzadaCliente($nit, $descripcion)
+    {
+        $nit = $nit > 0? $nit:null;
+        $stored = new Clases\StoredProcedure($this->adapter);
+        return $stored->execProcedureReturnDatos("Tercero.ConsultaAvanzadaCliente ?,?",array($nit, $descripcion));
+    }
+    
     private function LlenarEntidad($result)
     {
         $this->idCliente=$result['idCliente'];
@@ -128,5 +163,17 @@ class Cliente extends AbstractTableGateway
         $this->email=$result['email'];
         $this->direccion=$result['direccion'];
         $this->telefono=$result['telefono'];
+        $this->CargarEmbebidos();
+    }
+    //<===============================================================>
+    //<--- Carga los objetos completos relacionados a este objeto ====>
+    //<===============================================================>
+    private function CargarEmbebidos()
+    {
+        $this->DatoBasicoTercero =new Entity\DatoBasicoTercero(parent::getAdapter());
+        $this->DatoBasicoTercero->consultarDatoBasicoTerceroPoridDatoBasicoTercero($this->idDatoBasicoTercero);
+        
+        $this->Municipio =new Entity\Municipio(parent::getAdapter());
+        $this->Municipio->consultarMunicipioPoridMunicipio($this->idMunicipio);
     }
 }

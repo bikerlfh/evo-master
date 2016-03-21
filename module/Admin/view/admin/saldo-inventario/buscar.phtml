@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtbuscarTercero').DataTable();
+    });
+</script>
+<div class="row">  
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" id="btnClosePop" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Saldo Inventario</strong></h4></h4>
+        </div>
+        <div class="box-body">
+            <?php echo $this->form()->openTag($form); ?>
+            <div class="form-group">
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <label for="email1" class="control-label">Producto</label>
+                </div>
+                <div class="col-lg-3 col-md-11 col-sm-9">
+                    <?php echo $this->formElement($form->get('nombreProducto')); ?>
+                    <?php echo $this->formElement($form->get('idProducto')); ?>
+                </div>
+                <div class="col-lg-1">
+                    <?php echo $this->formElement($form->get('btnBuscarProducto2')); ?> 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <label for="email1" class="control-label">Proveedor</label>
+                </div>
+                <div class="col-lg-3 col-md-11 col-sm-9">
+                    <?php echo $this->formElement($form->get('nombreProveedor')); ?>
+                    <?php echo $this->formElement($form->get('idProveedor')); ?>
+                </div>
+                <div class="col-lg-1">
+                    <?php echo $this->formElement($form->get('btnBuscarProveedor2')); ?> 
+                </div>
+            </div>
+
+            <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
+                <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
+                       onclick="usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>&campoCantidad=<?php echo $this->campoCantidad ?>&campoValorVenta=<?php echo $this->campoValorVenta ?>  ', '#modal-dialog-display', 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
+                               ">
+                       <?php
+                       echo $this->formElement($form->get('btnCancelar'));
+                       ?>
+            </div>
+            <?php echo $this->form()->closeTag(); ?>
+        </div>
+
+        <div class="box "> 
+            <div class="box-body table-responsive">
+                <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
+                    <table id="dtbuscarTercero" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
+                        <thead>
+                            <tr role="row">
+                                <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Producto</th>
+                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Marca</th>
+                                <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Categoria</th>
+                                <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Proveedor</th>
+                                <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Cantidad</th>
+                                <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Venta</th>
+                                <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Compra</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($this->registros as $obj) {
+                                echo "
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#" . $this->campoId . "').val(" . $obj['idSaldoInventario'] . ");$('#" . $this->campoNombre . "').val('" . $obj['descripcionProducto'] . "');$('#" . $this->campoCantidad . "').val('" . $obj['cantidad'] . "'); $('#" . $this->campoValorVenta . "').val('" . $obj['valorVenta'] . "');$('#" . $this->campoIdProducto . "').val('" . $obj['idProducto'] . "');$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
+                                                    <td>" . $obj['descripcionProducto'] . "</td>
+                                                    <td>" . $obj['descripcionMarca'] . "</td>
+                                                    <td>" . $obj['descripcionCategoria'] . "</td>
+                                                    <td>" . $obj['descripcionProveedor'] . "</td>
+                                                    <td>" . $obj['cantidad'] . "</td>
+                                                    <td>" . $obj['valorVenta'] . "</td>
+                                                    <td>" . $obj['valorCompra'] . "</td>
+                                                </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

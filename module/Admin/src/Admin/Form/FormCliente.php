@@ -1,34 +1,33 @@
 <?php
+
 /*
- * @autor Luis Fernando Henriquez
+ * @autor Ezequiel David
  * @copyrigth 2016
  */
 
 namespace Admin\Form;
+
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Application\Model\Entity\Proveedor;
+use Application\Model\Entity\Municipio;
 
-class FormSaldoInventario extends Form {
+class FormCliente extends Form {
 
     private $adapter;
     private $cssClass;
     private $basePath;
-
-    /* Formularios */
-    private $FormProducto;
-    private $FormProveedor;
-    private $form;
+    //Formulario
+    private $FormDatoBasicoTercero;
 
     public function __construct($serviceLocator, $basePath = null) {
-        parent::__construct("frmsaldoinventario");
+        parent::__construct("frmcliente");
         $this->adapter = $serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
-        $this->FormProducto = new FormProducto($serviceLocator, $basePath);
-        $this->FormProveedor = new FormProveedor($serviceLocator, $basePath);
+
+        $this->FormDatoBasicoTercero = new FormDatoBasicoTercero($serviceLocator, $basePath);
 
         $this->setAttributes(array(
-            'action' => $this->basePath . '/admin/saldoinventario/index',
+            'action' => $this->basePath . '/admin/cliente/index',
             'method' => 'post',
             'class' => 'form-horizontal',
             'role' => 'form'
@@ -40,70 +39,71 @@ class FormSaldoInventario extends Form {
 
     private function generarCampos() {
         $this->add(array(
-            'name' => 'idSaldoInventario',
+            'name' => 'idCliente',
             'attributes' => array(
-                'id' => 'idSaldoInventario',
+                'id' => 'idCliente',
                 'type' => 'hidden',
             ),
         ));
-        /*************  Producto ********** */
-        $this->add($this->FormProducto->get("idProducto"));
-        $this->add($this->FormProducto->get("nombreProducto"));
-        /************* Producto  ********** */
-
-        /*********** Proveedor ************* */
-
-        $this->add($this->FormProveedor->get("idProveedor"));
-        $this->add($this->FormProveedor->get("nombreProveedor"));
-
-        /** ********* Proveedor ************* */
-
-
-        /** *********** select Proveedor ********** */
-        //$proveedor = new Proveedor($this->adapter);
-        //$select2 = new Element\Select('idProveedor');
-        //$select2->setValueOptions($proveedor->generarOptionsSelect());
-        //$select2->setAttributes(array('id' => 'idProveedor',
-        //    'class' => $this->cssClass['select'],
-        //    'required' => true));
-        //$this->add($select2);
-        /** *********** select Proveedor ********** */
-
 
         $this->add(array(
-            'name' => 'cantidad',
+            'name' => 'nombreCliente',
             'attributes' => array(
-                'id' => 'cantidad',
+                'id' => 'nombreCliente',
                 'type' => 'text',
-                'placeholder' => 'Cantidad',
+                'placeholder' => 'Cliente',
+                'required' => 'required',
+                'onkeypress' => 'return false',
+                'class' => $this->cssClass['text']
+            ),
+        ));
+
+        /*         * ****** campos Tercero***************** */
+        //campo Modal
+        $this->add($this->FormDatoBasicoTercero->get("nit"));
+        $this->add($this->FormDatoBasicoTercero->get("descripcion"));
+
+        //campo Formulario
+        $this->add($this->FormDatoBasicoTercero->get("idDatoBasicoTercero"));
+        $this->add($this->FormDatoBasicoTercero->get("nombreTercero"));
+
+        $municipio = new Municipio($this->adapter);
+        $select = new Element\Select('idMunicipio');
+        $select->setValueOptions($municipio->generarOptionsSelect());
+        $select->setAttributes(array('id' => 'idMunicipio',
+                                    'class' => $this->cssClass['select'],
+                                    'required' => true));
+        $this->add($select);
+
+        $this->add(array(
+            'name' => 'email',
+            'attributes' => array(
+                'id' => 'email',
+                'type' => 'text',
+                'placeholder' => 'E-mail',
                 'required' => true,
-                'maxlength' => '11',
-                'required' => true,
-                'onKeyPress' => "return validarTecla(event,'num')",
+                'maxlength' => '150',
                 'class' => $this->cssClass['text']
             ),
         ));
         $this->add(array(
-            'name' => 'valorCompra',
+            'name' => 'direccion',
             'attributes' => array(
-                'id' => 'valorCompra',
+                'id' => 'direccion',
                 'type' => 'text',
-                'placeholder' => 'Valor Compra',
-                'maxlength' => '11',
-                'required' => true,
-                'onKeyPress' => "return validarTecla(event,'num')",
+                'placeholder' => 'Dirección',
+                'maxlength' => '150',
                 'class' => $this->cssClass['text']
             ),
         ));
+
         $this->add(array(
-            'name' => 'valorVenta',
+            'name' => 'telefono',
             'attributes' => array(
-                'id' => 'valorVenta',
+                'id' => 'telefono',
                 'type' => 'text',
-                'placeholder' => 'Valor Venta',
-                'maxlength' => '11',
-                'required' => true,
-                'onKeyPress' => "return validarTecla(event,'num')",
+                'placeholder' => 'Teléfono',
+                'maxlength' => '50',
                 'class' => $this->cssClass['text']
             ),
         ));
@@ -136,7 +136,7 @@ class FormSaldoInventario extends Form {
                 'type' => 'button',
                 'value' => 'Eliminar',
                 'title' => 'Eliminar',
-                'onClick' => "$(location).attr('href','" . $this->basePath . "/admin/saldoinventario/eliminar?id='+$('#idSaldoInventario').val());",
+                'onClick' => "$(location).attr('href','" . $this->basePath . "/admin/cliente/eliminar?id='+$('#idCliente').val());",
                 'style' => 'margin:2px',
                 'class' => $this->cssClass['btnEliminar']
             )
@@ -154,5 +154,7 @@ class FormSaldoInventario extends Form {
             )
         ));
     }
+
 }
+
 ?>

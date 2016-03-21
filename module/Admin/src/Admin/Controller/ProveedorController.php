@@ -106,6 +106,36 @@ class ProveedorController extends AbstractActionController
         return $view;
     }
     
+    //Se realiza esta action, con el fin de que cuando se realice la busqueda en un dialog.
+    public function buscar2Action()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        
+        $this->form = new FormDatoBasicoTercero($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        /** Campos para saber en donde se deben devolver los valores de la busqueda **/
+        $campoId=$this->params()->fromQuery('campoId',null) == null? 'idProveedor':$this->params()->fromQuery('campoId',null);
+        $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreProveedor':$this->params()->fromQuery('campoNombre',null);
+        
+        $registros = array();
+        if(count($this->request->getPost()) > 0)
+        {
+            $this->Proveedor = new Proveedor($this->dbAdapter);
+            $datos = $this->request->getPost();
+            
+            $this->form->get("nit")->setValue($datos["nit"]);
+            $this->form->get("descripcion")->setValue($datos["descripcion"]);
+            
+            $registros = $this->Proveedor->consultaAvanzadaProveedor($datos["nit"],$datos["descripcion"]);
+        }
+        
+        // consultamos todos los Proveedores y los devolvemos a la vista    
+        $view = new ViewModel(array('form'=>$this->form,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros ));
+        $view->setTerminal(true);
+        return $view;
+    }
+    
     public function eliminarAction()
     {
         //$this->validarSession();

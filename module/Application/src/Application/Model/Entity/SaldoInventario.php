@@ -6,6 +6,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
+use Application\Model\Clases;
 use Application\Model\Entity;
 
 class SaldoInventario extends AbstractTableGateway
@@ -170,6 +171,15 @@ class SaldoInventario extends AbstractTableGateway
     {
         return $this->select(array('idProveedor'=>$idProveedor))->toArray();
     }
+    
+    public function consultaAvanzadaSaldoInventario($idProducto, $idProveedor)
+    {
+        $idProducto = $idProducto > 0? $idProducto:null;
+        $idProveedor = $idProveedor > 0? $idProveedor:null;
+        $stored = new Clases\StoredProcedure($this->adapter);
+        return $stored->execProcedureReturnDatos("Inventario.ConsultaAvanzadaSaldoInventario ?,?",array($idProducto, $idProveedor));
+    }
+    
     private function LlenarEntidad($result)
     {
         $this->fechaModificacion=$result['fechaModificacion'];

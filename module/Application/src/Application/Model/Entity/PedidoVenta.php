@@ -1,29 +1,28 @@
 <?php
+
 namespace Application\Model\Entity;
+
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 
-class EstadoPedidoVenta extends AbstractTableGateway
-{
+class PedidoVenta extends AbstractTableGateway {
+
     private $idPedidoVenta;
+    private $numeroPedidoVenta;
     private $idCliente;
     private $idEstadoPedidoVenta;
     private $idViaPago;
     private $fechaPedido;
     private $urlDocumentoPago;
     private $idUsuarioCreacion;
-    
-    
     public $PedidoVentaPosicion;
-    
     //Entidades embebidas
     public $ViaPago;
     public $EstadoPedidoVenta;
 
-    public function __construct(Adapter $adapter = null)
-    {
+    public function __construct(Adapter $adapter = null) {
         $this->adapter = $adapter;
-        $this->table =  new \Zend\Db\Sql\TableIdentifier('PedidoVenta', 'Venta');
+        $this->table = new \Zend\Db\Sql\TableIdentifier('PedidoVenta', 'Venta');
     }
 
     function getIdPedidoVenta() {
@@ -81,22 +80,26 @@ class EstadoPedidoVenta extends AbstractTableGateway
     function setIdUsuarioCreacion($idUsuarioCreacion) {
         $this->idUsuarioCreacion = $idUsuarioCreacion;
     }
-    
-   public function guardarPedidoVenta($idEstadoPedidoVenta,$idCliente,$urlDocumentoPago,$idUsuarioCreacion)
-    {
+
+    function getNumeroPedidoVenta() {
+        return $this->numeroPedidoVenta;
+    }
+
+    function setNumeroPedidoVenta($numeroPedidoVenta) {
+        $this->numeroPedidoVenta = $numeroPedidoVenta;
+    }
+
+    public function guardarPedidoVenta($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion) {
         $stored = new StoredProcedure($this->adapter);
         // Venta.GuardarPedidoVenta @idEstadoPedidoVenta smallint,@idCliente bigint,@urlDocumentoPago varchar,@idUsuarioCreacion bigint
-        $idPedidoVenta = $stored->execProcedureReturnDatos("Compra.GuardarPedidoVenta ?,?,?,?",array($idEstadoPedidoVenta,$idCliente,$urlDocumentoPago,$idUsuarioCreacion))->current();
+        $idPedidoVenta = $stored->execProcedureReturnDatos("Compra.GuardarPedidoVenta ?,?,?,?", array($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion))->current();
         unset($stored);
-        if ($idPedidoVenta['idPedidoVenta'] > 0) 
-        {
+        if ($idPedidoVenta['idPedidoVenta'] > 0) {
             $this->idPedidoVenta = $idPedidoVenta['idPedidoVenta'];
-            foreach ($this->PedidoVentaPosicion as $posicion)
-            {
+            foreach ($this->PedidoVentaPosicion as $posicion) {
                 $posicion->setIdPedidoVenta($this->idPedidoVenta);
                 $resultado = $posicion->guardarPedidoVentaPosicion();
-                if ($resultado != 'true')
-                {
+                if ($resultado != 'true') {
                     $this->eliminarPedidoVenta($idPedidoVenta);
                     return $resultado;
                 }
@@ -106,93 +109,87 @@ class EstadoPedidoVenta extends AbstractTableGateway
         return 'false';
     }
 
-    public function modificarPedidoVenta($idPedidoVenta,$idEstadoPedidoVenta,$idCliente,$urlDocumentoPago)
-    {
-        $datos=array(
-                'urlDocumentoPago' => $urlDocumentoPago,
-                'idCliente'=> $idCliente,
-                'idEstadoPedidoVenta'=> $idEstadoPedidoVenta);
-        $result=$this->update($datos,array('idPedidoVenta'=>$idPedidoVenta));
-        if($result>0)
+    public function modificarPedidoVenta($idPedidoVenta, $idEstadoPedidoVenta, $idCliente, $urlDocumentoPago) {
+        $datos = array(
+            'urlDocumentoPago' => $urlDocumentoPago,
+            'idCliente' => $idCliente,
+            'idEstadoPedidoVenta' => $idEstadoPedidoVenta);
+        $result = $this->update($datos, array('idPedidoVenta' => $idPedidoVenta));
+        if ($result > 0)
             return true;
         return false;
     }
-    public function modificarEstadoPedidoVenta($idPedidoVenta,$idEstadoPedidoVenta)
-    {
-        $datos=array('idEstadoPedidoVenta'=> $idEstadoPedidoVenta);
-        $result=$this->update($datos,array('idPedidoVenta'=>$idPedidoVenta));
-        if($result>0)
+
+    public function modificarEstadoPedidoVenta($idPedidoVenta, $idEstadoPedidoVenta) {
+        $datos = array('idEstadoPedidoVenta' => $idEstadoPedidoVenta);
+        $result = $this->update($datos, array('idPedidoVenta' => $idPedidoVenta));
+        if ($result > 0)
             return true;
         return false;
     }
-    private function eliminarPedidoVenta($idPedidoVenta)
-    {
-        if ($this->delete(array('idPedidoVenta'=>$idPedidoVenta))>0) {
+
+    private function eliminarPedidoVenta($idPedidoVenta) {
+        if ($this->delete(array('idPedidoVenta' => $idPedidoVenta)) > 0) {
             return true;
         }
         return false;
     }
-    public function consultarTodoPedidoVenta()
-    {
+
+    public function consultarTodoPedidoVenta() {
         return $this->select()->toArray();
     }
-    public function consultarPedidoVentaPorIdPedidoVenta($idPedidoVenta)
-    {
-        $result=$this->select(array('idPedidoVenta'=>$idPedidoVenta))->current();
-        if($result)
-        {
+
+    public function consultarPedidoVentaPorIdPedidoVenta($idPedidoVenta) {
+        $result = $this->select(array('idPedidoVenta' => $idPedidoVenta))->current();
+        if ($result) {
             $this->LlenarEntidad($result);
             $this->LlenarPedidoVentaPosicion();
             return true;
         }
         return false;
     }
-    public function consultarPedidoVentaPorIdEstadoPedidoVenta($idEstadoPedidoVenta)
-    {
-        return $this->select(array('idEstadoPedidoVenta'=>$idEstadoPedidoVenta))->toArray();
+
+    public function consultarPedidoVentaPorIdEstadoPedidoVenta($idEstadoPedidoVenta) {
+        return $this->select(array('idEstadoPedidoVenta' => $idEstadoPedidoVenta))->toArray();
     }
-   
-    public function consultaAvanzadaPedidoVenta($numeroPedidoVenta,$idCliente,$idEstadoPedidoVenta)
-    {
-        $numeroPedidoVenta = $numeroPedidoVenta > 0? $numeroPedidoVenta:null;
-        $idCliente = $idCliente > 0? $idCliente:null;
-        $idEstadoPedidoVenta = $idEstadoPedidoVenta > 0? $idEstadoPedidoVenta:null;
+
+    public function consultaAvanzadaPedidoVenta($numeroPedidoVenta, $idCliente, $idEstadoPedidoVenta) {
+        $numeroPedidoVenta = $numeroPedidoVenta > 0 ? $numeroPedidoVenta : null;
+        $idCliente = $idCliente > 0 ? $idCliente : null;
+        $idEstadoPedidoVenta = $idEstadoPedidoVenta > 0 ? $idEstadoPedidoVenta : null;
         $stored = new StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Venta.ConsultaAvanzadaPedidoVenta ?,?,?",array($numeroPedidoVenta, $idCliente,(int)$idEstadoPedidoVenta));
+        return $stored->execProcedureReturnDatos("Venta.ConsultaAvanzadaPedidoVenta ?,?,?", array($numeroPedidoVenta, $idCliente, (int) $idEstadoPedidoVenta));
     }
-    private function LlenarPedidoVentaPosicion()
-    {
+
+    private function LlenarPedidoVentaPosicion() {
         $PedidoVentaPosicion = new PedidoVentaPosicion($this->adapter);
         $this->PedidoVentaPosicion = $PedidoVentaPosicion->consultarPedidoVentaPosicionPorIdPedidoVenta($this->idPedidoVenta);
-        
     }
-    
-    private function LlenarEntidad($result)
-    {
-        $this->idPedidoVenta=$result['idPedidoVenta'];
+
+    private function LlenarEntidad($result) {
+        $this->idPedidoVenta = $result['idPedidoVenta'];
+        $this->numeroPedidoVenta = $result['numeroPedido'];
         $this->idCliente = $result['idCliente'];
         $this->idEstadoPedidoVenta = $result['idEstadoPedidoVenta'];
         $this->idViaPago = $result['idViaPago'];
         $this->fechaPedido = $result['fechaPedido'];
         $this->urlDocumentoPago = $result['urlDocumentoPago'];
         $this->idUsuarioCreacion = $result['idUsuarioCreacion'];
-        
+
         $this->CargarEmbebidos();
     }
-    
+
     //<===============================================================>
     //<--- Carga los objetos completos relacionados a este objeto ====>
     //<===============================================================>
-    private function CargarEmbebidos()
-    {
+    private function CargarEmbebidos() {
         //Via Pago
-        $this->ViaPago =new Entity\ViaPago(parent::getAdapter());
+        $this->ViaPago = new Entity\ViaPago(parent::getAdapter());
         $this->ViaPago->consutlarViapagoPoridViaPago($this->idViaPago);
-        
+
         //Estado Pedido
         $this->EstadoPedidoVenta = new Entity\EstadoPedidoVenta(parent::getAdapter());
         $this->EstadoPedidoVenta->consultarEstadoPedidoVentaPorId($this->idEstadoPedidoVenta);
     }
-    
-  
+
 }

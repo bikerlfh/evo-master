@@ -38,6 +38,22 @@ class FormBase extends Form
                         'class'=>$this->cssClass['btnBuscar']
                 )
         ));
+        
+        //Este se usa cuando se necesita abrir un dialog dentro de otro
+         $this->add(array(
+                'name'=>'btnBuscarProducto2',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarProducto2',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/producto/buscar2','#modal-dialog-display2','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
         /*************** btn Buscar Producto********************************/
         
         /*************** btn Buscar Proveedor********************************/
@@ -51,6 +67,36 @@ class FormBase extends Form
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
                         'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedor/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        $this->add(array(
+                'name'=>'btnBuscarProveedor2',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarProveedor2',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedor/buscar2','#modal-dialog-display2','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        
+         /*************** btn Buscar Cliente********************************/
+        $this->add(array(
+                'name'=>'btnBuscarCliente',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarCliente',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/cliente/buscar','#modal-dialog-display','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
@@ -135,6 +181,22 @@ class FormBase extends Form
                         'class'=>$this->cssClass['btnBuscar']
                 )
         ));
+         /*************** btn Buscar Saldo Inventario ********************************/
+        $this->add(array(
+                'name'=>'btnBuscarSaldoInventario',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarSaldoInventario',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/saldoinventario/buscar','#modal-dialog-display','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        
         /*************** btn Buscar Municipio********************************/
         $this->add(array(
                 'name'=>'btnGuardar',			
