@@ -279,14 +279,20 @@ if (defined('RUNNING_FROM_ROOT')) {
             <!-- END CONTENT -->
 
         </div><!--end #base-->
-        <div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="textModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal fade" id="textModal" tabindex="0" role="dialog" aria-labelledby="textModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog" id="modal-dialog-display">
                 
             </div><!-- /.modal-dialog -->
-            <!--Se usa para los dialog que proviene de otro dialog-->
+        </div>
+        <!--Se usa para los dialog que proviene de otro dialog-->
+        <!--Se asigna u z-index superior con el fin de que cuando se abra el primer dialog este no lo oculte.-->
+        <div class="modal fade" id="textModal2" tabindex="1"  role="dialog" aria-labelledby="textModalLabel2" aria-hidden="true" style="display: none; z-index: 99999">
+            
             <div class="modal-dialog" id="modal-dialog-display2">
                 
-            </div>
         </div>
+        </div>
+        
+        
     </body>
 </html>

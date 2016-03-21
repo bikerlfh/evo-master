@@ -94,7 +94,7 @@ class SaldoInventarioController extends AbstractActionController {
         /** Campos para saber en donde se deben devolver los valores de la busqueda * */
         $campoId = $this->params()->fromQuery('campoId', null) == null ? 'idSaldoInventario' : $this->params()->fromQuery('campoId', null);
         $campoIdProducto = $this->params()->fromQuery('campoIdProducto', null) == null ? 'campoIdProducto' : $this->params()->fromQuery('campoIdProducto', null);
-        $campoNombre = $this->params()->fromQuery('campoNombre', null) == null ? 'nombreProducto' : $this->params()->fromQuery('nombreProducto', null);
+        $campoNombre = $this->params()->fromQuery('campoNombre', null) == null ? 'nombreProducto' : $this->params()->fromQuery('campoNombre', null);
         $campoValorVenta = $this->params()->fromQuery('campoValorVenta', null) == null ? 'campoValorVenta' : $this->params()->fromQuery('campoValorVenta', null);
         $campoCantidad = $this->params()->fromQuery('campoCantidad', null) == null ? 'campoCantidad' : $this->params()->fromQuery('campoCantidad', null);
 
