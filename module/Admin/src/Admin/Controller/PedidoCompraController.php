@@ -14,6 +14,7 @@ use Zend\Session\Container;
 class PedidoCompraController extends AbstractActionController
 {
     private $PedidoCompra;
+    private $EstadoPedido;
     //private $PedidoCompraPosicion;
     private $form;
     
@@ -86,7 +87,7 @@ class PedidoCompraController extends AbstractActionController
         {
             $this->form->remove('idEstadoPedido');
             $urlDocumentoPago = null;
-            $returnCrud = $this->consultarMessage("errorSave");
+            $returnCrud = $this->consultarMessage("errorAutorizacion");
             // Make certain to merge the files info!
             $data = array_merge_recursive(
                 $request->getPost()->toArray(),
@@ -102,8 +103,8 @@ class PedidoCompraController extends AbstractActionController
                 $urlDocumentoPago = $data['image-file']['tmp_name'];
                 $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
                 $result = $this->PedidoCompra->autorizarPedidoCompra($data['idPedidoCompra'],$urlDocumentoPago,$this->user_session->idUsuario);
-                if ($result == 'true') {
-                    $returnCrud = $this->consultarMessage("okSave");
+                if ($result == 'true'){
+                    $returnCrud = $this->consultarMessage("okAutorizacion");
                 }
             }
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
@@ -113,6 +114,13 @@ class PedidoCompraController extends AbstractActionController
             $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
             if($this->PedidoCompra->consultarPedidoCompraPorIdPedidoCompra($id))
             {
+                $this->EstadoPedido = new EstadoPedido($this->dbAdapter);
+                $this->EstadoPedido->consultarEstadoPedidoPorIdEstadoPedido($this->PedidoCompra->getIdEstadoPedido());
+                // Se valida que el pedido este con estado SOLICITADO
+                if ($this->EstadoPedido->getDescripcion() != 'SOLICITADO'){
+                    unset($this->PedidoCompra);
+                    return new ViewModel(array('form'=>$this->form,'validacion'=>'El pedído seleccionado esta con estado '.$this->EstadoPedido->getDescripcion()));
+                }
                 $this->form->get("idPedidoCompra")->setValue($this->PedidoCompra->getIdPedidoCompra());
                 $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
                 $this->form->get("nombreProveedor")->setValue($this->PedidoCompra->getNombreProveedor());

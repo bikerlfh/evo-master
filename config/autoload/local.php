@@ -51,6 +51,7 @@ return array(
         'errorDelete'=>array('title'=>'Operación sin resultado','message'=>'No se logro Eliminar','function'=>'showMessageError'),
         'updateDisable'=>array('title'=>'Información','message'=>'Este módulo no esta habilitado para modificar','function'=>'showMessaginfo'),
         'errorDesconocido'=>array('title'=>'Erro desconocido','message'=>'Ha ocurrido un error desconocido','function'=>'showMessageWarning'),
-        
+        'okAutorizacion'=> array('title'=>'Operación Exitosa','message'=>'Se ha autorizado el pedido con Exito','function'=>'showMessageSuccess'),
+        'errorAutorizacion'=>array('title'=>'Operación sin resultado','message'=>'No se logro autorizar el pedído','function'=>'showMessageError'),
     ),
     );

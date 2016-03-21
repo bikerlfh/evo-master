@@ -15,22 +15,22 @@ class EstadoPedido extends AbstractTableGateway
         $this->table =  new \Zend\Db\Sql\TableIdentifier('EstadoPedido', 'Compra');
     }
 
-    public function getdescripcion(){
+    public function getDescripcion(){
         return $this->descripcion;
     }
-    public function setdescripcion($descripcion){
+    public function setDescripcion($descripcion){
         $this->descripcion=$descripcion;
     }
-    public function getcodigo(){
+    public function getCodigo(){
         return $this->codigo;
     }
-    public function setcodigo($codigo){
+    public function setCodigo($codigo){
         $this->codigo=$codigo;
     }
-    public function getidEstadoPedido(){
+    public function getIdEstadoPedido(){
         return $this->idEstadoPedido;
     }
-    public function setidEstadoPedido($idEstadoPedido){
+    public function setIdEstadoPedido($idEstadoPedido){
         $this->idEstadoPedido=$idEstadoPedido;
     }
 
@@ -67,7 +67,7 @@ class EstadoPedido extends AbstractTableGateway
     {
         return $this->select()->toArray();
     }
-    public function consultarEstadoPedidoPoridEstadoPedido($idEstadoPedido)
+    public function consultarEstadoPedidoPorIdEstadoPedido($idEstadoPedido)
     {
         $result=$this->select(array('idEstadoPedido'=>$idEstadoPedido))->current();
         if($result)
