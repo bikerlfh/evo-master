@@ -68,7 +68,14 @@ class PedidoCompra extends AbstractTableGateway
         }
         return 'false';
     }
-
+    public function autorizarPedidoCompra($idPedidoCompra,$urlDocumentoPago,$idUsuario)
+    {
+        $stored = new StoredProcedure($this->adapter);
+        // Compra.AutorizarPedidoCompra	@idPedidoCompra bigint,@urlDocumentoPago varchar(150),	@idUsuario bigint
+        $result =  $stored->execProcedureReturnDatos("Compra.AutorizarPedidoCompra ?,?,?",array($idPedidoCompra,$urlDocumentoPago,$idUsuario))->current();
+        unset($stored);
+        return $result['result'];
+    }
     public function modificarPedidoCompra($idPedidoCompra,$idEstadoPedido,$idProveedor,$urlDocumentoPago)
     {
         $datos=array(
