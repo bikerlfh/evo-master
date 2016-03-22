@@ -49,7 +49,6 @@ $(document).ready(function()
                 break;
         }
     }
-    
 });
 
 
@@ -275,6 +274,24 @@ function centrarObjeto (campo){
         $(campo).css('margin-top', ((-1) *  parseInt($(campo).offset('Height')) / 2) +'px');
     }
 }
+
+//Esta función se agrega cuando se inicia un popup, con el fin de que borre el contenido que tiene actualmente.
+//Parametros true cuando se maneje dialog de primera instancia, y false cuando esta dentro de otro dialog.
+function eventoLimpiarModal(cual){
+    
+    if(cual){
+        $("#btnClosePop").click(function(){
+            $("#modal-dialog-display").html("");
+            $('#textModal').modal('hide');
+        });
+    }else{
+        $("#btnClosePop2").click(function(){
+            $("#modal-dialog-display2").html("");
+            $('#textModal2').modal('hide');
+        });    
+    }
+}
+
 
 //<== funcion que captura un parametro GET ===>
 (function($) {  
