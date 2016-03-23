@@ -1,6 +1,6 @@
 <?php
 /*
-* @autor Luis Fernando Henriquez
+* @autor Ezequiel David Gutierrez
 * @copyrigth 2016
 */
 
@@ -25,7 +25,7 @@ class FormPedidoVenta extends Form
         $this->FormCliente = new FormCliente($serviceLocator,$basePath);
         $this->FormBase = new FormBase($serviceLocator,$basePath);
         $this->setAttributes(array(
-            'action' => $this->basePath.'/admin/pedidoventa/index',
+            'action' => $this->basePath.'/admin/pedidoventa/solicitud',
             'method' => 'post',
             'class'=>'form-horizontal',
             'role'=>'form'

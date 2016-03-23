@@ -1,62 +1,60 @@
-<?php echo $this->doctype(); 
+<?php
+echo $this->doctype();
 if (defined('RUNNING_FROM_ROOT')) {
-    $this->plugin('basePath')->setBasePath($this->basePath().'/public');
+    $this->plugin('basePath')->setBasePath($this->basePath() . '/public');
 }
 ?>
 <html lang="en">
     <head>
         <title>Evo</title>
         <meta charset="utf-8">
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendName('keywords', 'your,keywords')
-            ->appendName('description', 'Short explanation about this website')
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+                ->appendName('keywords', 'your,keywords')
+                ->appendName('description', 'Short explanation about this website')
         ?>
-        <?php echo $this->headLink(array('rel' => 'stylesheet', 'href' => 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700,800'))
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/DataTables/TableTools.css?1401297385')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/DataTables/jquery.dataTables.css?1401297385')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/font-awesome.min.css?1400333030')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/boostbox_responsive.css?1400695309')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/boostbox.css?1401297311')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/bootstrap.css?1400695306')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/toastr/toastr.css?1401216363')
-                        ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/select2/select2.css?1401216370')
+        <?php
+        echo $this->headLink(array('rel' => 'stylesheet', 'href' => 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,600,700,800'))
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/DataTables/TableTools.css?1401297385')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/DataTables/jquery.dataTables.css?1401297385')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/font-awesome.min.css?1400333030')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/boostbox_responsive.css?1400695309')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/boostbox.css?1401297311')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/bootstrap.css?1400695306')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/toastr/toastr.css?1401216363')
+                ->prependStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/select2/select2.css?1401216370')
+        ?>
 
-        ?>
-        
         <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/script2.js')
-            ->prependFile($this->basePath() . '/js/registroobjetos.js')
-                
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/select2/select2.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/core/demo/DemoUIMessages.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/toastr/toastr.min.js')
-                
-            ->prependFile($this->basePath() . '/admin/assets/js/core/demo/Demo.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/core/App.js')
-                
-            ->prependFile($this->basePath() . '/admin/assets/js/core/demo/DemoTableDynamic.js')
-                
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/slimscroll/jquery.slimscroll.min.js')
-                
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/DataTables/extras/TableTools/media/js/TableTools.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/DataTables/extras/ColVis/js/ColVis.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/DataTables/jquery.dataTables.min.js')            
-                
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/spin.js/spin.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/bootstrap/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/core/BootstrapFixed.js')
-            
+        <?php
+        echo $this->headScript()
+                ->prependFile($this->basePath() . '/js/script2.js')
+                ->prependFile($this->basePath() . '/js/registroobjetos.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/select2/select2.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/core/demo/DemoUIMessages.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/toastr/toastr.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/core/demo/Demo.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/core/App.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/core/demo/DemoTableDynamic.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/slimscroll/jquery.slimscroll.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/DataTables/extras/TableTools/media/js/TableTools.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/DataTables/extras/ColVis/js/ColVis.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/DataTables/jquery.dataTables.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/spin.js/spin.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/bootstrap/bootstrap.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/core/BootstrapFixed.js')
+
 //            ->prependFile($this->basePath() . '/admin/plugins/flot/jquery.flot.time.min.js')
 //            ->prependFile($this->basePath() . '/admin/plugins/flot/jquery.flot.categories.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/jquery/jquery-migrate-1.2.1.min.js')
-            ->prependFile($this->basePath() . '/admin/assets/js/libs/jquery/jquery-1.11.0.min.js')
-            
-            ; ?>
-        </head>
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/jquery/jquery-migrate-1.2.1.min.js')
+                ->prependFile($this->basePath() . '/admin/assets/js/libs/jquery/jquery-1.11.0.min.js')
+
+        ;
+        ?>
+    </head>
     <body class="sidebar-expanded">
-        
+
         <!-- BEGIN HEADER-->
         <header id="header">
             <!-- BEGIN NAVBAR -->
@@ -74,7 +72,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="header-navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a target="_blank" href="<?php  echo $this->basePath()?>/client"><i class="fa fa-desktop"></i></a></li>
+                        <li><a target="_blank" href="<?php echo $this->basePath() ?>/client"><i class="fa fa-desktop"></i></a></li>
                     </ul><!--end .nav -->
                     <ul class="nav navbar-nav navbar-right">
                         <li><span class="navbar-devider"></span></li>
@@ -105,7 +103,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                         <li><span class="navbar-devider"></span></li>
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="navbar-profile dropdown-toggle text-bold" data-toggle="dropdown">
-                                <?php echo $_SESSION['user']['username'];?>
+                                <?php echo $_SESSION['user']['username']; ?>
                                 <i class="fa fa-fw fa-angle-down"></i> 
                                 <img class="img-circle" src="<?php echo $this->basePath() ?>/admin/assets/img/Ninja Head-48.png" alt="" />
                             </a>
@@ -113,7 +111,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                                 <li class="dropdown-header">Config</li>
                                 <li><a href="../../html/pages/profile.html">My profile</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?php echo str_replace("/public", "",$this->basePath())?>/admin/login/exit"><i class="fa fa-fw fa-power-off text-danger"></i>Salir</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/login/exit"><i class="fa fa-fw fa-power-off text-danger"></i>Salir</a></li>
                             </ul><!--end .dropdown-menu -->
                         </li><!--end .dropdown -->
                     </ul><!--end .nav -->
@@ -151,30 +149,30 @@ if (defined('RUNNING_FROM_ROOT')) {
                                 <i class="fa fa-building-o fa-fw"></i><span class="title">Compras</span> <span class="expand-sign">+</span>
                             </a>
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/estadopedido">Estado Pedido</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pedidocompra/solicitud">Solicitud Pedído</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pedidocompra/autorizar">Autorización Pedído</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/estadopedido">Estado Pedido</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidocompra/solicitud">Solicitud Pedído</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidocompra/autorizar">Autorización Pedído</a></li>
                             </ul>
                         </li>
-                        
+
                         <li>
                             <a href="javascript:void(0);">
                                 <i class="fa fa-building-o fa-fw"></i><span class="title">Ventas</span> <span class="expand-sign">+</span>
                             </a>
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/estadopedidoventa">Estado Pedido Venta</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pedidoventa/solicitud">Solicitud Pedido</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/estadopedidoventa">Estado Pedido Venta</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidoventa/solicitud">Solicitud Pedido</a></li>
                             </ul>
                         </li>
-                        
+
                         <li>
                             <a href="javascript:void(0);">
                                 <i class="fa fa-building-o fa-fw"></i><span class="title">División Territorial</span> <span class="expand-sign">+</span>
                             </a>
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/pais">Pais</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/departamento">Departamento</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/municipio">Municipio</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pais">Pais</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/departamento">Departamento</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/municipio">Municipio</a></li>
                             </ul>
                         </li>
                         <li>
@@ -183,8 +181,8 @@ if (defined('RUNNING_FROM_ROOT')) {
                             </a>
                             <!--start submenu -->
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/saldoinventario" >Saldo Inventario</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/movimientoinventario" >Movimiento de Inventarios</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/saldoinventario" >Saldo Inventario</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/movimientoinventario" >Movimiento de Inventarios</a></li>
                             </ul><!--end /submenu -->
                         </li><!--end /menu-item -->
                         <li>
@@ -196,13 +194,13 @@ if (defined('RUNNING_FROM_ROOT')) {
                                 <li>
                                     <a href="javascript:void(0);"> <span class="expand-sign">+</span>Parámetros</a>
                                     <ul style="display: none;">
-                                        <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/categoria" >Categoria</a></li>
-                                        <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/marca" >Marca</a></li>
+                                        <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/categoria" >Categoria</a></li>
+                                        <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/marca" >Marca</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/producto" >Producto</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/imagenproducto" >Imagenes Producto</a></li>
-                                
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/producto" >Producto</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/imagenproducto" >Imagenes Producto</a></li>
+
                             </ul><!--end /submenu -->
                         </li><!--end /menu-item -->
                         <li>
@@ -211,9 +209,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                             </a>
                             <!--start submenu -->
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedor" >Proveedor</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedoroficina" >Proveedor Oficina</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/proveedorcuenta" >Proveedor Cuenta</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/proveedor" >Proveedor</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/proveedoroficina" >Proveedor Oficina</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/proveedorcuenta" >Proveedor Cuenta</a></li>
                             </ul><!--end /submenu -->
                         </li><!--end /menu-item -->
                         <li>
@@ -222,9 +220,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                             </a>
                             <!--start submenu -->
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/datobasicotercero" >Dato Basico Tercero</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/cliente" >Cliente</a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/tipodocumento" >Tipo Documento</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/datobasicotercero" >Dato Basico Tercero</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/cliente" >Cliente</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/tipodocumento" >Tipo Documento</a></li>
                             </ul><!--end /submenu -->
                         </li><!--end /menu-item -->
                         <!-- Menu Pages -->
@@ -234,8 +232,8 @@ if (defined('RUNNING_FROM_ROOT')) {
                             </a>
                             <!--start submenu -->
                             <ul>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/usuario" >Usuarios<span class="badge" id="lblNumUsuario">42</span></a></li>
-                                <li><a href="<?php echo str_replace("/public","",$this->basePath()) ?>/admin/tipousuario">Tipo Usuarios</a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/usuario" >Usuarios<span class="badge" id="lblNumUsuario">42</span></a></li>
+                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/tipousuario">Tipo Usuarios</a></li>
                             </ul>
                         </li><!--end /menu-item -->
 
@@ -255,44 +253,64 @@ if (defined('RUNNING_FROM_ROOT')) {
             <!-- BEGIN CONTENT-->
             <div id="content">
                 <section>
-                        <ol class="breadcrumb">
-                            <li><a href="http://localhost/CodeCovers/www.codecovers.com/boostbox">home</a></li>
-                            <li class="active">Formulario</li>
-                        </ol>
-                        <div class="section-header">
-                            <h3 class="text-standard"><i class="fa fa-fw fa-arrow-circle-right text-gray-light"></i> Evo <small></small></h3>
-                        </div>
-                        <div class="section-body">
-                            <!-- START HORIZONTAL FORM -->
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <?php echo $this->content; ?>
-                                </div><!--end .col-lg-12 -->
-                            </div><!--end .row -->
-                            <!-- END HORIZONTAL FORM -->
+                    <ol class="breadcrumb">
+                        <li><a href="http://localhost/CodeCovers/www.codecovers.com/boostbox">home</a></li>
+                        <li class="active">Formulario</li>
+                    </ol>
+                    <div class="section-header">
+                        <h3 class="text-standard"><i class="fa fa-fw fa-arrow-circle-right text-gray-light"></i> Evo <small></small></h3>
+                    </div>
+                    <div class="section-body">
+                        <!-- START HORIZONTAL FORM -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <?php echo $this->content; ?>
+                            </div><!--end .col-lg-12 -->
+                        </div><!--end .row -->
+                        <!-- END HORIZONTAL FORM -->
 
 
-                        </div><!--end .section-body -->
+                    </div><!--end .section-body -->
                 </section>
 
             </div><!--end #content-->
             <!-- END CONTENT -->
 
         </div><!--end #base-->
-        <div class="modal fade" id="textModal" tabindex="0" role="dialog" aria-labelledby="textModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal fade" id="textModal" tabindex="0" role="dialog" aria-labelledby="textModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display: none;">
             <div class="modal-dialog" id="modal-dialog-display">
-                
+
             </div><!-- /.modal-dialog -->
         </div>
         <!--Se usa para los dialog que proviene de otro dialog-->
         <!--Se asigna u z-index superior con el fin de que cuando se abra el primer dialog este no lo oculte.-->
-        <div class="modal fade" id="textModal2" tabindex="1"  role="dialog" aria-labelledby="textModalLabel2" aria-hidden="true" style="display: none; z-index: 99999">
-            
-            <div class="modal-dialog" id="modal-dialog-display2">
-                
+        <div class="modal fade" id="textModal2" tabindex="1"  role="dialog" aria-labelledby="textModalLabel2" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="display: none; z-index: 99999">
+
+            <div class="modal-dialog" id="modal-dialog-display2">                
+            </div>
         </div>
+
+        <style>
+            #loaderCenter {
+                position: absolute;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                margin: auto;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+                height: 100px;
+                width: 100px;
+                z-index: 99999;
+                display: none;
+            }
+
+        </style>
+
+        <div id="loaderCenter">
+            <img src="<?php echo $this->basePath() ?>/img/loader.gif">
         </div>
-        
-        
     </body>
 </html>

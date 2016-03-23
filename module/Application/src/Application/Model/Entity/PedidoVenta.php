@@ -4,6 +4,7 @@ namespace Application\Model\Entity;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Application\Model\Clases\StoredProcedure;
 
 class PedidoVenta extends AbstractTableGateway {
 
@@ -92,7 +93,7 @@ class PedidoVenta extends AbstractTableGateway {
     public function guardarPedidoVenta($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion) {
         $stored = new StoredProcedure($this->adapter);
         // Venta.GuardarPedidoVenta @idEstadoPedidoVenta smallint,@idCliente bigint,@urlDocumentoPago varchar,@idUsuarioCreacion bigint
-        $idPedidoVenta = $stored->execProcedureReturnDatos("Compra.GuardarPedidoVenta ?,?,?,?", array($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion))->current();
+        $idPedidoVenta = $stored->execProcedureReturnDatos("Venta.GuardarPedidoVenta ?,?,?,?", array($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion))->current();
         unset($stored);
         if ($idPedidoVenta['idPedidoVenta'] > 0) {
             $this->idPedidoVenta = $idPedidoVenta['idPedidoVenta'];
@@ -100,7 +101,7 @@ class PedidoVenta extends AbstractTableGateway {
                 $posicion->setIdPedidoVenta($this->idPedidoVenta);
                 $resultado = $posicion->guardarPedidoVentaPosicion();
                 if ($resultado != 'true') {
-                    $this->eliminarPedidoVenta($idPedidoVenta);
+                    $this->eliminarPedidoVenta($this->idPedidoVenta);
                     return $resultado;
                 }
             }

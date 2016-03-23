@@ -69,7 +69,7 @@ class PedidoVentaPosicion extends AbstractTableGateway
     {
         $stored = new StoredProcedure($this->adapter);
         // Venta.GuardarPedidoVentaPosicion @idPedidoVenta bigint,@idProducto bigint,@cantidad bigint,@valorVenta decimal(10,2),@idUsuarioCreacion bigint
-        $result = $stored->execProcedureReturnDatos("Venta.GuardarPedidoVentaPosicion ?,?,?,?,?",array($this->$idPedidoVenta,$this->idProducto,$this->cantidad,$this->valorVenta,$this->idUsuarioCreacion))->current();
+        $result = $stored->execProcedureReturnDatos("Venta.GuardarPedidoVentaPosicion ?,?,?,?,?",array($this->idPedidoVenta,$this->idProducto,$this->cantidad,$this->valorVenta,$this->idUsuarioCreacion))->current();
         return $result['result'];
     }
 

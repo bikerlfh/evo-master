@@ -110,6 +110,7 @@ function usar_ajax(URL,objeto,datos)
     $.ajax(
     {
         beforeSend: function(){
+            $("#loaderCenter").show();
            //codigo q se ejecutará antes de q se inicie ajax;
            //mostrarImgCargando();
         },
@@ -127,7 +128,8 @@ function usar_ajax(URL,objeto,datos)
             console.log(estado);
         },
         complete: function(jqXHR,estado)
-        {			
+        {
+            $("#loaderCenter").hide();
             //se ejecuta despues de succes o error
             console.log(estado);
         },
@@ -277,21 +279,13 @@ function centrarObjeto (campo){
 
 //Esta función se agrega cuando se inicia un popup, con el fin de que borre el contenido que tiene actualmente.
 //Parametros true cuando se maneje dialog de primera instancia, y false cuando esta dentro de otro dialog.
-function eventoLimpiarModal(cual){
+function fnLimpiarModal(button, contenidoModal, modal){
     
-    if(cual){
-        $("#btnClosePop").click(function(){
-            $("#modal-dialog-display").html("");
-            $('#textModal').modal('hide');
-        });
-    }else{
-        $("#btnClosePop2").click(function(){
-            $("#modal-dialog-display2").html("");
-            $('#textModal2').modal('hide');
-        });    
-    }
+    $("#" + button).click(function(){
+        $("#" + contenidoModal).html("");
+        $('#' + modal).modal('hide');
+    });
 }
-
 
 //<== funcion que captura un parametro GET ===>
 (function($) {  

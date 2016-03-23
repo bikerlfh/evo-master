@@ -7,6 +7,7 @@ use Admin\Form\FormPedidoVenta;
 use Application\Model\Entity\PedidoVenta;
 use Application\Model\Entity\PedidoVentaPosicion;
 use Application\Model\Entity\EstadoPedido;
+use Application\Model\Entity\SaldoInventario;
 
 use Zend\Session\Container;
 
@@ -24,7 +25,6 @@ class PedidoVentaController extends AbstractActionController
     
     public function solicitudAction()
     {
-      
         $this->validarSession();
         // se asigna el layout admin
         $this->layout('layout/admin'); 
@@ -37,50 +37,52 @@ class PedidoVentaController extends AbstractActionController
         if(count($this->request->getPost())>0)
         {
             $urlDocumentoPago = null;
-            // Guardamos la imagen, si esta viene.
-            $request = $this->getRequest();
-            if ($request->isPost()) 
-            {
-                // Make certain to merge the files info!
-                $data = array_merge_recursive(
-                    $request->getPost()->toArray(),
-                    $request->getFiles()->toArray()
-                );
-
-                $this->form->setData($data);
-                if ($this->form->isValid()) 
-                {
-                    $data = $this->form->getData();
-                    $urlDocumentoPago = $data['file-documentoPago']['tmp_name'];
-                }
-            }
             $datos=$this->request->getPost();
             // Este ciclo muestra todas las claves del array asociativo
+            $this->PedidoVenta->PedidoVentaPosicion = array();
+            $validador = false;
             foreach($datos as $key => $value)
             {
                 // Se evalua si la clave es un idProducto
                 if (strpos($key, 'idSaldoInventario') !== FALSE)
                 {
                     $indice = split('idSaldoInventario',$key)[1];
+                    
+                    //Se obtienen valores
+                    $idSaldoInventario = $datos['idSaldoInventario'. $indice];
+                    $cantidad = $datos['cantidad'.$indice];
+                    //Se consulta el saldo inventario para rectificar tarifas.
+                    $SaldoInventario = new SaldoInventario($this->dbAdapter);
+                    $SaldoInventario->consultarSaldoInventarioPorIdSaldoInventario($idSaldoInventario);
+//                    
+//                    //Se valida la cantidad de productos ingresados
+//                    if($cantidad > $SaldoInventario->getCantidad())
+//                    {
+//                        $validador = true;
+//                        break;
+//                    }
                     $PedidoVentaPosicion = new PedidoVentaPosicion($this->dbAdapter);
-                    $PedidoVentaPosicion->setIdProducto($datos['idProducto'.$indice]);
-                    $PedidoVentaPosicion->setCantidad($datos['cantidad'.$indice]);
-                    $PedidoVentaPosicion->setValorCompra($datos['valorVenta'.$indice]);
+                    $PedidoVentaPosicion->setIdProducto($SaldoInventario->getIdProducto());
+                    $PedidoVentaPosicion->setCantidad($cantidad);
+                    $PedidoVentaPosicion->setValorVenta($SaldoInventario->getValorVenta());
                     $PedidoVentaPosicion->setIdUsuarioCreacion($this->user_session->idUsuario);                        
                     array_push($this->PedidoVenta->PedidoVentaPosicion, $PedidoVentaPosicion);
                 }
             }
             $returnCrud=$this->consultarMessage("errorSave");
-            /********************* Se consulta el estado Solicitado*****************************/
-            $estadoPedido = new EstadoPedido($this->dbAdapter);
-            $estadoPedido->consultarEstadoPedidoPorCodigo("01");
-            /**********************************************************************************/
-            // Se guarda el nuevo pedido compra con sus posiciones.
-            $resultado = $this->PedidoVenta->guardarPedidoVenta($estadoPedido->getidEstadoPedido(),$datos['idCliente'],$urlDocumentoPago, $this->user_session->idUsuario);
-            if($resultado == 'true'){
-                $returnCrud=$this->consultarMessage("okSave");
-            }
             
+            if(!$validador)
+            {
+                /********************* Se consulta el estado Solicitado*****************************/
+                $estadoPedido = new EstadoPedido($this->dbAdapter);
+                $estadoPedido->consultarEstadoPedidoPorCodigo("01");
+                /**********************************************************************************/
+                // Se guarda el nuevo pedido compra con sus posiciones.
+                $resultado = $this->PedidoVenta->guardarPedidoVenta($estadoPedido->getidEstadoPedido(),$datos['idCliente'],$urlDocumentoPago, $this->user_session->idUsuario);
+                if($resultado == 'true'){
+                    $returnCrud=$this->consultarMessage("okSave");
+                }
+            }
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         return new ViewModel(array('form'=>$this->form));
