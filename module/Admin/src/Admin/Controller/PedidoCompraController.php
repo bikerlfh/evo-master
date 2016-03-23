@@ -119,7 +119,7 @@ class PedidoCompraController extends AbstractActionController
                 // Se valida que el pedido este con estado SOLICITADO
                 if ($this->EstadoPedido->getDescripcion() != 'SOLICITADO'){
                     unset($this->PedidoCompra);
-                    return new ViewModel(array('form'=>$this->form,'validacion'=>'El pedído seleccionado esta con estado '.$this->EstadoPedido->getDescripcion()));
+                    return new ViewModel(array('form'=>$this->form,'validacion'=>'El pedido seleccionado esta con estado '.$this->EstadoPedido->getDescripcion()));
                 }
                 $this->form->get("idPedidoCompra")->setValue($this->PedidoCompra->getIdPedidoCompra());
                 $this->form->get("numeroPedido")->setValue($this->PedidoCompra->getNumeroPedido());
