@@ -279,7 +279,7 @@ function centrarObjeto (campo){
 
 //Esta función se agrega cuando se inicia un popup, con el fin de que borre el contenido que tiene actualmente.
 //Parametros true cuando se maneje dialog de primera instancia, y false cuando esta dentro de otro dialog.
-function fnLimpiarModal(button, contenidoModal, modal){
+function LimpiarModal(button, contenidoModal, modal){
     
     $("#" + button).click(function(){
         $("#" + contenidoModal).html("");
