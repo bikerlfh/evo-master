@@ -66,8 +66,17 @@ class MarcaController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Marca = new Marca($this->dbAdapter);
+        
+        //****Campos modal *****//
+        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
+        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
+        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
+        
         // consultamos todas las marcas y los devolvemos a la vista    
-        $view = new ViewModel(array('registros'=>$this->Marca->consultarTodoMarca()));
+        $view = new ViewModel(array('botonClose'=> $botonClose,
+                                    'contenedorDialog'=> $contenedorDialog,
+                                    'modal'=> $modal,
+                                    'registros'=>$this->Marca->consultarTodoMarca()));
         $view->setTerminal(true);
         return $view;
     }

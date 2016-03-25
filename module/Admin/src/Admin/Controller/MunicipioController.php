@@ -67,8 +67,17 @@ class MunicipioController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Municipio = new Municipio($this->dbAdapter);
+        
+        //****Campos modal *****//
+        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
+        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
+        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
+        
         // consultamos todos los municipio y los devolvemos a la vista    
-        $view = new ViewModel(array('registros'=>$this->Municipio->consultarTodoMunicipio()));
+        $view = new ViewModel(array('botonClose'=> $botonClose,
+                                    'contenedorDialog'=> $contenedorDialog,
+                                    'modal'=> $modal,
+                                    'registros'=>$this->Municipio->consultarTodoMunicipio()));
         $view->setTerminal(true);
         return $view;
     }

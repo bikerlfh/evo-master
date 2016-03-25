@@ -15,6 +15,7 @@ use Zend\Session\Container;
 class PedidoVentaController extends AbstractActionController
 {
     private $PedidoVenta;
+    private $EstadoPedido;
     private $form;
     
     private $user_session;
@@ -34,6 +35,9 @@ class PedidoVentaController extends AbstractActionController
         $this->form = new FormPedidoVenta($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
+        
+        
+        
         if(count($this->request->getPost())>0)
         {
             $urlDocumentoPago = null;

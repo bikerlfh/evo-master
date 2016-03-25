@@ -23,6 +23,9 @@ class FormBase extends Form
     }
     private function generarCampos()
     {
+        //Variable que se usa para asignar campos para modal 2
+        $parametrosGet = "?botonClose=btnClosePop2&contenedorDialog=modal-dialog-display2&modal=textModal2";
+        
         /*************** btn Buscar Producto********************************/
         $this->add(array(
                 'name'=>'btnBuscarProducto',			
@@ -40,6 +43,8 @@ class FormBase extends Form
         ));
         
         //Este se usa cuando se necesita abrir un dialog dentro de otro
+        
+        
          $this->add(array(
                 'name'=>'btnBuscarProducto2',			
                 'attributes'=>array(
@@ -49,7 +54,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal2",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/producto/buscar2','#modal-dialog-display2','')",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/producto/buscar".$parametrosGet."','#modal-dialog-display2','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
@@ -80,7 +85,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal2",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedor/buscar2','#modal-dialog-display2','')",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedor/buscar".$parametrosGet."','#modal-dialog-display2','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )

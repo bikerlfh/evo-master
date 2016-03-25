@@ -1,9 +1,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dtbuscarTercero').DataTable();
-        fnLimpiarModal("btnClosePop","modal-dialog-display","textModal");
+        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
+<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
@@ -40,7 +41,7 @@
 
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>&campoCantidad=<?php echo $this->campoCantidad ?>&campoValorVenta=<?php echo $this->campoValorVenta ?>&campoIdProducto=<?php echo $this->campoIdProducto ?>  ', '#modal-dialog-display', 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
+                       onclick="usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>&campoCantidad=<?php echo $this->campoCantidad ?>&campoValorVenta=<?php echo $this->campoValorVenta ?>&campoIdProducto=<?php echo $this->campoIdProducto ?><?php echo $parametrosGet ?> ', '#<?php echo $this->contenedorDialog ?>', 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
                                ">
                        <?php
                        echo $this->formElement($form->get('btnCancelar'));
@@ -69,7 +70,7 @@
                             <?php
                             foreach ($this->registros as $obj) {
                                 echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#" . $this->campoId . "').val(" . $obj['idSaldoInventario'] . ");$('#" . $this->campoNombre . "').val('" . $obj['descripcionProducto'] . "');$('#" . $this->campoCantidad . "').val('" . $obj['cantidad'] . "'); $('#" . $this->campoValorVenta . "').val('" . $obj['valorVenta'] . "');$('#" . $this->campoIdProducto . "').val('" . $obj['idProducto'] . "');$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#" . $this->campoId . "').val(" . $obj['idSaldoInventario'] . ");$('#" . $this->campoNombre . "').val('" . $obj['descripcionProducto'] . "');$('#" . $this->campoCantidad . "').val('" . $obj['cantidad'] . "'); $('#" . $this->campoValorVenta . "').val('" . $obj['valorVenta'] . "');$('#" . $this->campoIdProducto . "').val('" . $obj['idProducto'] . "');$('#". $this->botonClose ."').click();\">
                                                     <td>" . $obj['descripcionProducto'] . "</td>
                                                     <td>" . $obj['descripcionMarca'] . "</td>
                                                     <td>" . $obj['descripcionCategoria'] . "</td>

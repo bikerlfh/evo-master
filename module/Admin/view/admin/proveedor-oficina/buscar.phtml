@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dtbuscarProveedorOficina').DataTable();   
-        fnLimpiarModal("btnClosePop","modal-dialog-display","textModal");
+        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
 <div class="row">
@@ -31,7 +31,7 @@
                                          <?php 
                                         foreach ($this->registros as $obj) {
                                             echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idProveedorOficina').val(".$obj['idProveedorOficina'].");$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idProveedorOficina').val(".$obj['idProveedorOficina'].");$('#". $this->botonClose ."').click();\">
                                                     <td>".$obj['descripcionTercero']."</td>
                                                     <td>".$obj['descripcionMunicipio']."</td>
                                                     <td>".$obj['webSite']."</td>

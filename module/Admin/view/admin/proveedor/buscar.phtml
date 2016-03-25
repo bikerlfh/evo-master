@@ -1,9 +1,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dtbuscarProveedor').DataTable();
-        fnLimpiarModal("btnClosePop","modal-dialog-display","textModal");
+        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
+
+    <?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
+
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
@@ -17,7 +20,7 @@
                     <label for="email1" class="control-label">Nit</label>
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
-                     <?php echo $this->formElement($form->get('nit'));?>                            
+                     <?php echo $this->formElement($form->get('nit')); ?>                            
                 </div>
             </div>
             
@@ -29,10 +32,10 @@
                      <?php echo $this->formElement($form->get('descripcion'));?>                            
                 </div>
             </div>
-
+            
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->basePath()?>/admin/proveedor/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>','#modal-dialog-display','nit='+$('#nit').val()+'&amp;descripcion='+$('#descripcion').val());">
+                       onclick="usar_ajax('<?php echo $this->basePath()?>/admin/proveedor/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?><?php echo $parametrosGet ?>','#<?php echo $this->contenedorDialog ?>','nit='+$('#nit').val()+'&amp;descripcion='+$('#descripcion').val());">
                 <?php
                     echo $this->formElement($form->get('btnCancelar'));
                 ?>
@@ -53,9 +56,12 @@
                         </thead>
                         <tbody>
                              <?php 
+                             
+                             
+                             
                             foreach ($this->registros as $obj) {
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProveedor'].");$('#".$this->campoNombre."').val('".$obj["descripcionTercero"]."');$('#btnClosePop').click();$('#modal-dialog-display').html('')\")\">
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProveedor'].");$('#".$this->campoNombre."').val('".$obj["descripcionTercero"]."');$('#". $this->botonClose ."').click();\">
                                         <td>".$obj['descripcionTercero']."</td>
                                         <td>".$obj['webSite']."</td>
                                         <td>".$obj['email']."</td>

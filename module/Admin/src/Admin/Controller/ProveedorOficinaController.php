@@ -80,8 +80,17 @@ class ProveedorOficinaController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->ProveedorOficina = new ProveedorOficina($this->dbAdapter);
+        
+         //****Campos modal *****//
+        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
+        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
+        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
+        
         // consultamos todos los Proveedores y los devolvemos a la vista    
-        $view = new ViewModel(array('registros'=>$this->ProveedorOficina->consultarTodoProveedorOficina()));
+        $view = new ViewModel(array('botonClose'=> $botonClose,
+                                    'contenedorDialog'=> $contenedorDialog,
+                                    'modal'=> $modal,
+                                    'registros'=>$this->ProveedorOficina->consultarTodoProveedorOficina()));
         $view->setTerminal(true);
         return $view;
     }

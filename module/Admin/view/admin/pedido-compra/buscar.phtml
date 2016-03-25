@@ -1,12 +1,13 @@
+<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#numeroPedido').attr('readonly','');
         $('#dtbuscarPedidoCompra').DataTable();
-        fnLimpiarModal("btnClosePop","modal-dialog-display","textModal");
+        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
     function btnBuscar_onclick()
     {
-        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>",'#modal-dialog-display',"numeroPedido="+$('#numeroPedido').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
+        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?><?php echo $parametrosGet ?>",'#<?php echo $this->contenedorDialog ?>',"numeroPedido="+$('#numeroPedido').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
     }
 </script>
   

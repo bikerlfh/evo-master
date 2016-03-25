@@ -97,6 +97,11 @@ class SaldoInventarioController extends AbstractActionController {
         $campoNombre = $this->params()->fromQuery('campoNombre', null) == null ? 'nombreProducto' : $this->params()->fromQuery('campoNombre', null);
         $campoValorVenta = $this->params()->fromQuery('campoValorVenta', null) == null ? 'campoValorVenta' : $this->params()->fromQuery('campoValorVenta', null);
         $campoCantidad = $this->params()->fromQuery('campoCantidad', null) == null ? 'campoCantidad' : $this->params()->fromQuery('campoCantidad', null);
+        
+        //****Campos modal *****//
+        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
+        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
+        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
 
         $registros = array();
         if (count($this->request->getPost()) > 0) {
@@ -118,6 +123,9 @@ class SaldoInventarioController extends AbstractActionController {
                                     'campoValorVenta'=> $campoValorVenta, 
                                     'campoCantidad'=> $campoCantidad, 
                                     'campoIdProducto'=> $campoIdProducto,
+                                    'botonClose'=> $botonClose,
+                                    'contenedorDialog'=> $contenedorDialog,
+                                    'modal'=> $modal,
                                     'registros' => $registros));
         $view->setTerminal(true);
         return $view;
