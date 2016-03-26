@@ -6,6 +6,9 @@ if ($this->msg != null)
 {
     echo "<script type='text/javascript'>".$this->msg."</script>";    
 }
+if ($this->numeroPedido != null) {
+    echo "<script type='text/javascript'>showMessageSuccess('Número Pedido Compra','Se genero el pedido con el numero ".$this->numeroPedido."');</script>";
+}
 ?>
 <script type="text/javascript">
     var numRows=0;
