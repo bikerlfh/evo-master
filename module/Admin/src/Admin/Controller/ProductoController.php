@@ -116,34 +116,6 @@ class ProductoController extends AbstractActionController
         return $view;
     }
     
-    public function buscar2Action()
-    {
-        $this->validarSession();
-        // se obtiene el adapter
-        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->form = new FormProducto($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
-        /** Campos para saber en donde se deben devolver los valores de la busqueda **/
-        $campoId=$this->params()->fromQuery('campoId',null) == null? 'idProducto':$this->params()->fromQuery('campoId',null);
-        $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreProducto':$this->params()->fromQuery('campoNombre',null);
-        /*****************************************************************************/
-        $registros = array();
-        if(count($this->request->getPost())>0)
-        {
-            $this->Producto = new Producto($this->dbAdapter);
-            $datos = $this->request->getPost();
-            $this->form->get("idMarca")->setValue($datos['idMarca']);
-            $this->form->get("idCategoria")->setValue($datos['idCategoria']);
-            $this->form->get("referencia")->setValue($datos['referencia']);
-            $this->form->get("codigo")->setValue($datos['codigo']);
-            $this->form->get("nombre")->setValue($datos['nombre']);
-            $registros = $this->Producto->consultaAvanzadaProducto($datos['idMarca'],$datos['idCategoria'],$datos['referencia'],$datos['codigo'],$datos['nombre']);
-        }
-        // consultamos todos los productos y los devolvemos a la vista    
-        $view = new ViewModel(array('form'=>$this->form,'campoId'=>$campoId,'campoNombre'=>$campoNombre,'registros'=>$registros));
-        $view->setTerminal(true);
-        return $view;
-    }
-    
     public function eliminarAction()
     {
         //$this->validarSession();
