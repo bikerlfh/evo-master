@@ -41,7 +41,7 @@
 
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>&campoCantidad=<?php echo $this->campoCantidad ?>&campoValorVenta=<?php echo $this->campoValorVenta ?>&campoIdProducto=<?php echo $this->campoIdProducto ?><?php echo $parametrosGet ?> ', '#<?php echo $this->contenedorDialog ?>', 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
+                       onclick="usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar?origen=<?php echo $this->origen ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>&campoCantidad=<?php echo $this->campoCantidad ?>&campoValorVenta=<?php echo $this->campoValorVenta ?>&campoIdProducto=<?php echo $this->campoIdProducto ?><?php echo $parametrosGet ?> ', '#<?php echo $this->contenedorDialog ?>', 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
                                ">
                        <?php
                        echo $this->formElement($form->get('btnCancelar'));
@@ -68,9 +68,14 @@
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($this->registros as $obj) {
+                            foreach ($this->registros as $obj) 
+                            {
+                                $onClick = "$('#".$this->campoId."').val(".$obj['idSaldoInventario'].");$('#".$this->campoNombre."').val('".$obj['descripcionProducto']."');$('#".$this->campoCantidad."').val('".$obj['cantidad']."'); $('#".$this->campoValorVenta."').val('".$obj['valorVenta']."');$('#".$this->campoIdProducto."').val('".$obj['idProducto']."');$('#".$this->botonClose."').click();";
+                                if ($this->origen != null) {
+                                    $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idSaldoInventario=".$obj['idSaldoInventario']."')";
+                                }
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idSaldoInventario'].");$('#".$this->campoNombre."').val('".$obj['descripcionProducto']."');$('#".$this->campoCantidad."').val('".$obj['cantidad']."'); $('#".$this->campoValorVenta."').val('".$obj['valorVenta']."');$('#".$this->campoIdProducto."').val('".$obj['idProducto']."');$('#".$this->botonClose."').click();\">
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"".$onClick."\">
                                         <td>".$obj['descripcionProducto']."</td>
                                         <td>".$obj['descripcionMarca']."</td>
                                         <td>".$obj['descripcionCategoria']."</td>

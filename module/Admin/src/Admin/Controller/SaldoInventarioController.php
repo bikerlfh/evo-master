@@ -25,7 +25,7 @@ class SaldoInventarioController extends AbstractActionController {
         // se obtiene el adapter
         $this->dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id = $this->params()->fromQuery('id', null);
+        $id = $this->params()->fromQuery('idSaldoInventario', null);
 
         $this->SaldoInventario = new SaldoInventario($this->dbAdapter);
         $this->form = new FormSaldoInventario($this->getServiceLocator(), $this->getRequest()->getBaseUrl());
@@ -56,21 +56,17 @@ class SaldoInventarioController extends AbstractActionController {
         }
         // si existe el parametro $id  se consulta la saldoinventario y se carga el formulario.
         else if (isset($id)) {
-            $this->SaldoInventario->consultarSaldoInventarioPorIdSaldoInventario($this->params()->fromQuery('id'));
+            $this->SaldoInventario->consultarSaldoInventarioPorIdSaldoInventario($id);
             $this->form->get("idSaldoInventario")->setValue($this->SaldoInventario->getIdSaldoInventario());
-            //Campos Producto
             $this->form->get("idProducto")->setValue($this->SaldoInventario->getIdProducto());
             $descripcionProducto = $this->SaldoInventario->Producto->getCodigo() . ' - ' . $this->SaldoInventario->Producto->getNombre();
             $this->form->get("nombreProducto")->setValue($descripcionProducto);
-            //Campo Proveedor
             $this->form->get("idProveedor")->setValue($this->SaldoInventario->getIdProveedor());
             $descripcionProveedor = $this->SaldoInventario->Proveedor->DatoBasicoTercero->getnit() . ' - ' . $this->SaldoInventario->Proveedor->DatoBasicoTercero->getdescripcion();
             $this->form->get("nombreProveedor")->setValue($descripcionProveedor);
-
             $this->form->get("cantidad")->setValue($this->SaldoInventario->getCantidad());
             $this->form->get("costoTotal")->setValue($this->SaldoInventario->getCostoTotal());
             $this->form->get("valorVenta")->setValue($this->SaldoInventario->getValorVenta());
-
             $this->configurarBotonesFormulario(true);
         }
         return new ViewModel(array('form' => $this->form, 'registros' => $this->SaldoInventario->consultarTodoSaldoInventario()));
@@ -97,7 +93,9 @@ class SaldoInventarioController extends AbstractActionController {
         $campoNombre = $this->params()->fromQuery('campoNombre', null) == null ? 'nombreProducto' : $this->params()->fromQuery('campoNombre', null);
         $campoValorVenta = $this->params()->fromQuery('campoValorVenta', null) == null ? 'campoValorVenta' : $this->params()->fromQuery('campoValorVenta', null);
         $campoCantidad = $this->params()->fromQuery('campoCantidad', null) == null ? 'campoCantidad' : $this->params()->fromQuery('campoCantidad', null);
-        
+        // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
         //****Campos modal *****//
         $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
         $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
@@ -126,6 +124,7 @@ class SaldoInventarioController extends AbstractActionController {
                                     'botonClose'=> $botonClose,
                                     'contenedorDialog'=> $contenedorDialog,
                                     'modal'=> $modal,
+                                    'origen'=>$origen,
                                     'registros' => $registros));
         $view->setTerminal(true);
         return $view;
