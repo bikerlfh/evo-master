@@ -14,7 +14,7 @@
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" id="btnClosePop" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" id="<?php echo $this->botonClose ?>" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Pedido Compra</strong></h4></h4>
         </div>
         <div class="box-body">
@@ -28,18 +28,17 @@
                     <?php echo $this->formInput($form->get('numeroPedido'));?>
                 </div>
             </div>
-            <!--
             <div class="form-group">
                 <div class="col-lg-1 col-md-2 col-sm-3">
                     <label for="email1" class="control-label">Proveedor</label>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-5">
                     <?php echo $this->formInput($form->get('nombreProveedor'));?>  
-
                 </div>
-                <?php echo $this->formElement($form->get('btnBuscarProveedor'));?>  
+                <!-- Se quema el boton por que se hace necesario pasar el campoId y el campoNombre -->
+                <input name="btnBuscarProveedor2" id="btnBuscarProveedor2" type="button" title="Buscar" data-target="#textModal2" data-toggle="modal" style="margin:2px" class="btn btn-support2" value="Buscar" 
+                       onclick="usar_ajax('/evo-master/admin/proveedor/buscar?campoId=idProveedor&campoNombre=nombreProveedorBusqueda&botonClose=btnClosePop2&amp;contenedorDialog=modal-dialog-display2&amp;modal=textModal2','#modal-dialog-display2','')">  
             </div>
-            -->
             <div class="form-group">
                 <div class="col-lg-1 col-md-2 col-sm-3">
                     <label for="select1" class="control-label">Estado Pedido</label>
