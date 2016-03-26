@@ -42,7 +42,6 @@ class PedidoCompraController extends AbstractActionController
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
-            
             $datos=$this->request->getPost();
             // Este ciclo muestra todas las claves del array asociativo
             foreach($datos as $key => $value)
@@ -69,7 +68,7 @@ class PedidoCompraController extends AbstractActionController
             if($resultado == 'true'){
                 $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'numeroPedido'=>$this->PedidoCompra->getNumeroPedido()));
         }
         return new ViewModel(array('form'=>$this->form));
     }
