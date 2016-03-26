@@ -145,6 +145,7 @@ class PedidoCompraController extends AbstractActionController
         $this->form->setAttribute('name' , 'frmBuscarPedidoCompra');
         // Se cambia de nombre al campo, para que este no tenga conflicto con el campo del formulario que abrió la busqueda.
         $this->form->get('nombreProveedor')->setAttributes(array('id'=>'nombreProveedorBusqueda','name'=>'nombreProveedorBusqueda'));
+        $this->form->get('numeroPedido')->setAttributes(array('id'=>'numeroPedidoBusqueda','name'=>'numeroPedidoBusqueda','readonly'=>false));
         /** Campos para saber en donde se deben devolver los valores de la busqueda **/
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idPedidoCompra':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'numeroPedido':$this->params()->fromQuery('campoNombre',null);
@@ -161,10 +162,10 @@ class PedidoCompraController extends AbstractActionController
             $datos = $this->request->getPost();
             $this->PedidoCompra = new PedidoCompra($this->dbAdapter);
             $this->form->get("numeroPedido")->setValue($datos["numeroPedido"]);
-            //$this->form->get("idProveedor")->setValue($datos["idProveedor"]);
-            //$this->form->get("nombreProveedor")->setValue($datos["nombreProveedor"]);
+            $this->form->get("idProveedor")->setValue($datos["idProveedor"]);
+            $this->form->get("nombreProveedor")->setValue($datos["nombreProveedor"]);
             $this->form->get("idEstadoPedido")->setValue($datos["idEstadoPedido"]);            
-            $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],0,$datos["idEstadoPedido"]);
+            $registros = $this->PedidoCompra->consultaAvanzadaPedidoCompra($datos["numeroPedido"],$datos["idProveedor"],$datos["idEstadoPedido"]);
         }
         // consultamos todos los Proveedores y los devolvemos a la vista    
         $view = new ViewModel(array(
