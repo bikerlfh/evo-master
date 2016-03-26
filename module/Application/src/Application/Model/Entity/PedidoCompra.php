@@ -64,6 +64,7 @@ class PedidoCompra extends AbstractTableGateway
                     return $resultado;
                 }
             }
+            $this->consultarPedidoCompraPorIdPedidoCompra($idPedidoCompra['idPedidoCompra']);
             return 'true';
         }
         return 'false';
@@ -115,7 +116,8 @@ class PedidoCompra extends AbstractTableGateway
                                    'pedido.idProveedor = prov.idProveedor')->
                         join(array('dbt'=>new TableIdentifier('DatoBasicoTercero','Tercero')),
                                    'prov.idDatoBasicoTercero = dbt.idDatoBasicoTercero',
-                                   array('nombreProveedor' => new Expression("CONVERT(VARCHAR,dbt.nit )+' - '+ dbt.descripcion")));
+                                   array('nombreProveedor' => new Expression("CONVERT(VARCHAR,dbt.nit )+' - '+ dbt.descripcion")))->
+                        where(array('pedido.idPedidoCompra'=>$idPedidoCompra));
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
         $result =  $resultsSet->initialize($results)->current();   
@@ -148,12 +150,12 @@ class PedidoCompra extends AbstractTableGateway
     }
     private function LlenarEntidad($result)
     {
-        $this->idPedidoCompra=$result['idPedidoCompra'];
-        $this->idEstadoPedido=$result['idEstadoPedido'];
+        $this->idPedidoCompra = $result['idPedidoCompra'];
+        $this->idEstadoPedido = $result['idEstadoPedido'];
         $this->numeroPedido = $result['numeroPedido'];
-        $this->idProveedor=$result['idProveedor'];
-        $this->fechaPedido=$result['fechaPedido'];
-        $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
+        $this->idProveedor = $result['idProveedor'];
+        $this->fechaPedido = $result['fechaPedido'];
+        $this->idUsuarioCreacion = $result['idUsuarioCreacion'];
         $this->nombreProveedor = $result['nombreProveedor'];
     }
 }
