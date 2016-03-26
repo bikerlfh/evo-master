@@ -70,7 +70,7 @@
                             <?php
                             foreach ($this->registros as $obj) {
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#" . $this->campoId . "').val(" . $obj['idSaldoInventario'] . ");$('#" . $this->campoNombre . "').val('" . $obj['descripcionProducto'] . "');$('#" . $this->campoCantidad . "').val('" . $obj['cantidad'] . "'); $('#" . $this->campoValorVenta . "').val('" . $obj['valorVenta'] . "');$('#" . $this->campoIdProducto . "').val('" . $obj['idProducto'] . "');$('#". $this->botonClose ."').click();\">
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idSaldoInventario'].");$('#".$this->campoNombre."').val('".$obj['descripcionProducto']."');$('#".$this->campoCantidad."').val('".$obj['cantidad']."'); $('#".$this->campoValorVenta."').val('".$obj['valorVenta']."');$('#".$this->campoIdProducto."').val('".$obj['idProducto']."');$('#".$this->botonClose."').click();\">
                                         <td>".$obj['descripcionProducto']."</td>
                                         <td>".$obj['descripcionMarca']."</td>
                                         <td>".$obj['descripcionCategoria']."</td>
