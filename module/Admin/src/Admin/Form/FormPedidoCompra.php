@@ -48,7 +48,7 @@ class FormPedidoCompra extends Form
         /************ CAMPOS DEL PROVEEDOR *****************/
         $this->add($this->FormProveedor->get('idProveedor'));
         $this->add($this->FormProveedor->get('nombreProveedor'));
-        $this->add($this->FormBase->get('btnBuscarProveedor'));
+        $this->add($this->FormBase->get('btnBuscarProveedor2'));
         /************ CAMPOS DEL PROVEEDOR *****************/
         
         $file = new Element\File('image-file');
