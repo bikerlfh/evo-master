@@ -15,7 +15,7 @@ class SaldoInventario extends AbstractTableGateway
     private $idProducto;
     private $idProveedor;
     private $cantidad;
-    private $valorCompra;
+    private $costoTotal;
     private $valorVenta;
     private $idUsuarioCreacion;
     private $idUsuarioModificacion;
@@ -62,11 +62,11 @@ class SaldoInventario extends AbstractTableGateway
     public function setValorVenta($valorVenta){
         $this->valorVenta=$valorVenta;
     }
-    public function getValorCompra(){
-        return $this->valorCompra;
+    public function getCostoTotal(){
+        return $this->costoTotal;
     }
-    public function setValorCompra($valorCompra){
-        $this->valorCompra=$valorCompra;
+    public function setCostoTotal($costoTotal){
+        $this->costoTotal=$costoTotal;
     }
     public function getCantidad(){
         return $this->cantidad;
@@ -93,7 +93,7 @@ class SaldoInventario extends AbstractTableGateway
         $this->idSaldoInventario=$idSaldoInventario;
     }
     
-    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioCreacion,$fechaCreacion)
+    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$idUsuarioCreacion,$fechaCreacion)
     {
         $datos=array(
                 'fechaModificacion'=> $fechaCreacion,
@@ -101,7 +101,7 @@ class SaldoInventario extends AbstractTableGateway
                 'idUsuarioModificacion'=> $idUsuarioCreacion,
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'valorVenta'=> $valorVenta,
-                'valorCompra'=> $valorCompra,
+                'costoTotal'=> $costoTotal,
                 'cantidad'=> $cantidad,
                 'idProveedor'=> $idProveedor,
                 'idProducto'=> $idProducto
@@ -112,13 +112,13 @@ class SaldoInventario extends AbstractTableGateway
         return false;
     }
 
-    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$valorCompra,$valorVenta,$idUsuarioModificacion,$fechaModificacion)
+    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$idUsuarioModificacion,$fechaModificacion)
     {
         $datos=array(
                 'fechaModificacion'=> $fechaModificacion,
                 'idUsuarioModificacion'=> $idUsuarioModificacion,
                 'valorVenta'=> $valorVenta,
-                'valorCompra'=> $valorCompra,
+                'costoTotal'=> $costoTotal,
                 'cantidad'=> $cantidad,
                 'idProveedor'=> $idProveedor,
                 'idProducto'=> $idProducto
@@ -187,7 +187,7 @@ class SaldoInventario extends AbstractTableGateway
         $this->idUsuarioModificacion=$result['idUsuarioModificacion'];
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
         $this->valorVenta=$result['valorVenta'];
-        $this->valorCompra=$result['valorCompra'];
+        $this->costoTotal=$result['costoTotal'];
         $this->cantidad=$result['cantidad'];
         $this->idProveedor=$result['idProveedor'];
         $this->idProducto=$result['idProducto'];

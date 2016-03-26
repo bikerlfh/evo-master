@@ -61,8 +61,8 @@
                                 <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Categoria</th>
                                 <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Proveedor</th>
                                 <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Cantidad</th>
+                                <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Costo Total</th>
                                 <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Venta</th>
-                                <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Compra</th>
 
                             </tr>
                         </thead>
@@ -70,15 +70,15 @@
                             <?php
                             foreach ($this->registros as $obj) {
                                 echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#" . $this->campoId . "').val(" . $obj['idSaldoInventario'] . ");$('#" . $this->campoNombre . "').val('" . $obj['descripcionProducto'] . "');$('#" . $this->campoCantidad . "').val('" . $obj['cantidad'] . "'); $('#" . $this->campoValorVenta . "').val('" . $obj['valorVenta'] . "');$('#" . $this->campoIdProducto . "').val('" . $obj['idProducto'] . "');$('#". $this->botonClose ."').click();\">
-                                                    <td>" . $obj['descripcionProducto'] . "</td>
-                                                    <td>" . $obj['descripcionMarca'] . "</td>
-                                                    <td>" . $obj['descripcionCategoria'] . "</td>
-                                                    <td>" . $obj['descripcionProveedor'] . "</td>
-                                                    <td>" . number_format($obj['cantidad']) . "</td>
-                                                    <td>$" . number_format($obj['valorVenta']) . "</td>
-                                                    <td>$" . number_format($obj['valorCompra']) . "</td>
-                                                </tr>";
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#" . $this->campoId . "').val(" . $obj['idSaldoInventario'] . ");$('#" . $this->campoNombre . "').val('" . $obj['descripcionProducto'] . "');$('#" . $this->campoCantidad . "').val('" . $obj['cantidad'] . "'); $('#" . $this->campoValorVenta . "').val('" . $obj['valorVenta'] . "');$('#" . $this->campoIdProducto . "').val('" . $obj['idProducto'] . "');$('#". $this->botonClose ."').click();\">
+                                        <td>".$obj['descripcionProducto']."</td>
+                                        <td>".$obj['descripcionMarca']."</td>
+                                        <td>".$obj['descripcionCategoria']."</td>
+                                        <td>".$obj['descripcionProveedor']."</td>
+                                        <td>".number_format($obj['cantidad'])."</td>
+                                        <td>$".number_format($obj['costoTotal'])."</td>
+                                        <td>$".number_format($obj['valorVenta'])."</td>
+                                    </tr>";
                             }
                             ?>
                         </tbody>

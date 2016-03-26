@@ -43,13 +43,13 @@ class SaldoInventarioController extends AbstractActionController {
             // Si se envia el id de la saldoinventario se modifica este.
             if ($datos["idSaldoInventario"] != null) {
                 $returnCrud = $this->consultarMessage("errorUpdate");
-                if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['valorCompra'], $datos['valorVenta'], $this->user_session->idUsuario, date('d-m-Y H:i:s')))
+                if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $this->user_session->idUsuario, date('d-m-Y H:i:s')))
                     $returnCrud = $this->consultarMessage("okUpdate");
             }
             else {
                 $returnCrud = $this->consultarMessage("errorSave");
                 // se guarda la nueva saldoinventario
-                if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['valorCompra'], $datos['valorVenta'], $this->user_session->idUsuario, date('d-m-Y H:i:s')))
+                if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $this->user_session->idUsuario, date('d-m-Y H:i:s')))
                     $returnCrud = $this->consultarMessage("okSave");
             }
             return new ViewModel(array('form' => $this->form, 'msg' => $returnCrud, 'registros' => $this->SaldoInventario->consultarTodoSaldoInventario()));
@@ -68,7 +68,7 @@ class SaldoInventarioController extends AbstractActionController {
             $this->form->get("nombreProveedor")->setValue($descripcionProveedor);
 
             $this->form->get("cantidad")->setValue($this->SaldoInventario->getCantidad());
-            $this->form->get("valorCompra")->setValue($this->SaldoInventario->getValorCompra());
+            $this->form->get("costoTotal")->setValue($this->SaldoInventario->getCostoTotal());
             $this->form->get("valorVenta")->setValue($this->SaldoInventario->getValorVenta());
 
             $this->configurarBotonesFormulario(true);

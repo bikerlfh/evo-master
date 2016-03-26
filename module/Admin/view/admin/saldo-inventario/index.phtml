@@ -50,10 +50,10 @@ if ($this->msg != null)
                     </div>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Valor Compra</label>
+                            <label for="email1" class="control-label">Costo Total</label>
                         </div>
                         <div class="col-lg-3 col-md-11 col-sm-9">
-                            <?php echo $this->formInput($form->get('valorCompra'));?>                            
+                            <?php echo $this->formInput($form->get('costoTotal'));?>                            
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,10 +91,10 @@ if ($this->msg != null)
                                             <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Producto</th>
                                             <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Proveedor</th>
                                             <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Cantidad</th>
-                                            <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Compra</th>
-                                            <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">valorVenta</th>
+                                            <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Costo Total</th>
+                                            <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">valor Venta</th>
                                         </tr>
-                                    </thead>
+                                    </thead>    
                                     <tbody>
                                          <?php 
                                         foreach ($this->registros as $obj) {
@@ -103,8 +103,8 @@ if ($this->msg != null)
                                                     <td>".$obj['nombreProducto']."</td>
                                                     <td>".$obj['descripcionProveedor']."</td>
                                                     <td>".$obj['cantidad']."</td>
-                                                    <td>".$obj['valorCompra']."</td>
-                                                    <td>".$obj['valorVenta']."</td>
+                                                    <td>$".number_format($obj['costoTotal'])."</td>
+                                                    <td>$".number_format($obj['valorVenta'])."</td>
                                                 </tr>";
                                         }
                                         ?>

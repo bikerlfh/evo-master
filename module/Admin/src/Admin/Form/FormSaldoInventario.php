@@ -84,11 +84,11 @@ class FormSaldoInventario extends Form {
             ),
         ));
         $this->add(array(
-            'name' => 'valorCompra',
+            'name' => 'costoTotal',
             'attributes' => array(
-                'id' => 'valorCompra',
+                'id' => 'costoTotal',
                 'type' => 'text',
-                'placeholder' => 'Valor Compra',
+                'placeholder' => 'Costo Total',
                 'maxlength' => '11',
                 'required' => true,
                 'onKeyPress' => "return validarTecla(event,'num')",
