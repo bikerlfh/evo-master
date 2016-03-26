@@ -46,13 +46,18 @@ class SaldoInventarioController extends AbstractActionController {
                 if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $this->user_session->idUsuario, date('d-m-Y H:i:s')))
                     $returnCrud = $this->consultarMessage("okUpdate");
             }
-            else {
+            else 
+            {
+                // Se valida que no exista un saldo inventario con el mismo producto y proveedor
+                if ($this->SaldoInventario->consultarSaldoInventarioPorIdProductoIdProveedor($datos['idProducto'], $datos['idProveedor'])) {
+                    return new ViewModel(array('form' => $this->form, 'validacion' => 'Ya existe un saldo invenario con el producto y el proveedor seleccionados.'));
+                }
                 $returnCrud = $this->consultarMessage("errorSave");
                 // se guarda la nueva saldoinventario
                 if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $this->user_session->idUsuario, date('d-m-Y H:i:s')))
                     $returnCrud = $this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form' => $this->form, 'msg' => $returnCrud, 'registros' => $this->SaldoInventario->consultarTodoSaldoInventario()));
+            return new ViewModel(array('form' => $this->form, 'msg' => $returnCrud));
         }
         // si existe el parametro $id  se consulta la saldoinventario y se carga el formulario.
         else if (isset($id)) {
@@ -69,7 +74,7 @@ class SaldoInventarioController extends AbstractActionController {
             $this->form->get("valorVenta")->setValue($this->SaldoInventario->getValorVenta());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form' => $this->form, 'registros' => $this->SaldoInventario->consultarTodoSaldoInventario()));
+        return new ViewModel(array('form' => $this->form));
     }
 
     public function buscarAction() {

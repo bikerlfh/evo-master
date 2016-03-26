@@ -171,6 +171,16 @@ class SaldoInventario extends AbstractTableGateway
     {
         return $this->select(array('idProveedor'=>$idProveedor))->toArray();
     }
+    public function consultarSaldoInventarioPorIdProductoIdProveedor($idProducto,$idProveedor)
+    {
+        $result = $this->select(array('idProducto'=>$idProducto,'idProveedor'=>$idProveedor))->current();
+        if($result)
+        {
+            $this->LlenarEntidad($result);
+            return true;
+        }
+        return false;
+    }
     
     public function consultaAvanzadaSaldoInventario($idProducto, $idProveedor)
     {
