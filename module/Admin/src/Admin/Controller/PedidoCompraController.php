@@ -143,6 +143,8 @@ class PedidoCompraController extends AbstractActionController
         
         $this->form = new FormPedidoCompra($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         $this->form->setAttribute('name' , 'frmBuscarPedidoCompra');
+        // Se cambia de nombre al campo, para que este no tenga conflicto con el campo del formulario que abrió la busqueda.
+        $this->form->get('nombreProveedor')->setAttributes(array('id'=>'nombreProveedorBusqueda','name'=>'nombreProveedorBusqueda'));
         /** Campos para saber en donde se deben devolver los valores de la busqueda **/
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idPedidoCompra':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'numeroPedido':$this->params()->fromQuery('campoNombre',null);
