@@ -87,8 +87,8 @@ class FormPedidoCompra extends Form
                 'attributes'=>array(
                         'id'=>'btnAutorizar',
                         'type'=>'submit',
-                        'value'=>'Autorizar Pedído',
-                        'title'=>'Autorizar Pedído',
+                        'value'=>'Autorizar Pedido',
+                        'title'=>'Autorizar Pedido',
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnModificar']
                 )
