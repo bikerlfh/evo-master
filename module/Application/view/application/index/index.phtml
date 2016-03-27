@@ -290,7 +290,7 @@
                            <ul class="category-filter-list jscrollpane">
                               <?php 
                                 foreach ($this->categorias as $value) {
-                                    echo "<li><a href='#'>".$value['descripcion']."</a></li>";
+                                    echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
                                 }
                               ?>
                               <li><a href="#">Mobile Phones (341)</a></li>
@@ -333,7 +333,7 @@
                            <ul class="category-filter-list jscrollpane">
                                 <?php 
                                  foreach ($this->marcas as $value) {
-                                     echo "<li><a href='#'>".$value['descripcion']."</a></li>";
+                                     echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
                                  }
                                 ?>
                                 <li><a href="#">Samsung (50)</a></li>

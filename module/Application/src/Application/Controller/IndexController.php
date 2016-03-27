@@ -1,9 +1,9 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
+ * Autor :    Luis Fernando Henriquez Arciniegas
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      https://github.com/bikerlfh/evo-master for the source repository
+ * @copyright Copyright (c) 2016 EvoMaster
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -22,8 +22,8 @@ class IndexController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
-        //$this->Categoria->consultarTodoCategoria();
-        return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoria(),
-                                   'marcas'=>$this->Marca->consultarTodoMarca()));
+        
+        return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoriaCountNumeroProductos(),
+                                   'marcas'=>$this->Marca->consultarTodoMarcaCountNumeroProductos()));
     }
 }
