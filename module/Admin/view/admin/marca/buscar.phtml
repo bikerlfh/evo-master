@@ -27,7 +27,7 @@
                                          <?php 
                                         foreach ($this->registros as $obj) {
                                             echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idMarca').val(".$obj['idMarca'].");$('#<". $this->botonClose ."').click();\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idMarca').val(".$obj['idMarca'].");$('#". $this->botonClose ."').click();\">
                                                     <td>".$obj['codigo']."</td>
                                                     <td>".$obj['descripcion']."</td>
                                                 </tr>";
