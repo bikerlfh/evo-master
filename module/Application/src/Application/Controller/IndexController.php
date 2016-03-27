@@ -15,12 +15,15 @@ use Application\Model\Entity;
 
 class IndexController extends AbstractActionController
 {
-    private $tipoUsuario;
+    private $Categoria;
+    private $Marca;
     public function indexAction()
     {
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $tipoUsuario = new Entity\TipoUsuario($this->dbAdapter);
-        $tipoUsuario->consultarTodoTipoUsuario();
-        return new ViewModel();
+        $this->Categoria = new Entity\Categoria($this->dbAdapter);
+        $this->Marca = new Entity\Marca($this->dbAdapter);
+        //$this->Categoria->consultarTodoCategoria();
+        return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoria(),
+                                   'marcas'=>$this->Marca->consultarTodoMarca()));
     }
 }

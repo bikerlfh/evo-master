@@ -288,6 +288,11 @@
                      <div id="category-list-1" class="collapse in">
                         <div class="panel-body">
                            <ul class="category-filter-list jscrollpane">
+                              <?php 
+                                foreach ($this->categorias as $value) {
+                                    echo "<li><a href='#'>".$value['descripcion']."</a></li>";
+                                }
+                              ?>
                               <li><a href="#">Mobile Phones (341)</a></li>
                               <li><a href="#">Smartphones (55)</a></li>
                               <li><a href="#">Communicators (24)</a></li>
@@ -326,11 +331,16 @@
                      <div id="category-list-2" class="collapse in">
                         <div class="panel-body">
                            <ul class="category-filter-list jscrollpane">
-                              <li><a href="#">Samsung (50)</a></li>
-                              <li><a href="#">Apple (80)</a></li>
-                              <li><a href="#">HTC (20)</a></li>
-                              <li><a href="#">Motoroloa (20)</a></li>
-                              <li><a href="#">Nokia (11)</a></li>
+                                <?php 
+                                 foreach ($this->marcas as $value) {
+                                     echo "<li><a href='#'>".$value['descripcion']."</a></li>";
+                                 }
+                                ?>
+                                <li><a href="#">Samsung (50)</a></li>
+                                <li><a href="#">Apple (80)</a></li>
+                                <li><a href="#">HTC (20)</a></li>
+                                <li><a href="#">Motoroloa (20)</a></li>
+                                <li><a href="#">Nokia (11)</a></li>
                            </ul>
                         </div>
                         <!-- End .panel-body -->
