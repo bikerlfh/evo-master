@@ -65,9 +65,11 @@ class Categoria extends AbstractTableGateway
     {
         $datos=array(
                 'descripcion'=> $descripcion,
-                'codigo'=> $codigo,
-                'idCategoriaCentral' => $idCategoriaCentral
+                'codigo'=> $codigo
         );
+        if ($idCategoriaCentral != null) {
+            $datos['idCategoriaCentral'] = $idCategoriaCentral;
+        }
         $result=$this->update($datos,array('idCategoria'=>$idCategoria));
         if ($result > 0) {
             return true;
@@ -84,7 +86,7 @@ class Categoria extends AbstractTableGateway
     public function consultarTodoCategoria()
     {
         return $this->select()->toArray();
-        $sql = new Sql($this->adapter);        
+        /*$sql = new Sql($this->adapter);        
         $select = $sql->select()->
                          from(array('c'=> $this->table))->
                          columns(array('idCategoria','idCategoriaCentral','codigo','descripcion'))->
@@ -95,8 +97,16 @@ class Categoria extends AbstractTableGateway
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
         $resultsSet->initialize($results)->toArray();
-        return   $resultsSet;
+        return   $resultsSet;*/
     }
+    
+    public function consultarTodoCategoriaCountNumeroProductos()
+    {
+        $select = "select c.*, (select count(*) from Producto.Producto p where p.idCategoria = c.idCategoria) as 'numProducto' from Producto.Categoria c order by c.descripcion";
+        $stmt = $this->adapter->createStatement()->setSql($select);
+        return $stmt->execute();
+    }
+    
     public function consultarCategoriaPorIdCategoria($idCategoria)
     {
         $result=$this->select(array('idCategoria'=>$idCategoria))->current();
