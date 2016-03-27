@@ -14,22 +14,22 @@ class Marca extends AbstractTableGateway
         $this->adapter = $adapter;
         $this->table =  new \Zend\Db\Sql\TableIdentifier('Marca', 'Producto');
     }
-    public function getdescripcion(){
+    public function getDescripcion(){
         return $this->descripcion;
     }
-    public function setdescripcion($descripcion){
+    public function setDescripcion($descripcion){
         $this->descripcion=$descripcion;
     }
-    public function getcodigo(){
+    public function getCodigo(){
         return $this->codigo;
     }
-    public function setcodigo($codigo){
+    public function setCodigo($codigo){
         $this->codigo=$codigo;
     }
-    public function getidMarca(){
+    public function getIdMarca(){
         return $this->idMarca;
     }
-    public function setidMarca($idMarca){
+    public function setIdMarca($idMarca){
         $this->idMarca=$idMarca;
     }
 
@@ -68,7 +68,12 @@ class Marca extends AbstractTableGateway
     {
         return $this->select()->toArray();
     }
-    
+    public function consultarTodoMarcaCountNumeroProductos()
+    {
+        $select = "select m.*, (select count(*) from Producto.Producto p where p.idMarca = m.idMarca) as 'numProducto' from Producto.Marca m order by m.descripcion";
+        $stmt = $this->adapter->createStatement()->setSql($select);
+        return $stmt->execute();
+    }
     public function consultarMarcaPoridMarca($idMarca)
     {
         $result=$this->select(array('idMarca'=>$idMarca))->current();
@@ -82,7 +87,7 @@ class Marca extends AbstractTableGateway
         return false;
     }
     
-    public function consultarMarcaPorcodigo($codigo)
+    public function consultarMarcaPorCodigo($codigo)
     {
         $result=$this->select(array('codigo'=>$codigo))->current();
         if($result)
