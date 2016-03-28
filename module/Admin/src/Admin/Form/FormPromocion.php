@@ -7,18 +7,21 @@
 namespace Admin\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Application\Model\Entity\Promocion;
 
 class FormPromocion extends Form
 {
     private $adapter;
     private $cssClass;
     private $basePath;
+    private $formProducto;
+    private $formBase;
     public function __construct($serviceLocator,$basePath = null)
     {
         parent::__construct("frmpromocion");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
+        $this->formProducto = new FormProducto($serviceLocator,$basePath);
+        $this->formBase = new FormBase($serviceLocator,$basePath);
         $this->setAttributes(array(
             'action' => $this->basePath.'/admin/promocion/index',
             'method' => 'post',
@@ -47,12 +50,15 @@ class FormPromocion extends Form
             ),
         ));
         
+        $this->add($this->formProducto->get('nombreProducto'));
+        $this->add($this->formBase->get('btnBuscarSaldoInventario'));
+        
         $this->add(array(
             'name' => 'valorAnterior',                       
             'attributes' => array(
                 'id'=>'valorAnterior', 
                 'type' => 'text',
-                'placeholder'=>'Código',
+                'placeholder'=>'Valor Anterior',
                 'readonly'=>true,
                 'class' => $this->cssClass['text']
             ),
@@ -90,7 +96,7 @@ class FormPromocion extends Form
         ));
          /************* select estado ***********/
         $select2 = new Element\Select('estado');
-        $select2->setValueOptions(array(1=>'Activo',0=>'Inactivo'));
+        $select2->setValueOptions(array(''=>'',1=>'Activo',0=>'Inactivo'));
         $select2->setAttributes(array('id' => 'estado',
                                      'class' => $this->cssClass['select']));
         $this->add($select2);

@@ -43,7 +43,7 @@ class Promocion extends AbstractTableGateway
     function setEstado($estado) { $this->estado = $estado; }
     function setIdUsuarioCreacion($idUsuarioCreacion) { $this->idUsuarioCreacion = $idUsuarioCreacion; }
 
-    public function guardarPromocion($idSaldoInventario,$valorAnterior,$valorPromocion,$fechaDesde,$fechaHasta,$idUsuarioCreacion)
+    public function guardarPromocion($idSaldoInventario,$valorAnterior,$valorPromocion,$fechaDesde,$fechaHasta,$estado,$idUsuarioCreacion)
     {
         $datos=array(
                 'idSaldoInventario'=> $idSaldoInventario,
@@ -51,6 +51,7 @@ class Promocion extends AbstractTableGateway
                 'valorPromocion'=> $valorPromocion,
                 'fechaDesde'=> $fechaDesde,
                 'fechaHasta'=> $fechaHasta,
+                'estado'=>$estado,
                 'idUsuarioCreacion'=> $idUsuarioCreacion);
         
         $result=$this->insert($datos);

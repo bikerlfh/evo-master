@@ -30,23 +30,28 @@ class PromocionController extends AbstractActionController
         
         $this->Promocion = new Promocion($this->dbAdapter);
         $this->form = new FormPromocion($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        $this->form ->get('btnBuscarSaldoInventario')->setAttribute('onClick',"usar_ajax('".$this->getRequest()->getBaseUrl()."/admin/saldoinventario/buscar?campoValorVenta=valorAnterior','#modal-dialog-display','')");
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
             $datos=$this->request->getPost();
+            $fechaDesde = new \DateTime($datos['fechaDesde']);
+            $fechaDesde =$fechaDesde->format('d-m-Y');
+            $fechaHasta = new \DateTime($datos['fechaHasta']);
+            $fechaHasta =$fechaHasta->format('d-m-Y');
             // Si se envia el id de la promocion se modifica este.
             if ($datos["idPromocion"] != null) 
             {
                 $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->Promocion->modificarPromocion($datos['idPromocion'],$datos['idSaldoInventario'],$datos['valorAnterior'],$datos['valorPromocion'],$datos['fechaDesde'],$datos['fechaHasta'],$datos['estado']))
+                if($this->Promocion->modificarPromocion($datos['idPromocion'],$datos['idSaldoInventario'],$datos['valorAnterior'],$datos['valorPromocion'],$fechaDesde,$fechaHasta,$datos['estado']))
                     $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva promocion
-                if($this->Promocion->guardarPromocion($datos['idSaldoInventario'],$datos['valorAnterior'],$datos['valorPromocion'],$datos['fechaDesde'],$datos['fechaHasta'],$this->user_session->idUsuario))
+                if($this->Promocion->guardarPromocion($datos['idSaldoInventario'],$datos['valorAnterior'],$datos['valorPromocion'],$fechaDesde,$fechaHasta,$datos['estado'],$this->user_session->idUsuario))
                     $returnCrud=$this->consultarMessage("okSave");
             }
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));

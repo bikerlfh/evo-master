@@ -27,6 +27,7 @@ return array(
             'Admin\Controller\ViaPago' => 'Admin\Controller\ViaPagoController',
             'Admin\Controller\EstadoPedidoVenta' => 'Admin\Controller\EstadoPedidoVentaController',
             'Admin\Controller\PedidoVenta' => 'Admin\Controller\PedidoVentaController',
+            'Admin\Controller\Promocion' => 'Admin\Controller\PromocionController',
         ),
     ),
     'router' => array(
