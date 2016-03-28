@@ -1,14 +1,14 @@
+<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dtbuscarCliente').DataTable();
         LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
-<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" id="btnClosePop" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" id="<?php echo $this->botonClose ?>" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Cliente</strong></h4></h4>
         </div>
         <div class="box-body">

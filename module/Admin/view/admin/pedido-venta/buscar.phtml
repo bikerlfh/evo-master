@@ -1,0 +1,95 @@
+<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#dtbuscarPedidoVenta').DataTable();
+        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
+    });
+    function btnBuscar_onclick()
+    {
+        usar_ajax("<?php echo $this->basePath()?>/admin/pedidoventa/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?><?php echo $parametrosGet ?>",'#<?php echo $this->contenedorDialog ?>',"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idCliente="+$('#idCliente').val()+"&nombreCliente="+$('#nombreClienteBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
+    }
+</script>
+  
+<div class="row">  
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" id="<?php echo $this->botonClose ?>" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Pedido Venta</strong></h4></h4>
+        </div>
+        <div class="box-body">
+            <?php echo $this->form()->openTag($form); ?>
+            <?php echo $this->formElement($form->get('idCliente'));?>
+            <div class="form-group">
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <label for="email1" class="control-label">Número Pedido</label>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <?php echo $this->formInput($form->get('numeroPedido'));?>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <label for="email1" class="control-label">Cliente</label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-5">
+                    <?php echo $this->formInput($form->get('nombreCliente'));?>  
+                </div>
+                <!-- Se quema el boton por que se hace necesario pasar el campoId y el campoNombre -->
+                <input name="btnBuscarCliente2" id="btnBuscarProveedor2" type="button" title="Buscar" data-target="#textModal2" data-toggle="modal" style="margin:2px" class="btn btn-support2" value="Buscar" 
+                       onclick="usar_ajax('/evo-master/admin/cliente/buscar?campoId=idCliente&campoNombre=nombreClienteBusqueda&botonClose=btnClosePop2&amp;contenedorDialog=modal-dialog-display2&amp;modal=textModal2','#modal-dialog-display2','')">  
+               
+            </div>
+            <div class="form-group">
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <label for="select1" class="control-label">Estado Pedido</label>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4">
+                    <?php echo $this->formElement($form->get('idEstadoPedidoVenta'));?>  
+
+                </div>
+            </div>
+            <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
+                <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
+                       onclick="btnBuscar_onclick()">
+                <?php
+                    echo $this->formElement($form->get('btnCancelar'));
+                ?>
+            </div>
+            <?php echo $this->form()->closeTag(); ?>
+        </div>
+        
+        <div class="box "> 
+            <div class="box-body table-responsive">
+                <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
+                    <table id="dtbuscarPedidoVenta" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
+                        <thead>
+                            <tr role="row">
+                                <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Número Pedido</th>
+                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Cliente</th>
+                                <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Detalle</th>
+                                <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Estado Pedido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <?php 
+                            foreach ($this->registros as $obj) {
+                                echo "
+                                    
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href','".$this->basePath()."/admin/pedidoventa/".$this->vista."?idPedidoVenta=".$obj['idPedidoVenta']."')\">
+                                        <td>".$obj['numeroPedido']."</td>
+                                        <td>".$obj['nombreCliente']."</td>
+                                        <td>".$obj['pedidoDetalle']."</td>
+                                        <td>".$obj['descripcionEstadoPedido']."</td>
+                                    </tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+ 

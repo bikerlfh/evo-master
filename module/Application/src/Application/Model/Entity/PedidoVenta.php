@@ -4,7 +4,13 @@ namespace Application\Model\Entity;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\TableIdentifier;
+use Zend\Db\Sql\Expression;
 use Application\Model\Clases\StoredProcedure;
+use Application\Model\Entity\ViaPago;
+use Application\Model\Entity\EstadoPedidoVenta;
 
 class PedidoVenta extends AbstractTableGateway {
 
@@ -17,6 +23,7 @@ class PedidoVenta extends AbstractTableGateway {
     private $urlDocumentoPago;
     private $idUsuarioCreacion;
     public $PedidoVentaPosicion;
+    private $nombreCliente;
     //Entidades embebidas
     public $ViaPago;
     public $EstadoPedidoVenta;
@@ -90,6 +97,10 @@ class PedidoVenta extends AbstractTableGateway {
         $this->numeroPedidoVenta = $numeroPedidoVenta;
     }
 
+    function getNombreCliente() {
+        return $this->nombreCliente;
+    }
+
     public function guardarPedidoVenta($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion) {
         $stored = new StoredProcedure($this->adapter);
         // Venta.GuardarPedidoVenta @idEstadoPedidoVenta smallint,@idCliente bigint,@urlDocumentoPago varchar,@idUsuarioCreacion bigint
@@ -108,6 +119,14 @@ class PedidoVenta extends AbstractTableGateway {
             return 'true';
         }
         return 'false';
+    }
+
+    public function autorizarPedidoVenta($idPedidoVenta, $urlDocumentoPago, $idUsuario) {
+        $stored = new StoredProcedure($this->adapter);
+        // Compra.AutorizarPedidoCompra	@idPedidoCompra bigint,@urlDocumentoPago varchar(150),	@idUsuario bigint
+        $result = $stored->execProcedureReturnDatos("Venta.AutorizarPedidoVenta ?,?,?", array($idPedidoVenta, $urlDocumentoPago, $idUsuario))->current();
+        unset($stored);
+        return $result['result'];
     }
 
     public function modificarPedidoVenta($idPedidoVenta, $idEstadoPedidoVenta, $idCliente, $urlDocumentoPago) {
@@ -141,7 +160,15 @@ class PedidoVenta extends AbstractTableGateway {
     }
 
     public function consultarPedidoVentaPorIdPedidoVenta($idPedidoVenta) {
-        $result = $this->select(array('idPedidoVenta' => $idPedidoVenta))->current();
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                from(array('pedido' => $this->table))->
+                join(array('cliente' => new TableIdentifier('Cliente', 'Tercero')), 'pedido.idCliente = cliente.idCliente')->
+                join(array('dbt' => new TableIdentifier('DatoBasicoTercero', 'Tercero')), 'cliente.idDatoBasicoTercero = dbt.idDatoBasicoTercero', array('nombreCliente' => new Expression("CONVERT(VARCHAR,dbt.nit )+' - '+ dbt.descripcion")))->
+                where(array('pedido.idPedidoVenta' => $idPedidoVenta));
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        $result = $resultsSet->initialize($result)->current();
         if ($result) {
             $this->LlenarEntidad($result);
             $this->LlenarPedidoVentaPosicion();
@@ -176,7 +203,7 @@ class PedidoVenta extends AbstractTableGateway {
         $this->fechaPedido = $result['fechaPedido'];
         $this->urlDocumentoPago = $result['urlDocumentoPago'];
         $this->idUsuarioCreacion = $result['idUsuarioCreacion'];
-
+        $this->nombreCliente = $result['nombreCliente'];
         $this->CargarEmbebidos();
     }
 
@@ -184,13 +211,16 @@ class PedidoVenta extends AbstractTableGateway {
     //<--- Carga los objetos completos relacionados a este objeto ====>
     //<===============================================================>
     private function CargarEmbebidos() {
-        //Via Pago
-        $this->ViaPago = new Entity\ViaPago(parent::getAdapter());
-        $this->ViaPago->consutlarViapagoPoridViaPago($this->idViaPago);
+
+        if ($this->idViaPago != null) {
+            //Via Pago
+            $this->ViaPago = new ViaPago(parent::getAdapter());
+            $this->ViaPago->consutlarViapagoPoridViaPago($this->idViaPago);
+        }
 
         //Estado Pedido
-        $this->EstadoPedidoVenta = new Entity\EstadoPedidoVenta(parent::getAdapter());
-        $this->EstadoPedidoVenta->consultarEstadoPedidoVentaPorId($this->idEstadoPedidoVenta);
+        $this->EstadoPedidoVenta = new EstadoPedidoVenta(parent::getAdapter());
+        $this->EstadoPedidoVenta->consultarEstadoPedidoVentaPorIdEstadoPedidoVenta($this->idEstadoPedidoVenta);
     }
 
 }

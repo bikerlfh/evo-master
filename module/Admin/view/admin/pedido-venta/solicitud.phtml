@@ -5,6 +5,11 @@ $form->prepare();
 if ($this->msg != null) {
     echo "<script type='text/javascript'>" . $this->msg . "</script>";
 }
+
+if ($this->numeroPedido != null) {
+    echo "<script type='text/javascript'>showMessageSuccess('Número Pedido Venta','Se genero el pedido con el número ".$this->numeroPedido."');</script>";
+}
+
 ?>
 <script type="text/javascript">
     var numRows = 0;

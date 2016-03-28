@@ -51,11 +51,12 @@ class FormPedidoVenta extends Form
         $this->add($this->FormBase->get('btnBuscarCliente'));
         /************ CAMPOS DEL PROVEEDOR *****************/
         
-        $file = new Element\File('file-documentoPago');
+        $file = new Element\File('image-file');
         $file->setLabel('Imagen')
-             ->setAttribute('id', 'file-documentoPago')
+             ->setAttribute('id', 'image-file')
              ->setAttributes(array('multiple' => false,
-                                   'accept'=>".gif,.jpg,.jpeg,.png"));
+                                   'accept'=>".gif,.jpg,.jpeg,.png",
+                                    'required'=>true));
         $this->add($file);
         
         /************* EstadoPedido ***********/
@@ -80,6 +81,18 @@ class FormPedidoVenta extends Form
         
         $this->add($this->FormBase->get('btnGuardar'));
         $this->add($this->FormBase->get('btnModificar'));
+        
+        $this->add(array(
+                'name'=>'btnAutorizar',			
+                'attributes'=>array(
+                        'id'=>'btnAutorizar',
+                        'type'=>'submit',
+                        'value'=>'Autorizar Pedido',
+                        'title'=>'Autorizar Pedido',
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnModificar']
+                )
+        ));
         
         $this->add(array(
                 'name'=>'btnEliminar',			
@@ -110,15 +123,15 @@ class FormPedidoVenta extends Form
     {
         $inputFilter = new InputFilter\InputFilter();
         // File Input
-        $fileInput = new InputFilter\FileInput('file-documentoPago');
+        $fileInput = new InputFilter\FileInput('image-file');
         $fileInput->setRequired(true);
         $fileInput->getFilterChain()->attachByName(
             'filerenameupload',
             array(
-                'target'    => './public/imguploads/compra',
+                'target'    => './public/imguploads/venta/',
                 //'randomize' => true,
-                'overwrite'       => false,
-                'use_upload_name' => true,  
+                'overwrite'       => true,
+                'use_upload_name' => true,
             )
         );
         $inputFilter->add($fileInput);
