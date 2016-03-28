@@ -34,6 +34,7 @@ return array(
         'text'=>'form-control',
         'select'=>'form-control',
         'date'=>'form-control',
+        'spinner'=>'form-control ui-spinner-input',
         'radio'=>'',
         'btnGuardar'=>'btn btn-primary',
         'btnModificar'=>'btn btn-success',
