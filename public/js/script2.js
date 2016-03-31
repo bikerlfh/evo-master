@@ -16,18 +16,17 @@ function showBusquedaOnModal(button,url,parametrosPost)
     if ($(".modal").last() != null) 
     {
         var modal = $(".modal").last();
-        // Se obtiene el id del modal que se va a crear
-        var idModal = modal.attr('id').toString().split("textModal")[1].length > 0? parseInt(modal.attr('id').toString().split("textModal")[1]) + 1 : 1;
+        var idModal = 1;
+        if (modal.attr('id') != undefined) {
+            // Se obtiene el id del modal que se va a crear
+            idModal = modal.attr('id').toString().split("textModal")[1].length > 0? parseInt(modal.attr('id').toString().split("textModal")[1]) + 1 : 1;
+        }
         $(button).attr('data-target','#textModal'+idModal);
         // Div del modal a crear
         var divModal = "<div class='modal fade' id='textModal"+idModal+"' tabindex='0' role='dialog' aria-labelledby='textModalLabel"+idModal+"' aria-hidden='true' data-backdrop='static' data-keyboard='false' style='display: none;'>";
         divModal += "<div class='modal-dialog' id='modal-dialog-display"+idModal+"'></div></div>";
         // Se agrega al final del body el modal.
         $("body").append(divModal);
-        // Se agrega el evento de borrar el modal
-        $('#textModal'+idModal).on('hidden.bs.modal', function () {
-            $('#textModal'+idModal).last().remove();
-        });
         if (url.indexOf("?") >= 0){
             url+='&';
         }
@@ -36,6 +35,11 @@ function showBusquedaOnModal(button,url,parametrosPost)
         }
         url+='modalDialogDisplay=modal-dialog-display'+idModal;
         usar_ajax(url,'#modal-dialog-display'+idModal,parametrosPost);
+        
+        // Se agrega el evento de borrar el modal
+        $('#textModal'+idModal).on('hidden.bs.modal', function () {
+            $('#textModal'+idModal).last().remove();
+        });
     }
 }
 /**
