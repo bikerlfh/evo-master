@@ -28,10 +28,27 @@ function showBusquedaOnModal(button,url,parametrosPost)
         $('#textModal'+idModal).on('hidden.bs.modal', function () {
             $('#textModal'+idModal).last().remove();
         });
+        if (url.indexOf("?") >= 0){
+            url+='&';
+        }
+        url+='modalDialogDisplay=modal-dialog-display'+idModal;
         usar_ajax(url,'#modal-dialog-display'+idModal,parametrosPost);
     }
 }
-
+/**
+ * Retorna el valor de un parametro de una cadena con formato URL
+ * Se usa para no tener que enviar desde el controlador el nombre del modalDialogDisplay donde se debe mostrar la busqueda
+ * @param {type} url
+ * @param {type} nombreParametro
+ * @returns {@var;url}
+ */
+function consultarValorParametroUrl(url,nombreParametro)
+{
+    url  = url.split('?')[1];
+    url  = url.split('&')[1].length>0? url.split('&')[1] : url;
+    url  = url.split(nombreParametro+'=')[1];
+    return url;
+}
 // Se activa del menu el formulario que este visible
 // y muestra mensajes del crud que se pasan por get
 $(document).ready(function()
