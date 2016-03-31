@@ -31,6 +31,9 @@ function showBusquedaOnModal(button,url,parametrosPost)
         if (url.indexOf("?") >= 0){
             url+='&';
         }
+        else{
+            url+='?';
+        }
         url+='modalDialogDisplay=modal-dialog-display'+idModal;
         usar_ajax(url,'#modal-dialog-display'+idModal,parametrosPost);
     }
