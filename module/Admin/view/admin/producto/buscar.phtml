@@ -1,14 +1,12 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dtbuscarProducto').DataTable();
-        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
-<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>  
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" id="<?php echo $this->botonClose?>" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" id="btnCloseBusquedaProducto" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Productos</strong></h4></h4>
         </div>
         <div class="box-body">
@@ -51,7 +49,7 @@
             </div>
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->basePath()?>/admin/producto/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?><?php echo $parametrosGet ?>','#<?php echo $this->contenedorDialog ?>','idMarca='+$('#idMarca').val()+'&amp;idCategoria='+$('#idCategoria').val()+'&amp;referencia='+$('#referencia').val()+'&amp;codigo='+$('#codigo').val()+'&amp;nombre='+$('#nombre').val());">
+                       onclick="usar_ajax('<?php  echo $this->Uri ?>','#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),'idMarca='+$('#idMarca').val()+'&amp;idCategoria='+$('#idCategoria').val()+'&amp;referencia='+$('#referencia').val()+'&amp;codigo='+$('#codigo').val()+'&amp;nombre='+$('#nombre').val());">
                 <?php
                     echo $this->formElement($form->get('btnCancelar'));
                 ?>
@@ -77,7 +75,7 @@
                             foreach ($this->registros as $obj) {
                                 $descripcionProducto = $obj['codigo'] .' - '.$obj['nombre'];
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProducto'].");$('#".$this->campoNombre."').val('".$descripcionProducto."');$('#". $this->botonClose ."').click();\")\">
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProducto'].");$('#".$this->campoNombre."').val('".$descripcionProducto."');$('#btnCloseBusquedaProducto').click();\")\">
                                         <td>".$obj['referencia']."</td>
                                         <td>".$obj['codigo']."</td>
                                         <td>".$obj['nombre']."</td>

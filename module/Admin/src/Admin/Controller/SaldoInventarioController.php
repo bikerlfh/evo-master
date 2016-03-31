@@ -88,7 +88,7 @@ class SaldoInventarioController extends AbstractActionController {
         // Se agregan los botones de buscar producto y proveedor al formualrio saldo inventario
         /*         * *********************************************************************************** */
         $formBase = new FormBase($this->getServiceLocator(), $this->getRequest()->getBaseUrl());
-        $this->form->add($formBase->get("btnBuscarProducto2"));
+        $this->form->add($formBase->get("btnBuscarProducto"));
         $this->form->add($formBase->get("btnBuscarProveedor2"));
         /*         * *********************************************************************************** */
         

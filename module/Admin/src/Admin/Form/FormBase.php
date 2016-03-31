@@ -34,27 +34,9 @@ class FormBase extends Form
                         'type'=>'button',
                         'value'=>'Buscar',
                         'title'=>'Buscar',
-                        'data-target'=>"#textModal",
+                        //'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/producto/buscar','#modal-dialog-display','')",
-                        'style'=>'margin:2px',
-                        'class'=>$this->cssClass['btnBuscar']
-                )
-        ));
-        
-        //Este se usa cuando se necesita abrir un dialog dentro de otro
-        
-        
-         $this->add(array(
-                'name'=>'btnBuscarProducto2',			
-                'attributes'=>array(
-                        'id'=>'btnBuscarProducto2',
-                        'type'=>'button',
-                        'value'=>'Buscar',
-                        'title'=>'Buscar',
-                        'data-target'=>"#textModal2",
-                        'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/producto/buscar".$parametrosGet."','#modal-dialog-display2','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/producto/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
