@@ -2,10 +2,41 @@
  * script ajax y validaciones 
  * Hecho por Luis Fernando Henriquez Arcinegas
  * */
+
+/* Funcion para mostrar una busqueda en un modal dinamico.
+ * Este moda se crea al momento de invocar la fucion y se destuye al momento de cerrarlo.
+ * @param {type} button: boton donde es llamada la busqueda
+ * @param {type} url   : Url de la vista de la busqueda
+ * @param {type} parametrosPost : data post
+ * @returns {null}
+ */
+function showBusquedaOnModal(button,url,parametrosPost)
+{
+    // Se verifica el ultimo modal que esta cargado
+    if ($(".modal").last() != null) 
+    {
+        var modal = $(".modal").last();
+        // Se obtiene el id del modal que se va a crear
+        var idModal = modal.attr('id').toString().split("textModal")[1].length > 0? parseInt(modal.attr('id').toString().split("textModal")[1]) + 1 : 1;
+        $(button).attr('data-target','#textModal'+idModal);
+        // Div del modal a crear
+        var divModal = "<div class='modal fade' id='textModal"+idModal+"' tabindex='0' role='dialog' aria-labelledby='textModalLabel"+idModal+"' aria-hidden='true' data-backdrop='static' data-keyboard='false' style='display: none;'>";
+        divModal += "<div class='modal-dialog' id='modal-dialog-display"+idModal+"'></div></div>";
+        // Se agrega al final del body el modal.
+        $("body").append(divModal);
+        // Se agrega el evento de borrar el modal
+        $('#textModal'+idModal).on('hidden.bs.modal', function () {
+            $('#textModal'+idModal).last().remove();
+        });
+        usar_ajax(url,'#modal-dialog-display'+idModal,parametrosPost);
+    }
+}
+
 // Se activa del menu el formulario que este visible
 // y muestra mensajes del crud que se pasan por get
 $(document).ready(function()
-{
+{   
+    //showBusqueda("/evo-master/admin/datobasicotercero/buscar","");
     //********** activa el menu del formulario q esta visible************/
     $(document).find('a').each(function() 
     {
@@ -51,7 +82,6 @@ $(document).ready(function()
     }
 });
 
-
 function limpiarformulario(formulario){
     $("#btnGuardar").attr("type","submit");
     $("#btnModificar").attr("type","hidden");
@@ -93,16 +123,6 @@ function limpiarformulario(formulario){
    $(formulario).find('textarea').each(function(){
       $(this).val('');
    });
-}
-//<=== funcion que se utiliza en la busqueda de objetos para ====>
-function seleccionarObjetoBusqueda(campoid,campotext,Value,Text)
-{
-    //alert('a');
-    if (confirm('Desea seleccionar este? ')) {
-        $("#"+campoid).val(Value);
-        $("#"+campotext).val(Text.replace(/_/g,' '));
-        $("#btnCerrar").click();
-    }
 }
 //<=========================================================>
 function usar_ajax(URL,objeto,datos)
@@ -178,91 +198,6 @@ function showMessageSuccess(title,menssage)
     toastr.success(menssage, title);
 }
 
-
-function ajax_2form(form,datos2)//funcion hecha para vincular los usuarios
-{
-    var respuesta;
-    var datos=$("#"+form).serialize()+'&'+datos2;
-    $("#"+form).unbind('submit');
-    $("#"+form).on('submit',function(e)
-    {
-        e.preventDefault();//previene que el formulario haga submit
-        var URL=$("#"+form).attr("action");
-        var metodo=$("#"+form).attr("method");
-        $.ajax(
-        {
-            beforeSend: function(){
-                    //codigo q se ejecutará antes de q se inicie ajax;				
-               mostrarImgCargando();
-            },
-            type: metodo,
-            url: URL,
-            data: datos,
-            success: function(resp){
-                    //recibe la la respuesta de ajax 
-                    $('#divhidden').html(resp);//mostramos la respuesta en el objeto	
-                    respuesta=resp;
-                    console.log(resp)//se muestra tambien en la consola			
-            },
-            error: function(jqXHR,estado,error){
-                    console.log(error)
-                    console.log(estado)
-            },
-            complete: function(jqXHR,estado)
-            {			
-                    //se ejecuta despues de succes o error
-                    esconderImgCargando();
-            },
-            timeout:10000 //tiempo maximo de espera
-        })
-    });
-}
-
-function ajax_form(form)
-{
-    var respuesta;
-    var datos=$("#"+form).serialize();
-    $("#"+form).unbind('submit');
-    $("#"+form).on('submit',function(e)
-    {
-        e.preventDefault();//previene que el formulario haga submit
-        var URL=$("#"+form).attr("action");
-        var metodo=$("#"+form).attr("method");
-        $.ajax(
-        {
-            beforeSend: function(){
-                    //codigo q se ejecutará antes de q se inicie ajax;				
-               mostrarImgCargando();
-            },
-            type: metodo,
-            url: URL,
-            data: datos,
-            success: function(resp){
-                //recibe la la respuesta de ajax 
-                //$("#"+objeto).html(resp);//mostramos la respuesta en el objeto		
-                respuesta=resp;
-                console.log(resp)//se muestra tambien en la consola			
-            },
-            error: function(jqXHR,estado,error){
-                console.log(error)
-                console.log(estado)
-            },
-            complete: function(jqXHR,estado)
-            {			
-                //se ejecuta despues de succes o error
-                esconderImgCargando();
-                if(respuesta==true)
-                {
-                    crearAlerta('Operacion exitosa','exito','');
-                    clearForm(form);
-                }
-                else
-                    crearAlerta(respuesta,'alerta','');
-            },
-            timeout:10000 //tiempo maximo de espera
-        })
-    });
-}
 function centrarObjeto (campo){
 	
     var correctorPercent = 1;//En caso de definir las dimensiones del wrapper en porcentajes.
