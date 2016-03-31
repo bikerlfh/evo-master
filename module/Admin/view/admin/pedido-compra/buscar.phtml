@@ -1,19 +1,17 @@
-<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dtbuscarPedidoCompra').DataTable();
-        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
     function btnBuscar_onclick()
     {
-        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?><?php echo $parametrosGet ?>",'#<?php echo $this->contenedorDialog ?>',"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idProveedor="+$('#idProveedor').val()+"&nombreProveedor="+$('#nombreProveedorBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
+        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>", '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idProveedor="+$('#idProveedor').val()+"&nombreProveedor="+$('#nombreProveedorBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
     }
 </script>
   
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" id="<?php echo $this->botonClose ?>" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" id="btncloseBusquedaPedidoCompra" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Pedido Compra</strong></h4></h4>
         </div>
         <div class="box-body">
@@ -34,9 +32,7 @@
                 <div class="col-lg-3 col-md-4 col-sm-5">
                     <?php echo $this->formInput($form->get('nombreProveedor'));?>  
                 </div>
-                <!-- Se quema el boton por que se hace necesario pasar el campoId y el campoNombre -->
-                <input name="btnBuscarProveedor2" id="btnBuscarProveedor2" type="button" title="Buscar" data-target="#textModal2" data-toggle="modal" style="margin:2px" class="btn btn-support2" value="Buscar" 
-                       onclick="usar_ajax('/evo-master/admin/proveedor/buscar?campoId=idProveedor&campoNombre=nombreProveedorBusqueda&botonClose=btnClosePop2&amp;contenedorDialog=modal-dialog-display2&amp;modal=textModal2','#modal-dialog-display2','')">  
+                <?php echo $this->formInput($form->get('btnBuscarProveedor')->setAttribute('onClick', "showBusquedaOnModal(this,'/evo-master/admin/proveedor/buscar?campoId=idProveedor&campoNombre=nombreProveedorBusqueda','')"));?> 
             </div>
             <div class="form-group">
                 <div class="col-lg-1 col-md-2 col-sm-3">

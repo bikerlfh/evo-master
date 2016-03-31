@@ -1,14 +1,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dtbuscarTercero').DataTable();
-        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
-<?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" id="btnClosePop" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" id="btnCloseBusquedaSaldoInventario" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Saldo Inventario</strong></h4></h4>
         </div>
         <div class="box-body">
@@ -35,13 +33,13 @@
                     <?php echo $this->formElement($form->get('idProveedor')); ?>
                 </div>
                 <div class="col-lg-1">
-                    <?php echo $this->formElement($form->get('btnBuscarProveedor2')); ?> 
+                    <?php echo $this->formElement($form->get('btnBuscarProveedor')); ?> 
                 </div>
             </div>
 
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar?origen=<?php echo $this->origen ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>&campoCantidad=<?php echo $this->campoCantidad ?>&campoValorVenta=<?php echo $this->campoValorVenta ?>&campoIdProducto=<?php echo $this->campoIdProducto ?><?php echo $parametrosGet ?> ', '#<?php echo $this->contenedorDialog ?>', 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
+                       onclick="usar_ajax('<?php echo $this->Uri ?>', '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'), 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
                                ">
                        <?php
                        echo $this->formElement($form->get('btnCancelar'));
@@ -70,7 +68,7 @@
                             <?php
                             foreach ($this->registros as $obj) 
                             {
-                                $onClick = "$('#".$this->campoId."').val(".$obj['idSaldoInventario'].");$('#".$this->campoNombre."').val('".$obj['descripcionProducto']."');$('#".$this->campoCantidad."').val('".$obj['cantidad']."'); $('#".$this->campoValorVenta."').val('".$obj['valorVenta']."');$('#".$this->campoIdProducto."').val('".$obj['idProducto']."');$('#".$this->botonClose."').click();";
+                                $onClick = "$('#".$this->campoId."').val(".$obj['idSaldoInventario'].");$('#".$this->campoNombre."').val('".$obj['descripcionProducto']."');$('#".$this->campoCantidad."').val('".$obj['cantidad']."'); $('#".$this->campoValorVenta."').val('".$obj['valorVenta']."');$('#".$this->campoIdProducto."').val('".$obj['idProducto']."');$('#btnCloseBusquedaSaldoInventario').click();";
                                 if ($this->origen != null) {
                                     $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idSaldoInventario=".$obj['idSaldoInventario']."')";
                                 }

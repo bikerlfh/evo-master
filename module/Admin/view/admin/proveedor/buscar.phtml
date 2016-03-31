@@ -1,16 +1,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dtbuscarProveedor').DataTable();
-        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
-
-    <?php $parametrosGet = "&botonClose=".$this->botonClose."&contenedorDialog=".$this->contenedorDialog."&modal=".$this->modal; ?>
-
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" id="<?php echo $this->botonClose ?>" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" id="btnCloseBusquedaProveedor" data-dismiss="modal" aria-hidden="true">×</button>
             <h4 class="modal-title" id="textModalLabel"><h4 class="text-light">Búsqueda de <strong>Proveedor</strong></h4></h4>
         </div>
         <div class="box-body">
@@ -35,7 +31,7 @@
             
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->basePath()?>/admin/proveedor/buscar?campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?><?php echo $parametrosGet ?>','#<?php echo $this->contenedorDialog ?>','nit='+$('#nit').val()+'&amp;descripcion='+$('#descripcion').val());">
+                       onclick="usar_ajax('<?php echo $this->Uri ?>', '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),'nit='+$('#nit').val()+'&amp;descripcion='+$('#descripcion').val());">
                 <?php
                     echo $this->formElement($form->get('btnCancelar'));
                 ?>
@@ -61,7 +57,7 @@
                              
                             foreach ($this->registros as $obj) {
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProveedor'].");$('#".$this->campoNombre."').val('".$obj["descripcionTercero"]."');$('#". $this->botonClose ."').click();\">
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProveedor'].");$('#".$this->campoNombre."').val('".$obj["descripcionTercero"]."');$('#btnCloseBusquedaProveedor').click();\">
                                         <td>".$obj['descripcionTercero']."</td>
                                         <td>".$obj['webSite']."</td>
                                         <td>".$obj['email']."</td>

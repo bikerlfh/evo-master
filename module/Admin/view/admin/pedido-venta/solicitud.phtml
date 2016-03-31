@@ -19,7 +19,7 @@ if ($this->numeroPedido != null) {
         numRows++;
         var parametrosGet = "?campoId=idSaldoInventario" + numRows + "&campoNombre=nombreProducto" + numRows + "&campoIdProducto=hidIdProducto" + numRows;
         parametrosGet += "&campoValorVenta=hidValorVenta" + numRows + "&campoCantidad=hidCantidad" + numRows;
-        var onClick = "onclick=\"usar_ajax('<?php echo $this->basePath() ?>/admin/saldoinventario/buscar" + parametrosGet + "','#modal-dialog-display','')\"";
+        var onClick = "onclick=\"showBusquedaOnModal(this,'<?php echo $this->basePath() ?>/admin/saldoinventario/buscar" + parametrosGet + "','')\"";
         var cadena = "<tr id='pedidoVentaPosicion" + numRows + "'>";
         cadena += "<td>" + numRows + "</td>";
         cadena += "<td><div class='col-lg-8 col-md-4 col-sm-4'>";

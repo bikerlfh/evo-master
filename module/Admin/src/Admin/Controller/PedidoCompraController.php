@@ -150,10 +150,8 @@ class PedidoCompraController extends AbstractActionController
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'numeroPedido':$this->params()->fromQuery('campoNombre',null);
         $vista=$this->params()->fromQuery('vista',null)== null?'autorizar':$this->params()->fromQuery('vista',null);
         
-         //****Campos modal *****//
-        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
-        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
-        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
+         //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
         
         $registros = array();
         if(count($this->request->getPost()) > 0)
@@ -172,9 +170,7 @@ class PedidoCompraController extends AbstractActionController
                                     'vista'=>$vista,
                                     'campoId'=>$campoId,
                                     'campoNombre'=>$campoNombre,
-                                    'botonClose'=> $botonClose,
-                                    'contenedorDialog'=> $contenedorDialog,
-                                    'modal'=> $modal,
+                                    'Uri'=> $Uri,
                                     'registros'=>$registros ));
         $view->setTerminal(true);
         return $view;

@@ -53,26 +53,11 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedor/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/proveedor/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
         ));
-        $this->add(array(
-                'name'=>'btnBuscarProveedor2',			
-                'attributes'=>array(
-                        'id'=>'btnBuscarProveedor2',
-                        'type'=>'button',
-                        'value'=>'Buscar',
-                        'title'=>'Buscar',
-                        'data-target'=>"#textModal2",
-                        'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedor/buscar".$parametrosGet."','#modal-dialog-display2','')",
-                        'style'=>'margin:2px',
-                        'class'=>$this->cssClass['btnBuscar']
-                )
-        ));
-        
          /*************** btn Buscar Cliente********************************/
         $this->add(array(
                 'name'=>'btnBuscarCliente',			
@@ -83,12 +68,12 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/cliente/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/cliente/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
         ));
-        /*************** btn Buscar Producto ********************************/
+        /*************** btn Buscar Cliente ********************************/
         /*************** btn Buscar Tercero ********************************/
         $this->add(array(
                 'name'=>'btnBuscarTercero',			
@@ -99,7 +84,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/datobasicotercero/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/datobasicotercero/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
@@ -178,7 +163,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/saldoinventario/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/saldoinventario/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )

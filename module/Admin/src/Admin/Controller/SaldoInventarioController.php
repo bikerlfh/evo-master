@@ -89,7 +89,7 @@ class SaldoInventarioController extends AbstractActionController {
         /*         * *********************************************************************************** */
         $formBase = new FormBase($this->getServiceLocator(), $this->getRequest()->getBaseUrl());
         $this->form->add($formBase->get("btnBuscarProducto"));
-        $this->form->add($formBase->get("btnBuscarProveedor2"));
+        $this->form->add($formBase->get("btnBuscarProveedor"));
         /*         * *********************************************************************************** */
         
         /** Campos para saber en donde se deben devolver los valores de la busqueda * */
@@ -101,10 +101,8 @@ class SaldoInventarioController extends AbstractActionController {
         // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
         // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
         $origen = $this->params()->fromQuery('origen', null);
-        //****Campos modal *****//
-        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
-        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
-        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
+         //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
 
         $registros = array();
         if (count($this->request->getPost()) > 0) {
@@ -126,9 +124,7 @@ class SaldoInventarioController extends AbstractActionController {
                                     'campoValorVenta'=> $campoValorVenta, 
                                     'campoCantidad'=> $campoCantidad, 
                                     'campoIdProducto'=> $campoIdProducto,
-                                    'botonClose'=> $botonClose,
-                                    'contenedorDialog'=> $contenedorDialog,
-                                    'modal'=> $modal,
+                                    'Uri'=> $Uri,
                                     'origen'=>$origen,
                                     'registros' => $registros));
         $view->setTerminal(true);

@@ -16,7 +16,7 @@ if ($this->numeroPedido != null) {
     function AddRow()
     {
         numRows++;
-        var onClick="onclick=\"usar_ajax('<?php echo $this->basePath()?>/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','#modal-dialog-display','')\"";
+        var onClick="onclick=\"showBusquedaOnModal(this,'<?php echo $this->basePath()?>/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','')\"";
         var cadena ="<tr id='pedidoCompraPosicion"+numRows+"'>";
         cadena += "<td>"+numRows+"</td>";
         cadena += " <td><div class='col-lg-8 col-md-4 col-sm-4'>";
