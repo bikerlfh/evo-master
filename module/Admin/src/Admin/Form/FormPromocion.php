@@ -52,6 +52,7 @@ class FormPromocion extends Form
         
         $this->add($this->formProducto->get('nombreProducto'));
         $this->add($this->formBase->get('btnBuscarSaldoInventario'));
+        $this->add($this->formBase->get('btnBuscarSaldoInventario2'));
         
         $this->add(array(
             'name' => 'valorAnterior',                       

@@ -6,6 +6,7 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
+use Application\Model\Clases\StoredProcedure;
 use Zend\Db\Sql\Expression;
 
 class Promocion extends AbstractTableGateway
@@ -20,6 +21,8 @@ class Promocion extends AbstractTableGateway
     private $estado;
     private $idUsuarioCreacion;
     
+    public $idProducto;
+    public $nombreProducto;
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
@@ -103,13 +106,28 @@ class Promocion extends AbstractTableGateway
     
     public function consultarPromocionPorIdPromocion($idPromocion)
     {
-        $result=$this->select(array('idPromocion'=>$idPromocion))->current();
-        if($result)
+        $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                         from(array('pro'=> $this->table))->
+                         columns(array('idPromocion','idSaldoInventario','valorAnterior','valorPromocion','fechaDesde','fechaHasta','estado'))->
+                         join(array('s'=> new TableIdentifier("SaldoInventario","Inventario")),
+                                    's.idSaldoInventario = pro.idSaldoInventario')->
+                         join(array("p"=> new TableIdentifier("Producto","Producto")),
+                                    "p.idProducto = s.idProducto",
+                                    array("nombreProducto"=> new Expression("p.codigo + ' - ' + p.nombre")));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        $resultsSet->initialize($results)->current();
+       // return   $resultsSet;
+        if($resultsSet)
         {
-            $this->LlenarEntidad($result);
+            $this->LlenarEntidad($resultsSet[0]);
             return true;
         }
         return false;
+        //$result=$this->select(array('idPromocion'=>$idPromocion))->current();
+        
     }
     
     public function consultarPromocionPorIdSaldoInventario($idSaldoInventario)
@@ -122,11 +140,19 @@ class Promocion extends AbstractTableGateway
         }
         return false;
     }
-    
+    public function consultaAvanzadaPromocion($idSaldoInventario,$estado)
+    {
+        $idSaldoInventario = $idSaldoInventario > 0? $idSaldoInventario:null;
+        $estado = $estado > 0? $estado:null;
+        $stored = new StoredProcedure($this->adapter);
+        return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaPromocion ?,?",array($idSaldoInventario,$estado));
+    }
     private function LlenarEntidad($result)
     {
         $this->idPromocion=$result['idPromocion'];
         $this->idSaldoInventario=$result['idSaldoInventario'];
+        $this->idProducto = $result['idProducto'];
+        $this->nombreProducto=$result['nombreProducto'];
         $this->valorAnterior=$result['valorAnterior'];
         $this->valorPromocion=$result['valorPromocion'];
         $this->fechaDesde=$result['fechaDesde'];

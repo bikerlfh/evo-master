@@ -26,7 +26,7 @@ class PromocionController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idPromocion',null);
         
         $this->Promocion = new Promocion($this->dbAdapter);
         $this->form = new FormPromocion($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -59,13 +59,20 @@ class PromocionController extends AbstractActionController
         // si existe el parametro $id  se consulta la promocion y se carga el formulario.
         else if(isset($id))
         {
-            $this->Promocion->consultarPromocionPorIdPromocion($this->params()->fromQuery('id'));
+            $this->Promocion->consultarPromocionPorIdPromocion($id);
             $this->form->get("idPromocion")->setValue($this->Promocion->getIdPromocion());
             $this->form->get("idSaldoInventario")->setValue($this->Promocion->getIdSaldoInventario());
             $this->form->get("valorAnterior")->setValue($this->Promocion->getValorAnterior());
-            $this->form->get("valorPromocion")->setValue($this->Promocion->getValorPromocion());
-            $this->form->get("fechaDesde")->setValue($this->Promocion->getFechaDesde());
-            $this->form->get("fechaHasta")->setValue($this->Promocion->getFechaHasta());
+                $this->form->get("valorPromocion")->setValue($this->Promocion->getValorPromocion());
+            
+            $fechaDesde = new \DateTime($this->Promocion->getFechaDesde());
+            $fechaDesde =$fechaDesde->format('Y-m-d');
+            
+            $fechaHasta = new \DateTime($this->Promocion->getFechaHasta());
+            $fechaHasta =$fechaHasta->format('Y-m-d');
+            
+            $this->form->get("fechaDesde")->setValue($fechaDesde);
+            $this->form->get("fechaHasta")->setValue($fechaHasta);
             $this->form->get("estado")->setValue($this->Promocion->getEstado());
             $this->configurarBotonesFormulario(true);
         }
@@ -77,18 +84,26 @@ class PromocionController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Promocion = new Promocion($this->dbAdapter);
+        $this->form = new FormPromocion($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+         //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
+        $origen = $this->params()->fromQuery('origen',null);
         
-         //****Campos modal *****//
-        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
-        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
-        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
-        
+        $registros = array();
+        if(count($this->request->getPost())>0)
+        {
+            $datos = $this->request->getPost();
+            $this->form->get("idSaldoInventario")->setValue($datos['idSaldoInventario']);
+            $this->form->get("nombreProducto")->setValue($datos['nombreProducto']);
+            $this->form->get("estado")->setValue($datos['estado']);
+            $registros = $this->Promocion->consultaAvanzadaPromocion($datos['idSaldoInventario'],$datos['estado']);
+        }
         
         // consultamos todas las promocions y los devolvemos a la vista    
-        $view = new ViewModel(array('botonClose'=> $botonClose,
-                                    'contenedorDialog'=> $contenedorDialog,
-                                    'modal'=> $modal,
-                                    'registros'=>$this->Promocion->consultarTodoPromocion()));
+        $view = new ViewModel(array('form'=>$this->form,
+                                    'Uri'=>$Uri,
+                                    'origen'=>$origen,
+                                    'registros'=>$registros));
         $view->setTerminal(true);
         return $view;
     }

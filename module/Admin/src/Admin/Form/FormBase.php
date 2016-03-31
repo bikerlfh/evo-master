@@ -202,6 +202,21 @@ class FormBase extends Form
                 )
         ));
         
+        $this->add(array(
+                'name'=>'btnBuscarSaldoInventario2',			
+                'attributes'=>array(
+                        'id'=>'btnBuscarSaldoInventario2',
+                        'type'=>'button',
+                        'value'=>'Buscar',
+                        'title'=>'Buscar',
+                        'data-target'=>"#textModal2",
+                        'data-toggle'=>"modal",
+                        'onClick'=>"usar_ajax('".$this->basePath."/admin/saldoinventario/buscar','#modal-dialog-display2','')",
+                        'style'=>'margin:2px',
+                        'class'=>$this->cssClass['btnBuscar']
+                )
+        ));
+        
         /*************** btn Buscar Municipio********************************/
         $this->add(array(
                 'name'=>'btnGuardar',			
