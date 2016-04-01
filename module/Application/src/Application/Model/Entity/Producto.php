@@ -147,6 +147,23 @@ class Producto extends AbstractTableGateway
         $resultsSet = new ResultSet();
         return $resultsSet->initialize($results)->toArray();
     }
+    public function consultarProductoPorIdProductoSimple($idProducto)
+    {
+        $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                        from(array('p'=> $this->table))->
+                        join(array("m"=> new TableIdentifier("Marca","Producto")),
+                                    "m.idMarca = p.idMarca",
+                                    array("descripcionMarca"=>"descripcion"))->
+                        join(array("c"=> new TableIdentifier("Categoria","Producto")),
+                                    "c.idCategoria = p.idCategoria",
+                                    array("descripcionCategoria"=> "descripcion"))->
+                        where(array('p.idProducto' => $idProducto));
+        
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->current();
+    }
     public function consultarProductoPorIdProducto($idProducto)
     {
         $result=$this->select(array('idproducto'=>$idProducto))->current();

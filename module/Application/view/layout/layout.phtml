@@ -40,7 +40,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                 ->prependFile('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
         ?>
         <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
-        <script>window.jQuery || document.write('<script src="<?php echo $this->basePath()?>/js/jquery-1.11.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="<?php echo $this->basePath()?>/js/jquery-2.22.2.min.js"><\/script>')</script>
 
 		<!--[if lt IE 9]>
 			<script src="js/html5shiv.js"></script>
@@ -50,6 +50,8 @@ if (defined('RUNNING_FROM_ROOT')) {
 		<style id="custom-style">
 		
 		</style>
+        <!-- END -->
+    
     </head>
     <body>
     <div id="wrapper">
@@ -415,8 +417,7 @@ if (defined('RUNNING_FROM_ROOT')) {
             
         </footer><!-- End #footer -->
     </div><!-- End #wrapper -->
-        <a href="#" id="scroll-top" title="Scroll to Top"><i class="fa fa-angle-up"></i></a><!-- End #scroll-top -->
-    <!-- END -->
+    
     <?php
     echo $this->headScript()
                 ->appendFile($this->basePath().'/js/bootstrap.min.js')
@@ -428,8 +429,17 @@ if (defined('RUNNING_FROM_ROOT')) {
                 ->appendFile($this->basePath().'/js/twitter/jquery.tweet.min.js')
                 ->appendFile($this->basePath().'/js/jquery.flexslider-min.js')
                 ->appendFile($this->basePath().'/js/owl.carousel.min.js')
+                ->appendFile($this->basePath().'/js/jflickrfeed.min.js')
+                ->appendFile($this->basePath().'/js/jquery.prettyPhoto.js')
+                ->appendFile($this->basePath().'/js/jquery.fitvids.js')
+                ->appendFile($this->basePath().'/js/colpick.js')
+                ->appendFile($this->basePath().'/js/modernizr.custom.js') 
+                ->appendFile($this->basePath().'/js/jquery.elastislide.js')
+                ->appendFile($this->basePath().'/js/jquery.elevateZoom.min.js')
                 ->appendFile($this->basePath().'/js/main.js')
+            
             ;
     
     ?>
+    
 </html>
