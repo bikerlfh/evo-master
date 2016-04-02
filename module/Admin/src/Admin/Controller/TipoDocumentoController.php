@@ -24,7 +24,7 @@ class TipoDocumentoController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idTipoDocumento',null);
         
         $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
         $this->form = new FormTipoDocumento($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -47,18 +47,39 @@ class TipoDocumentoController extends AbstractActionController
                 if($this->TipoDocumento->guardarTipoDocumento($datos['codigo'],$datos['descripcion']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->TipoDocumento->consultarTodoTipoDocumento()));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la viapago y se carga el formulario.
         else if(isset($id))
         {
-            $this->TipoDocumento->consultarTipodocumentoPoridTipoDocumento($this->params()->fromQuery('id'));
+            $this->TipoDocumento->consultarTipodocumentoPoridTipoDocumento($this->params()->fromQuery('idTipoDocumento'));
             $this->form->get("idTipoDocumento")->setValue($this->TipoDocumento->getIdTipoDocumento());
             $this->form->get("codigo")->setValue($this->TipoDocumento->getCodigo());
             $this->form->get("descripcion")->setValue($this->TipoDocumento->getDescripcion());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->TipoDocumento->consultarTodoTipoDocumento()));
+        return new ViewModel(array('form'=>$this->form));
+    }
+    
+     public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->TipoDocumento = new TipoDocumento($this->dbAdapter);
+        
+       // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
+        //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
+        
+        // consultamos todos los municipio y los devolvemos a la vista    
+        $view = new ViewModel(array('Uri'=> $Uri,
+                                    'origen'=> $origen,
+                                    'registros'=>$this->TipoDocumento->consultarTodoTipoDocumento()));
+        $view->setTerminal(true);
+        return $view;
     }
     
     public function eliminarAction()

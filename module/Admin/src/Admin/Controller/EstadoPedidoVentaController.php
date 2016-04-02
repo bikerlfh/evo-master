@@ -24,7 +24,7 @@ class EstadoPedidoVentaController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idEstadoPedidoVenta',null);
         
         $this->EstadoPedidoVenta = new EstadoPedidoVenta($this->dbAdapter);
         $this->form = new FormEstadoPedidoVenta($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -47,18 +47,39 @@ class EstadoPedidoVentaController extends AbstractActionController
                 if($this->EstadoPedidoVenta->guardarEstadoPedidoVenta($datos['codigo'],$datos['descripcion']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->EstadoPedidoVenta->consultarTodoEstadoPedidoVenta()));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta el estado pedido y se carga el formulario.
         else if(isset($id))
         {
-            $this->EstadoPedidoVenta->consultarEstadoPedidoVentaPorIdEstadoPedidoVenta($this->params()->fromQuery('id'));
+            $this->EstadoPedidoVenta->consultarEstadoPedidoVentaPorIdEstadoPedidoVenta($this->params()->fromQuery('idEstadoPedidoVenta'));
             $this->form->get("idEstadoPedidoVenta")->setValue($this->EstadoPedidoVenta->getIdEstadoPedidoVenta());
             $this->form->get("codigo")->setValue($this->EstadoPedidoVenta->getCodigo());
             $this->form->get("descripcion")->setValue($this->EstadoPedidoVenta->getDescripcion());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->EstadoPedidoVenta->consultarTodoEstadoPedidoVenta()));
+        return new ViewModel(array('form'=>$this->form));
+    }
+    
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->EstadoPedidoVenta = new EstadoPedidoVenta($this->dbAdapter);
+        
+       // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
+        //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
+        
+        // consultamos todos los municipio y los devolvemos a la vista    
+        $view = new ViewModel(array('Uri'=> $Uri,
+                                    'origen'=> $origen,
+                                    'registros'=>$this->EstadoPedidoVenta->consultarTodoEstadoPedidoVenta()));
+        $view->setTerminal(true);
+        return $view;
     }
     
     public function eliminarAction()

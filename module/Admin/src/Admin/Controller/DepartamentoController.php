@@ -24,7 +24,7 @@ class DepartamentoController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idDepartamento',null);
         
         $this->Departamento = new Departamento($this->dbAdapter);
         $this->form = new FormDepartamento($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -47,19 +47,40 @@ class DepartamentoController extends AbstractActionController
                 if($this->Departamento->guardarDepartamento($datos['idPais'],$datos['codigo'],$datos['descripcion']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Departamento->consultarTodoDepartamento()));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la categoria y se carga el formulario.
         else if(isset($id))
         {
-            $this->Departamento->consultarDepartamentoPorIdDepartamento($this->params()->fromQuery('id'));
+            $this->Departamento->consultarDepartamentoPorIdDepartamento($this->params()->fromQuery('idDepartamento'));
             $this->form->get("idDepartamento")->setValue($this->Departamento->getIdDepartamento());
             $this->form->get("idPais")->setValue($this->Departamento->getidPais());
             $this->form->get("codigo")->setValue($this->Departamento->getCodigo());
             $this->form->get("descripcion")->setValue($this->Departamento->getDescripcion());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->Departamento->consultarTodoDepartamento()));
+        return new ViewModel(array('form'=>$this->form));
+    }
+    
+     public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Departamento = new Departamento($this->dbAdapter);
+        
+       // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
+        //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
+        
+        // consultamos todos los municipio y los devolvemos a la vista    
+        $view = new ViewModel(array('Uri'=> $Uri,
+                                    'origen'=> $origen,
+                                    'registros'=>$this->Departamento->consultarTodoDepartamento()));
+        $view->setTerminal(true);
+        return $view;
     }
     
     public function eliminarAction()
