@@ -1,7 +1,6 @@
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#dtbuscarProveedorOficina').DataTable();   
-        LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
+    $(document).ready(function () {
+        $('#dtbuscarProveedorOficina').DataTable();
     });
 </script>
 <div class="row">
@@ -11,7 +10,7 @@
                 <div class="box box-bordered">
                     <div class="box-head">
                         <header><h4 class="text-light"><strong>Proveedor Oficinas</strong> <small>Todas</small></h4></header>
-                        <a class="btn btn-equal btn-sm btn-close" id="btnClosePop" style="float: right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
+                        <a class="btn btn-equal btn-sm btn-close" id="btnCloseBusquedaProveedorOficina" style="float: right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
                     </div>
                     <div class="box"> 
                         <div class="box-body table-responsive">
@@ -28,22 +27,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <?php 
+                                        <?php
                                         foreach ($this->registros as $obj) {
+
+                                            $onClick = "$('#idProveedorOficina').val(" . $obj['idProveedorOficina'] . ");$('#btnCloseBusquedaProveedorOficina').click();";
+
+                                            if ($this->origen != null) {
+                                                $onClick = "$(location).attr('href','" . $this->BasePath() . "/admin/" . $this->origen . "?idProveedorOficina=" . $obj['idProveedorOficina'] . "');";
+                                            }
+
                                             echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idProveedorOficina').val(".$obj['idProveedorOficina'].");$('#". $this->botonClose ."').click();\">
-                                                    <td>".$obj['descripcionTercero']."</td>
-                                                    <td>".$obj['descripcionMunicipio']."</td>
-                                                    <td>".$obj['webSite']."</td>
-                                                    <td>".$obj['email']."</td>
-                                                    <td>".$obj['direccion']."</td>
-                                                    <td>".$obj['telefono']."</td>
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"". $onClick ."\">
+                                                    <td>" . $obj['descripcionTercero'] . "</td>
+                                                    <td>" . $obj['descripcionMunicipio'] . "</td>
+                                                    <td>" . $obj['webSite'] . "</td>
+                                                    <td>" . $obj['email'] . "</td>
+                                                    <td>" . $obj['direccion'] . "</td>
+                                                    <td>" . $obj['telefono'] . "</td>
                                                 </tr>";
                                         }
                                         ?>
                                     </tbody>
                                 </table>
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,4 +57,3 @@
         </div>
     </div>
 </div>
- 

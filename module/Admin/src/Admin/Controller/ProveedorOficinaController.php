@@ -27,7 +27,7 @@ class ProveedorOficinaController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idProveedorOficina',null);
         
         $this->ProveedorOficina = new ProveedorOficina($this->dbAdapter);
         $this->form = new FormProveedorOficina($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -57,12 +57,12 @@ class ProveedorOficinaController extends AbstractActionController
                 if($this->ProveedorOficina->guardarProveedorOficina($datos['idProveedor'],$datos['idMunicipio'],$datos['email'],$datos['webSite'],$datos['direccion'],$datos['telefono']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->ProveedorOficina->consultarTodoProveedorOficina()));
+                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la proveedoroficina y se carga el formulario.
         else if(isset($id))
         {
-            $this->ProveedorOficina->consultarProveedorOficinaPorIdProveedorOficina($this->params()->fromQuery('id'));
+            $this->ProveedorOficina->consultarProveedorOficinaPorIdProveedorOficina($this->params()->fromQuery('idProveedorOficina'));
             $this->form->get("idProveedorOficina")->setValue($this->ProveedorOficina->getIdProveedorOficina());
             $this->form->get("idProveedor")->setValue($this->ProveedorOficina->getIdProveedor());
             $this->form->get("idMunicipio")->setValue($this->ProveedorOficina->getIdMunicipio());
@@ -72,7 +72,7 @@ class ProveedorOficinaController extends AbstractActionController
             $this->form->get("telefono")->setValue($this->ProveedorOficina->getTelefono());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->ProveedorOficina->consultarTodoProveedorOficina()));
+        return new ViewModel(array('form'=>$this->form));
     }
     public function buscarAction()
     {
@@ -81,15 +81,16 @@ class ProveedorOficinaController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->ProveedorOficina = new ProveedorOficina($this->dbAdapter);
         
-         //****Campos modal *****//
-        $botonClose = $this->params()->fromQuery('botonClose',null) == null ? 'btnClosePop' :$this->params()->fromQuery('botonClose',null);
-        $contenedorDialog = $this->params()->fromQuery('contenedorDialog',null) == null ? 'modal-dialog-display' :$this->params()->fromQuery('contenedorDialog',null);
-        $modal = $this->params()->fromQuery('modal',null) == null ? 'textModal' :$this->params()->fromQuery('modal',null);
+        /*****************************************************************************/
+        // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
+       //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
         
         // consultamos todos los Proveedores y los devolvemos a la vista    
-        $view = new ViewModel(array('botonClose'=> $botonClose,
-                                    'contenedorDialog'=> $contenedorDialog,
-                                    'modal'=> $modal,
+        $view = new ViewModel(array('Uri'=> $Uri,
+                                    'origen'=>$origen,
                                     'registros'=>$this->ProveedorOficina->consultarTodoProveedorOficina()));
         $view->setTerminal(true);
         return $view;
