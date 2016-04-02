@@ -25,7 +25,7 @@ class UsuarioController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idUsuario',null);
         
         $this->Usuario = new Usuario($this->dbAdapter);
         $this->form = new FormUsuario($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -55,12 +55,12 @@ class UsuarioController extends AbstractActionController
                 if($this->Usuario->guardarUsuario($datos['clave'],$datos['email'],$datos['idDatoBasicoTercero'],$datos['idTipoUsuario']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Usuario->consultarTodoUsuario()));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la categoria y se carga el formulario.
         else if(isset($id))
         {
-            $this->Usuario->consultarUsuarioPorIdUsuario($this->params()->fromQuery('id'));
+            $this->Usuario->consultarUsuarioPorIdUsuario($this->params()->fromQuery('idUsuario'));
             $this->form->get("idUsuario")->setValue($this->Usuario->getIdUsuario());
             $this->form->get("email")->setValue($this->Usuario->getemail());
             $this->form->get("clave")->setAttribute("required", false);
@@ -72,7 +72,29 @@ class UsuarioController extends AbstractActionController
             $this->form->get("idTipoUsuario")->setValue($this->Usuario->getidTipoUsuario());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->Usuario->consultarTodoUsuario()));
+        return new ViewModel(array('form'=>$this->form));
+    }
+    
+    public function buscarAction()
+    {
+        $this->validarSession();
+        // se obtiene el adapter
+        $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Usuario = new Usuario($this->dbAdapter);
+        
+        /*****************************************************************************/
+        // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
+       //**** OJO: la Uri se debe enviar a la busqueda *****//
+        $Uri = $this->getRequest()->getRequestUri();
+        
+        // consultamos todos los Proveedores y los devolvemos a la vista    
+        $view = new ViewModel(array('Uri'=> $Uri,
+                                    'origen'=>$origen,
+                                    'registros'=>$this->Usuario->consultarTodoUsuario()));
+        $view->setTerminal(true);
+        return $view;
     }
     
     public function eliminarAction()
