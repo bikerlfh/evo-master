@@ -25,7 +25,7 @@ class DatoBasicoTerceroController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idDatoBasicoTercero',null);
         
         $this->DatoBasicoTercero = new DatoBasicoTercero($this->dbAdapter);
         $this->form = new FormDatoBasicoTercero($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -48,12 +48,12 @@ class DatoBasicoTerceroController extends AbstractActionController
                 if($this->DatoBasicoTercero->guardarDatoBasicoTercero($datos['idTipoDocumento'],$datos['nit'],$datos['descripcion'],$datos['primerNombre'],$datos['segundoNombre'],$datos['primerApellido'],$datos['segundoApellido'],$datos['direccion'],$datos['telefono']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->DatoBasicoTercero->consultarTodoDatoBasicoTercero()));
+            return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la categoria y se carga el formulario.
         else if(isset($id))
         {
-            $this->DatoBasicoTercero->consultarDatoBasicoTerceroPorIdDatoBasicoTercero($this->params()->fromQuery('id'));
+            $this->DatoBasicoTercero->consultarDatoBasicoTerceroPorIdDatoBasicoTercero($this->params()->fromQuery('idDatoBasicoTercero'));
             $this->form->get("idDatoBasicoTercero")->setValue($this->DatoBasicoTercero->getIdDatoBasicoTercero());
             $this->form->get("idTipoDocumento")->setValue($this->DatoBasicoTercero->getidTipoDocumento());
             $this->form->get("nit")->setValue($this->DatoBasicoTercero->getnit());
@@ -66,7 +66,7 @@ class DatoBasicoTerceroController extends AbstractActionController
             $this->form->get("telefono")->setValue($this->DatoBasicoTercero->gettelefono());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->DatoBasicoTercero->consultarTodoDatoBasicoTercero()));
+        return new ViewModel(array('form'=>$this->form));
     }
     public function buscarAction()
     {
@@ -79,6 +79,9 @@ class DatoBasicoTerceroController extends AbstractActionController
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idDatoBasicoTercero':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreTercero':$this->params()->fromQuery('campoNombre',null);
         
+        // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
         //**** OJO: la Uri se debe enviar a la busqueda *****//
         $Uri = $this->getRequest()->getRequestUri();
         
@@ -93,12 +96,12 @@ class DatoBasicoTerceroController extends AbstractActionController
             
             $registros = $this->DatoBasicoTercero->consultaAvanzadaDatoBasicoTercero($datos['nit'], $datos['descripcion']);
         }
-        
         // consultamos todos los terceros y los devolvemos a la vista    
         $view = new ViewModel(array('form'=> $this->form,
                                     'campoId'=>$campoId, 
                                     'campoNombre'=> $campoNombre,
                                     'Uri'=> $Uri,
+                                    'origen'=> $origen,
                                     'registros'=> $registros));
         $view->setTerminal(true);
         return $view;

@@ -1,7 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#dtbuscarMunicipio').DataTable();
-       LimpiarModal('<?php echo $this->botonClose ?>','<?php echo $this->contenedorDialog ?>','<?php echo $this->modal ?>');
     });
 </script>
 <div class="row">
@@ -11,7 +10,7 @@
                 <div class="box box-bordered">
                     <div class="box-head">
                         <header><h4 class="text-light"><strong>Municipios</strong></h4></header>
-                        <a class="btn btn-equal btn-sm btn-close" id="btnClosePop" style="float: right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
+                        <a class="btn btn-equal btn-sm btn-close" id="btnCloseBusquedaMunicipio" style="float: right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
                     </div>
                     <div class="box"> 
                         <div class="box-body table-responsive">
@@ -27,8 +26,15 @@
                                     <tbody>
                                          <?php 
                                         foreach ($this->registros as $obj) {
+                                            
+                                             $onClick = "$('#idMunicipio').val(" . $obj['idMunicipio'] . ");$('#btnCloseBusquedaMunicipio').click();";
+                                                       
+                                            if ($this->origen != null) {
+                                                $onClick = "$(location).attr('href','" . $this->BasePath() . "/admin/" . $this->origen . "?idMunicipio=" . $obj['idMunicipio'] . "');";
+                                            }
+                                            
                                             echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#idMunicipio').val(".$obj['idMunicipio'].");$('#". $this->botonClose ."').click();\">
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"". $onClick ."\">
                                                     <td>".$obj['codigo']."</td>
                                                     <td>".$obj['descripcion']."</td>
                                                     <td>".$obj['descripcionDepartamento']."</td>

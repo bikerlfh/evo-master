@@ -61,18 +61,25 @@
                         <tbody>
                             <?php
                             foreach ($this->registros as $obj) {
+                                
+                                $onClick = "$('#".$this->campoId."').val(".$obj['idDatoBasicoTercero'].");$('#".$this->campoNombre."').val('".$obj['nit'].' - '.$obj["descripcion"]."');$('#btnCloseBusquedaTercero').click();";
+                                
+                                if($this->origen != null){
+                                    $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idDatoBasicoTercero=".$obj['idDatoBasicoTercero']."');";
+                                }
+                                
                                 echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idDatoBasicoTercero'].");$('#".$this->campoNombre."').val('".$obj['nit'].' - '.$obj["descripcion"]."');$('#btnCloseBusquedaTercero').click();\">
-                                                    <td>" . $obj['descripcionTipoDocumento'] . "</td>
-                                                    <td>" . $obj['nit'] . "</td>
-                                                    <td>" . $obj['descripcion'] . "</td>
-                                                    <!--<td>" . $obj['primerNombre'] . "</td>
-                                                    <td>" . $obj['segundoNombre'] . "</td>
-                                                    <td>" . $obj['primerApellido'] . "</td>
-                                                    <td>" . $obj['segundoApellido'] . "</td>-->
-                                                    <td>" . $obj['direccion'] . "</td>
-                                                    <td>" . $obj['telefono'] . "</td>
-                                                </tr>";
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"". $onClick ."\" >
+                                        <td>" . $obj['descripcionTipoDocumento'] . "</td>
+                                        <td>" . $obj['nit'] . "</td>
+                                        <td>" . $obj['descripcion'] . "</td>
+                                        <!--<td>" . $obj['primerNombre'] . "</td>
+                                        <td>" . $obj['segundoNombre'] . "</td>
+                                        <td>" . $obj['primerApellido'] . "</td>
+                                        <td>" . $obj['segundoApellido'] . "</td>-->
+                                        <td>" . $obj['direccion'] . "</td>
+                                        <td>" . $obj['telefono'] . "</td>
+                                    </tr>";
                             }
                             ?>
                         </tbody>

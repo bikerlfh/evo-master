@@ -28,7 +28,7 @@ class ClienteController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idCliente',null);
         
         $this->Cliente = new Cliente($this->dbAdapter);
         $this->form = new FormCliente($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -57,12 +57,12 @@ class ClienteController extends AbstractActionController
                 if($this->Cliente->guardarCliente($datos['idDatoBasicoTercero'],$datos['idMunicipio'],$datos['email'],$datos['direccion'],$datos['telefono'],$this->user_session->idUsuario))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Cliente->consultarTodoCliente()));
+                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la proveedor y se carga el formulario.
         else if(isset($id))
         {
-            $this->Cliente->consultarClientePorIdCliente($this->params()->fromQuery('id'));
+            $this->Cliente->consultarClientePorIdCliente($this->params()->fromQuery('idCliente'));
             $this->form->get("idCliente")->setValue($this->Cliente->getIdCliente());
             
             //campos Tercero
@@ -77,7 +77,7 @@ class ClienteController extends AbstractActionController
             $this->form->get("direccion")->setValue($this->Cliente->getDireccion());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->Cliente->consultarTodoCliente()));
+        return new ViewModel(array('form'=>$this->form));
     }
     
     public function buscarAction()
@@ -90,6 +90,10 @@ class ClienteController extends AbstractActionController
         /** Campos para saber en donde se deben devolver los valores de la busqueda **/
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idCliente':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreCliente':$this->params()->fromQuery('campoNombre',null);
+        
+        // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
         
         //**** OJO: la Uri se debe enviar a la busqueda *****//
         $Uri = $this->getRequest()->getRequestUri();
@@ -111,6 +115,7 @@ class ClienteController extends AbstractActionController
                                     'campoId'=>$campoId,
                                     'campoNombre'=>$campoNombre,
                                     'Uri'=> $Uri,
+                                    'origen'=>$origen,
                                     'registros'=>$registros ));
         $view->setTerminal(true);
         return $view;

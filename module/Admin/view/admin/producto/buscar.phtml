@@ -73,9 +73,15 @@
                         <tbody>
                              <?php 
                             foreach ($this->registros as $obj) {
+                                
                                 $descripcionProducto = $obj['codigo'] .' - '.$obj['nombre'];
+                                $onClick = "$('#".$this->campoId."').val(".$obj['idProducto'].");$('#".$this->campoNombre."').val('".$descripcionProducto."');$('#btnCloseBusquedaProducto').click();";
+                                
+                                if($this->origen != null){
+                                    $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idProducto=".$obj['idProducto']."');";
+                                }
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProducto'].");$('#".$this->campoNombre."').val('".$descripcionProducto."');$('#btnCloseBusquedaProducto').click();\")\">
+                                    <tr class='gradeX odd' style='cursor:pointer'onClick=\"".$onClick."\">
                                         <td>".$obj['referencia']."</td>
                                         <td>".$obj['codigo']."</td>
                                         <td>".$obj['nombre']."</td>

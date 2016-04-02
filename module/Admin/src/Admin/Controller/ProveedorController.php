@@ -28,7 +28,7 @@ class ProveedorController extends AbstractActionController
         // se obtiene el adapter
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
-        $id=$this->params()->fromQuery('id',null);
+        $id=$this->params()->fromQuery('idProveedor',null);
         
         $this->Proveedor = new Proveedor($this->dbAdapter);
         $this->form = new FormProveedor($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
@@ -57,12 +57,12 @@ class ProveedorController extends AbstractActionController
                 if($this->Proveedor->guardarProveedor($datos['idDatoBasicoTercero'],$datos['email'],$datos['webSite'],$this->user_session->idUsuario))
                     $returnCrud=$this->consultarMessage("okSave");
             }
-                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud,'registros'=>$this->Proveedor->consultarTodoProveedor()));
+                return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
         // si existe el parametro $id  se consulta la proveedor y se carga el formulario.
         else if(isset($id))
         {
-            $this->Proveedor->consultarProveedorPorIdProveedor($this->params()->fromQuery('id'));
+            $this->Proveedor->consultarProveedorPorIdProveedor($this->params()->fromQuery('idProveedor'));
             $this->form->get("idProveedor")->setValue($this->Proveedor->getIdProveedor());
             
             //campos Tercero
@@ -74,7 +74,7 @@ class ProveedorController extends AbstractActionController
             $this->form->get("webSite")->setValue($this->Proveedor->getWebSite());
             $this->configurarBotonesFormulario(true);
         }
-        return new ViewModel(array('form'=>$this->form,'registros'=>$this->Proveedor->consultarTodoProveedor()));
+        return new ViewModel(array('form'=>$this->form));
     }
     
     public function buscarAction()
@@ -88,6 +88,10 @@ class ProveedorController extends AbstractActionController
         $campoId=$this->params()->fromQuery('campoId',null) == null? 'idProveedor':$this->params()->fromQuery('campoId',null);
         $campoNombre=$this->params()->fromQuery('campoNombre',null)== null?'nombreProveedor':$this->params()->fromQuery('campoNombre',null);
         
+        /*****************************************************************************/
+        // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
+        // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
+        $origen = $this->params()->fromQuery('origen', null);
        //**** OJO: la Uri se debe enviar a la busqueda *****//
         $Uri = $this->getRequest()->getRequestUri();
         
@@ -109,6 +113,7 @@ class ProveedorController extends AbstractActionController
                                     'campoId'=>$campoId,
                                     'campoNombre'=>$campoNombre,
                                     'Uri'=> $Uri,
+                                    'origen'=>$origen,
                                     'registros'=>$registros ));
         $view->setTerminal(true);
         return $view;

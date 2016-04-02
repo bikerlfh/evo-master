@@ -53,11 +53,16 @@
                         <tbody>
                              <?php 
                              
-                             
-                             
                             foreach ($this->registros as $obj) {
+                                
+                                $onClick = "$('#".$this->campoId."').val(".$obj['idProveedor'].");$('#".$this->campoNombre."').val('".$obj["descripcionTercero"]."');$('#btnCloseBusquedaProveedor').click();";
+                                
+                                if($this->origen != null){
+                                    $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idProveedor=".$obj['idProveedor']."');";
+                                }
+                                
                                 echo "
-                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"$('#".$this->campoId."').val(".$obj['idProveedor'].");$('#".$this->campoNombre."').val('".$obj["descripcionTercero"]."');$('#btnCloseBusquedaProveedor').click();\">
+                                    <tr class='gradeX odd' style='cursor:pointer' onClick=\"". $onClick ."\">
                                         <td>".$obj['descripcionTercero']."</td>
                                         <td>".$obj['webSite']."</td>
                                         <td>".$obj['email']."</td>
