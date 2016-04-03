@@ -30,7 +30,7 @@ class PromocionController extends AbstractActionController
         
         $this->Promocion = new Promocion($this->dbAdapter);
         $this->form = new FormPromocion($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
-        $this->form ->get('btnBuscarSaldoInventario')->setAttribute('onClick',"usar_ajax('".$this->getRequest()->getBaseUrl()."/admin/saldoinventario/buscar?campoValorVenta=valorAnterior','#modal-dialog-display','')");
+        $this->form ->get('btnBuscarSaldoInventario')->setAttribute('onClick',"showBusquedaOnModal(this,'".$this->getRequest()->getBaseUrl()."/admin/saldoinventario/buscar?campoValorVenta=valorAnterior','')");
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
@@ -61,6 +61,7 @@ class PromocionController extends AbstractActionController
         {
             $this->Promocion->consultarPromocionPorIdPromocion($id);
             $this->form->get("idPromocion")->setValue($this->Promocion->getIdPromocion());
+            $this->form->get("nombreProducto")->setValue($this->Promocion->nombreProducto);
             $this->form->get("idSaldoInventario")->setValue($this->Promocion->getIdSaldoInventario());
             $this->form->get("valorAnterior")->setValue($this->Promocion->getValorAnterior());
                 $this->form->get("valorPromocion")->setValue($this->Promocion->getValorPromocion());
@@ -85,6 +86,7 @@ class PromocionController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Promocion = new Promocion($this->dbAdapter);
         $this->form = new FormPromocion($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
+        //$this->form->get('estado')->setAttributes(array('id'=>'estadoBusqueda','name'=>'estadoBusqueda'));
          //**** OJO: la Uri se debe enviar a la busqueda *****//
         $Uri = $this->getRequest()->getRequestUri();
         $origen = $this->params()->fromQuery('origen',null);
@@ -93,10 +95,12 @@ class PromocionController extends AbstractActionController
         if(count($this->request->getPost())>0)
         {
             $datos = $this->request->getPost();
-            $this->form->get("idSaldoInventario")->setValue($datos['idSaldoInventario']);
+            $this->form->get("idProducto")->setValue($datos['idProducto']);
             $this->form->get("nombreProducto")->setValue($datos['nombreProducto']);
-            $this->form->get("estado")->setValue($datos['estado']);
-            $registros = $this->Promocion->consultaAvanzadaPromocion($datos['idSaldoInventario'],$datos['estado']);
+            $this->form->get("idProveedor")->setValue($datos['idProveedor']);
+            $this->form->get("nombreProveedor")->setValue($datos['nombreProveedor']);
+            //$this->form->get("estado")->setValue($datos['estadoBusqueda']);
+            $registros = $this->Promocion->consultaAvanzadaPromocion($datos['idProducto'],$datos['idProveedor'],null);
         }
         
         // consultamos todas las promocions y los devolvemos a la vista    

@@ -1,3 +1,15 @@
+<?php 
+$form=$this->form;
+$form->prepare();
+$form->setAttributes(array(
+            'action' =>'',
+            'name'=>'formulariobusquedapromociones',
+            'method' => '',
+            'class'=>'form-horizontal',
+            'role'=>'form'
+        ));
+
+?>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -19,22 +31,35 @@
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
                     <?php echo $this->formElement($form->get('nombreProducto')); ?>
-                    <?php echo $this->formElement($form->get('idSaldoInventario')); ?>
+                    <?php echo $this->formElement($form->get('idProducto')); ?>
                 </div>
                 <div class="col-lg-1">
-                    <?php echo $this->formElement($form->get('btnBuscarSaldoInventario2')); ?> 
+                    <?php echo $this->formElement($form->get('btnBuscarProducto')); ?> 
                 </div>
             </div>
-
+            <div class="form-group">
+                <div class="col-lg-1 col-md-2 col-sm-3">
+                    <label for="email1" class="control-label">Proveedor</label>
+                </div>
+                <div class="col-lg-3 col-md-11 col-sm-9">
+                    <?php echo $this->formElement($form->get('nombreProveedor')); ?>
+                    <?php echo $this->formElement($form->get('idProveedor')); ?>
+                </div>
+                <div class="col-lg-1">
+                    <?php echo $this->formElement($form->get('btnBuscarProveedor')); ?> 
+                </div>
+            </div>
+            <!--
             <div class="form-group">
                 <div class="col-lg-1 col-md-2 col-sm-3">
                     <label for="email1" class="control-label">Estado</label>
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
                     <?php echo $this->formElement($form->get('estado')); ?>
+                    <input type='hidden' name='ohlals' values='aa'>
                 </div>
             </div>
-
+            -->
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
                        onclick="usar_ajax('<?php echo $this->Uri ?>', '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>') , 'idProducto=' + $('#idProducto').val() + '&amp;nombreProducto=' + $('#nombreProducto').val() + '&amp;idProveedor=' + $('#idProveedor').val() + '&amp;nombreProveedor=' + $('#nombreProveedor').val());
@@ -53,10 +78,11 @@
                         <thead>
                             <tr role="row">
                                 <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Producto</th>
-                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Anterior</th>
-                                <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Promoción</th>
-                                <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Fecha Desde</th>
-                                <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Fecha Hasta</th>
+                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Proveedor</th>
+                                <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Anterior</th>
+                                <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Promoción</th>
+                                <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Fecha Desde</th>
+                                <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Fecha Hasta</th>
                                 <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Estado</th>
                             </tr>
                         </thead>
@@ -70,7 +96,8 @@
                                 }
                                 echo "
                                     <tr class='gradeX odd' style='cursor:pointer' onClick=\"".$onClick."\">
-                                        <td>".$obj['descripcionProducto']."</td>
+                                        <td>".$obj['nombreProducto']."</td>
+                                        <td>".$obj['nombreProveedor']."</td>
                                         <td>$".number_format($obj['valorAnterior'])."</td>
                                         <td>$".number_format($obj['valorPromocion'])."</td>
                                         <td>".$obj['fechaDesde']."</td>

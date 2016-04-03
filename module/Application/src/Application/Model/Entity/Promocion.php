@@ -122,7 +122,7 @@ class Promocion extends AbstractTableGateway
        // return   $resultsSet;
         if($resultsSet)
         {
-            $this->LlenarEntidad($resultsSet[0]);
+            $this->LlenarEntidad($resultsSet);
             return true;
         }
         return false;
@@ -140,15 +140,17 @@ class Promocion extends AbstractTableGateway
         }
         return false;
     }
-    public function consultaAvanzadaPromocion($idSaldoInventario,$estado)
+    public function consultaAvanzadaPromocion($idProducto,$idProveedor,$estado)
     {
-        $idSaldoInventario = $idSaldoInventario > 0? $idSaldoInventario:null;
+        $idProducto = $idProducto > 0? $idProducto:null;
+        $idProveedor = $idProveedor > 0? $idProveedor:null;
         $estado = $estado > 0? $estado:null;
         $stored = new StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaPromocion ?,?",array($idSaldoInventario,$estado));
+        return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaPromocion ?,?,?",array($idProducto,$idProveedor,$estado));
     }
     private function LlenarEntidad($result)
     {
+        $result = $result->getDataSource()->current();
         $this->idPromocion=$result['idPromocion'];
         $this->idSaldoInventario=$result['idSaldoInventario'];
         $this->idProducto = $result['idProducto'];

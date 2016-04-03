@@ -43,6 +43,20 @@ class FormPromocion extends Form
         ));
         
         $this->add(array(
+            'name' => 'idProducto',                       
+            'attributes' => array(
+                'id'=>'idProducto', 
+                'type' => 'hidden',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'idProveedor',                       
+            'attributes' => array(
+                'id'=>'idProveedor', 
+                'type' => 'hidden',
+            ),
+        ));
+        $this->add(array(
             'name' => 'idSaldoInventario',                       
             'attributes' => array(
                 'id'=>'idSaldoInventario', 
@@ -51,9 +65,19 @@ class FormPromocion extends Form
         ));
         
         $this->add($this->formProducto->get('nombreProducto'));
+        $this->add($this->formBase->get('btnBuscarProducto'));
+        $this->add($this->formBase->get('btnBuscarProveedor'));
         $this->add($this->formBase->get('btnBuscarSaldoInventario'));
-        $this->add($this->formBase->get('btnBuscarSaldoInventario2'));
-        
+        $this->add(array(
+            'name' => 'nombreProveedor',                       
+            'attributes' => array(
+                'id'=>'nombreProveedor', 
+                'type' => 'text',
+                'placeholder'=>'Proveedor',
+                'readonly'=>true,
+                'class' => $this->cssClass['text']
+            ),
+        ));
         $this->add(array(
             'name' => 'valorAnterior',                       
             'attributes' => array(
