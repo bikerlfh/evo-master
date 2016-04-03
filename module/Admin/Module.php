@@ -50,7 +50,7 @@ class Module implements AutoloaderProviderInterface
         $this->bootstrapSession($e);
     }
     
-   public function bootstrapSession($e)
+    public function bootstrapSession($e)
     {
         $session = $e->getApplication()
                      ->getServiceManager()
