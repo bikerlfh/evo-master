@@ -15,10 +15,8 @@ class DatoBasicoTercero extends AbstractTableGateway
     private $idTipoDocumento;
     private $nit;
     private $descripcion;
-    private $primerNombre;
-    private $segundoNombre;
-    private $primerApellido;
-    private $segundoApellido;
+    private $nombre;
+    private $apellido;
     private $direccion;
     private $telefono;
     
@@ -40,29 +38,17 @@ class DatoBasicoTercero extends AbstractTableGateway
     public function setDireccion($direccion){
         $this->direccion=$direccion;
     }
-    public function getSegundoApellido(){
-        return $this->segundoApellido;
+    public function getApellido(){
+        return $this->apellido;
     }
-    public function setSegundoApellido($segundoApellido){
-        $this->segundoApellido=$segundoApellido;
+    public function setApellido($apellido){
+        $this->apellido=$apellido;
     }
-    public function getPrimerApellido(){
-        return $this->primerApellido;
+    public function getNombre(){
+        return $this->nombre;
     }
-    public function setPrimerApellido($primerApellido){
-        $this->primerApellido=$primerApellido;
-    }
-    public function getSegundoNombre(){
-        return $this->segundoNombre;
-    }
-    public function setSegundoNombre($segundoNombre){
-        $this->segundoNombre=$segundoNombre;
-    }
-    public function getPrimerNombre(){
-        return $this->primerNombre;
-    }
-    public function setPrimerNombre($primerNombre){
-        $this->primerNombre=$primerNombre;
+    public function setNombre($nombre){
+        $this->nombre=$nombre;
     }
     public function getDescripcion(){
         return $this->descripcion;
@@ -89,15 +75,13 @@ class DatoBasicoTercero extends AbstractTableGateway
         $this->idDatoBasicoTercero=$idDatoBasicoTercero;
     }
 
-    public function guardarDatobasicotercero($idTipoDocumento,$nit,$descripcion,$primerNombre,$segundoNombre,$primerApellido,$segundoApellido,$direccion,$telefono)
+    public function guardarDatobasicotercero($idTipoDocumento,$nit,$descripcion,$nombre,$apellido,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
                 'direccion'=> $direccion,
-                'segundoApellido'=> $segundoApellido,
-                'primerApellido'=> $primerApellido,
-                'segundoNombre'=> $segundoNombre,
-                'primerNombre'=> $primerNombre,
+                'apellido'=> $apellido,
+                'nombre'=> $nombre,
                 'descripcion'=> $descripcion,
                 'nit'=> $nit,
                 'idTipoDocumento'=> $idTipoDocumento
@@ -108,15 +92,13 @@ class DatoBasicoTercero extends AbstractTableGateway
         return false;
     }
 
-    public function modificarDatobasicotercero($idDatoBasicoTercero,$idTipoDocumento,$nit,$descripcion,$primerNombre,$segundoNombre,$primerApellido,$segundoApellido,$direccion,$telefono)
+    public function modificarDatobasicotercero($idDatoBasicoTercero,$idTipoDocumento,$nit,$descripcion,$nombre,$apellido,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
                 'direccion'=> $direccion,
-                'segundoApellido'=> $segundoApellido,
-                'primerApellido'=> $primerApellido,
-                'segundoNombre'=> $segundoNombre,
-                'primerNombre'=> $primerNombre,
+                'apellido'=> $apellido,
+                'nombre'=> $nombre,
                 'descripcion'=> $descripcion,
                 'nit'=> $nit,
                 'idTipoDocumento'=> $idTipoDocumento
@@ -190,10 +172,8 @@ class DatoBasicoTercero extends AbstractTableGateway
     {
         $this->telefono=$result['telefono'];
         $this->direccion=$result['direccion'];
-        $this->segundoApellido=$result['segundoApellido'];
-        $this->primerApellido=$result['primerApellido'];
-        $this->segundoNombre=$result['segundoNombre'];
-        $this->primerNombre=$result['primerNombre'];
+        $this->apellido=$result['apellido'];
+        $this->nombre=$result['nombre'];
         $this->descripcion=$result['descripcion'];
         $this->nit=$result['nit'];
         $this->idTipoDocumento=$result['idTipoDocumento'];

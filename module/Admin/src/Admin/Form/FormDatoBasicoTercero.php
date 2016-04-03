@@ -84,44 +84,22 @@ class FormDatoBasicoTercero extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'primerNombre',                       
+            'name' => 'nombre',                       
             'attributes' => array(
-                'id'=>'primerNombre', 
+                'id'=>'nombre', 
                 'type' => 'text',
-                'placeholder'=>'Primer Nombre',
+                'placeholder'=>'Nombre',
                 'required'=>'required',
                 'maxlength'=>'30',
                 'class' => $this->cssClass['text']
             ),
         ));
         $this->add(array(
-            'name' => 'segundoNombre',                       
+            'name' => 'apellido',                       
             'attributes' => array(
-                'id'=>'segundoNombre', 
+                'id'=>'apellido', 
                 'type' => 'text',
-                'placeholder'=>'Segundo Nombre',
-                'required'=>'required',
-                'maxlength'=>'30',
-                'class' => $this->cssClass['text']
-            ),
-        ));
-        $this->add(array(
-            'name' => 'primerApellido',                       
-            'attributes' => array(
-                'id'=>'primerApellido', 
-                'type' => 'text',
-                'placeholder'=>'Primer Apellido',
-                'required'=>'required',
-                'maxlength'=>'30',
-                'class' => $this->cssClass['text']
-            ),
-        ));
-        $this->add(array(
-            'name' => 'segundoApellido',                       
-            'attributes' => array(
-                'id'=>'segundoApellido', 
-                'type' => 'text',
-                'placeholder'=>'Segundo Apellido',
+                'placeholder'=>'Apellido',
                 'required'=>'required',
                 'maxlength'=>'30',
                 'class' => $this->cssClass['text']

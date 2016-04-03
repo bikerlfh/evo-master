@@ -38,14 +38,14 @@ class DatoBasicoTerceroController extends AbstractActionController
             if ($datos["idDatoBasicoTercero"] != null) 
             {
                 $returnCrud=$this->consultarMessage("errorUpdate");
-                if($this->DatoBasicoTercero->modificarDatoBasicoTercero($datos['idDatoBasicoTercero'],$datos['idTipoDocumento'],$datos['nit'],$datos['descripcion'],$datos['primerNombre'],$datos['segundoNombre'],$datos['primerApellido'],$datos['segundoApellido'],$datos['direccion'],$datos['telefono']))
+                if($this->DatoBasicoTercero->modificarDatoBasicoTercero($datos['idDatoBasicoTercero'],$datos['idTipoDocumento'],$datos['nit'],$datos['descripcion'],$datos['nombre'],$datos['apellido'],$datos['direccion'],$datos['telefono']))
                     $returnCrud=$this->consultarMessage("okUpdate");
             }
             else
             {
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva categoria
-                if($this->DatoBasicoTercero->guardarDatoBasicoTercero($datos['idTipoDocumento'],$datos['nit'],$datos['descripcion'],$datos['primerNombre'],$datos['segundoNombre'],$datos['primerApellido'],$datos['segundoApellido'],$datos['direccion'],$datos['telefono']))
+                if($this->DatoBasicoTercero->guardarDatoBasicoTercero($datos['idTipoDocumento'],$datos['nit'],$datos['descripcion'],$datos['nombre'],$datos['apellido'],$datos['direccion'],$datos['telefono']))
                     $returnCrud=$this->consultarMessage("okSave");
             }
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
@@ -55,15 +55,13 @@ class DatoBasicoTerceroController extends AbstractActionController
         {
             $this->DatoBasicoTercero->consultarDatoBasicoTerceroPorIdDatoBasicoTercero($this->params()->fromQuery('idDatoBasicoTercero'));
             $this->form->get("idDatoBasicoTercero")->setValue($this->DatoBasicoTercero->getIdDatoBasicoTercero());
-            $this->form->get("idTipoDocumento")->setValue($this->DatoBasicoTercero->getidTipoDocumento());
-            $this->form->get("nit")->setValue($this->DatoBasicoTercero->getnit());
-            $this->form->get("descripcion")->setValue($this->DatoBasicoTercero->getdescripcion());
-            $this->form->get("primerNombre")->setValue($this->DatoBasicoTercero->getprimerNombre());
-            $this->form->get("segundoNombre")->setValue($this->DatoBasicoTercero->getsegundoNombre());
-            $this->form->get("primerApellido")->setValue($this->DatoBasicoTercero->getprimerApellido());
-            $this->form->get("segundoApellido")->setValue($this->DatoBasicoTercero->getsegundoApellido());
-            $this->form->get("direccion")->setValue($this->DatoBasicoTercero->getdireccion());
-            $this->form->get("telefono")->setValue($this->DatoBasicoTercero->gettelefono());
+            $this->form->get("idTipoDocumento")->setValue($this->DatoBasicoTercero->getIdTipoDocumento());
+            $this->form->get("nit")->setValue($this->DatoBasicoTercero->getNit());
+            $this->form->get("descripcion")->setValue($this->DatoBasicoTercero->getDescripcion());
+            $this->form->get("nombre")->setValue($this->DatoBasicoTercero->getNombre());
+            $this->form->get("apellido")->setValue($this->DatoBasicoTercero->getApellido());
+            $this->form->get("direccion")->setValue($this->DatoBasicoTercero->getDireccion());
+            $this->form->get("telefono")->setValue($this->DatoBasicoTercero->getTelefono());
             $this->configurarBotonesFormulario(true);
         }
         return new ViewModel(array('form'=>$this->form));
