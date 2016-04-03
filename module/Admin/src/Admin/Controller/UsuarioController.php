@@ -15,7 +15,7 @@ class UsuarioController extends AbstractActionController
     
     private $user_session;
     public function __construct() {
-        $this->user_session = new Container();
+        $this->user_session = new Container('user');
     }
     public function indexAction()
     {
@@ -135,10 +135,17 @@ class UsuarioController extends AbstractActionController
     
     private function validarSession()
     {
-        //<== Si no existe la session se redirge al login ==>
-        if (!isset($_SESSION['user'])) {
-            return $this->redirect()->toUrl(str_replace("/public","", $this->getRequest()->getBaseUrl()).'/admin/login');
+        $dif = date("H:i:s", strtotime("00:00:00") + strtotime(date('H:i:s')) - strtotime($this->user_session->timeLastActivity) );
+        $dif = explode(':',$dif)[0]*3600+explode(':',$dif)[1]*60+explode(':',$dif)[2];
+        // Si el no existe la variable de sesión o  tiempo de inactividad sobrepasa al parametrizado  se cierra la sesión
+        if (!$this->user_session->offsetExists('idUsuario') || 
+            $dif > $this->user_session->getManager()->getConfig()->getRememberMeSeconds()) 
+        {
+            $manager = $this->user_session->getManager();
+            $manager->getStorage()->clear(); //delete all session values unless it is immutable
+            unset($_SESSION['user']);
+            return $this->redirect()->toRoute("login_admin");
         }
-        $this->user_session = $_SESSION['user'];
+        $this->user_session->timeLastActivity = date('H:i:s');
     }
 }
