@@ -149,7 +149,13 @@ if (defined('RUNNING_FROM_ROOT')) {
                                 <i class="fa fa-building-o fa-fw"></i><span class="title">Compras</span> <span class="expand-sign">+</span>
                             </a>
                             <ul>
-                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/estadopedido">Estado Pedido</a></li>
+                                <li>
+                                    <a href="javascript:void(0);"> <span class="expand-sign">+</span>Parámetros</a>
+                                    <ul style="display: none;">
+                                        <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/estadopedido">Estado Pedido</a></li>
+                                        <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/viapago">Vía Pago</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidocompra/solicitud">Solicitud Pedido</a></li>
                                 <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidocompra/autorizar">Autorización Pedido</a></li>
                             </ul>
@@ -160,7 +166,12 @@ if (defined('RUNNING_FROM_ROOT')) {
                                 <i class="fa fa-building-o fa-fw"></i><span class="title">Ventas</span> <span class="expand-sign">+</span>
                             </a>
                             <ul>
-                                <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/estadopedidoventa">Estado Pedido Venta</a></li>
+                                <li>
+                                    <a href="javascript:void(0);"> <span class="expand-sign">+</span>Parámetros</a>
+                                    <ul style="display: none;">
+                                        <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/estadopedidoventa">Estado Pedido Venta</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidoventa/solicitud">Solicitud Pedido</a></li>
                                 <li><a href="<?php echo str_replace("/public", "", $this->basePath()) ?>/admin/pedidoventa/autorizar">Autorización Pedido</a></li>
                             </ul>
