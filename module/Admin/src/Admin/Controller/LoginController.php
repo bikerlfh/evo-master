@@ -50,6 +50,8 @@ class LoginController extends AbstractActionController
         $user_session->idUsuario=$this->Usuario->getIdUsuario();
         $user_session->username =  $this->Usuario->DatoBasicoTercero->getDescripcion();
         $user_session->tipousuario = $this->Usuario->TipoUsuario->getDescripcion(); 
+        $user_session->timeStartSession = date('H:i:s');
+        $user_session->timeLastActivity = date('H:i:s');
         /*
         $this->ValoresSesion = ValoresSesion::obtenerInstancia();
         $this->ValoresSesion->idUsuarioSesion =$user_session->idUsuario;

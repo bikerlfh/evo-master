@@ -55,4 +55,19 @@ return array(
         'okAutorizacion'=> array('title'=>'Operación Exitosa','message'=>'Se ha autorizado el pedido con Exito','function'=>'showMessageSuccess'),
         'errorAutorizacion'=>array('title'=>'Operación sin resultado','message'=>'No se logro autorizar el pedido','function'=>'showMessageError'),
     ),
-    );
+    
+    'session' => array(
+        'config' => array(
+            'class' => 'Zend\Session\Config\SessionConfig',
+            'options' => array(
+                'remember_me_seconds' => 3600,
+                'name' => 'evo-master',
+            ),
+        ),
+        'storage' => 'Zend\Session\Storage\SessionArrayStorage',
+        'validators' => array(
+            'Zend\Session\Validator\RemoteAddr',
+            'Zend\Session\Validator\HttpUserAgent',
+        ),
+    ),
+);

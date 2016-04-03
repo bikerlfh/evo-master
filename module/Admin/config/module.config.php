@@ -65,6 +65,16 @@ return array(
                     ),
                 ),
             ),
+            'login_admin' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/admin/login',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Admin\Controller',
+                        'controller'    => 'Login',
+                        'action'        => 'index',
+                    ),
+                )),
             /*
             'buscarPedidoCompra' => array(
                 'type' => 'segment',
