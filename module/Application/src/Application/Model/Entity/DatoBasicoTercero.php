@@ -75,7 +75,7 @@ class DatoBasicoTercero extends AbstractTableGateway
         $this->idDatoBasicoTercero=$idDatoBasicoTercero;
     }
 
-    public function guardarDatobasicotercero($idTipoDocumento,$nit,$descripcion,$nombre,$apellido,$direccion,$telefono)
+    public function guardarDatoBasicoTercero($idTipoDocumento,$nit,$descripcion,$nombre,$apellido,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
@@ -87,12 +87,14 @@ class DatoBasicoTercero extends AbstractTableGateway
                 'idTipoDocumento'=> $idTipoDocumento
         );
         $result=$this->insert($datos);
-        if($result>0)
+        if($result>0){
+            $this->idDatoBasicoTercero = $this->getLastInsertValue();
             return true;
+        }
         return false;
     }
 
-    public function modificarDatobasicotercero($idDatoBasicoTercero,$idTipoDocumento,$nit,$descripcion,$nombre,$apellido,$direccion,$telefono)
+    public function modificarDatoBasicoTercero($idDatoBasicoTercero,$idTipoDocumento,$nit,$descripcion,$nombre,$apellido,$direccion,$telefono)
     {
         $datos=array(
                 'telefono'=> $telefono,
@@ -139,7 +141,7 @@ class DatoBasicoTercero extends AbstractTableGateway
         }
         return false;
     }
-    public function consultarDatoBasicoTerceroPornit($nit)
+    public function consultarDatoBasicoTerceroPorNit($nit)
     {
         $result=$this->select(array('nit'=>$nit))->current();
         if($result)

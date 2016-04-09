@@ -6,6 +6,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\TableIdentifier;
 use Zend\Db\Sql\Expression;
+use Application\Model\Clases;
 
 
 class Usuario extends AbstractTableGateway
@@ -92,7 +93,12 @@ class Usuario extends AbstractTableGateway
             return true;
         return false;
     }
-
+    public function guardarUsuarioCliente($idTipoDocumento,$nit,$nombre,$apellido,$direccion,$telefono,$idMunicipio,$email,$clave)
+    {                
+        $stored = new Clases\StoredProcedure($this->adapter);
+        $result = $stored->execProcedureReturnDatos("Seguridad.RegistrarCliente ?,?,?,?,?,?,?,?,?",array($idTipoDocumento,$nit,$nombre,$apellido,$direccion,$telefono,$idMunicipio,$email,$clave))->current();
+        return $result['result'];
+    }
     public function consultarTodoUsuario()
     {
          $sql = new Sql($this->adapter);        
@@ -110,9 +116,19 @@ class Usuario extends AbstractTableGateway
         return $resultsSet->initialize($results)->toArray();   
     }
     
-    public function consultarUsuarioPoridUsuario($idUsuario)
+    public function consultarUsuarioPorIdUsuario($idUsuario)
     {
         $result=$this->select(array('idusuario'=>$idUsuario))->current();
+        if($result)
+        {
+            $this->LlenarEntidad($result);
+            return true;
+        }
+        return false;
+    }
+    public function consultarUsuarioPorEmail($emial)
+    {
+        $result=$this->select(array('email'=>$email))->current();
         if($result)
         {
             $this->LlenarEntidad($result);

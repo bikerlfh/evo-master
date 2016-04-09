@@ -24,6 +24,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                 ->appendStylesheet($this->basePath() . '/css/font-awesome.min.css')
                 ->appendStylesheet($this->basePath() . '/css/prettyPhoto.css')
                 ->appendStylesheet($this->basePath() . '/css/owl.carousel.css')
+                ->appendStylesheet($this->basePath() . '/css/jquery.selectbox.css')
                 ->appendStylesheet($this->basePath() . '/css/style.css')
                 ->appendStylesheet($this->basePath() . '/css/responsive.css')
                 ->appendStylesheet($this->basePath() . '/admin/assets/css/theme-default/libs/toastr/toastr.css?1401216363')
@@ -100,7 +101,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                            <div class="header-text-container pull-right">
                               <p class="header-text">Welcome to Venedor!</p>
                               <?php 
-                                    if (isset($_SESSION['user'])) {
+                                    if (isset($_SESSION['user']['username'])) {
                                         echo "<p class='header-link'    >".$_SESSION['user']['username']."</p>";
                                     }
                                     else
@@ -471,6 +472,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                 ->appendFile($this->basePath().'/js/jquery.elastislide.js')
                 ->appendFile($this->basePath().'/js/jquery.elevateZoom.min.js')
                 ->appendFile($this->basePath().'/js/main.js')
+                ->appendFile($this->basePath().'/js/jquery.selectbox.min.js') 
+                ->appendFile($this->basePath().'/admin/assets/js/libs/toastr/toastr.min.js') 
+                ->appendFile($this->basePath().'/js/customScript.js') 
             
             ;
     

@@ -1,0 +1,167 @@
+<?php
+$form = $this->form;
+$form->prepare();
+//<====Si se envía un mensaje este se muestra=====> 
+if ($this->msg != null) {
+    echo "<script type='text/javascript'>$(document).ready(function(){" . $this->msg . "});</script>";
+}
+if ($this->msgError != null)
+{
+    echo "<script type='text/javascript'>$(document).ready(function(){ showMessageWarning('Upps.','".$this->msgError."'); });</script>";
+}
+?>
+
+<script type="text/javascript">
+    $(function () {
+        $("#idDepartamento").selectbox();
+        $("#idMunicipio").selectbox();
+        
+        $("#idTipoDocumento").selectbox();
+        $("#idPais").selectbox({
+            onChange: function (val, inst) {
+                $.ajax({
+			type: "GET",
+			data: {idPais: val},
+			url: "<?php echo $this->basePath()?>/application/index/generar-select-departamento",
+			success: function (data) {
+                            $("#divDepartamento").html(data);
+                            $("#idDepartamento").selectbox({
+                                onChange: function (val, inst) {
+                                    $.ajax({
+                                            type: "GET",
+                                            data: {idDepartamento: val},
+                                            url: "<?php echo $this->basePath()?>/application/index/generar-select-municipio",
+                                            success: function (data) {
+                                                $("#divMunicipio").html(data);
+                                                $("#idMunicipio").selectbox();
+                                            }
+                                    });
+                                }
+                            });
+			}
+		});
+            },
+            effect: "slide"
+        });
+    });
+    
+</script>
+<div class="row">
+   <div class="col-md-12">
+      <header class="content-title">
+         <h1 class="title">Register Account</h1>
+         <p class="title-desc">If you already have an account, please login at <a href="#">login page</a>.</p>
+      </header>
+      <div class="xs-margin"></div>
+      <!-- space -->
+       <?php echo $this->form()->openTag($form); ?>
+         <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+               <fieldset>
+                  <h2 class="sub-title">YOUR PERSONAL DETAILS</h2>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">First Name&#42;</span></span>
+                     <?php echo $this->formInput($form->get('nombre')); ?>
+                  </div>
+                  <!-- End .input-group -->
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">Last Name&#42;</span></span>
+                     <?php echo $this->formInput($form->get('apellido')); ?>
+                  </div>
+                  <!-- End .input-group -->
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-email"></span><span class="input-text">Email&#42;</span></span>
+                     <?php echo $this->formInput($form->get('email')); ?>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-email"></span><span class="input-text">Identificación&#42;</span></span>
+                     <?php echo $this->formInput($form->get('nit')); ?>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-subject"></span><span class="input-text">Tipo Doc.&#42;</span></span>
+                     <?php echo $this->formElement($form->get('idTipoDocumento')); ?>
+                  </div>
+                  
+                  <!-- End .input-group -->
+               </fieldset>
+               <fieldset>
+                  <h2 class="sub-title">YOUR PASSWORD</h2>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-password"></span><span class="input-text">Password&#42;</span></span>
+                     <?php echo $this->formInput($form->get('clave1')); ?>
+                  </div>
+                  <!-- End .input-group -->
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-password"></span><span class="input-text">Password&#42;</span></span>
+                     <?php echo $this->formInput($form->get('clave2')); ?>
+                  </div>
+                  <!-- End .input-group -->
+               </fieldset>
+            </div>
+            <!-- End .col-md-6 -->
+            <div class="col-md-6 col-sm-6 col-xs-12">
+               <fieldset>
+                  <h2 class="sub-title">YOUR ADDRESS</h2>
+                  <!-- End .input-group -->
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-country"></span><span class="input-text">Country*</span></span>
+                     <div class="large-selectbox clearfix">
+                        <?php echo $this->formElement($form->get('idPais')); ?>
+                     </div>
+                     <!-- End .large-selectbox-->
+                  </div>
+                  <!-- End .input-group -->
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-region"></span><span class="input-text">Region / State&#42;</span></span>
+                     <div class="large-selectbox clearfix" id="divDepartamento">
+                        <select id="idDepartamento" name="idDepartamento" class="sbSelector"><option></option><select>
+                     </div>
+                     <!-- End .large-selectbox-->
+                  </div>
+                  <!-- End .input-group -->
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-region"></span><span class="input-text">Region / State&#42;</span></span>
+                     <div class="large-selectbox clearfix" id="divMunicipio">
+                         <select id="idMunicipio" name="idMunicipio" class="sbSelector"><option></option><select>
+                     </div>
+                     <!-- End .large-selectbox-->
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-address"></span><span class="input-text">Address &#42;</span></span>
+                     <?php echo $this->formInput($form->get('direccion')); ?>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-phone"></span><span class="input-text">Telephone&#42;</span></span>
+                     <?php echo $this->formInput($form->get('telefono')); ?>
+                  </div>
+                  <!-- End .input-group -->
+               </fieldset>
+            </div>
+            <!-- End .col-md-6 -->
+         </div>
+         <!-- End .row -->
+         <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <fieldset class="half-margin">
+                    <h2 class="sub-title">NEWSLETTER</h2>
+                    <div class="input-desc-box">
+                       <span class="separator icon-box">&plus;</span>I wish to subscribe to the Venedor newsletter.
+                    </div>
+                    <!-- End .input-desc -->
+                    <div class="input-group custom-checkbox">
+                       <input type="checkbox"> <span class="checbox-container">
+                       <i class="fa fa-check"></i>
+                       </span>
+                       I have reed and agree to the <a href="#">Privacy Policy</a>.
+                    </div>
+                    <!-- End .input-group -->
+                </fieldset>
+                <?php echo $this->formInput($form->get('btnGuardar'))?>
+            </div>
+            <!-- End .col-md-6 -->
+         </div>
+         <!-- End .row -->
+      <?php echo $this->form()->closeTag(); ?>
+   </div>
+   <!-- End .col-md-12 -->
+</div>

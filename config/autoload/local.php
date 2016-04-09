@@ -55,6 +55,13 @@ return array(
         'okAutorizacion'=> array('title'=>'Operación Exitosa','message'=>'Se ha autorizado el pedido con Exito','function'=>'showMessageSuccess'),
         'errorAutorizacion'=>array('title'=>'Operación sin resultado','message'=>'No se logro autorizar el pedido','function'=>'showMessageError'),
     ),
+    'MsgCliente'=> array(
+        'okRegistroUsuario'=>array('title'=>'Registro Usuario','message'=>'Se registrado Exitosamente..','function'=>'showMessageSuccess'),
+        ''=>array('title'=>'','message'=>'','function'=>''),
+        ''=>array('title'=>'','message'=>'','function'=>''),
+        ''=>array('title'=>'','message'=>'','function'=>''),
+        ''=>array('title'=>'','message'=>'','function'=>''),
+    ),
     
     'session' => array(
         'config' => array(
