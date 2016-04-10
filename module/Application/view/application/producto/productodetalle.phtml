@@ -30,8 +30,17 @@ $(document).ready(function(){
                <figure>
                   <img src="<?php echo $this->imagenesProducto[0]['url'] ?>" data-zoom-image="<?php echo $this->imagenesProducto[0]['url'] ?>" alt="" id="product-image">
                   <figcaption class="item-price-container">
-                     <span class="old-price">$160</span>
-                     <span class="item-price">$120</span>
+                      <?php 
+                        if(isset($this->Producto['idPromocion']))
+                        {
+                            echo "<span class='old-price'>$".number_format($this->Producto['valorAnterior'])."</span>
+                                 <span class='item-price'>$".number_format($this->Producto['valorPromocion'])."</span>";
+                        }
+                        else
+                        {
+                             echo "<span class='item-price'>$".number_format($this->Producto['valorVenta'])."</span>";
+                        }
+                      ?>
                   </figcaption>
                </figure>
             </div>
@@ -44,7 +53,7 @@ $(document).ready(function(){
             <h1 class="product-name"><?php echo $this->Producto['nombre']?></h1>
             <div class="ratings-container">
                <div class="ratings separator">
-                  <div class="ratings-result" data-result="70"></div>
+                  <div class="ratings-result" data-result="100"></div>
                </div>
                <!-- End .ratings -->
                <span class="ratings-amount separator">
@@ -110,20 +119,6 @@ $(document).ready(function(){
                   <!-- End .item-action-inner -->
                </div>
                <div class="md-margin visible-xs"></div>
-               <div class="share-button-group">
-                  <!-- AddThis Button BEGIN -->
-                  <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-                     <a class="addthis_button_facebook"></a>
-                     <a class="addthis_button_twitter"></a>
-                     <a class="addthis_button_email"></a>
-                     <a class="addthis_button_print"></a>
-                     <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
-                  </div>
-                  <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
-                  <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52b2197865ea0183"></script>
-                  <!-- AddThis Button END -->
-               </div>
-               <!-- End .share-button-group -->
             </div>
          </div>
          <!-- End .col-md-6 -->
@@ -224,7 +219,7 @@ $(document).ready(function(){
                      </a>
                   </figure>
                   <div class="item-price-container">
-                     <span class="item-price">$160<span class="sub-price">.99</span></span>
+                     <span class="item-price">$160</span>
                   </div>
                   <!-- End .item-price-container -->
                   <span class="new-rect">New</span>

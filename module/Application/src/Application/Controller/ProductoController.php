@@ -34,17 +34,29 @@ class ProductoController extends AbstractActionController
     {
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         $this->Producto =  new Producto($this->dbAdapter);
-        $id =  $this->params()->fromRoute('idProducto', 0);
-        $producto = $this->Producto->consultarProductoPorIdProductoSimple($id);
-        if ($producto) 
+        $idSaldoInventario =  $this->params()->fromRoute('idSaldoInventario', 0);
+        $idPromocion =  $this->params()->fromQuery('promocion', 0);
+        $producto = null;
+        $where = array();
+        if ($idSaldoInventario > 0) 
+        {
+            $where = array('idSaldoInventario'=>$idSaldoInventario);
+        }
+        else if($idPromocion > 0)
+        {
+            $where = array('idPromocion'=>$idPromocion);
+        }
+        
+        $producto = $this->Producto->vistaConsultaProducto($where);
+        if(count($producto)> 0){
+            $producto = $producto[0];
+        }
+        if(count($producto) > 0)
         {
             $this->ImagenProducto =  new ImagenProducto($this->dbAdapter);
-            $imagenes = $this->ImagenProducto->consultarImagenProductoPorIdProducto($id);
+            $imagenes = $this->ImagenProducto->consultarImagenProductoPorIdProducto($producto['idProducto']);
             return new ViewModel(array('Producto'=>$producto,'imagenesProducto'=>$imagenes));
         }
-        else{
-            return $this->redirect()->toRoute('home');
-        }
-        return new ViewModel();
+        return $this->redirect()->toRoute('home');
     }
 }

@@ -54,20 +54,7 @@ return array(
                     ),
                 ),
             ),
-            'producto-detalle' => array(
-                'type'    => 'segment',
-                'options' => array(
-                    'route'    => '/producto/:idProducto',
-                    'constraints' => array(
-                            'idProducto' => '\d+'
-                            ),
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Producto',
-                        'action'        => 'productodetalle',
-                    ),
-                ),
-            ),
+            // login
             'login' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -75,6 +62,31 @@ return array(
                     'defaults' => array(
                         'controller' => 'Application\Controller\Login',
                         'action'     => 'index',
+                    ),
+                ),
+            ),
+            // Sing up
+            'singup' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/singup',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'register',
+                    ),
+                ),
+            ),
+            'producto-detalle' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/producto[/:idSaldoInventario]',
+                    'constraints' => array(
+                            'idSaldoInventario' => '\d+',
+                            ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Producto',
+                        'action'        => 'productodetalle',
                     ),
                 ),
             ),

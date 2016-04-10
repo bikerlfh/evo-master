@@ -23,6 +23,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                 ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css')
                 ->appendStylesheet($this->basePath() . '/css/font-awesome.min.css')
                 ->appendStylesheet($this->basePath() . '/css/prettyPhoto.css')
+                ->appendStylesheet($this->basePath() . '/css/revslider.css')
                 ->appendStylesheet($this->basePath() . '/css/owl.carousel.css')
                 ->appendStylesheet($this->basePath() . '/css/jquery.selectbox.css')
                 ->appendStylesheet($this->basePath() . '/css/style.css')
@@ -106,7 +107,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                                     }
                                     else
                                     {
-                                        echo " <p class='header-link'><a href='".$this->basePath()."/login'>login</a>&nbsp;or&nbsp;<a href='#'>create an account</a></p>";
+                                        echo " <p class='header-link'><a href='".str_replace("/public", "", $this->basePath())."/login'>login</a>&nbsp;or&nbsp;<a href='".str_replace("/public", "", $this->basePath())."/singup'>create an account</a></p>";
                                     }
                               ?>
                              
@@ -356,9 +357,47 @@ if (defined('RUNNING_FROM_ROOT')) {
         	<div class="container">
                     <?php echo $this->content; ?>
                 </div><!-- End .container -->
+                <!-- Fabricantes -->
+                <div id="brand-slider-container" class="carousel-wrapper">
+                    <header class="content-title">
+                       <div class="title-bg">
+                          <h2 class="title">FABRICANTES</h2>
+                       </div>
+                       <!-- End .title-bg -->
+                    </header>
+                    <div class="carousel-controls">
+                       <div id="brand-slider-prev" class="carousel-btn carousel-btn-prev">
+                       </div>
+                       <!-- End .carousel-prev -->
+                       <div id="brand-slider-next" class="carousel-btn carousel-btn-next carousel-space">
+                       </div>
+                       <!-- End .carousel-next -->
+                    </div>
+                    <!-- End .carousel-controllers -->
+                    <div class="sm-margin"></div>
+                    <!-- space -->
+                    <div class="row">
+                       <div class="brand-slider owl-carousel">
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/1-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/2-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/3-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/4-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/5-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/6-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/7-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/8-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/9-brand.jpg"></a>
+                          <a><img src="<?php echo $this->basePath() ?>/images/brands/10-brand.jpg"></a>
+                       </div>
+                       <!-- End .brand-slider -->
+                    </div>
+                    <!-- End .row -->
+                </div>
+                 
         </section><!-- End #content -->
         
         <footer id="footer">
+            
             <div id="twitterfeed-container">
                 <div class="container">
                     <div class="row">
@@ -471,13 +510,20 @@ if (defined('RUNNING_FROM_ROOT')) {
                 ->appendFile($this->basePath().'/js/modernizr.custom.js') 
                 ->appendFile($this->basePath().'/js/jquery.elastislide.js')
                 ->appendFile($this->basePath().'/js/jquery.elevateZoom.min.js')
+            
+                ->appendFile($this->basePath().'/js/jquery.themepunch.tools.min.js')
+                ->appendFile($this->basePath().'/js/jquery.themepunch.revolution.min.js')
+            
                 ->appendFile($this->basePath().'/js/main.js')
                 ->appendFile($this->basePath().'/js/jquery.selectbox.min.js') 
                 ->appendFile($this->basePath().'/admin/assets/js/libs/toastr/toastr.min.js') 
-                ->appendFile($this->basePath().'/js/customScript.js') 
+                ->appendFile($this->basePath().'/js/customScript.js')
+                
+            
+                
             
             ;
     
     ?>
-    
+     
 </html>

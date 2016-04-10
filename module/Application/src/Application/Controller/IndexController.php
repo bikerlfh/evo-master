@@ -19,17 +19,21 @@ class IndexController extends AbstractActionController
     private $Categoria;
     private $Marca;
     private $Usuario;
-    private $Cliente;
+    private $Promocion;
     private $form;
+    
     
     public function indexAction()
     {
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
+        $this->Promocion = new Entity\Promocion($this->dbAdapter);
+        $promociones =  $this->Promocion->vistaConsultaPromocionCliente();
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
         
         return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoriaCountNumeroProductos(),
-                                   'marcas'=>$this->Marca->consultarTodoMarcaCountNumeroProductos()));
+                                   'marcas'=>$this->Marca->consultarTodoMarcaCountNumeroProductos(),
+                                   'promociones'=>$promociones));
     }
     
     public function registerAction()

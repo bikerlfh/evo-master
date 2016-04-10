@@ -210,6 +210,22 @@ class Producto extends AbstractTableGateway
         }
         return $options;
     }
+    /*
+     *  Consulta la vista de productos detalle para el cliente 
+     */
+    public function vistaConsultaProducto($where = array())
+    {
+        $sql = new Sql($this->adapter);  
+        $select = $sql->select()->from(new TableIdentifier("vConsultaProducto", "Venta"));
+        if(count($where)> 0){
+            $select->where($where);
+        }
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
+    }
+    
+    
     private function LlenarEntidad($result)
     {
         $this->fechaCreacion=$result['fechaCreacion'];

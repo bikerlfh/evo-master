@@ -1,88 +1,116 @@
-<div class="row">
-   <div class="col-md-12">
-      <div class="row">
-         <div class="col-md-9 col-sm-8 col-xs-12 main-content">
-            <div id="category-header" class="category-banner">
-               <img src="<?php echo $this->basePath()?>/public/images/banner.png" alt="Category banner" class="img-responsive">
-               <div class="category-title">
-                  <h2>Computers</h2>
-                  <p>Aenean dictum libero vitae magna sagittis, eu convallis dolor blandit. Fusce consectur tincidunt pretium aenean tincidunt...</p>
-                  <a href="#" class="btn btn-custom">LEARN MORE</a>
-               </div>
-               <!-- End .category-title -->
+ <!--<div id="slider-rev-container">
+   <div id="slider-rev">
+      <ul>
+         <li data-transition="fade" data-slotamount="6" data-masterspeed="600" data-saveperformance="on"  data-title="Special Offers">
+            <img src="<?php echo $this->basePath() ?>/public/images/revslider/dummy.png"  alt="slidebg1" data-lazyload="<?php echo $this->basePath() ?>/public/img/The_Division-WMFG-ES.jpg" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat">
+            <div class="tp-caption rev-title lfr ltr" data-x="695" data-y="198" data-speed="1600" data-start="300" data-endspeed="300">SPECIAL OFFER -25%</div>
+            <div class="tp-caption rev-text lfr ltr" data-x="695" data-y="252" data-speed="1600" data-start="600" data-endspeed="550">Performance &amp; Design. Taken right <br> to the edge.</div>
+            <div class="tp-caption lfr ltr" data-x="695" data-y="332" data-speed="1600" data-start="900" data-endspeed="800">
+               <a href="#" class="btn btn-custom-2">Learn More</a>
             </div>
-            <!-- End #category-header -->
-            <div class="md-margin"></div>
-            <!-- space -->
-            <div class="category-toolbar clearfix">
-               <div class="toolbox-filter clearfix">
-                  <div class="sort-box">
-                     <span class="separator">sort by:</span>
-                     <div class="btn-group select-dropdown">
-                        <button type="button" class="btn select-btn">Position</button>
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                           <li><a href="#">Date</a></li>
-                           <li><a href="#">Name</a></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <div class="view-box">
-                     <a href="category.html" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                     <a href="category-list.html" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
-                  </div>
-                  <!-- End .view-box -->
-               </div>
-               <!-- End .toolbox-filter -->
-               <div class="toolbox-pagination clearfix">
-                  <ul class="pagination">
-                     <li class="active"><a href="#">1</a></li>
-                     <li><a href="#">2</a></li>
-                     <li><a href="#">3</a></li>
-                     <li><a href="#">4</a></li>
-                     <li><a href="#">5</a></li>
-                     <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                  </ul>
-                  <div class="view-count-box">
-                     <span class="separator">view:</span>
-                     <div class="btn-group select-dropdown">
-                        <button type="button" class="btn select-btn">10</button>
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                           <li><a href="#">15</a></li>
-                           <li><a href="#">30</a></li>
-                        </ul>
-                     </div>
-                  </div>
-                  <!-- End .view-count-box -->
-               </div>
-               <!-- End .toolbox-pagination -->
+            <div class="tp-caption lfl ltl" data-x="center"  data-y="bottom"  data-speed="2000" data-start="500" data-endspeed="800">
+               <img src="<?php echo $this->basePath() ?>/public/img/The_Division-WMFG-ES.jpg">
             </div>
-            <!-- End .category-toolbar -->
-            <div class="md-margin"></div>
-            <!-- .space -->
-            <div class="category-item-container">
-               <div class="row">
-                  <div class="col-md-4 col-sm-6 col-xs-12">
+         </li>
+      </ul>
+   </div>
+   
+</div>-->
+<!-- End #slider-rev-container -->
+<div class="md-margin2x"></div>
+<!-- Space -->
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+         <div class="row">
+            <div class="col-md-9 col-sm-8 col-xs-12 main-content">
+               <header class="content-title">
+                  <h2 class="title">Nuestras Promociones</h2>
+                  <p class="title-desc">Save your money and time with our store. Here's the best part of our impressive assortment.</p>
+               </header>
+              
+               <div id="products-tabs-content" class="row">
+                    <?php
+                        foreach ($this->promociones as $promo) 
+                        {
+                            echo "<div class='col-md-4 col-sm-6 col-xs-12'>
+                                    <div class='item item-hover'>
+                                       <div class'
+                                          <figure class='item-image-container'>
+                                             <a href='".$this->basePath()."/producto?promocion=".$promo['idPromocion']."'>
+                                                <img src='".$promo['url']."' alt='item1' class='item-image'>
+                                                <img src='".$promo['url']."' alt='item1' class='item-image-hover'>
+                                             </a>
+                                          </figure>
+                                          <div class='item-price-container'>
+                                             <span class='old-price'>$".number_format($promo['valorAnterior'])."</span>
+                                             <span class='item-price'>$".number_format($promo['valorPromocion'])."</span>
+                                          </div>
+
+                                          <!--<span class='new-rect'>New</span>-->
+                                          <span class='discount-rect'>-".number_format($promo['procentajeDescuento'])."%</span>
+                                       </div>
+
+                                       <div class='item-meta-container'>
+                                          <div class='ratings-container'>
+                                             <div class='ratings'>
+                                                <div class='ratings-result' data-result='100'></div>
+                                             </div>
+
+                                             <span class='ratings-amount'>
+                                             5 Reviews
+                                             </span>
+                                          </div>
+
+                                          <h3 class='item-name'><a href='product.html'>".$promo['nombre']."</a></h3>
+                                          <div class='item-action'>
+                                             <a href='#' class='item-add-btn'>
+                                             <span class='icon-cart-text'>Add to Cart</span>
+                                             </a>
+                                          </div>
+
+                                       </div>
+
+                                    </div>
+
+                                 </div>";
+                        }
+                    ?>
+               </div>
+               <!-- End #products-tabs-content -->
+               <div class="xlg-margin"></div>
+               <!-- Space -->
+               <div class="hot-items carousel-wrapper">
+                  <header class="content-title">
+                     <div class="title-bg">
+                        <h2 class="title">On Sale</h2>
+                     </div>
+                     <!-- End .title-bg -->
+                     <p class="title-desc">Only with us you can get a new model with a discount.</p>
+                  </header>
+                  <div class="carousel-controls">
+                     <div id="hot-items-slider-prev" class="carousel-btn carousel-btn-prev">
+                     </div>
+                     <!-- End .carousel-prev -->
+                     <div id="hot-items-slider-next" class="carousel-btn carousel-btn-next carousel-space">
+                     </div>
+                     <!-- End .carousel-next -->
+                  </div>
+                  <!-- End .carousel-controls -->
+                  <div class="hot-items-slider owl-carousel">
                      <div class="item item-hover">
                         <div class="item-image-wrapper">
                            <figure class="item-image-container">
                               <a href="product.html">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item2.jpg" alt="item1" class="item-image">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item2-hover.jpg" alt="item1  Hover" class="item-image-hover">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item2.jpg" alt="item1" class="item-image">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item2-hover.jpg" alt="item1  Hover" class="item-image-hover">
                               </a>
                            </figure>
                            <div class="item-price-container">
-                              <span class="old-price">$210<span class="sub-price">.99</span></span>
                               <span class="item-price">$160<span class="sub-price">.99</span></span>
                            </div>
                            <!-- End .item-price-container -->
                            <span class="new-rect">New</span>
-                           <span class="discount-rect">-15%</span>
                         </div>
                         <!-- End .item-image-wrapper -->
                         <div class="item-meta-container">
@@ -112,19 +140,16 @@
                         <!-- End .item-meta-container --> 
                      </div>
                      <!-- End .item -->
-                  </div>
-                  <!-- End .col-md-4 -->
-                  <div class="col-md-4 col-sm-6 col-xs-12">
                      <div class="item item-hover">
                         <div class="item-image-wrapper">
                            <figure class="item-image-container">
                               <a href="product.html">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item1.jpg" alt="item1" class="item-image">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item1-hover.jpg" alt="item1  Hover" class="item-image-hover">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item3.jpg" alt="item1" class="item-image">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item3-hover.jpg" alt="item1  Hover" class="item-image-hover">
                               </a>
                            </figure>
                            <div class="item-price-container">
-                              <span class="item-price">$199</span>
+                              <span class="item-price">$100</span>
                            </div>
                            <!-- End .item-price-container -->
                            <span class="new-rect">New</span>
@@ -133,53 +158,7 @@
                         <div class="item-meta-container">
                            <div class="ratings-container">
                               <div class="ratings">
-                                 <div class="ratings-result" data-result="74"></div>
-                              </div>
-                              <!-- End .ratings -->
-                              <span class="ratings-amount">
-                              9 Reviews
-                              </span>
-                           </div>
-                           <!-- End .rating-container -->
-                           <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                           <div class="item-action">
-                              <a href="#" class="item-add-btn">
-                              <span class="icon-cart-text">Add to Cart</span>
-                              </a>
-                              <div class="item-action-inner">
-                                 <a href="#" class="icon-button icon-like">Favourite</a>
-                                 <a href="#" class="icon-button icon-compare">Checkout</a>
-                              </div>
-                              <!-- End .item-action-inner -->
-                           </div>
-                           <!-- End .item-action -->
-                        </div>
-                        <!-- End .item-meta-container --> 
-                     </div>
-                     <!-- End .item -->
-                  </div>
-                  <!-- End .col-md-4 -->
-                  <div class="col-md-4 col-sm-6 col-xs-12">
-                     <div class="item item-hover">
-                        <div class="item-image-wrapper">
-                           <figure class="item-image-container">
-                              <a href="product.html">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item4.jpg" alt="item1" class="item-image">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item4-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                              </a>
-                           </figure>
-                           <div class="item-price-container">
-                              <span class="old-price">$120<span class="sub-price">.99</span></span>
-                              <span class="item-price">$99<span class="sub-price">.99</span></span>
-                           </div>
-                           <!-- End .item-price-container -->
-                           <span class="discount-rect">-25%</span>
-                        </div>
-                        <!-- End .item-image-wrapper -->
-                        <div class="item-meta-container">
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="90"></div>
+                                 <div class="ratings-result" data-result="99"></div>
                               </div>
                               <!-- End .ratings -->
                               <span class="ratings-amount">
@@ -203,19 +182,101 @@
                         <!-- End .item-meta-container --> 
                      </div>
                      <!-- End .item -->
-                  </div>
-                  <!-- End .col-md-4 -->
-                  <div class="col-md-4 col-sm-6 col-xs-12">
                      <div class="item item-hover">
                         <div class="item-image-wrapper">
                            <figure class="item-image-container">
                               <a href="product.html">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item10.jpg" alt="item1" class="item-image">
-                              <img src="<?php echo $this->basePath()?>/public/images/products/item10-hover.jpg" alt="item1  Hover" class="item-image-hover">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item8.jpg" alt="item1" class="item-image">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item8-hover.jpg" alt="item1  Hover" class="item-image-hover">
                               </a>
                            </figure>
                            <div class="item-price-container">
-                              <span class="item-price">$180<span class="sub-price">.99</span></span>
+                              <span class="old-price">$100</span>
+                              <span class="item-price">$80</span>
+                           </div>
+                           <!-- End .item-price-container -->
+                           <span class="discount-rect">-20%</span>
+                        </div>
+                        <!-- End .item-image-wrapper -->
+                        <div class="item-meta-container">
+                           <div class="ratings-container">
+                              <div class="ratings">
+                                 <div class="ratings-result" data-result="75"></div>
+                              </div>
+                              <!-- End .ratings -->
+                              <span class="ratings-amount">
+                              2 Reviews
+                              </span>
+                           </div>
+                           <!-- End .rating-container -->
+                           <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
+                           <div class="item-action">
+                              <a href="#" class="item-add-btn">
+                              <span class="icon-cart-text">Add to Cart</span>
+                              </a>
+                              <div class="item-action-inner">
+                                 <a href="#" class="icon-button icon-like">Favourite</a>
+                                 <a href="#" class="icon-button icon-compare">Checkout</a>
+                              </div>
+                              <!-- End .item-action-inner -->
+                           </div>
+                           <!-- End .item-action -->
+                        </div>
+                        <!-- End .item-meta-container --> 
+                     </div>
+                     <!-- End .item -->
+                     <div class="item item-hover">
+                        <div class="item-image-wrapper">
+                           <figure class="item-image-container">
+                              <a href="product.html">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item5.jpg" alt="item1" class="item-image">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item5-hover.jpg" alt="item1  Hover" class="item-image-hover">
+                              </a>
+                           </figure>
+                           <div class="item-price-container">
+                              <span class="item-price">$99</span>
+                           </div>
+                           <!-- End .item-price-container -->
+                           <span class="new-rect">New</span>
+                        </div>
+                        <!-- End .item-image-wrapper -->
+                        <div class="item-meta-container">
+                           <div class="ratings-container">
+                              <div class="ratings">
+                                 <div class="ratings-result" data-result="40"></div>
+                              </div>
+                              <!-- End .ratings -->
+                              <span class="ratings-amount">
+                              3 Reviews
+                              </span>
+                           </div>
+                           <!-- End .rating-container -->
+                           <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
+                           <div class="item-action">
+                              <a href="#" class="item-add-btn">
+                              <span class="icon-cart-text">Add to Cart</span>
+                              </a>
+                              <div class="item-action-inner">
+                                 <a href="#" class="icon-button icon-like">Favourite</a>
+                                 <a href="#" class="icon-button icon-compare">Checkout</a>
+                              </div>
+                              <!-- End .item-action-inner -->
+                           </div>
+                           <!-- End .item-action -->
+                        </div>
+                        <!-- End .item-meta-container --> 
+                     </div>
+                     <!-- End .item -->
+                     <div class="item item-hover">
+                        <div class="item-image-wrapper">
+                           <figure class="item-image-container">
+                              <a href="product.html">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item7.jpg" alt="item1" class="item-image">
+                              <img src="<?php echo $this->basePath() ?>/public/images/products/item7-hover.jpg" alt="item1  Hover" class="item-image-hover">
+                              </a>
+                           </figure>
+                           <div class="item-price-container">
+                              <span class="item-price">$280</span>
                            </div>
                            <!-- End .item-price-container -->
                         </div>
@@ -241,303 +302,211 @@
                      </div>
                      <!-- End .item -->
                   </div>
-                  <!-- End .col-md-4 -->
+                  <!--hot-items-slider -->
+                  <div class="lg-margin"></div>
+                  <!-- Space -->
                </div>
-               <!-- End .row -->
+               <!-- End .hot-items -->
             </div>
-            <!-- End .category-item-container -->
-            <div class="pagination-container clearfix">
-               <div class="pull-right">
-                  <ul class="pagination">
-                     <li class="active"><a href="#">1</a></li>
-                     <li><a href="#">2</a></li>
-                     <li><a href="#">3</a></li>
-                     <li><a href="#">4</a></li>
-                     <li><a href="#">5</a></li>
-                     <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                  </ul>
-               </div>
-               <!-- End .pull-right -->
-               <div class="pull-right view-count-box hidden-xs">
-                  <span class="separator">view:</span>
-                  <div class="btn-group select-dropdown">
-                     <button type="button" class="btn select-btn">10</button>
-                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                     <i class="fa fa-angle-down"></i>
-                     </button>
-                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">15</a></li>
-                        <li><a href="#">30</a></li>
+            <!-- End .col-md-9 -->
+            <div class="col-md-3 col-sm-4 col-xs-12 sidebar">
+                <div class="widget">
+                    <div class="panel-group custom-accordion sm-accordion" id="category-filter">
+                       <div class="panel">
+                          <div class="accordion-header">
+                             <div class="accordion-title"><span>Categoría</span></div>
+                             <!-- End .accordion-title -->
+                             <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-1"></a>
+                          </div>
+                          <!-- End .accordion-header -->
+                          <div id="category-list-1" class="collapse in">
+                             <div class="panel-body">
+                                <ul class="category-filter-list jscrollpane">
+                                    <?php 
+                                        foreach ($this->categorias as $value) {
+                                            echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
+                                        }
+                                      ?>
+                                </ul>
+                             </div>
+                             <!-- End .panel-body -->
+                          </div>
+                          <!-- #collapse -->
+                       </div>
+                       <!-- End .panel -->
+                       <div class="panel">
+                          <div class="accordion-header">
+                             <div class="accordion-title"><span>Marca</span></div>
+                             <!-- End .accordion-title -->
+                             <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-2"></a>
+                          </div>
+                          <!-- End .accordion-header -->
+                          <div id="category-list-2" class="collapse in">
+                             <div class="panel-body">
+                                <ul class="category-filter-list jscrollpane">
+                                    <?php 
+                                        foreach ($this->marcas as $value) {
+                                            echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
+                                        }
+                                       ?>
+                                </ul>
+                             </div>
+                             <!-- End .panel-body -->
+                          </div>
+                          <!-- #collapse -->
+                       </div>
+                    </div>
+             
+                </div>
+                <!-- End .widget -->
+               <div class="widget testimonials">
+                  <h3>Testimonials</h3>
+                  <div class="testimonials-slider flexslider sidebarslider">
+                     <ul class="testimonials-list clearfix">
+                        <li>
+                           <div class="testimonial-details">
+                              <header>Best Service!</header>
+                              Maecenas semper aliquam massa. Praesent pharetra sem vitae nisi eleifend molestie. Aliquam molestie scelerisque ultricies. Suspendisse potenti. 
+                           </div>
+                           <!-- End .testimonial-details -->
+                           <figure class="clearfix">
+                              <img src="<?php echo $this->basePath() ?>/public/images/testimonials/anna.jpg" alt="Computer Ceo">
+                              <figcaption>
+                                 <a href="#">Anna Retallic</a>
+                                 <span>12.05.2013</span>
+                              </figcaption>
+                           </figure>
+                        </li>
+                        <li>
+                           <div class="testimonial-details">
+                              <header>Cool Style!</header>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt iure quisquam necessitatibus fugit! Nisi tempora reiciendis omnis error sapiente ipsam maiores dolorem maxime.
+                           </div>
+                           <!-- End .testimonial-details -->
+                           <figure class="clearfix">
+                              <img src="<?php echo $this->basePath() ?>/public/images/testimonials/jake.jpg" alt="Computer Ceo">
+                              <figcaption>
+                                 <a href="#">Jake Suasoo</a>
+                                 <span>17.05.2013</span>
+                              </figcaption>
+                           </figure>
+                        </li>
                      </ul>
                   </div>
+                  <!-- End .testimonials-slider -->
                </div>
+               <!-- End .widget -->
+               <div class="widget latest-posts">
+                  <h3>Latest News</h3>
+                  <div class="latest-posts-slider flexslider sidebarslider">
+                     <ul class="latest-posts-list clearfix">
+                        <li>
+                           <a href="single.html">
+                              <figure class="latest-posts-media-container">
+                                 <img class="img-responsive" src="<?php echo $this->basePath() ?>/public/images/blog/post1-small.jpg" alt="lats post">
+                              </figure>
+                           </a>
+                           <h4><a href="single.html">35% Discount on second purchase!</a></h4>
+                           <p>Sed blandit nulla nec nunc ullamcorper tristique. Mauris adipiscing cursus ante ultricies dictum sed lobortis.</p>
+                           <div class="latest-posts-meta-container clearfix">
+                              <div class="pull-left">
+                                 <a href="#">Read More...</a>
+                              </div>
+                              <!-- End .pull-left -->
+                              <div class="pull-right">
+                                 12.05.2013
+                              </div>
+                              <!-- End .pull-right -->
+                           </div>
+                           <!-- End .latest-posts-meta-container -->
+                        </li>
+                        <li>
+                           <a href="single.html">
+                              <figure class="latest-posts-media-container">
+                                 <img class="img-responsive" src="<?php echo $this->basePath() ?>/public/images/blog/post2-small.jpg" alt="lats post">
+                              </figure>
+                           </a>
+                           <h4><a href="single.html">Free shipping for regular customers.</a></h4>
+                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque fuga officia in molestiae easint..</p>
+                           <div class="latest-posts-meta-container clearfix">
+                              <div class="pull-left">
+                                 <a href="#">Read More...</a>
+                              </div>
+                              <!-- End .pull-left -->
+                              <div class="pull-right">
+                                 10.05.2013
+                              </div>
+                              <!-- End .pull-right -->
+                           </div>
+                           <!-- End .latest-posts-meta-container -->
+                        </li>
+                        <li>
+                           <a href="single.html">
+                              <figure class="latest-posts-media-container">
+                                 <img class="img-responsive" src="<?php echo $this->basePath() ?>/public/images/blog/post3-small.jpg" alt="lats post">
+                              </figure>
+                           </a>
+                           <h4><a href="#">New jeans on sales!</a></h4>
+                           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque fuga officia in molestiae easint..</p>
+                           <div class="latest-posts-meta-container clearfix">
+                              <div class="pull-left">
+                                 <a href="#">Read More...</a>
+                              </div>
+                              <!-- End .pull-left -->
+                              <div class="pull-right">
+                                 8.05.2013
+                              </div>
+                              <!-- End .pull-right -->
+                           </div>
+                           <!-- End .latest-posts-meta-container -->
+                        </li>
+                     </ul>
+                  </div>
+                  <!-- End .latest-posts-slider -->
+               </div>
+               <!-- End .widget -->
             </div>
-            <!-- End pagination-container -->
+            <!-- End .col-md-3 -->
          </div>
-         <!-- End .col-md-9 -->
-         <aside class="col-md-3 col-sm-4 col-xs-12 sidebar">
-            <div class="widget">
-               <div class="panel-group custom-accordion sm-accordion" id="category-filter">
-                  <div class="panel">
-                     <div class="accordion-header">
-                        <div class="accordion-title"><span>Categoria</span></div>
-                        <!-- End .accordion-title -->
-                        <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-1"></a>
-                     </div>
-                     <!-- End .accordion-header -->
-                     <div id="category-list-1" class="collapse in">
-                        <div class="panel-body">
-                           <ul class="category-filter-list jscrollpane">
-                              <?php 
-                                foreach ($this->categorias as $value) {
-                                    echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
-                                }
-                              ?>
-                              <li><a href="#">Mobile Phones (341)</a></li>
-                              <li><a href="#">Smartphones (55)</a></li>
-                              <li><a href="#">Communicators (24)</a></li>
-                              <li><a href="#">CDMA Phones (14)</a></li>
-                              <li><a href="#">Accessories (83)</a></li>
-                              <li><a href="#">Chargers (8)</a></li>
-                              <li><a href="#">Memory Cards (6)</a></li>
-                              <li><a href="#">Protectors (12)</a></li>
-                              <li><a href="#">ravelsim (5)</a></li>
-                              <li><a href="#">CDMA Phones (14)</a></li>
-                              <li><a href="#">Accessories (83)</a></li>
-                              <li><a href="#">Chargers (8)</a></li>
-                              <li><a href="#">Memory Cards (6)</a></li>
-                              <li><a href="#">Protectors (12)</a></li>
-                              <li><a href="#">ravelsim (5)</a></li>
-                              <li><a href="#">CDMA Phones (14)</a></li>
-                              <li><a href="#">Accessories (83)</a></li>
-                              <li><a href="#">Chargers (8)</a></li>
-                              <li><a href="#">Memory Cards (6)</a></li>
-                              <li><a href="#">Protectors (12)</a></li>
-                              <li><a href="#">ravelsim (5)</a></li>
-                           </ul>
-                        </div>
-                        <!-- End .panel-body -->
-                     </div>
-                     <!-- #collapse -->
-                  </div>
-                  <!-- End .panel -->
-                  <div class="panel">
-                     <div class="accordion-header">
-                        <div class="accordion-title"><span>Marca</span></div>
-                        <!-- End .accordion-title -->
-                        <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-2"></a>
-                     </div>
-                     <!-- End .accordion-header -->
-                     <div id="category-list-2" class="collapse in">
-                        <div class="panel-body">
-                           <ul class="category-filter-list jscrollpane">
-                                <?php 
-                                 foreach ($this->marcas as $value) {
-                                     echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
-                                 }
-                                ?>
-                                <li><a href="#">Samsung (50)</a></li>
-                                <li><a href="#">Apple (80)</a></li>
-                                <li><a href="#">HTC (20)</a></li>
-                                <li><a href="#">Motoroloa (20)</a></li>
-                                <li><a href="#">Nokia (11)</a></li>
-                           </ul>
-                        </div>
-                        <!-- End .panel-body -->
-                     </div>
-                     <!-- #collapse -->
-                  </div>
-                  <!-- End .panel -->
-                  <div class="panel">
-                     <div class="accordion-header">
-                        <div class="accordion-title"><span>Precio</span></div>
-                        <!-- End .accordion-title -->
-                        <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-3"></a>
-                     </div>
-                     <!-- End .accordion-header -->
-                     <div id="category-list-3" class="collapse in">
-                        <div class="panel-body">
-                           <div id="price-range">
-                           </div>
-                           <!-- End #price-range -->
-                           <div id="price-range-details">
-                              <span class="sm-separator">from</span>
-                              <input type="text" id="price-range-low" class="separator">
-                              <span class="sm-separator">to</span>
-                              <input type="text" id="price-range-high">
-                           </div>
-                           <div id="price-range-btns">
-                              <a href="#" class="btn btn-custom-2 btn-sm">Ok</a>
-                              <a href="#" class="btn btn-custom-2 btn-sm">Clear</a>
-                           </div>
-                        </div>
-                        <!-- End .panel-body -->
-                     </div>
-                     <!-- #collapse -->
-                  </div>
-                  <!-- End .panel -->
-               </div>
-               <!-- .panel-group -->
-            </div>
-            <!-- End .widget -->
-            <div class="widget featured">
-               <h3>Featured</h3>
-               <div class="featured-slider flexslider sidebarslider">
-                  <ul class="featured-list clearfix">
-                     <li>
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item5.jpg" alt="item5">
-                           </figure>
-                           <h5><a href="#">Jacket Suiting Blazer</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$40</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item1.jpg" alt="item1">
-                           </figure>
-                           <h5><a href="#">Gap Graphic Cuffed</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$18</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item2.jpg" alt="item2">
-                           </figure>
-                           <h5><a href="#">Women's Lauren Dress</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$30</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                     </li>
-                     <li>
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item3.jpg" alt="item3">
-                           </figure>
-                           <h5><a href="#">Swiss Mobile Phone</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="64"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$39</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item4.jpg" alt="item4">
-                           </figure>
-                           <h5><a href="#">Zwinzed HeadPhones</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="94"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$18.99</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item7.jpg" alt="item7">
-                           </figure>
-                           <h5><a href="#">Kless Man Suit</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="74"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$99</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                     </li>
-                     <li>
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item4.jpg" alt="item4">
-                           </figure>
-                           <h5><a href="#">Gap Graphic Cuffed</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$17</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath()?>/public/images/products/thumbnails/item6.jpg" alt="item6">
-                           </figure>
-                           <h5><a href="#">Women's Lauren Dress</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                              <!-- End .ratings -->
-                           </div>
-                           <!-- End .rating-container -->
-                           <div class="featured-price">$30</div>
-                           <!-- End .featured-price -->
-                        </div>
-                        <!-- End .featured-product -->
-                     </li>
-                  </ul>
-               </div>
-               <!-- End .featured-slider -->
-            </div>
-            <!-- End .widget -->
-            <!--<div class="widget banner-slider-container">
-               <div class="banner-slider flexslider">
-                  <ul class="banner-slider-list clearfix">
-                     <li><a href="#"><img src="<?php echo $this->basePath()?>/public/images/banner1.jpg" alt="Banner 1"></a></li>
-                     <li><a href="#"><img src="<?php echo $this->basePath()?>/public/images/banner2.jpg" alt="Banner 2"></a></li>
-                     <li><a href="#"><img src="<?php echo $this->basePath()?>/public/images/banner3.jpg" alt="Banner 3"></a></li>
-                  </ul>
-               </div>
-            </div>
-            <!-- End .widget -->
-         </aside>
-         <!-- End .col-md-3 -->
+
       </div>
-      <!-- End .row -->
+      <!-- End .col-md-12 -->
    </div>
-   <!-- End .col-md-12 -->
+   <!-- End .row -->
 </div>
-<!-- End .row -->
+<!-- End .container -->
+
+<script>
+    $(document).ready(function() {
+            // Slider Revolution
+            jQuery('#slider-rev').revolution({
+                delay:8000,
+                startwidth:$('.container').width(),
+                startheight:400,
+                onHoverStop:"true",
+                hideThumbs:250,
+                navigationHAlign:"center",
+                navigationVAlign:"bottom",
+                navigationHOffset:0,
+                navigationVOffset:20,
+                soloArrowLeftHalign:"left",
+                soloArrowLeftValign:"center",
+                soloArrowLeftHOffset:0,
+                soloArrowLeftVOffset:0,
+                soloArrowRightHalign:"right",
+                soloArrowRightValign:"center",
+                soloArrowRightHOffset:0,
+                soloArrowRightVOffset:0,
+                touchenabled:"on",
+                stopAtSlide:-1,
+                stopAfterLoops:-1,
+                dottedOverlay:"none",
+                fullWidth:"on",
+                spinned:"spinner5",
+                shadow:0,
+                hideTimerBar: "on",
+                // navigationStyle:"preview4"
+              });
+
+        });
+</script>
