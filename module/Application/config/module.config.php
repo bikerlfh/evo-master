@@ -13,6 +13,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Login' => 'Application\Controller\LoginController',
             'Application\Controller\Producto' => 'Application\Controller\ProductoController',
+            'Application\Controller\Buscar' => 'Application\Controller\BuscarController',
         ),
     ),
     'router' => array(
@@ -87,6 +88,17 @@ return array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Producto',
                         'action'        => 'productodetalle',
+                    ),
+                ),
+            ),
+            'busqueda' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/buscar',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Buscar',
+                        'action'        => 'index',
                     ),
                 ),
             ),
