@@ -32,6 +32,11 @@ class StoredProcedure
         }       
         return $stmt->execute();
     }
+    public function ejecutarSelect($select)
+    {
+        $stmt = $this->adapter->createStatement()->setSql($select);   
+        return $stmt->execute();
+    }
     //Metodo que devuelve las filas affectadas
     public function execProcedureReturnAffectedRows($nameProcedure,$parameters=array())
     {

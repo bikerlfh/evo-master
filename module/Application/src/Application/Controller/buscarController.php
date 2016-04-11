@@ -27,18 +27,20 @@ class BuscarController extends AbstractActionController
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
         $where = array();
+        // Se recorren los parametros para generar el Where
         foreach ($this->params()->fromQuery() as $parametro => $value)
         {
             switch($parametro)
             {
-                case "nombreProducto":
-                    $where['nombre']=$value;
+                case "textobusqueda":
+                    $like =" LIKE '%".$value."%'";
+                    $where['textobusqueda']=" nombre ".$like." OR descripcionMarca ".$like." OR descripcionCategoria ".$like;
                     break;
                 case "idMarca":
-                    $where['idMarca']=$value;
+                    $where['idMarca']="idMarca=".$value;
                     break;
                 case "idCategoria":
-                    $where['idCategoria']=$value;
+                    $where['idCategoria']="idCategoria=".$value;
                     break;
             }
         }

@@ -215,6 +215,7 @@ class Producto extends AbstractTableGateway
      */
     public function vistaConsultaProducto($where = array())
     {
+        /*
         $sql = new Sql($this->adapter);  
         $select = $sql->select()->from(new TableIdentifier("vConsultaProducto", "Venta"));
         if(count($where)> 0){
@@ -223,6 +224,23 @@ class Producto extends AbstractTableGateway
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
         return $resultsSet->initialize($results)->toArray();
+        */
+        
+        $select = "SELECT * FROM Venta.vConsultaProducto ";
+        if(count($where)> 0)
+        {
+            $select .=" WHERE ";
+            $i = 0;
+            foreach ($where as $value) {
+                 $select .= $value;
+                 if($i < count($where)-1)
+                    $select .=" AND ";
+                 $i++;
+            }
+        }
+        
+        $stored = new Clases\StoredProcedure($this->adapter);
+        return $stored->ejecutarSelect($select);
     }
     
     

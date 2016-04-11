@@ -169,13 +169,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                               <ul class="menu clearfix">
                                  <li>
                                     <a class="active" href="index.html">HOME</a>
-                                    <ul>
-                                       <li><a href="../green/index.html">Home 1</a></li>
-                                       
-                                    </ul>
                                  </li>
                                  <li class="mega-menu-container">
-                                    <a href="#">SHOP</a>
+                                    <a href="#">Tienda</a>
                                     <div class="mega-menu clearfix">
                                        <div class="col-5">
                                           <a href="category.html" class="mega-menu-title">Clothing</a><!-- End .mega-menu-title -->
@@ -216,7 +212,7 @@ if (defined('RUNNING_FROM_ROOT')) {
                                     <!-- End .mega-menu -->
                                  </li>
                                  <li>
-                                    <a href="#">PAGES</a>
+                                    <a href="#">Noticias</a>
                                     <ul>
                                        <li>
                                           <a href="#">Headers</a>
@@ -271,12 +267,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                                     </ul>
                                  </li>
                                  <li>
-                                    <a href="#">Elements</a>
-                                    <ul>
-                                       <li><a href="elements/tabs.html">Tabs</a></li>
-                                    </ul>
+                                    <a href="#">Lista de Precios</a>
                                  </li>
-                                 <li><a href="contact.html">Contact Us</a></li>
+                                 <li><a href="<?php echo $this->basePath()?>/contactanos">Contactenos</a></li>
                               </ul>
                            </nav>
                            <div id="quick-access">
@@ -323,9 +316,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                                  <!-- End .btn-group -->
                               </div>
                               <!-- End .dropdown-cart-menu-container -->
-                              <form class="form-inline quick-search-form" role="form" action="#">
+                              <form class="form-inline quick-search-form" role="form" method="get" name="bla"  action="<?php echo str_replace("/public","", $this->basePath()) ?>/buscar">
                                  <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Search here">
+                                     <input type="text" name="textobusqueda" id="textobusqueda" class="form-control" placeholder="Buscar en la tienda">
                                  </div>
                                  <!-- End .form-inline -->
                                  <button type="submit" id="quick-search" class="btn btn-custom"></button>
