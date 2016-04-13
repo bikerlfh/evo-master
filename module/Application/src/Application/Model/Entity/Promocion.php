@@ -114,7 +114,8 @@ class Promocion extends AbstractTableGateway
                                     's.idSaldoInventario = pro.idSaldoInventario')->
                          join(array("p"=> new TableIdentifier("Producto","Producto")),
                                     "p.idProducto = s.idProducto",
-                                    array("nombreProducto"=> new Expression("p.codigo + ' - ' + p.nombre")));
+                                    array("nombreProducto"=> new Expression("p.codigo + ' - ' + p.nombre")))->
+                        where(array('idPromocion'=>$idPromocion));
         
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();

@@ -215,17 +215,14 @@ class Producto extends AbstractTableGateway
      */
     public function vistaConsultaProducto($where = array())
     {
-        /*
         $sql = new Sql($this->adapter);  
         $select = $sql->select()->from(new TableIdentifier("vConsultaProducto", "Venta"));
-        if(count($where)> 0){
-            $select->where($where);
-        }
+        $select->where($where);
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
         return $resultsSet->initialize($results)->toArray();
-        */
-        
+       
+        /*
         $select = "SELECT * FROM Venta.vConsultaProducto ";
         if(count($where)> 0)
         {
@@ -240,7 +237,12 @@ class Producto extends AbstractTableGateway
         }
         
         $stored = new Clases\StoredProcedure($this->adapter);
-        return $stored->ejecutarSelect($select);
+        $results = $stored->ejecutarSelect($select);
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
+        */
+        
+        
     }
     
     

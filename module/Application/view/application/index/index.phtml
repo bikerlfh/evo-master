@@ -324,7 +324,7 @@
                                 <ul class="category-filter-list jscrollpane">
                                     <?php 
                                         foreach ($this->categorias as $value) {
-                                            echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
+                                            echo "<li><a href=\"".$this->basePath()."/buscar?idCategoria=".$value['idCategoria']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
                                         }
                                       ?>
                                 </ul>
@@ -346,7 +346,7 @@
                                 <ul class="category-filter-list jscrollpane">
                                     <?php 
                                         foreach ($this->marcas as $value) {
-                                            echo "<li><a href='#'>".$value['descripcion']." (".$value['numProducto'].")</a></li>";
+                                            echo "<li><a href=\"".$this->basePath()."/buscar?idMarca=".$value['idMarca']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
                                         }
                                     ?>
                                 </ul>

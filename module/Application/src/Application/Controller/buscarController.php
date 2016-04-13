@@ -30,17 +30,19 @@ class BuscarController extends AbstractActionController
         // Se recorren los parametros para generar el Where
         foreach ($this->params()->fromQuery() as $parametro => $value)
         {
+            
             switch($parametro)
             {
                 case "textobusqueda":
+                    //$where->like('nombre', "%".$value."%")->like('descripcionMarca', "%".$value."%");
                     $like =" LIKE '%".$value."%'";
-                    $where['textobusqueda']=" nombre ".$like." OR descripcionMarca ".$like." OR descripcionCategoria ".$like;
+                    $where = array(" nombre ".$like." OR descripcionMarca ".$like." OR descripcionCategoria ".$like);
                     break;
                 case "idMarca":
-                    $where['idMarca']="idMarca=".$value;
+                    $where['idMarca']=$value;
                     break;
                 case "idCategoria":
-                    $where['idCategoria']="idCategoria=".$value;
+                    $where['idCategoria']=$value;
                     break;
             }
         }
