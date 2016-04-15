@@ -34,6 +34,15 @@ class BusquedaCliente
     {
         return $this->vistaConsultaProductoSimple(array("numeroVentas > 20"));
     }
+    
+    public function busquedaProductosSimilares($idProducto,$idCategoria)
+    {
+        $where = array('idProducto != '. $idProducto,
+                       'idCategoria = '.$idCategoria);
+        return $this->vistaConsultaProductoSimple($where);
+    }
+    
+    
     public function vistaConsultaProducto($where = array())
     {
         return $this->ejecutarSelect(new TableIdentifier("vConsultaProducto", "Venta"),$where);

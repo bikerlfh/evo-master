@@ -16,7 +16,6 @@ use Application\Model\Entity\ImagenProducto;
 
 class ProductoController extends AbstractActionController
 {
-    private $Producto;
     private $BusquedaCliente;
     private $ImagenProducto;
     
@@ -48,9 +47,10 @@ class ProductoController extends AbstractActionController
         }
         if(count($producto) > 0)
         {
+            $productosSimilares = $this->BusquedaCliente->busquedaProductosSimilares($producto['idProducto'],$producto['idCategoria']);
             $this->ImagenProducto =  new ImagenProducto($this->dbAdapter);
             $imagenes = $this->ImagenProducto->consultarImagenProductoPorIdProducto($producto['idProducto']);
-            return new ViewModel(array('Producto'=>$producto,'imagenesProducto'=>$imagenes));
+            return new ViewModel(array('Producto'=>$producto,'imagenesProducto'=>$imagenes,'productosSimilares'=>$productosSimilares));
         }
         return $this->redirect()->toRoute('home');
     }

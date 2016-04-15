@@ -24,7 +24,6 @@ $(document).ready(function(){
                    }
                    ?>
                </ul>
-               <!-- End product-carousel -->
             </div>
             <div id="product-image-container">
                <figure>
@@ -44,25 +43,20 @@ $(document).ready(function(){
                   </figcaption>
                </figure>
             </div>
-            <!-- product-image-container -->        				 
          </div>
-         <!-- End .col-md-6 -->
          <div class="col-md-6 col-sm-12 col-xs-12 product">
             <div class="lg-margin visible-sm visible-xs"></div>
-            <!-- Space -->
             <h1 class="product-name"><?php echo $this->Producto['nombre']?></h1>
             <div class="ratings-container">
                <div class="ratings separator">
                   <div class="ratings-result" data-result="100"></div>
                </div>
-               <!-- End .ratings -->
                <span class="ratings-amount separator">
                3 Review(s)
                </span>
                <span class="separator">|</span>
                <a href="#review" class="rate-this">Add Your Review</a>
             </div>
-            <!-- End .rating-container -->
             <ul class="product-list">
                <li><span>Referencia:</span><?php echo $this->Producto['referencia']?></li>
                <li><span>Availability:</span>In Stock</li>
@@ -99,61 +93,60 @@ $(document).ready(function(){
             </div>--<
             <!-- End .product-size-filter-container-->
             <hr>
-            <div class="product-add clearfix">
-               <div class="custom-quantity-input">
-                  <input type="text" name="quantity" value="1">
-                  <a href="#" onclick="return false;" class="quantity-btn quantity-input-up"><i class="fa fa-angle-up"></i></a>
-                  <a href="#" onclick="return false;" class="quantity-btn quantity-input-down"><i class="fa fa-angle-down"></i></a>
-               </div>
-               <button class="btn btn-custom-2">ADD TO CART</button>
+            <div>
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                <input type="number" class="form-control ui-spinner-input" name="cantidad" id="cantidad" onkeypress="return validarTecla(event,'num')" value="1">
+                </div>
+                <button class="btn btn-custom-2">ADD TO CART</button>
             </div>
-            <!-- .product-add -->
             <div class="md-margin"></div>
-            <!-- Space -->
+            <!-- 
             <div class="product-extra clearfix">
                <div class="product-extra-box-container clearfix">
                   <div class="item-action-inner">
                      <a href="#" class="icon-button icon-like">Favourite</a>
                      <a href="#" class="icon-button icon-compare">Checkout</a>
                   </div>
-                  <!-- End .item-action-inner -->
                </div>
                <div class="md-margin visible-xs"></div>
             </div>
+            -->
          </div>
-         <!-- End .col-md-6 -->
       </div>
-      <!-- End .row -->
       <div class="lg-margin2x"></div>
-      <!-- End .space -->
       <div class="row">
          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="panel panel-primary"> 
+                <div class="panel-heading"> 
+                    <h3 class="panel-title">DESCRIPCIÓN</h3> 
+                </div> 
+                <div class="panel-body"> 
+                    <?php echo $this->Producto['descripcion']?>
+                </div> 
+            </div>
+            <div class="panel panel-primary"> 
+                <div class="panel-heading"> 
+                    <h3 class="panel-title">ESPECIFICACIÓN</h3> 
+                </div> 
+                <div class="panel-body"> 
+                    
+                    <?php
+                    $escaper = new Zend\Escaper\Escaper('utf-8');
+                    echo $escaper->escapeHtml($this->Producto['especificacion']);?>
+                </div> 
+            </div>
             <div class="tab-container left product-detail-tab clearfix">
                <ul class="nav-tabs">
-                  <li class="active"><a href="#description" data-toggle="tab">Descripción</a></li>
-                  <li><a href="#especificaciones" data-toggle="tab">Especificaciones</a></li>
                   <li class="active"><a href="#review" data-toggle="tab">review</a></li>
                   <li><a href="#additional" data-toggle="tab">additional</a></li>
                   <li class="active"><a href="#video" data-toggle="tab">video</a></li>
-                  
-                  
                </ul>
                <div class="tab-content clearfix">
-                  <div class="tab-pane active" id="description">
-                     <p style='text-align : justify;'><?php echo $this->Producto['descripcion']?></p>
-                   
-                  </div>
-                  <!-- End .tab-pane -->
-                  <div class="tab-pane" id="especificaciones">
-                     <p style='text-align : justify;'><?php echo $this->Producto['especificacion']?></p>
-                  </div>
-                  <!-- End .tab-pane -->
                   <div class="tab-pane" id="review">
                      <p>Sed volutpat ac massa eget lacinia. Suspendisse non purus semper, tellus vel, tristique urna. </p>
                      <p>Cumque nihil facere itaque mollitia consectetur saepe cupiditate debitis fugiat temporibus soluta maxime doloremque alias enim officia aperiam at similique quae vel sapiente nulla molestiae tenetur deleniti architecto ratione accusantium.
                      </p>
                   </div>
-                  <!-- End .tab-pane -->
                   <div class="tab-pane" id="additional">
                      <strong>Additional Informations</strong>
                      <p>Quae eum placeat reiciendis enim at dolorem eligendi?</p>
@@ -167,7 +160,6 @@ $(document).ready(function(){
                         <li>Quae laudantium iste libero</li>
                      </ul>
                   </div>
-                  <!-- End .tab-pane -->
                   <div class="tab-pane" id="video">
                      <div class="video-container">
                         <strong>A Video about Product</strong>
@@ -175,285 +167,75 @@ $(document).ready(function(){
                         <hr>
                         <iframe width="560" height="315" src="http://www.youtube.com/embed/Z0MNVFtyO30?rel=0"></iframe>
                      </div>
-                     <!-- End .video-container -->
                   </div>
-                  <!-- End .tab-pane -->
                </div>
-               <!-- End .tab-content -->
             </div>
-            <!-- End .tab-container -->
             <div class="lg-margin visible-xs"></div>
          </div>
-         <!-- End .col-md-9 -->
          <div class="lg-margin2x visible-sm visible-xs"></div>
-         <!-- Space -->
-         
-      
-         <!-- End .col-md-4 -->
       </div>
-      <!-- End .row -->
       <div class="lg-margin2x"></div>
-      <!-- Space -->
+      <?php 
+        if(count($this->productosSimilares)> 0)
+        {
+      ?>
       <div class="purchased-items-container carousel-wrapper">
          <header class="content-title">
             <div class="title-bg">
-               <h2 class="title">También han comprado</h2>
+               <h2 class="title">También Te podría Interesar</h2>
             </div>
-            <!-- End .title-bg -->
-            <p class="title-desc">Nota: Productos similares</p>
          </header>
          <div class="carousel-controls">
             <div id="purchased-items-slider-prev" class="carousel-btn carousel-btn-prev"></div>
-            <!-- End .carousel-prev -->
             <div id="purchased-items-slider-next" class="carousel-btn carousel-btn-next carousel-space"></div>
-            <!-- End .carousel-next -->
          </div>
-         <!-- End .carousel-controllers -->
          <div class="purchased-items-slider owl-carousel">
-            <div class="item item-hover">
-               <div class="item-image-wrapper">
-                  <figure class="item-image-container">
-                     <a href="product.html">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item7.jpg" alt="item1" class="item-image">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item7-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                     </a>
-                  </figure>
-                  <div class="item-price-container">
-                     <span class="item-price">$160</span>
-                  </div>
-                  <!-- End .item-price-container -->
-                  <span class="new-rect">New</span>
-               </div>
-               <!-- End .item-image-wrapper -->
-               <div class="item-meta-container">
-                  <div class="ratings-container">
-                     <div class="ratings">
-                        <div class="ratings-result" data-result="80"></div>
-                     </div>
-                     <!-- End .ratings -->
-                     <span class="ratings-amount">
-                     5 Reviews
-                     </span>
-                  </div>
-                  <!-- End .rating-container -->
-                  <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                  <div class="item-action">
-                     <a href="#" class="item-add-btn">
-                     <span class="icon-cart-text">Add to Cart</span>
-                     </a>
-                     <div class="item-action-inner">
-                        <a href="#" class="icon-button icon-like">Favourite</a>
-                        <a href="#" class="icon-button icon-compare">Checkout</a>
-                     </div>
-                     <!-- End .item-action-inner -->
-                  </div>
-                  <!-- End .item-action -->
-               </div>
-               <!-- End .item-meta-container --> 
-            </div>
-            <!-- End .item -->
-            <div class="item item-hover">
-               <div class="item-image-wrapper">
-                  <figure class="item-image-container">
-                     <a href="product.html">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item8.jpg" alt="item1" class="item-image">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item8-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                     </a>
-                  </figure>
-                  <div class="item-price-container">
-                     <span class="item-price">$100</span>
-                  </div>
-                  <!-- End .item-price-container -->
-                  <span class="new-rect">New</span>
-               </div>
-               <!-- End .item-image-wrapper -->
-               <div class="item-meta-container">
-                  <div class="ratings-container">
-                     <div class="ratings">
-                        <div class="ratings-result" data-result="99"></div>
-                     </div>
-                     <!-- End .ratings -->
-                     <span class="ratings-amount">
-                     4 Reviews
-                     </span>
-                  </div>
-                  <!-- End .rating-container -->
-                  <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                  <div class="item-action">
-                     <a href="#" class="item-add-btn">
-                     <span class="icon-cart-text">Add to Cart</span>
-                     </a>
-                     <div class="item-action-inner">
-                        <a href="#" class="icon-button icon-like">Favourite</a>
-                        <a href="#" class="icon-button icon-compare">Checkout</a>
-                     </div>
-                     <!-- End .item-action-inner -->
-                  </div>
-                  <!-- End .item-action -->
-               </div>
-               <!-- End .item-meta-container --> 
-            </div>
-            <!-- End .item -->
-            <div class="item item-hover">
-               <div class="item-image-wrapper">
-                  <figure class="item-image-container">
-                     <a href="product.html">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item9.jpg" alt="item1" class="item-image">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item9-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                     </a>
-                  </figure>
-                  <div class="item-price-container">
-                     <span class="old-price">$100</span>
-                     <span class="item-price">$80</span>
-                  </div>
-                  <!-- End .item-price-container -->
-                  <span class="discount-rect">-20%</span>
-               </div>
-               <!-- End .item-image-wrapper -->
-               <div class="item-meta-container">
-                  <div class="ratings-container">
-                     <div class="ratings">
-                        <div class="ratings-result" data-result="75"></div>
-                     </div>
-                     <!-- End .ratings -->
-                     <span class="ratings-amount">
-                     2 Reviews
-                     </span>
-                  </div>
-                  <!-- End .rating-container -->
-                  <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                  <div class="item-action">
-                     <a href="#" class="item-add-btn">
-                     <span class="icon-cart-text">Add to Cart</span>
-                     </a>
-                     <div class="item-action-inner">
-                        <a href="#" class="icon-button icon-like">Favourite</a>
-                        <a href="#" class="icon-button icon-compare">Checkout</a>
-                     </div>
-                     <!-- End .item-action-inner -->
-                  </div>
-                  <!-- End .item-action -->
-               </div>
-               <!-- End .item-meta-container --> 
-            </div>
-            <!-- End .item -->
-            <div class="item item-hover">
-               <div class="item-image-wrapper">
-                  <figure class="item-image-container">
-                     <a href="product.html">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item6.jpg" alt="item1" class="item-image">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item6-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                     </a>
-                  </figure>
-                  <div class="item-price-container">
-                     <span class="item-price">$99</span>
-                  </div>
-                  <!-- End .item-price-container -->
-                  <span class="new-rect">New</span>
-               </div>
-               <!-- End .item-image-wrapper -->
-               <div class="item-meta-container">
-                  <div class="ratings-container">
-                     <div class="ratings">
-                        <div class="ratings-result" data-result="40"></div>
-                     </div>
-                     <!-- End .ratings -->
-                     <span class="ratings-amount">
-                     3 Reviews
-                     </span>
-                  </div>
-                  <!-- End .rating-container -->
-                  <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                  <div class="item-action">
-                     <a href="#" class="item-add-btn">
-                     <span class="icon-cart-text">Add to Cart</span>
-                     </a>
-                     <div class="item-action-inner">
-                        <a href="#" class="icon-button icon-like">Favourite</a>
-                        <a href="#" class="icon-button icon-compare">Checkout</a>
-                     </div>
-                     <!-- End .item-action-inner -->
-                  </div>
-                  <!-- End .item-action -->
-               </div>
-               <!-- End .item-meta-container --> 
-            </div>
-            <!-- End .item -->
-            <div class="item item-hover">
-               <div class="item-image-wrapper">
-                  <figure class="item-image-container">
-                     <a href="product.html">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item7.jpg" alt="item1" class="item-image">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item7-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                     </a>
-                  </figure>
-                  <div class="item-price-container">
-                     <span class="item-price">$280</span>
-                  </div>
-                  <!-- End .item-price-container -->
-               </div>
-               <!-- End .item-image-wrapper -->
-               <div class="item-meta-container">
-                  <div class="ratings-container">
-                  </div>
-                  <!-- End .rating-container -->
-                  <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                  <div class="item-action">
-                     <a href="#" class="item-add-btn">
-                     <span class="icon-cart-text">Add to Cart</span>
-                     </a>
-                     <div class="item-action-inner">
-                        <a href="#" class="icon-button icon-like">Favourite</a>
-                        <a href="#" class="icon-button icon-compare">Checkout</a>
-                     </div>
-                     <!-- End .item-action-inner -->
-                  </div>
-                  <!-- End .item-action -->
-               </div>
-               <!-- End .item-meta-container --> 
-            </div>
-            <!-- End .item -->
-            <div class="item item-hover">
-               <div class="item-image-wrapper">
-                  <figure class="item-image-container">
-                     <a href="product.html">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item10.jpg" alt="item1" class="item-image">
-                     <img src="<?php echo $this->basePath() ?>/public/images/products/item10-hover.jpg" alt="item1  Hover" class="item-image-hover">
-                     </a>
-                  </figure>
-                  <div class="item-price-container">
-                     <span class="old-price">$150</span>
-                     <span class="item-price">$120</span>
-                  </div>
-                  <!-- End .item-price-container -->
-               </div>
-               <!-- End .item-image-wrapper -->
-               <div class="item-meta-container">
-                  <div class="ratings-container">
-                  </div>
-                  <!-- End .rating-container -->
-                  <h3 class="item-name"><a href="product.html">Phasellus consequat</a></h3>
-                  <div class="item-action">
-                     <a href="#" class="item-add-btn">
-                     <span class="icon-cart-text">Add to Cart</span>
-                     </a>
-                     <div class="item-action-inner">
-                        <a href="#" class="icon-button icon-like">Favourite</a>
-                        <a href="#" class="icon-button icon-compare">Checkout</a>
-                     </div>
-                     <!-- End .item-action-inner -->
-                  </div>
-                  <!-- End .item-action -->
-               </div>
-               <!-- End .item-meta-container --> 
-            </div>
-            <!-- End .item -->
+             <?php
+                foreach ($this->productosSimilares as $producto) 
+                {
+                    echo "<div class='item item-hover'>
+                            <div class='item-image-wrapper'>
+                                <figure class='item-image-container'>
+                                    <a href='".$this->basePath()."/producto/".$producto['idSaldoInventario']."'>
+                                        <img src='".$producto['urlImg']."' alt='item1' class='item-image'>
+                                        <img src='".$producto['urlImg']."' alt='item1' class='item-image-hover'>
+                                    </a>
+                                </figure>";
+                    if($producto['idPromocion']!= null)
+                    {
+                                echo "<div class='item-price-container'> 
+                                        <span class='old-price'>$".number_format($producto['valorAnterior'])."</span>
+                                        <span class='item-price'>$".number_format($producto['valorPromocion'])."</span>
+                                      </div>
+                                      <span class='discount-rect'>-".number_format($producto['procentajeDescuento'])."%</span>";
+                    }
+                    else 
+                        echo "<div class='item-price-container'> <span class='item-price'>$".number_format($producto['valorVenta'])."</span></div>";
+                    echo  " </div>
+                            <div class='item-meta-container'>
+                               <div class='ratings-container'>
+                                  <div class='ratings'>
+                                     <div class='ratings-result' data-result='99'></div>
+                                  </div>
+                                  <span class='ratings-amount'>
+                                  4 Reviews
+                                  </span>
+                               </div>
+                               <h3 class='item-name'><a href='".$this->basePath()."/producto/".$producto['idSaldoInventario']."'>".$producto['nombre']."</a></h3>
+                               <div class='item-action'>
+                                  <a href='#' class='item-add-btn'>
+                                  <span class='icon-cart-text'></i> Add to Cart</span>
+                                  </a>
+                               </div>
+                            </div>
+                         </div>";
+                }
+            ?>            
          </div>
-         <!--purchased-items-slider -->
       </div>
-      <!-- End .purchased-items-container -->
+      <?php
+        }
+      ?>
    </div>
-   <!-- End .col-md-12 -->
 </div>
-<!-- End .row -->
 			
