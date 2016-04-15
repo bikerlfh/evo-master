@@ -59,8 +59,9 @@
                                 <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Categoria</th>
                                 <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Proveedor</th>
                                 <th lass="sorting" role="columnheader" tabindex="4" aria-controls="dtcrudindex" rowspan="1" colspan="1">Cantidad</th>
-                                <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Costo Total</th>
-                                <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Venta</th>
+                                <th lass="sorting" role="columnheader" tabindex="5" aria-controls="dtcrudindex" rowspan="1" colspan="1">Costo Total</th>
+                                <th lass="sorting" role="columnheader" tabindex="6" aria-controls="dtcrudindex" rowspan="1" colspan="1">Valor Venta</th>
+                                <th lass="sorting" role="columnheader" tabindex="7" aria-controls="dtcrudindex" rowspan="1" colspan="1">Estado</th>
 
                             </tr>
                         </thead>
@@ -81,6 +82,7 @@
                                         <td>".number_format($obj['cantidad'])."</td>
                                         <td>$".number_format($obj['costoTotal'])."</td>
                                         <td>$".number_format($obj['valorVenta'])."</td>
+                                        <td>".$obj['estado']."</td>
                                     </tr>";
                             }
                             ?>
