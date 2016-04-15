@@ -151,7 +151,7 @@ class Promocion extends AbstractTableGateway
     }
     /*
      *  Consulta la vista de promociones para el cliente 
-     */
+     
     public function vistaConsultaPromocionCliente()
     {
         $sql = new Sql($this->adapter);  
@@ -159,7 +159,7 @@ class Promocion extends AbstractTableGateway
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
         return $resultsSet->initialize($results)->toArray();
-    }
+    }*/
     
     private function LlenarEntidad($result)
     {

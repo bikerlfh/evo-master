@@ -12,28 +12,34 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Entity;
+use Application\Model\Clases;
 use Application\Form\FormRegistro;
 
 class IndexController extends AbstractActionController
 {
+    private $BusquedaCliente;
     private $Categoria;
     private $Marca;
     private $Usuario;
-    private $Promocion;
     private $form;
-    
+
     
     public function indexAction()
     {
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->Promocion = new Entity\Promocion($this->dbAdapter);
-        $promociones =  $this->Promocion->vistaConsultaPromocionCliente();
+        $this->BusquedaCliente =  new Clases\BusquedaCliente($this->dbAdapter);
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
+        $promociones =  $this->BusquedaCliente->busquedaPromociones();
+        $productosNuevos = $this->BusquedaCliente->busquedaProductosNuevos();
+        $productosMasVentidos=$this->BusquedaCliente->busquedaProductosMasVendidos();
+        
         
         return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoriaCountNumeroProductos(),
                                    'marcas'=>$this->Marca->consultarTodoMarcaCountNumeroProductos(),
-                                   'promociones'=>$promociones));
+                                   'promociones'=>$promociones,
+                                   'productosNuevos'=>$productosNuevos,
+                                   'productosMasVendidos'=>$productosMasVentidos));
     }
     
     public function registerAction()

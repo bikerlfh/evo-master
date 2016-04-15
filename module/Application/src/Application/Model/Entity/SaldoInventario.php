@@ -127,6 +127,7 @@ class SaldoInventario extends AbstractTableGateway
         $datos=array(
                 'fechaModificacion'=> date('d-m-Y H:i:s'),
                 'idUsuarioModificacion'=> $idUsuarioModificacion,
+                'estado'=>$estado,
                 'valorVenta'=> $valorVenta,
                 'costoTotal'=> $costoTotal,
                 'cantidad'=> $cantidad,

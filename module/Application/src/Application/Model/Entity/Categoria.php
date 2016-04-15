@@ -102,7 +102,11 @@ class Categoria extends AbstractTableGateway
     
     public function consultarTodoCategoriaCountNumeroProductos()
     {
-        $select = "select c.*, (select count(*) from Producto.Producto p where p.idCategoria = c.idCategoria) as 'numProducto' from Producto.Categoria c order by c.descripcion";
+        $select = "select c.*, 
+                    (select count(*) from Producto.Producto p 
+                    inner join Inventario.SaldoInventario si on p.idProducto = si.idProducto and si.estado = 1
+                    where p.idCategoria = c.idCategoria) as 'numProducto' 
+                    from Producto.Categoria c order by c.descripcion";
         $stmt = $this->adapter->createStatement()->setSql($select);
         return $stmt->execute();
     }

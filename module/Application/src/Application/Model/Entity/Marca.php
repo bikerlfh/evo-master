@@ -70,7 +70,11 @@ class Marca extends AbstractTableGateway
     }
     public function consultarTodoMarcaCountNumeroProductos()
     {
-        $select = "select m.*, (select count(*) from Producto.Producto p where p.idMarca = m.idMarca) as 'numProducto' from Producto.Marca m order by m.descripcion";
+        $select = "select m.*, 
+                    (select count(*) from Producto.Producto p 
+                                    inner join Inventario.SaldoInventario si on p.idProducto = si.idProducto and si.estado = 1 
+                                    where p.idMarca = m.idMarca) as 'numProducto' 
+                    from Producto.Marca m order by m.descripcion";
         $stmt = $this->adapter->createStatement()->setSql($select);
         return $stmt->execute();
     }

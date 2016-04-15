@@ -11,19 +11,19 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Model\Entity;
+use Application\Model\Clases\BusquedaCliente;
 
 class BuscarController extends AbstractActionController
 {
     private $Categoria;
     private $Marca;
-    private $Producto;
+    private $BusquedaCliente;
     
     
     public function indexAction()
     {
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->Producto = new Entity\Producto($this->dbAdapter);
+        $this->BusquedaCliente = new Entity\BusquedaCliente($this->dbAdapter);
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
         $where = array();
@@ -46,7 +46,7 @@ class BuscarController extends AbstractActionController
                     break;
             }
         }
-        $productos = $this->Producto->vistaConsultaProducto($where);
+        $productos = $this->BusquedaCliente->vistaConsultaProducto($where);
         
         return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoriaCountNumeroProductos(),
                                    'marcas'=>$this->Marca->consultarTodoMarcaCountNumeroProductos(),
