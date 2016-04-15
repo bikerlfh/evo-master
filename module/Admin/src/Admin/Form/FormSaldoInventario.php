@@ -111,7 +111,8 @@ class FormSaldoInventario extends Form {
         $select2 = new Element\Select('estado');
         $select2->setValueOptions(array(''=>'',1=>'Activo',0=>'Inactivo'));
         $select2->setAttributes(array('id' => 'estado',
-                                     'class' => $this->cssClass['select']));
+                                     'class' => $this->cssClass['select'],
+                                     'required'=>true));
         $this->add($select2);
         /************* select estado ***********/ 
         $this->add(array(
