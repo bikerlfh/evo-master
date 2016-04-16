@@ -4,7 +4,7 @@
     });
     function btnBuscar_onclick()
     {
-        showBusquedaOnModal(this,"<?php echo $this->basePath()?>/admin/pedidoventa/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>",'#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idCliente="+$('#idCliente').val()+"&nombreCliente="+$('#nombreClienteBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
+        usar_ajax("<?php echo $this->Uri ?>","#"+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idCliente="+$('#idCliente').val()+"&nombreCliente="+$('#nombreClienteBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
     }
 </script>
   
@@ -61,15 +61,14 @@
                             <tr role="row">
                                 <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Número Pedido</th>
                                 <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Cliente</th>
-                                <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Detalle</th>
-                                <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Estado Pedido</th>
+                                <th lass="sorting" role="columnheader" tabindex="2" aria-controls="dtcrudindex" rowspan="1" colspan="1">Detalle</th>
+                                <th lass="sorting" role="columnheader" tabindex="3" aria-controls="dtcrudindex" rowspan="1" colspan="1">Estado Pedido</th>
                             </tr>
                         </thead>
                         <tbody>
                              <?php 
                             foreach ($this->registros as $obj) {
                                 echo "
-                                    
                                     <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href','".$this->basePath()."/admin/pedidoventa/".$this->vista."?idPedidoVenta=".$obj['idPedidoVenta']."')\">
                                         <td>".$obj['numeroPedido']."</td>
                                         <td>".$obj['nombreCliente']."</td>

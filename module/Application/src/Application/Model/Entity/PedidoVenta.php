@@ -182,11 +182,23 @@ class PedidoVenta extends AbstractTableGateway {
     }
 
     public function consultaAvanzadaPedidoVenta($numeroPedidoVenta, $idCliente, $idEstadoPedidoVenta) {
-        $numeroPedidoVenta = $numeroPedidoVenta > 0 ? $numeroPedidoVenta : null;
-        $idCliente = $idCliente > 0 ? $idCliente : null;
-        $idEstadoPedidoVenta = $idEstadoPedidoVenta > 0 ? $idEstadoPedidoVenta : null;
-        $stored = new StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Venta.ConsultaAvanzadaPedidoVenta ?,?,?", array($numeroPedidoVenta, $idCliente, (int) $idEstadoPedidoVenta));
+        $where = array();
+        if ($numeroPedidoVenta > 0 ) {
+            array_push($where,'numeroPedido='.$numeroPedidoVenta);
+        }
+        if ($idCliente > 0 ) {
+            array_push($where,'idCliente='.$idCliente);
+        }
+        if ($idEstadoPedidoVenta > 0 ) {
+            array_push($where,'idEstadoPedidoVenta='.$idEstadoPedidoVenta);
+        }
+        $sql = new Sql($this->adapter);
+        $select = $sql->select(new TableIdentifier("vConsultaAvanzadaPedidoVenta", "venta"))
+                               ->where($where);
+        
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($result)->toArray();
     }
 
     private function LlenarPedidoVentaPosicion() {

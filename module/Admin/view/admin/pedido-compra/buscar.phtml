@@ -4,7 +4,7 @@
     });
     function btnBuscar_onclick()
     {
-        usar_ajax("<?php echo $this->basePath()?>/admin/pedidocompra/buscar?vista=<?php echo $this->vista ?>&campoId=<?php echo $this->campoId ?>&campoNombre=<?php echo $this->campoNombre ?>", '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idProveedor="+$('#idProveedor').val()+"&nombreProveedor="+$('#nombreProveedorBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
+        usar_ajax("<?php echo $this->Uri?>", '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),"numeroPedido="+$('#numeroPedidoBusqueda').val()+"&idProveedor="+$('#idProveedor').val()+"&nombreProveedor="+$('#nombreProveedorBusqueda').val()+"&idEstadoPedido="+$('#idEstadoPedido').val());
     }
 </script>
   
