@@ -30,7 +30,8 @@ class LoginController extends AbstractActionController
             $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
             $this->Usuario=new Usuario($this->dbAdapter);
             //<== si se encontro el usuario ===>
-            if ($this->Usuario->logIn($datos['email'],$datos['pass']))
+            // y se valida que el usuario no sea un cliente
+            if ($this->Usuario->logIn($datos['email'],$datos['pass']) && $this->Usuario->TipoUsuario->getCodigo() != "02")
             {
                 // Se crea la sesion
                 $this->createSession();

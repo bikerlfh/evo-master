@@ -110,8 +110,8 @@ class SaldoInventario extends AbstractTableGateway
     public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$idUsuarioCreacion)
     {
         $datos=array(
-                'fechaModificacion'=> date('d-m-Y H:i:s'),
-                'fechaCreacion'=> date('d-m-Y H:i:s'),
+                'fechaModificacion'=> date('Y-m-d H:i:s'),
+                'fechaCreacion'=> date('Y-m-d H:i:s'),
                 'idUsuarioModificacion'=> $idUsuarioCreacion,
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'estado' => $estado,
@@ -131,7 +131,7 @@ class SaldoInventario extends AbstractTableGateway
     public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$idUsuarioModificacion)
     {
         $datos=array(
-                'fechaModificacion'=> date('d-m-Y H:i:s'),
+                'fechaModificacion'=> date('Y-m-d H:i:s'),
                 'idUsuarioModificacion'=> $idUsuarioModificacion,
                 'estado'=>$estado,
                 'url' => $url,

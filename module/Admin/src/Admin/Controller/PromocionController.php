@@ -37,9 +37,9 @@ class PromocionController extends AbstractActionController
         {
             $datos=$this->request->getPost();
             $fechaDesde = new \DateTime($datos['fechaDesde']);
-            $fechaDesde =$fechaDesde->format('d-m-Y');
+            $fechaDesde =$fechaDesde->format('Y-m-d');
             $fechaHasta = new \DateTime($datos['fechaHasta']);
-            $fechaHasta =$fechaHasta->format('d-m-Y');
+            $fechaHasta =$fechaHasta->format('Y-m-d');
             // Si se envia el id de la promocion se modifica este.
             if ($datos["idPromocion"] != null) 
             {

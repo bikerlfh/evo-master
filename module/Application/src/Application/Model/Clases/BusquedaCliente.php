@@ -28,7 +28,7 @@ class BusquedaCliente
     }
     public function busquedaProductosNuevos()
     {
-        return $this->vistaConsultaProductoSimple(array("fechaCreacionSaldoInventario >". date('Y-m-d', strtotime(date('d-m-Y H:i:s'). ' - 30 days'))));
+        return $this->vistaConsultaProductoSimple(array("fechaCreacionSaldoInventario >". date('Y-m-d', strtotime(date('Y-m-d H:i:s'). ' - 30 days'))));
     }
     public function busquedaProductosMasVendidos($where = array())
     {

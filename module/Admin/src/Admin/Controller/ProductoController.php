@@ -54,7 +54,7 @@ class ProductoController extends AbstractActionController
             {
                 $returnCrud=$this->consultarMessage("errorSave");
                 // se guarda la nueva producto
-                if($this->Producto->guardarProducto($datos['idMarca'],$datos['idCategoria'],$datos['codigo'],$datos['nombre'],$datos['referencia'],$datos['descripcion'],$datos['especificacion'], $this->user_session->idUsuario,  date('d-m-Y H:i:s')))
+                if($this->Producto->guardarProducto($datos['idMarca'],$datos['idCategoria'],$datos['codigo'],$datos['nombre'],$datos['referencia'],$datos['descripcion'],$datos['especificacion'], $this->user_session->idUsuario,  date('Y-m-d H:i:s')))
                     $returnCrud=$this->consultarMessage("okSave");
             }
                 return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
