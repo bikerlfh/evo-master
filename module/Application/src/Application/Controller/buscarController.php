@@ -23,7 +23,7 @@ class BuscarController extends AbstractActionController
     public function indexAction()
     {
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
-        $this->BusquedaCliente = new Entity\BusquedaCliente($this->dbAdapter);
+        $this->BusquedaCliente = new BusquedaCliente($this->dbAdapter);
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
         $where = array();
