@@ -12,6 +12,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Model\Clases\BusquedaCliente;
+use Application\Model\Entity;
 
 class BuscarController extends AbstractActionController
 {
