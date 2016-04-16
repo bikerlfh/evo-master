@@ -6,6 +6,7 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\FormBase;
 use Admin\Form\FormUsuario;
 use Application\Model\Entity\Usuario;
+use Application\Model\Clases\FuncionesBase;
 use Zend\Session\Container;
 
 class UsuarioController extends AbstractActionController
@@ -40,6 +41,7 @@ class UsuarioController extends AbstractActionController
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if(count($this->request->getPost())>0)
         {
+            try {
             $datos=$this->request->getPost();
             // Si se envia el id de la categoria se modifica este.
             if ($datos["idUsuario"] != null) 
@@ -54,6 +56,9 @@ class UsuarioController extends AbstractActionController
                 // se guarda la nueva categoria
                 if($this->Usuario->guardarUsuario($datos['clave'],$datos['email'],$datos['idDatoBasicoTercero'],$datos['idTipoUsuario']))
                     $returnCrud=$this->consultarMessage("okSave");
+            }
+             } catch (\Exception $e) {
+                $returnCrud = $this->consultarMessage($e->getMessage(), true);
             }
             return new ViewModel(array('form'=>$this->form,'msg'=>$returnCrud));
         }
@@ -109,28 +114,14 @@ class UsuarioController extends AbstractActionController
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/usuario');
         }
     }
-    private function consultarMessage($nameMensaje)
-    {
-        $serviceLocator=$this->getServiceLocator()->get('Config');
-        $mensaje=$serviceLocator['MsgCrud'];
-        $mensaje= $mensaje[$nameMensaje];
-        return $mensaje['function']."('".$mensaje['title']."','".$mensaje['message']."');";
+    private function consultarMessage($nameMensaje, $propio = false) {
+
+        return FuncionesBase::consultarMessage($this->getServiceLocator()->get('Config'), $nameMensaje, $propio);
     }
-    private function configurarBotonesFormulario($modificarBool)
-    {
-        if ($modificarBool == true)
-        {
-            $this->form->get("btnGuardar")->setAttribute("type", "hidden");
-            $this->form->get("btnModificar")->setAttribute("type", "submit");
-            $this->form->get("btnEliminar")->setAttribute("type", "button");
-          
-        }
-        else
-        {
-            $this->form->get("btnGuardar")->setAttribute("type", "submit");
-            $this->form->get("btnModificar")->setAttribute("type", "hidden");
-            $this->form->get("btnEliminar")->setAttribute("type", "hidden");
-        }
+
+    private function configurarBotonesFormulario($modificarBool) {
+
+        FuncionesBase::configurarBotonesFormulario($this->form, $modificarBool);
     }
     
     private function validarSession()
