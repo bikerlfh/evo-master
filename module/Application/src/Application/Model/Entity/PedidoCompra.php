@@ -136,11 +136,23 @@ class PedidoCompra extends AbstractTableGateway
    
     public function consultaAvanzadaPedidoCompra($numeroPedido,$idProveedor,$idEstadoPedido)
     {
-        $numeroPedido = $numeroPedido > 0? $numeroPedido:null;
-        $idProveedor = $idProveedor > 0? $idProveedor:null;
-        $idEstadoPedido = $idEstadoPedido > 0? $idEstadoPedido:null;
-        $stored = new StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Compra.ConsultaAvanzadaPedidoCompra ?,?,?",array($numeroPedido, $idProveedor,(int)$idEstadoPedido));
+        $where = array();
+        if ($numeroPedido > 0 ) {
+            array_push($where,'numeroPedido='.$numeroPedido);
+        }
+        if ($idProveedor > 0 ) {
+            array_push($where,'idProveedor='.$idProveedor);
+        }
+        if ($idEstadoPedido > 0 ) {
+            array_push($where,'idEstadoPedido='.$idEstadoPedido);
+        }
+        $sql = new Sql($this->adapter);
+        $select = $sql->select(new TableIdentifier("vConsultaAvanzadaPedidoCompra", "Compra"))
+                               ->where($where);
+        
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($result)->toArray();
     }
     private function LlenarPedidoCompraPosicion()
     {
