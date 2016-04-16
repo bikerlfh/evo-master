@@ -5,45 +5,41 @@
 </script>
 <div class="row">
     <div class="col-lg-12">
-        <div class="row">  
-            <div class="col-lg-12">
-                <div class="box box-bordered">
-                    <div class="box-head">
-                        <header><h4 class="text-light">Búsqueda <strong>Marcas</strong></h4></header>
-                        <a class="btn btn-equal btn-sm btn-close" id="btnCloseBusquedaMarca" style="float: right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
-                    </div>
-                    <div class="box"> 
-                        <div class="box-body table-responsive">
-                            <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
-                                <table id="dtbuscarMarca" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Código</th>
-                                            <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Descripción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                         <?php 
-                                        foreach ($this->registros as $obj) {
-                                            
-                                             $onClick = "$('#idMarca').val(" . $obj['idMarca'] . ");$('#btnCloseBusquedaMarca').click();";
-                                                       
-                                            if ($this->origen != null) {
-                                                $onClick = "$(location).attr('href','" . $this->BasePath() . "/admin/" . $this->origen . "?idMarca=" . $obj['idMarca'] . "');";
-                                            }
-                                            
-                                            echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"". $onClick ."\">
-                                                    <td>".$obj['codigo']."</td>
-                                                    <td>".$obj['descripcion']."</td>
-                                                </tr>";
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                             </div>
-                        </div>
-                    </div>
+        <div class="box box-bordered">
+            <div class="box-head">
+                <header><h4 class="text-light">Búsqueda <strong>Marcas</strong></h4></header>
+                <a class="btn btn-equal btn-sm btn-close" id="btnCloseBusquedaMarca" style="float: right" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></a>
+            </div>
+            <div class="box"> 
+                <div class="box-body table-responsive">
+                    <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
+                        <table id="dtbuscarMarca" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
+                            <thead>
+                                <tr role="row">
+                                    <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Código</th>
+                                    <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <?php 
+                                foreach ($this->registros as $obj) {
+
+                                     $onClick = "$('#idMarca').val(" . $obj['idMarca'] . ");$('#btnCloseBusquedaMarca').click();";
+
+                                    if ($this->origen != null) {
+                                        $onClick = "$(location).attr('href','" . $this->BasePath() . "/admin/" . $this->origen . "?idMarca=" . $obj['idMarca'] . "');";
+                                    }
+
+                                    echo "
+                                        <tr class='gradeX odd' style='cursor:pointer' onClick=\"". $onClick ."\">
+                                            <td>".$obj['codigo']."</td>
+                                            <td>".$obj['descripcion']."</td>
+                                        </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                     </div>
                 </div>
             </div>
         </div>
