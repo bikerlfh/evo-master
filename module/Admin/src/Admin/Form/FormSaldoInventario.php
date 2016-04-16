@@ -58,18 +58,6 @@ class FormSaldoInventario extends Form {
 
         /** ********* Proveedor ************* */
 
-
-        /** *********** select Proveedor ********** */
-        //$proveedor = new Proveedor($this->adapter);
-        //$select2 = new Element\Select('idProveedor');
-        //$select2->setValueOptions($proveedor->generarOptionsSelect());
-        //$select2->setAttributes(array('id' => 'idProveedor',
-        //    'class' => $this->cssClass['select'],
-        //    'required' => true));
-        //$this->add($select2);
-        /** *********** select Proveedor ********** */
-
-
         $this->add(array(
             'name' => 'cantidad',
             'attributes' => array(
@@ -104,6 +92,16 @@ class FormSaldoInventario extends Form {
                 'maxlength' => '11',
                 'required' => true,
                 'onKeyPress' => "return validarTecla(event,'num')",
+                'class' => $this->cssClass['text']
+            ),
+        ));
+        $this->add(array(
+            'name' => 'url',
+            'attributes' => array(
+                'id' => 'urlProuctoProveedor',
+                'type' => 'text',
+                'placeholder' => 'Url producto - proveedor',
+                'maxlength' => '150',
                 'class' => $this->cssClass['text']
             ),
         ));

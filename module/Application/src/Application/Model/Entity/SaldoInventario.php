@@ -17,6 +17,7 @@ class SaldoInventario extends AbstractTableGateway
     private $cantidad;
     private $costoTotal;
     private $valorVenta;
+    private $url;
     private $estado;
     private $idUsuarioCreacion;
     private $idUsuarioModificacion;
@@ -60,11 +61,15 @@ class SaldoInventario extends AbstractTableGateway
     function getEstado() {
         return $this->estado;
     }
-
     function setEstado($estado) {
         $this->estado = $estado;
     }
-
+    function getUrl() {
+        return $this->url;
+    }
+    function setUrl($url) {
+        $this->url = $url;
+    }
     public function getValorVenta(){
         return $this->valorVenta;
     }
@@ -102,7 +107,7 @@ class SaldoInventario extends AbstractTableGateway
         $this->idSaldoInventario=$idSaldoInventario;
     }
     
-    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$estado,$idUsuarioCreacion)
+    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$idUsuarioCreacion)
     {
         $datos=array(
                 'fechaModificacion'=> date('d-m-Y H:i:s'),
@@ -110,6 +115,7 @@ class SaldoInventario extends AbstractTableGateway
                 'idUsuarioModificacion'=> $idUsuarioCreacion,
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'estado' => $estado,
+                'url' => $url,
                 'valorVenta'=> $valorVenta,
                 'costoTotal'=> $costoTotal,
                 'cantidad'=> $cantidad,
@@ -122,12 +128,13 @@ class SaldoInventario extends AbstractTableGateway
         return false;
     }
 
-    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$estado,$idUsuarioModificacion)
+    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$idUsuarioModificacion)
     {
         $datos=array(
                 'fechaModificacion'=> date('d-m-Y H:i:s'),
                 'idUsuarioModificacion'=> $idUsuarioModificacion,
                 'estado'=>$estado,
+                'url' => $url,
                 'valorVenta'=> $valorVenta,
                 'costoTotal'=> $costoTotal,
                 'cantidad'=> $cantidad,
@@ -208,6 +215,7 @@ class SaldoInventario extends AbstractTableGateway
         $this->idUsuarioModificacion=$result['idUsuarioModificacion'];
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
         $this->estado=$result['estado'];
+        $this->url=$result['url'];
         $this->valorVenta=$result['valorVenta'];
         $this->costoTotal=$result['costoTotal'];
         $this->cantidad=$result['cantidad'];
