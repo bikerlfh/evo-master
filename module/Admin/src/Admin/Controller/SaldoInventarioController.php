@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 use Admin\Form\FormBase;
 use Admin\Form\FormSaldoInventario;
 use Application\Model\Entity\SaldoInventario;
+use Application\Model\Clases\FuncionesBase;
 use Zend\Session\Container;
 
 class SaldoInventarioController extends AbstractActionController {
@@ -18,6 +19,7 @@ class SaldoInventarioController extends AbstractActionController {
     public function __construct() {
         $this->user_session = new Container('user');
     }
+
     public function indexAction() {
         $this->validarSession();
         // se asigna el layout admin
@@ -39,23 +41,26 @@ class SaldoInventarioController extends AbstractActionController {
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if (count($this->request->getPost()) > 0) {
-            $datos = $this->request->getPost();
-            // Si se envia el id de la saldoinventario se modifica este.
-            if ($datos["idSaldoInventario"] != null) {
-                $returnCrud = $this->consultarMessage("errorUpdate");
-                if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'],$datos['url'],$datos['estado'], $this->user_session->idUsuario))
-                    $returnCrud = $this->consultarMessage("okUpdate");
-            }
-            else 
-            {
-                // Se valida que no exista un saldo inventario con el mismo producto y proveedor
-                if ($this->SaldoInventario->consultarSaldoInventarioPorIdProductoIdProveedor($datos['idProducto'], $datos['idProveedor'])) {
-                    return new ViewModel(array('form' => $this->form, 'validacion' => 'Ya existe un saldo invenario con el producto y el proveedor seleccionados.'));
+            try {
+                $datos = $this->request->getPost();
+                // Si se envia el id de la saldoinventario se modifica este.
+                if ($datos["idSaldoInventario"] != null) {
+                    $returnCrud = $this->consultarMessage("errorUpdate");
+                    if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $datos['url'], $datos['estado'], $this->user_session->idUsuario))
+                        $returnCrud = $this->consultarMessage("okUpdate");
                 }
-                $returnCrud = $this->consultarMessage("errorSave");
-                // se guarda la nueva saldoinventario
-                if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'],$datos['url'],$datos['estado'], $this->user_session->idUsuario))
-                    $returnCrud = $this->consultarMessage("okSave");
+                else {
+                    // Se valida que no exista un saldo inventario con el mismo producto y proveedor
+                    if ($this->SaldoInventario->consultarSaldoInventarioPorIdProductoIdProveedor($datos['idProducto'], $datos['idProveedor'])) {
+                        return new ViewModel(array('form' => $this->form, 'validacion' => 'Ya existe un saldo invenario con el producto y el proveedor seleccionados.'));
+                    }
+                    $returnCrud = $this->consultarMessage("errorSave");
+                    // se guarda la nueva saldoinventario
+                    if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $datos['url'], $datos['estado'], $this->user_session->idUsuario))
+                        $returnCrud = $this->consultarMessage("okSave");
+                }
+            } catch (\Exception $e) {
+                $returnCrud = $this->consultarMessage($e->getMessage(), true);
             }
             return new ViewModel(array('form' => $this->form, 'msg' => $returnCrud));
         }
@@ -86,7 +91,7 @@ class SaldoInventarioController extends AbstractActionController {
         $this->dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter');
 
         $this->form = new FormSaldoInventario($this->getServiceLocator(), $this->getRequest()->getBaseUrl());
-        
+
         /*         * *********************************************************************************** */
         // Se agregan los botones de buscar producto y proveedor al formualrio saldo inventario
         /*         * *********************************************************************************** */
@@ -94,7 +99,7 @@ class SaldoInventarioController extends AbstractActionController {
         $this->form->add($formBase->get("btnBuscarProducto"));
         $this->form->add($formBase->get("btnBuscarProveedor"));
         /*         * *********************************************************************************** */
-        
+
         /** Campos para saber en donde se deben devolver los valores de la busqueda * */
         $campoId = $this->params()->fromQuery('campoId', null) == null ? 'idSaldoInventario' : $this->params()->fromQuery('campoId', null);
         $campoIdProducto = $this->params()->fromQuery('campoIdProducto', null) == null ? 'campoIdProducto' : $this->params()->fromQuery('campoIdProducto', null);
@@ -104,7 +109,7 @@ class SaldoInventarioController extends AbstractActionController {
         // Parametro que se utiliza para determinar si se va a redirigir a alguna vista en particular el id del saldo inventario seleccionado
         // Si el origen es saldoinventario/index, al dar click en la fila, esta debe redirigir al formualrio de saldo inventario
         $origen = $this->params()->fromQuery('origen', null);
-         //**** OJO: la Uri se debe enviar a la busqueda *****//
+        //**** OJO: la Uri se debe enviar a la busqueda *****//
         $Uri = $this->getRequest()->getRequestUri();
 
         $registros = array();
@@ -121,15 +126,15 @@ class SaldoInventarioController extends AbstractActionController {
         }
 
         // consultamos  y los devolvemos a la vista    
-        $view = new ViewModel(array('form' => $this->form, 
-                                    'campoId' => $campoId, 
-                                    'campoNombre' => $campoNombre,
-                                    'campoValorVenta'=> $campoValorVenta, 
-                                    'campoCantidad'=> $campoCantidad, 
-                                    'campoIdProducto'=> $campoIdProducto,
-                                    'Uri'=> $Uri,
-                                    'origen'=>$origen,
-                                    'registros' => $registros));
+        $view = new ViewModel(array('form' => $this->form,
+            'campoId' => $campoId,
+            'campoNombre' => $campoNombre,
+            'campoValorVenta' => $campoValorVenta,
+            'campoCantidad' => $campoCantidad,
+            'campoIdProducto' => $campoIdProducto,
+            'Uri' => $Uri,
+            'origen' => $origen,
+            'registros' => $registros));
         $view->setTerminal(true);
         return $view;
     }
@@ -145,33 +150,22 @@ class SaldoInventarioController extends AbstractActionController {
         }
     }
 
-    private function consultarMessage($nameMensaje) {
-        $serviceLocator = $this->getServiceLocator()->get('Config');
-        $mensaje = $serviceLocator['MsgCrud'];
-        $mensaje = $mensaje[$nameMensaje];
-        return $mensaje['function'] . "('" . $mensaje['title'] . "','" . $mensaje['message'] . "');";
+    private function consultarMessage($nameMensaje, $propio = false) {
+
+        return FuncionesBase::consultarMessage($this->getServiceLocator()->get('Config'), $nameMensaje, $propio);
     }
 
     private function configurarBotonesFormulario($modificarBool) {
-        if ($modificarBool == true) {
-            $this->form->get("btnGuardar")->setAttribute("type", "hidden");
-            $this->form->get("btnModificar")->setAttribute("type", "submit");
-            $this->form->get("btnEliminar")->setAttribute("type", "button");
-        } else {
-            $this->form->get("btnGuardar")->setAttribute("type", "submit");
-            $this->form->get("btnModificar")->setAttribute("type", "hidden");
-            $this->form->get("btnEliminar")->setAttribute("type", "hidden");
-        }
+
+        FuncionesBase::configurarBotonesFormulario($this->form, $modificarBool);
     }
 
-    private function validarSession()
-    {
-        $dif = date("H:i:s", strtotime("00:00:00") + strtotime(date('H:i:s')) - strtotime($this->user_session->timeLastActivity) );
-        $dif = explode(':',$dif)[0]*3600+explode(':',$dif)[1]*60+explode(':',$dif)[2];
+    private function validarSession() {
+        $dif = date("H:i:s", strtotime("00:00:00") + strtotime(date('H:i:s')) - strtotime($this->user_session->timeLastActivity));
+        $dif = explode(':', $dif)[0] * 3600 + explode(':', $dif)[1] * 60 + explode(':', $dif)[2];
         // Si el no existe la variable de sesión o  tiempo de inactividad sobrepasa al parametrizado  se cierra la sesión
-        if (!$this->user_session->offsetExists('idUsuario') || 
-            $dif > $this->user_session->getManager()->getConfig()->getRememberMeSeconds()) 
-        {
+        if (!$this->user_session->offsetExists('idUsuario') ||
+                $dif > $this->user_session->getManager()->getConfig()->getRememberMeSeconds()) {
             $manager = $this->user_session->getManager();
             $manager->getStorage()->clear(); //delete all session values unless it is immutable
             unset($_SESSION['user']);

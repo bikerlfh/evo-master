@@ -8,7 +8,7 @@ use Admin\Form\FormBase;
 use Admin\Form\FormImagenProducto;
 use Zend\Session\Container;
 use Application\Model\Entity\ImagenProducto;
-
+use Application\Model\Clases\FuncionesBase;
 
 class ImagenProductoController extends AbstractActionController
 {
@@ -125,12 +125,9 @@ class ImagenProductoController extends AbstractActionController
         }
     }
     
-    private function consultarMessage($nameMensaje)
+    private function consultarMessage($nameMensaje,$propio = false)
     {
-        $serviceLocator=$this->getServiceLocator()->get('Config');
-        $mensaje=$serviceLocator['MsgCrud'];
-        $mensaje= $mensaje[$nameMensaje];
-        return $mensaje['function']."('".$mensaje['title']."','".$mensaje['message']."');";
+        return FuncionesBase::consultarMessage($this->getServiceLocator()->get('Config'), $nameMensaje, $propio);
     }
     private function configurarBotonesFormulario($eliminar)
     {
