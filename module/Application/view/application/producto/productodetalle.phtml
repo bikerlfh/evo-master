@@ -130,45 +130,8 @@ $(document).ready(function(){
                 </div> 
                 <div class="panel-body"> 
                     
-                    <?php
-                    $escaper = new Zend\Escaper\Escaper('utf-8');
-                    echo $escaper->escapeHtml($this->Producto['especificacion']);?>
+                    <?php echo $this->Producto['especificacion'];?>
                 </div> 
-            </div>
-            <div class="tab-container left product-detail-tab clearfix">
-               <ul class="nav-tabs">
-                  <li class="active"><a href="#review" data-toggle="tab">review</a></li>
-                  <li><a href="#additional" data-toggle="tab">additional</a></li>
-                  <li class="active"><a href="#video" data-toggle="tab">video</a></li>
-               </ul>
-               <div class="tab-content clearfix">
-                  <div class="tab-pane" id="review">
-                     <p>Sed volutpat ac massa eget lacinia. Suspendisse non purus semper, tellus vel, tristique urna. </p>
-                     <p>Cumque nihil facere itaque mollitia consectetur saepe cupiditate debitis fugiat temporibus soluta maxime doloremque alias enim officia aperiam at similique quae vel sapiente nulla molestiae tenetur deleniti architecto ratione accusantium.
-                     </p>
-                  </div>
-                  <div class="tab-pane" id="additional">
-                     <strong>Additional Informations</strong>
-                     <p>Quae eum placeat reiciendis enim at dolorem eligendi?</p>
-                     <hr>
-                     <ul class="product-details-list">
-                        <li>Lorem ipsum dolor sit quam</li>
-                        <li>Consectetur adipisicing elit</li>
-                        <li>Illum autem tempora officia</li>
-                        <li>Amet  id odio architecto explicabo </li>
-                        <li>Voluptatem  laborum veritatis</li>
-                        <li>Quae laudantium iste libero</li>
-                     </ul>
-                  </div>
-                  <div class="tab-pane" id="video">
-                     <div class="video-container">
-                        <strong>A Video about Product</strong>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur adipisci esse.</p>
-                        <hr>
-                        <iframe width="560" height="315" src="http://www.youtube.com/embed/Z0MNVFtyO30?rel=0"></iframe>
-                     </div>
-                  </div>
-               </div>
             </div>
             <div class="lg-margin visible-xs"></div>
          </div>
