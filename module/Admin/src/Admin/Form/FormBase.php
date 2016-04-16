@@ -100,7 +100,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/categoria/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/categoria/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
@@ -116,7 +116,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/marca/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/marca/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
@@ -132,7 +132,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/municipio/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/municipio/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
@@ -148,7 +148,7 @@ class FormBase extends Form
                         'title'=>'Buscar',
                         'data-target'=>"#textModal",
                         'data-toggle'=>"modal",
-                        'onClick'=>"usar_ajax('".$this->basePath."/admin/proveedoroficina/buscar','#modal-dialog-display','')",
+                        'onClick'=>"showBusquedaOnModal(this,'".$this->basePath."/admin/proveedoroficina/buscar','')",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnBuscar']
                 )
