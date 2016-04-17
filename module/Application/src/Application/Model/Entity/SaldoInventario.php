@@ -202,10 +202,20 @@ class SaldoInventario extends AbstractTableGateway
     
     public function consultaAvanzadaSaldoInventario($idProducto, $idProveedor)
     {
-        $idProducto = $idProducto > 0? $idProducto:null;
-        $idProveedor = $idProveedor > 0? $idProveedor:null;
-        $stored = new Clases\StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Inventario.ConsultaAvanzadaSaldoInventario ?,?",array($idProducto, $idProveedor));
+        $where = array();
+        if ($idProducto > 0 ) {
+            array_push($where,'idProducto='.$idProducto);
+        }
+        if ($idProveedor > 0 ) {
+            array_push($where,'idProveedor='.$idProveedor);
+        }
+        $sql = new Sql($this->adapter);
+        $select = $sql->select(new TableIdentifier("vConsultaAvanzadaSaldoInventario", "Inventario"))
+                               ->where($where);
+        
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($result)->toArray();
     }
     
     private function LlenarEntidad($result)
