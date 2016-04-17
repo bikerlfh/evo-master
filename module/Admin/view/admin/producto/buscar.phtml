@@ -3,6 +3,9 @@
         $('#dtbuscarProducto').DataTable();
     });
 </script>
+<?php 
+$form = $this->form;
+?>
 <div class="row">  
     <div class="modal-content">
         <div class="modal-header">
@@ -16,13 +19,13 @@
                     <label for="email1" class="control-label">Marca</label>
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
-                     <?php echo $this->formElement($form->get('idMarca'));?>                            
+                     <?php echo $this->formElement($form->get('idMarca')->setAttribute('id','idMarcaBusqueda'));?>                            
                 </div>
                 <div class="col-lg-1 col-md-2 col-sm-3">
                     <label for="email1" class="control-label">Categoria </label>
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
-                     <?php echo $this->formElement($form->get('idCategoria'));?>                            
+                     <?php echo $this->formElement($form->get('idCategoria')->setAttribute('id','idCategoriaBusqueda'));?>                            
                 </div>
             </div>
             <div class="form-group">
@@ -30,13 +33,13 @@
                     <label for="email1" class="control-label">Referencia</label>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
-                    <?php echo $this->formInput($form->get('referencia'));?>                            
+                    <?php echo $this->formInput($form->get('referencia')->setAttribute('id','referenciaBusqueda'));?>                            
                 </div>
                 <div class="col-lg-1 col-md-2 col-sm-3">
                     <label for="email1" class="control-label">Código</label>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
-                    <?php echo $this->formInput($form->get('codigo'));?>                            
+                    <?php echo $this->formInput($form->get('codigo')->setAttribute('id','codigoBusqueda'));?>                            
                 </div>
             </div>
             <div class="form-group">
@@ -44,12 +47,12 @@
                     <label for="email1" class="control-label">Nombre</label>
                 </div>
                 <div class="col-lg-4 col-md-5 col-sm-6">
-                    <?php echo $this->formInput($form->get('nombre'));?>                            
+                    <?php echo $this->formInput($form->get('nombre')->setAttribute('id','nombreBusqueda'));?>                            
                 </div>
             </div>
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php  echo $this->Uri ?>','#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),'idMarca='+$('#idMarca').val()+'&amp;idCategoria='+$('#idCategoria').val()+'&amp;referencia='+$('#referencia').val()+'&amp;codigo='+$('#codigo').val()+'&amp;nombre='+$('#nombre').val());">
+                       onclick="usar_ajax('<?php  echo $this->Uri ?>','#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'),'idMarca='+$('#idMarcaBusqueda').val()+'&idCategoria='+$('#idCategoriaBusqueda').val()+'&referencia='+$('#referenciaBusqueda').val()+'&codigo='+$('#codigoBusqueda').val()+'&nombre='+$('#nombreBusqueda').val());">
                 <?php
                     echo $this->formElement($form->get('btnCancelar'));
                 ?>

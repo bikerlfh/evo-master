@@ -195,10 +195,37 @@ class Producto extends AbstractTableGateway
     //public function consultaAvanzadaProducto($referencia,$codigo,$nombre,$idMarca,$idCategoria)
     public function consultaAvanzadaProducto($idMarca,$idCategoria,$referencia,$codigo,$nombre)
     {
-        $idMarca = $idMarca > 0? $idMarca:null;
-        $idCategoria = $idCategoria > 0? $idCategoria:null;
-        $stored = new Clases\StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaProducto ?,?,?,?,?",array($idMarca,$idCategoria,$referencia,$codigo,$nombre));
+        $where = array();
+        if ($idMarca > 0) {
+            array_push($where,"p.idMarca=".$idMarca);
+        }
+        if ($idCategoria > 0) {
+            array_push($where,"p.idCategoria=".$idCategoria);
+        }
+        if (strlen($referencia) > 0) {
+            array_push($where,"p.referencia like '%".$referencia."'");
+        }
+        if (strlen($codigo) > 0) {
+            array_push($where,"p.codigo like '%".$codigo."'");
+        }
+        if (strlen($nombre) > 0) {
+            array_push($where,"p.nombre like '%".$nombre."'");
+        }
+        
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                        from(array('p'=> $this->table))->
+                        join(array("m"=> new TableIdentifier("Marca","Producto")),
+                                    "m.idMarca = p.idMarca",
+                                    array("descripcionMarca"=> new Expression("m.codigo + ' - ' + m.descripcion")))->
+                        join(array("c"=> new TableIdentifier("Categoria","Producto")),
+                                    "c.idCategoria = p.idCategoria",
+                                    array("descripcionCategoria"=> new Expression("c.codigo + ' - ' + c.descripcion")))->
+                        where($where);
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($result)->toArray();
+        
     }
     public function generarOptionsSelect($where = null)
     {
