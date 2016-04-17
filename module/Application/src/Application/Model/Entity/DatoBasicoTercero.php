@@ -153,10 +153,25 @@ class DatoBasicoTercero extends AbstractTableGateway
     }
     
     public function consultaAvanzadaDatoBasicoTercero($nit, $descripcion)
-    {
-        $nit = $nit > 0? $nit:null;
-        $stored = new Clases\StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Tercero.ConsultaAvanzadaTercero ?,?",array($nit, $descripcion));
+    {        
+        $where = array();
+        if ($nit>0) {
+            array_push($where,'t.nit ='.$nit);
+        }
+        if (strlen($descripcion) >0) {
+            $descripcion = strtoupper($descripcion);
+            array_push($where,"UPPER(t.descripcion) like '%".$descripcion."%' OR UPPER(t.nombre) like '%".$descripcion."%' OR UPPER(t.apellido) like '%".$descripcion."%'");
+        }
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                        from(array('t'=> $this->table))->
+                        join(array('td'=>new TableIdentifier("TipoDocumento", 'Tercero')),
+                                   "td.idTipoDocumento = t.idTipoDocumento", 
+                                   array('descripcionTipoDocumento'=> new Expression("td.codigo + ' - ' + td.descripcion")))->
+                        where($where);
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($result)->toArray();
     }
     
      public function generarOptionsSelect($where = null)

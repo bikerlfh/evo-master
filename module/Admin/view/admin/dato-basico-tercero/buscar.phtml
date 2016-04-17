@@ -16,7 +16,7 @@
                     <label for="email1" class="control-label">Nit</label>
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
-                    <?php echo $this->formElement($form->get('nit')); ?>                            
+                    <?php echo $this->formElement($form->get('nit')->setAttribute('id','nitBusqueda')); ?>                            
                 </div>
             </div>
 
@@ -25,13 +25,13 @@
                     <label for="email1" class="control-label">Descripción</label>
                 </div>
                 <div class="col-lg-3 col-md-11 col-sm-9">
-                    <?php echo $this->formElement($form->get('descripcion')); ?>                            
+                    <?php echo $this->formElement($form->get('descripcion')->setAttribute('id','descripcionBusqueda')); ?>                            
                 </div>
             </div>
 
             <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
                 <input name="btnBuscar" id="btnBuscar" type="button" title="Buscar" style="margin:2px" class="btn btn-success" value="Buscar" 
-                       onclick="usar_ajax('<?php echo $this->Uri ?>', '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'), 'nit=' + $('#nit').val() + '&amp;descripcion=' + $('#descripcion').val());">
+                       onclick="usar_ajax('<?php echo $this->Uri ?>', '#'+$.getParameter('modalDialogDisplay','<?php  echo $this->Uri ?>'), 'nit=' + $('#nitBusqueda').val() + '&descripcion=' + $('#descripcionBusqueda').val());">
                        <?php
                        echo $this->formElement($form->get('btnCancelar'));
                        ?>
