@@ -45,7 +45,7 @@ class FormDatoBasicoTercero extends Form
                 'id'=>'nombreTercero', 
                 'type' => 'text',
                 'placeholder'=>'Tercero',
-                'readonly'=>true,
+                'onkeypress'=>'return false',
                 'class' => $this->cssClass['text']
             ),
         ));

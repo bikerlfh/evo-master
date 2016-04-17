@@ -6,26 +6,27 @@
 
 namespace Admin\Form;
 use Zend\Form\Form;
-
-class FormProveedor extends Form
+use Zend\Form\Element;
+class FormReview extends Form
 {
     private $adapter;
     private $cssClass;
     private $basePath;
     
-    //Formulario
     private $FormDatoBasicoTercero;
+    private $FormProducto;
     
     public function __construct($serviceLocator,$basePath = null)
     {
-        parent::__construct("frmproveedor");
+        parent::__construct("frmreview");
         $this->adapter=$serviceLocator->get('Zend\Db\Adapter');
         $this->basePath = $basePath;
         
         $this->FormDatoBasicoTercero = new FormDatoBasicoTercero($serviceLocator, $basePath);
+        $this->FormProducto = new FormProducto($serviceLocator, $basePath);
         
         $this->setAttributes(array(
-            'action' => $this->basePath.'/admin/proveedor/index',
+            'action' => $this->basePath.'/admin/review/index',
             'method' => 'post',
             'class'=>'form-horizontal',
             'role'=>'form'
@@ -37,52 +38,45 @@ class FormProveedor extends Form
     private function generarCampos()
     {
         $this->add(array(
-            'name' => 'idProveedor',                       
+            'name' => 'idReview',                       
             'attributes' => array(
-                'id'=>'idProveedor', 
+                'id'=>'idReview', 
+                'type' => 'hidden',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'idPedidoVentaPosicion',                       
+            'attributes' => array(
+                'id'=>'idPedidoVentaPosicion', 
                 'type' => 'hidden',
             ),
         ));
         
-        $this->add(array(
-            'name'=> 'nombreProveedor',
-            'attributes' => array(
-                'id'=>'nombreProveedor', 
-                'type' => 'text',
-                'placeholder'=>'Proveedor',
-                'required'=>'required',
-                'onkeypress'=>'return false',
-                'class' => $this->cssClass['text']
-            ),
-        ));
-        
-        //campo Formulario
-        $this->add($this->FormDatoBasicoTercero->get("idDatoBasicoTercero"));
         $this->add($this->FormDatoBasicoTercero->get("nombreTercero"));
-         
-        /***************Campos tercero **************************/
-         $this->add(array(
-            'name' => 'email',                       
-            'attributes' => array(
-                'id'=>'email', 
-                'type' => 'text',
-                'placeholder'=>'E-mail',
-                'required'=>true,
-                'maxlength'=>'150',
-                'class' => $this->cssClass['text']
-            ),
-        ));
-        $this->add(array(
-            'name' => 'webSite',                       
-            'attributes' => array(
-                'id'=>'webSite', 
-                'type' => 'text',
-                'placeholder'=>'Web Site',
-                'maxlength'=>'150',
-                'class' => $this->cssClass['text']
-            ),
-        ));
+        $this->add($this->FormProducto->get("nombreProducto"));
         
+        $this->add(array(
+            'name' => 'puntuacion',                       
+            'attributes' => array(
+                'id'=>'puntuacion', 
+                'type' => 'number',
+                'placeholder'=>'Puntuación',
+                'required'=>'required',
+                'maxlength'=>'1',
+                'onkeyup'=>'if($(this).val()<1) $(this).val(1); else if($(this).val() > 5) $(this).val(5);',
+                'class' => $this->cssClass['text']
+            ),
+        ));
+        $textMensaje=new Element\Textarea('mensaje');
+        $textMensaje->setAttributes(array(
+                'id'=>'mensaje',
+                'placeholder'=>'mensaje',
+                'required'=>'required',
+                'maxlength'=>'150',
+                'rows'=>'5',
+                'style'=>'width:100%; height: 100%'
+        ));
+        $this->add($textMensaje);
         $this->add(array(
                 'name'=>'btnGuardar',			
                 'attributes'=>array(
@@ -110,8 +104,8 @@ class FormProveedor extends Form
                         'id'=>'btnEliminar',
                         'type'=>'button',
                         'value'=>'Eliminar',
-                        'title'=>'Eliminar',    
-                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/proveedor/eliminar?id='+$('#idProveedor').val());",
+                        'title'=>'Eliminar',
+                        'onClick'=>"$(location).attr('href','".$this->basePath."/admin/review/eliminar?id='+$('#idReview').val());",
                         'style'=>'margin:2px',
                         'class'=>$this->cssClass['btnEliminar']
                 )

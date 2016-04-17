@@ -28,6 +28,7 @@ return array(
             'Admin\Controller\EstadoPedidoVenta' => 'Admin\Controller\EstadoPedidoVentaController',
             'Admin\Controller\PedidoVenta' => 'Admin\Controller\PedidoVentaController',
             'Admin\Controller\Promocion' => 'Admin\Controller\PromocionController',
+            'Admin\Controller\Review' => 'Admin\Controller\ReviewController',
         ),
     ),
     'router' => array(
