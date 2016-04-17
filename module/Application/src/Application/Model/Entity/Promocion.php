@@ -98,10 +98,9 @@ class Promocion extends AbstractTableGateway
                                     "p.idProducto = s.idProducto",
                                     array("nombreProducto"=> new Expression("(p.codigo + ' - ' + p.nombre)")));
         
-        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
-        $resultsSet->initialize($results)->toArray();
-        return   $resultsSet;
+        return $resultsSet->initialize($result)->toArray();
     }
     
     public function consultarPromocionPorIdPromocion($idPromocion)
@@ -143,11 +142,37 @@ class Promocion extends AbstractTableGateway
     }
     public function consultaAvanzadaPromocion($idProducto,$idProveedor,$estado)
     {
-        $idProducto = $idProducto > 0? $idProducto:null;
-        $idProveedor = $idProveedor > 0? $idProveedor:null;
         $estado = $estado > 0? $estado:null;
-        $stored = new StoredProcedure($this->adapter);
-        return $stored->execProcedureReturnDatos("Producto.ConsultaAvanzadaPromocion ?,?,?",array($idProducto,$idProveedor,$estado));
+        $where = array();
+        if ($idProducto > 0) {
+            array_push($where,"s.idProducto=".$idProducto);
+        }
+        if ($idProveedor > 0) {
+            array_push($where,"s.idProveedor=".$idProveedor);
+        }
+        if ($estado != null) {
+            array_push($where,"pro.estado=".$estado);
+        }
+        
+        $sql = new Sql($this->adapter);        
+        $select = $sql->select()->
+                         from(array('pro'=> $this->table))->
+                         columns(array('idPromocion','idSaldoInventario','valorAnterior','valorPromocion','fechaDesde','fechaHasta','estado'))->
+                         join(array('s'=> new TableIdentifier("SaldoInventario","Inventario")),
+                                    's.idSaldoInventario = pro.idSaldoInventario')->
+                         join(array("p"=> new TableIdentifier("Producto","Producto")),
+                                    "p.idProducto = s.idProducto",
+                                    array("nombreProducto"=> new Expression("(p.codigo + ' - ' + p.nombre)")))->
+                         join(array("proveedor"=> new TableIdentifier("Proveedor","Tercero")),
+                                    "s.idProveedor = proveedor.idProveedor")->
+                         join(array("tercero"=> new TableIdentifier("DatoBasicoTercero","Tercero")),
+                                    "tercero.idDatoBasicoTercero = proveedor.idDatoBasicoTercero",
+                                    array("nombreProveedor"=> new Expression("CONVERT(VARCHAR,tercero.nit)+' - ' + tercero.descripcion")))->
+                         where($where);
+        
+        $result = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($result)->toArray();
     }
     /*
      *  Consulta la vista de promociones para el cliente 
