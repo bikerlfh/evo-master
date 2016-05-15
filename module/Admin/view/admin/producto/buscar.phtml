@@ -81,7 +81,7 @@ $form = $this->form;
                                 $onClick = "$('#".$this->campoId."').val(".$obj['idProducto'].");$('#".$this->campoNombre."').val('".$descripcionProducto."');$('#btnCloseBusquedaProducto').click();";
                                 
                                 if($this->origen != null){
-                                    $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idProducto=".$obj['idProducto']."');";
+                                    $onClick = "$(location).attr('href','".$this->BasePath()."/admin/".$this->origen."?idProducto=".$obj['idProducto']."&nombreProducto=". $descripcionProducto ."');";
                                 }
                                 echo "
                                     <tr class='gradeX odd' style='cursor:pointer'onClick=\"".$onClick."\">

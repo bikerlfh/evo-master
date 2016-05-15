@@ -101,7 +101,19 @@ class ImagenProducto extends AbstractTableGateway
     }
     public function consultarImagenProductoPorIdProducto($idProducto)
     {
-        return $this->select(array('idProducto'=>$idProducto))->toArray();
+        
+        $sql = new Sql($this->adapter);
+        $select = $sql->select()->
+                        from(array('i'=> $this->table))->
+                        join(array("p"=> new TableIdentifier("Producto","Producto")),
+                                    "i.idProducto = p.idProducto",
+                                    array("descripcionProducto"=> new Expression("p.codigo + ' - ' + p.nombre")))->
+                        where(array('i.idProducto'=> $idProducto));
+        $results = $sql->prepareStatementForSqlObject($select)->execute();
+        $resultsSet = new ResultSet();
+        return $resultsSet->initialize($results)->toArray();
+        
+        //return $this->select(array('idProducto'=>$idProducto))->toArray();
     }
     public function consultarImagenProductoPorUrl($url)
     {

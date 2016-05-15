@@ -27,6 +27,9 @@ class ImagenProductoController extends AbstractActionController
         $this->dbAdapter=$this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
         $id=$this->params()->fromQuery('id',null);
+        //Parámetro que se usa para consultar todas las imagenes de ese producto.
+        $idProducto = $this->params()->fromQuery('idProducto',null);
+        
         $this->ImagenProducto = new ImagenProducto($this->dbAdapter);
         $this->form = new FormImagenProducto($this->getServiceLocator(),$this->getRequest()->getBaseUrl());
         /**************************************************************************************/
@@ -78,7 +81,7 @@ class ImagenProductoController extends AbstractActionController
                         $returnCrud = $this->consultarMessage("okSave");
                     }
                 }
-                return new ViewModel(array('form' => $this->form,'msg'=>$returnCrud,'registros'=>$this->ImagenProducto->consultarTodoImagenProducto()));
+                return new ViewModel(array('form' => $this->form,'msg'=>$returnCrud));
             }
         }
         // si existe el parametro $id  se consulta la proveedoroficina y se carga el formulario.
@@ -90,8 +93,18 @@ class ImagenProductoController extends AbstractActionController
             $this->form->get("nombreProducto")->setValue($this->params()->fromQuery('nombreProducto'));
             $this->form->get("url")->setValue($this->ImagenProducto->getUrl());
             $this->configurarBotonesFormulario(true);
+            return new ViewModel(array('form' => $this->form));
+            
         }
-        return new ViewModel(array('form' => $this->form,'registros'=>$this->ImagenProducto->consultarTodoImagenProducto()));
+        else if(isset($idProducto))
+        {
+            $this->form->get("idProducto")->setValue($idProducto);
+            $this->form->get("nombreProducto")->setValue($this->params()->fromQuery('nombreProducto'));
+            $this->configurarBotonesFormulario(false);
+            return new ViewModel(array('form' => $this->form,'registros'=>$this->ImagenProducto->consultarImagenProductoPorIdProducto($this->params()->fromQuery('idProducto'))));
+
+        }
+        return new ViewModel(array('form' => $this->form));
     }
     
     public function eliminarAction()

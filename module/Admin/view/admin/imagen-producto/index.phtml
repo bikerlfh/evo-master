@@ -1,10 +1,9 @@
 <?php
-$form=$this->form;
+$form = $this->form;
 $form->prepare();
 //<====Si se envía un mensaje este se muestra=====> 
-if ($this->msg != null) 
-{
-    echo "<script type='text/javascript'>".$this->msg ."</script>";    
+if ($this->msg != null) {
+    echo "<script type='text/javascript'>" . $this->msg . "</script>";
 }
 ?>
 <div class="row">
@@ -15,49 +14,50 @@ if ($this->msg != null)
             </div>
             <div class="box-body">
                 <?php echo $this->form()->openTag($form); ?>
-                    <?php echo $this->formInput($form->get('idImagenProducto'));?>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Producto</label>
-                        </div>
-                        <div class="col-lg-5 col-md-11 col-sm-9">
-                            <?php echo $this->formElement($form->get('idProducto'));?>  
-                            <?php echo $this->formInput($form->get('nombreProducto'));?>  
-                        </div>
-                        <div class="col-lg-1">
-                             <?php echo $this->formElement($form->get('btnBuscarProducto'));?>                           
-                        </div>
+                <?php echo $this->formInput($form->get('idImagenProducto')); ?>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Producto</label>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Imagen</label>
-                        </div>
-                        <div class="col-lg-8 col-md-11 col-sm-9">
-                            <?php echo $this->formElement($form->get('image-file'));?>   
-                            <?php echo $this->formInput($form->get('url'));?>      
-                        </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formElement($form->get('idProducto')); ?>  
+                        <?php echo $this->formInput($form->get('nombreProducto')); ?>  
                     </div>
-                    <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
-                        <?php   
-                            echo $this->formElement($form->get('btnGuardar'));
-                            echo $this->formElement($form->get('btnModificar'));
-                            echo $this->formElement($form->get('btnEliminar'));
-                            echo $this->formElement($form->get('btnCancelar'));
-                        ?>
+                    <div class="col-lg-1">
+                        <?php echo $this->formInput($form->get('btnBuscarProducto')->setAttribute('onClick',"showBusquedaOnModal(this,'/evo-master/admin/producto/buscar?origen=imagenproducto','')")); ?>
+                        
                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Imagen</label>
+                    </div>
+                    <div class="col-lg-8 col-md-11 col-sm-9">
+                        <?php echo $this->formElement($form->get('image-file')); ?>   
+                        <?php echo $this->formInput($form->get('url')); ?>      
+                    </div>
+                </div>
+                <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
+                    <?php
+                    echo $this->formElement($form->get('btnGuardar'));
+                    echo $this->formElement($form->get('btnModificar'));
+                    echo $this->formElement($form->get('btnEliminar'));
+                    echo $this->formElement($form->get('btnCancelar'));
+                    ?>
+                </div>
                 <?php echo $this->form()->closeTag(); ?>
             </div>
         </div><!--end .box -->
     </div>
-    
+
     <div class="col-sm-2 style-inverse">
-          <div class="holder">
-                <img class="img-rounded img-responsive" id='imgAdminProducto' src="<?php echo $form->get('url')->getValue() ?>" alt="">
-                <!--<div class="stick-bottom-left">
-                        <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Contact me"><i class="fa fa-envelope"></i></a>
-                        <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Follow me"><i class="fa fa-twitter"></i></a>
-                        <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Personal info"><i class="fa fa-facebook"></i></a>
-                </div>-->
+        <div class="holder">
+            <img class="img-rounded img-responsive" id='imgAdminProducto' src="<?php echo $form->get('url')->getValue() ?>" alt="">
+            <!--<div class="stick-bottom-left">
+                    <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Contact me"><i class="fa fa-envelope"></i></a>
+                    <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Follow me"><i class="fa fa-twitter"></i></a>
+                    <a class="btn btn-inverse btn-equal" data-toggle="tooltip" data-placement="top" data-original-title="Personal info"><i class="fa fa-facebook"></i></a>
+            </div>-->
         </div>
         <!--
         <div class="box box-outlined">
@@ -68,42 +68,42 @@ if ($this->msg != null)
         -->
     </div>
     <div class="col-lg-12">
-        <?php if (count($this->registros)>0) { ?>       
-        <div class="row">  
-            <div class="col-lg-12">
-                <div class="box box-bordered">
-                    <div class="box-head">
-                        <header><h4 class="text-light"><strong>Imagen Productos</strong> <small>Todos</small></h4></header>
-                    </div>
-                    <div class="box"> 
-                        <div class="box-body table-responsive">
-                            <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
-                                <table id="dtbuscar" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Producto</th>
-                                            <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Url</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                         <?php 
-                                        foreach ($this->registros as $obj) {
-                                            echo "
-                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '".$this->basePath()."/admin/imagenproducto/index?id=".$obj['idImagenProducto']."&nombreProducto=".$obj['descripcionProducto']."')\">
-                                                    <td>".$obj['descripcionProducto']."</td>
-                                                    <td>".$obj['url']."</td>
+        <?php if (count($this->registros) > 0) { ?>       
+            <div class="row">  
+                <div class="col-lg-12">
+                    <div class="box box-bordered">
+                        <div class="box-head">
+                            <header><h4 class="text-light"><strong>Imagen Productos</strong> <small>Todos</small></h4></header>
+                        </div>
+                        <div class="box"> 
+                            <div class="box-body table-responsive">
+                                <div id="dtcrudindex_wrapper" class="dataTables_wrapper" role="grid">
+                                    <table id="dtbuscar" class="table table-striped table-hover dataTable" aria-describedby="dtcrudindex_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th lass="sorting" role="columnheader" tabindex="0" aria-controls="dtcrudindex" rowspan="1" colspan="1">Producto</th>
+                                                <th lass="sorting" role="columnheader" tabindex="1" aria-controls="dtcrudindex" rowspan="1" colspan="1">Url</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            
+                                            foreach ($this->registros as $obj) {
+                                                echo "
+                                                <tr class='gradeX odd' style='cursor:pointer' onClick=\"$(location).attr('href', '" . $this->basePath() . "/admin/imagenproducto/index?id=" . $obj['idImagenProducto'] . "&nombreProducto=" . $obj['descripcionProducto'] . "')\">
+                                                    <td>" . $obj['descripcionProducto'] . "</td>
+                                                    <td>" . $obj['url'] . "</td>
                                                 </tr>";
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                             </div>
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         <?php } ?>
     </div>
 </div>
- 
