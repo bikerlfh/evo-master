@@ -77,6 +77,17 @@ return array(
                     ),
                 ),
             ),
+            // Sing up
+            'longout' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/longout',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Login',
+                        'action'     => 'logout',
+                    ),
+                ),
+            ),
             'producto-detalle' => array(
                 'type'    => 'segment',
                 'options' => array(

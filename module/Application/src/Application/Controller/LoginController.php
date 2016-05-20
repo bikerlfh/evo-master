@@ -43,10 +43,10 @@ class LoginController extends AbstractActionController
         }
         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/admin/login');
     }
-    public function exitAction()
+    public function logoutAction()
     {
         $this->destroySession();
-        return $this->redirect()->toUrl(str_replace("/public","", $this->getRequest()->getBaseUrl()).'/admin/login');
+        return $this->redirect()->toUrl(str_replace("/public","", $this->getRequest()->getBaseUrl()).'/');
     }
     private function createSession()
     {

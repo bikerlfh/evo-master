@@ -72,45 +72,20 @@ if (defined('RUNNING_FROM_ROOT')) {
                         </div>
                         <!-- End .header-top-left -->
                         <div class="header-top-right">
-                           <div class="header-top-dropdowns pull-right">
-                               <!--
-                              <div class="btn-group dropdown-money">
-                                 <button type="button" class="btn btn-custom dropdown-toggle" data-toggle="dropdown">
-                                 <span class="hide-for-xs">US Dollar</span><span class="hide-for-lg">$</span>
-                                 </button>
-                                 <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#"><span class="hide-for-xs">Euro</span><span class="hide-for-lg">&euro;</span></a></li>
-                                    <li><a href="#"><span class="hide-for-xs">Pound</span><span class="hide-for-lg">&pound;</span></a></li>
-                                 </ul>
-                              </div>-->
-                              <!-- End .btn-group -->
-                              <div class="btn-group dropdown-language">
-                                 <button type="button" class="btn btn-custom dropdown-toggle" data-toggle="dropdown">
-                                 <span class="flag-container"><img src="<?php echo $this->basePath() ?>/images/england-flag.png" alt="flag of colombia"></span>
-                                 <span class="hide-for-xs">English</span>
-                                 </button>
-                                 <!--<ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#"><span class="flag-container"><img src="<?php echo $this->basePath() ?>/images/italy-flag.png" alt="flag of england"></span><span class="hide-for-xs">Italian</span></a></li>
-                                    <li><a href="#"><span class="flag-container"><img src="<?php echo $this->basePath() ?>/images/spain-flag.png" alt="flag of italy"></span><span class="hide-for-xs">Spanish</span></a></li>
-                                    <li><a href="#"><span class="flag-container"><img src="<?php echo $this->basePath() ?>/images/france-flag.png" alt="flag of france"></span><span class="hide-for-xs">French</span></a></li>
-                                    <li><a href="#"><span class="sm-separator"><img src="<?php echo $this->basePath() ?>/images/germany-flag.png" alt="flag of germany"></span><span class="hide-for-xs">German</span></a></li>
-                                 </ul>-->
-                              </div>
-                              <!-- End .btn-group -->
-                           </div>
+                           
                            <!-- End .header-top-dropdowns -->
                            <div class="header-text-container pull-right">
                               <p class="header-text">Welcome to Venedor!</p>
                               <?php 
                                     if (isset($_SESSION['user']['username'])) {
-                                        echo "<p class='header-link'    >".$_SESSION['user']['username']."</p>";
+                                        echo "<p class='header-link'>".$_SESSION['user']['username']."</p>"
+                                                . "<button type='button' class='btn fa fa-sign-out' onclick=\"$(location).attr('href','".str_replace("/public", "", $this->basePath())."/longout')\">Salir</button>";
                                     }
                                     else
                                     {
                                         echo " <p class='header-link'><a href='".str_replace("/public", "", $this->basePath())."/login'>login</a>&nbsp;or&nbsp;<a href='".str_replace("/public", "", $this->basePath())."/singup'>create an account</a></p>";
                                     }
                               ?>
-                             
                            </div>
                            <!-- End .pull-right -->
                         </div>
