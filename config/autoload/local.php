@@ -29,6 +29,11 @@ return array(
     'username'  => 'DB_9EB44A_evo_admin',
     'password'  => 'laurame123'
     ),*/
+    // <== Formatos de fechas, etc ==>
+    'formats'=>array(
+        'datetime'=>'d-m-Y H:m:i', //Y-m-d H:m:i
+        'date'=>'d-m-Y',// Y-m-d
+    ),
     //<== clases css Formularios ==>
     'cssClass' => array(
         'text'=>'form-control',

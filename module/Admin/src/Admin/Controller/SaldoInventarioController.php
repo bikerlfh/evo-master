@@ -16,19 +16,21 @@ class SaldoInventarioController extends AbstractActionController {
     private $form;
     private $user_session;
 
+    private $formats;
     public function __construct() {
         $this->user_session = new Container('user');
+    
     }
 
     public function indexAction() {
         $this->validarSession();
+        $this->formats = $this->getServiceLocator()->get('Config')['formats'];
         // se asigna el layout admin
         $this->layout('layout/admin');
         // se obtiene el adapter
         $this->dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter');
         // Parametro pasado por get, con el cual se sabe si se seleccionó objeto para modificar
         $id = $this->params()->fromQuery('idSaldoInventario', null);
-
         $this->SaldoInventario = new SaldoInventario($this->dbAdapter);
         $this->form = new FormSaldoInventario($this->getServiceLocator(), $this->getRequest()->getBaseUrl());
         /*         * *********************************************************************************** */
@@ -46,7 +48,7 @@ class SaldoInventarioController extends AbstractActionController {
                 // Si se envia el id de la saldoinventario se modifica este.
                 if ($datos["idSaldoInventario"] != null) {
                     $returnCrud = $this->consultarMessage("errorUpdate");
-                    if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $datos['url'], $datos['estado'], $this->user_session->idUsuario))
+                    if ($this->SaldoInventario->modificarSaldoInventario($datos['idSaldoInventario'], $datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $datos['url'], $datos['estado'],date($this->formats['datetime']), $this->user_session->idUsuario))
                         $returnCrud = $this->consultarMessage("okUpdate");
                 }
                 else {
@@ -56,7 +58,7 @@ class SaldoInventarioController extends AbstractActionController {
                     }
                     $returnCrud = $this->consultarMessage("errorSave");
                     // se guarda la nueva saldoinventario
-                    if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $datos['url'], $datos['estado'], $this->user_session->idUsuario))
+                    if ($this->SaldoInventario->guardarSaldoInventario($datos['idProducto'], $datos['idProveedor'], $datos['cantidad'], $datos['costoTotal'], $datos['valorVenta'], $datos['url'], $datos['estado'],date($this->formats['datetime']), $this->user_session->idUsuario))
                         $returnCrud = $this->consultarMessage("okSave");
                 }
             } catch (\Exception $e) {

@@ -107,11 +107,11 @@ class SaldoInventario extends AbstractTableGateway
         $this->idSaldoInventario=$idSaldoInventario;
     }
     
-    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$idUsuarioCreacion)
+    public function guardarSaldoInventario($idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$fecha,$idUsuarioCreacion)
     {
         $datos=array(
-                'fechaModificacion'=> date('Y-m-d H:i:s'),
-                'fechaCreacion'=> date('Y-m-d H:i:s'),
+                'fechaModificacion'=> $fecha,
+                'fechaCreacion'=> $fecha,
                 'idUsuarioModificacion'=> $idUsuarioCreacion,
                 'idUsuarioCreacion'=> $idUsuarioCreacion,
                 'estado' => $estado,
@@ -128,10 +128,10 @@ class SaldoInventario extends AbstractTableGateway
         return false;
     }
 
-    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$idUsuarioModificacion)
+    public function modificarSaldoInventario($idSaldoInventario,$idProducto,$idProveedor,$cantidad,$costoTotal,$valorVenta,$url,$estado,$fecha,$idUsuarioModificacion)
     {
         $datos=array(
-                'fechaModificacion'=> date('Y-m-d H:i:s'),
+                'fechaModificacion'=> $fecha,
                 'idUsuarioModificacion'=> $idUsuarioModificacion,
                 'estado'=>$estado,
                 'url' => $url,

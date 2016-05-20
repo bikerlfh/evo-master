@@ -14,13 +14,14 @@ class PromocionController extends AbstractActionController {
     private $Promocion;
     private $form;
     private $user_session;
-
+    private $formats;
     public function __construct() {
         $this->user_session = new Container('user');
     }
 
     public function indexAction() {
         $this->validarSession();
+        $this->formats = $this->getServiceLocator()->get('Config')['formats'];
         // se asigna el layout admin
         $this->layout('layout/admin');
         // se obtiene el adapter
@@ -37,9 +38,9 @@ class PromocionController extends AbstractActionController {
             try {
                 $datos = $this->request->getPost();
                 $fechaDesde = new \DateTime($datos['fechaDesde']);
-                $fechaDesde = $fechaDesde->format('Y-m-d');
+                $fechaDesde = $fechaDesde->format($this->formats['date']);
                 $fechaHasta = new \DateTime($datos['fechaHasta']);
-                $fechaHasta = $fechaHasta->format('Y-m-d');
+                $fechaHasta = $fechaHasta->format($this->formats['date']);
                 // Si se envia el id de la promocion se modifica este.
                 if ($datos["idPromocion"] != null) {
                     $returnCrud = $this->consultarMessage("errorUpdate");
