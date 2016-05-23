@@ -14,6 +14,7 @@ return array(
             'Application\Controller\Login' => 'Application\Controller\LoginController',
             'Application\Controller\Producto' => 'Application\Controller\ProductoController',
             'Application\Controller\Buscar' => 'Application\Controller\BuscarController',
+            'Application\Controller\Cart' => 'Application\Controller\CartController',
         ),
     ),
     'router' => array(
@@ -77,7 +78,7 @@ return array(
                     ),
                 ),
             ),
-            // Sing up
+            // long up
             'longout' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -85,6 +86,16 @@ return array(
                     'defaults' => array(
                         'controller' => 'Application\Controller\Login',
                         'action'     => 'logout',
+                    ),
+                ),
+            ),
+            'cart' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/cart',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Cart',
+                        'action'     => 'cart',
                     ),
                 ),
             ),

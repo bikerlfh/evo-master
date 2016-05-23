@@ -7,7 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Zend\\' => array($vendorDir . '/zendframework/zendframework/library'),
-    'ZendXml' => array($vendorDir . '/zendframework/zendxml/library'),
-    'ZF2FileUploadExamples' => array($vendorDir . '/cgm/zf2-file-upload-examples/src'),
+    'ZendXml\\' => array($vendorDir . '/zendframework/zendxml/library'),
     'ShoppingCart' => array($vendorDir . '/cyrkulewski/shopping-cart/src'),
 );

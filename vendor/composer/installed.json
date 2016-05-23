@@ -1,27 +1,27 @@
 [
     {
         "name": "zendframework/zendxml",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/ZendXml.git",
-            "reference": "559b34f426d33a11c3db118e00ce14bb8dc64e5f"
+            "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/559b34f426d33a11c3db118e00ce14bb8dc64e5f",
-            "reference": "559b34f426d33a11c3db118e00ce14bb8dc64e5f",
+            "url": "https://api.github.com/repos/zendframework/ZendXml/zipball/7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
+            "reference": "7b64507bc35d841c9c5802d67f6f87ef8e1a58c9",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.3"
+            "php": "^5.3.3 || ^7.0"
         },
         "require-dev": {
-            "fabpot/php-cs-fixer": "*@dev",
-            "phpunit/phpunit": "~3.7"
+            "phpunit/phpunit": "^3.7 || ^4.0",
+            "squizlabs/php_codesniffer": "^1.5"
         },
-        "time": "2014-03-05 22:25:44",
+        "time": "2016-02-04 21:02:08",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -31,7 +31,7 @@
         "installation-source": "dist",
         "autoload": {
             "psr-0": {
-                "ZendXml": "library/"
+                "ZendXml\\": "library/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -48,17 +48,17 @@
     },
     {
         "name": "zendframework/zendframework",
-        "version": "2.3.3",
-        "version_normalized": "2.3.3.0",
+        "version": "2.3.9",
+        "version_normalized": "2.3.9.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/zendframework/zf2.git",
-            "reference": "88c9b6f566fc1097f64ead155625db9bdfee531e"
+            "url": "https://github.com/zendframework/zendframework.git",
+            "reference": "32858f883fffb5eef9f610b538ed026f6033b6de"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zf2/zipball/88c9b6f566fc1097f64ead155625db9bdfee531e",
-            "reference": "88c9b6f566fc1097f64ead155625db9bdfee531e",
+            "url": "https://api.github.com/repos/zendframework/zendframework/zipball/32858f883fffb5eef9f610b538ed026f6033b6de",
+            "reference": "32858f883fffb5eef9f610b538ed026f6033b6de",
             "shasum": ""
         },
         "require": {
@@ -120,7 +120,7 @@
         },
         "require-dev": {
             "doctrine/annotations": ">=1.0",
-            "fabpot/php-cs-fixer": "dev-master#fcbb09b5204",
+            "fabpot/php-cs-fixer": "1.*",
             "ircmaxell/random-lib": "dev-master",
             "ircmaxell/security-lib": "dev-master",
             "mikey179/vfsstream": "1.2.*",
@@ -136,7 +136,7 @@
             "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
             "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
         },
-        "time": "2014-09-16 22:58:11",
+        "time": "2015-05-11 16:03:51",
         "bin": [
             "bin/classmap_generator.php",
             "bin/pluginmap_generator.php",
@@ -212,49 +212,5 @@
             "shopping-cart",
             "zf2"
         ]
-    },
-    {
-        "name": "cgm/zf2-file-upload-examples",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/cgmartin/ZF2FileUploadExamples.git",
-            "reference": "abd00718dda2b8a4715ce5a48e79050e6b50652b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/cgmartin/ZF2FileUploadExamples/zipball/abd00718dda2b8a4715ce5a48e79050e6b50652b",
-            "reference": "abd00718dda2b8a4715ce5a48e79050e6b50652b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zendframework": ">=2.1.0"
-        },
-        "time": "2013-01-31 03:22:57",
-        "type": "module",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "ZF2FileUploadExamples": "src/"
-            },
-            "classmap": [
-                "./Module.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Christopher Martin",
-                "email": "cgmartin@gmail.com",
-                "homepage": "http://cgmartin.com"
-            }
-        ],
-        "description": "Form file upload examples for Zend Framework 2",
-        "homepage": "https://github.com/cgmartin/ZF2FileUploadExamples"
     }
 ]

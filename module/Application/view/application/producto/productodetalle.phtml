@@ -97,7 +97,9 @@ $(document).ready(function(){
                 <div class="col-md-3 col-sm-6 col-xs-12">
                 <input type="number" class="form-control ui-spinner-input" name="cantidad" id="cantidad" onkeypress="return validarTecla(event,'num')" value="1">
                 </div>
-                <button class="btn btn-custom-2">ADD TO CART</button>
+                <button class="btn btn-custom-2" 
+                        onclick="usar_ajax('<?php echo $this->BasePath() ?>/application/cart/addToCart','#zoneCart','<?php echo "idSaldoInventario=".$this->Producto['idSaldoInventario']?>&qty='+$('#cantidad').val())">
+                    ADD TO CART</button>
             </div>
             <div class="md-margin"></div>
             <!-- 

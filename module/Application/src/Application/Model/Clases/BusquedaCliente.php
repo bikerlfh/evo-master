@@ -47,15 +47,15 @@ class BusquedaCliente
     {
         return $this->ejecutarSelect(new TableIdentifier("vConsultaProducto", "Venta"),$where);
     }
+    public function vistaConsultaProductoSimple($where = array())
+    {
+        return $this->ejecutarSelect(new TableIdentifier("vConsultaProductoSimple", "Venta"),$where);
+    }
     /******************************************************************************/
     
     /**********************************************************************
      * Metodos Privados
      **********************************************************************/
-    private function vistaConsultaProductoSimple($where = array())
-    {
-        return $this->ejecutarSelect(new TableIdentifier("vConsultaProductoSimple", "Venta"),$where);
-    }
     
     private function ejecutarSelect($tableIdentifier,$where = array())
     {

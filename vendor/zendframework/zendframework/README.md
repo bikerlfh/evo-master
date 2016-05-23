@@ -1,37 +1,47 @@
-### Welcome to the *Zend Framework 2.3* Release!
+![Logo](https://raw.githubusercontent.com/zendframework/zf2/234b554f2ca202095aea32e4fa557553f8849664/resources/ZendFramework-logo.png)
+
+# Welcome to the *Zend Framework 2.3* Release!
 
 Master:
-[![Build Status](https://secure.travis-ci.org/zendframework/zf2.png?branch=master)](http://travis-ci.org/zendframework/zf2)
-[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.png?branch=master)](https://coveralls.io/r/zendframework/zf2)
+[![Build Status](https://secure.travis-ci.org/zendframework/zf2.svg?branch=master)](http://travis-ci.org/zendframework/zf2)
+[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.svg?branch=master)](https://coveralls.io/r/zendframework/zf2)
 Develop:
-[![Build Status](https://secure.travis-ci.org/zendframework/zf2.png?branch=develop)](http://travis-ci.org/zendframework/zf2)
-[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.png?branch=develop)](https://coveralls.io/r/zendframework/zf2)
+[![Build Status](https://secure.travis-ci.org/zendframework/zf2.svg?branch=develop)](http://travis-ci.org/zendframework/zf2)
+[![Coverage Status](https://coveralls.io/repos/zendframework/zf2/badge.svg?branch=develop)](https://coveralls.io/r/zendframework/zf2)
 
 ## RELEASE INFORMATION
 
-*Zend Framework 2.3.3*
+*Zend Framework 2.3.9*
 
-This is the third maintenance release for the version 2.3 series.
+This is the ninth maintenance release for the version 2.3 series.
 
-17 Sep 2014
+11 May 2015
 
-### UPDATES IN 2.3.3
+### UPDATES IN 2.3.9
 
-**This release contains security updates:**
+This release contains the following security fixes introduced in 2.3.8:
 
-- **ZF2014-05:** Due to an issue that existed in PHP's LDAP extension, it is
-  possible to perform an unauthenticated simple bind against a LDAP server by
-  using a null byte for the password, regardless of whether or not the user
-  normally requires a password. We have provided a patch in order to protect
-  users of unpatched PHP versions (PHP 5.5 <= 5.5.11, PHP 5.4 <= 5.4.27, all
-  versions of PHP 5.3 and below). If you use `Zend\Ldap` and are on an affected
-  version of PHP, we recommend upgrading immediately.
-- **ZF2014-06:** A potential SQL injection vector existed when using a SQL
-  Server adapter to manually quote values due to the fact that it was not
-  escaping null bytes. Code was added to ensure null bytes are escaped, and
-  thus mitigate the SQLi vector. We do not recommend manually quoting values,
-  but if you do, and use the SQL Server adapter without PDO, we recommend
-  upgrading immediately.
+- **ZF2015-04**: `Zend\Mail` and `Zend\Http` were both susceptible to CRLF
+  Injection Attack vectors (for HTTP, this is often referred to as HTTP Response
+  Splitting). Both components were updated to perform header value validations
+  to ensure no values contain characters not detailed in their corresponding
+  specifications, and will raise exceptions on detection. Each also provides new
+  facilities for both validating and filtering header values prior to injecting
+  them into header classes.
+
+  If you use either `Zend\Mail` or `Zend\Http` (which includes users of
+  `Zend\Mvc`), we recommend upgrading immediately.
+
+Additionally, this release fixes several issues raised by the patch for the
+above security fix, including:
+
+- [#7506](https://github.com/zendframework/zf2/pull/7506) resolves issues when
+  UTF-8 values are used in Mail headers, particularly addresses.
+- [#7507](https://github.com/zendframework/zf2/pull/7507) ensures that array
+  values can be used with cookies.
+- [#7514](https://github.com/zendframework/zf2/pull/7514) ensures that multipart
+  MIME messages can be added to `Zend\Mail\Message` instances in such a way that
+  they do not conflict with ZF2015-04.
 
 Please see [CHANGELOG.md](CHANGELOG.md).
 

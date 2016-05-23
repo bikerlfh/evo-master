@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -124,7 +124,7 @@ class Response extends AbstractMessage implements ResponseInterface
         411 => 'Length Required',
         412 => 'Precondition Failed',
         413 => 'Request Entity Too Large',
-        414 => 'Request-URI Too Large',
+        414 => 'Request-URI Too Long',
         415 => 'Unsupported Media Type',
         416 => 'Requested range not satisfiable',
         417 => 'Expectation Failed',
@@ -202,11 +202,22 @@ class Response extends AbstractMessage implements ResponseInterface
                 $isHeader = false;
                 continue;
             }
+
             if ($isHeader) {
+                if (preg_match("/[\r\n]/", $line)) {
+                    throw new Exception\RuntimeException('CRLF injection detected');
+                }
                 $headers[] = $line;
-            } else {
-                $content[] = $line;
+                continue;
             }
+
+            if (empty($content)
+                && preg_match('/^[a-z0-9!#$%&\'*+.^_`|~-]+:$/i', $line)
+            ) {
+                throw new Exception\RuntimeException('CRLF injection detected');
+            }
+
+            $content[] = $line;
         }
 
         if ($headers) {
@@ -278,7 +289,6 @@ class Response extends AbstractMessage implements ResponseInterface
 
         $this->statusCode = (int) $code;
         return $this;
-
     }
 
     /**
@@ -328,7 +338,7 @@ class Response extends AbstractMessage implements ResponseInterface
             if ($contentEncoding =='gzip') {
                 $body = $this->decodeGzip($body);
             } elseif ($contentEncoding == 'deflate') {
-                 $body = $this->decodeDeflate($body);
+                $body = $this->decodeDeflate($body);
             }
         }
 

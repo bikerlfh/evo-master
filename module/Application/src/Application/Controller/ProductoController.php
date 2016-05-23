@@ -50,7 +50,7 @@ class ProductoController extends AbstractActionController
             $productosSimilares = $this->BusquedaCliente->busquedaProductosSimilares($producto['idProducto'],$producto['idCategoria']);
             $this->ImagenProducto =  new ImagenProducto($this->dbAdapter);
             $imagenes = $this->ImagenProducto->consultarImagenProductoPorIdProducto($producto['idProducto']);
-            return new ViewModel(array('Producto'=>$producto,'imagenesProducto'=>$imagenes,'productosSimilares'=>$productosSimilares));
+            return new ViewModel(array('Producto'=>$producto,'imagenesProducto'=>$imagenes,'productosSimilares'=>$productosSimilares, 'total_items' => $this->ShoppingCart()->total_items()));
         }
         return $this->redirect()->toRoute('home');
     }

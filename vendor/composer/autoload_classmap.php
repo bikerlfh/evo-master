@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ShoppingCart\\Module' => $vendorDir . '/cyrkulewski/shopping-cart/Module.php',
-    'ZF2FileUploadExamples\\Module' => $vendorDir . '/cgm/zf2-file-upload-examples/Module.php',
 );

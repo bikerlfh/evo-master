@@ -3,7 +3,7 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -93,6 +93,13 @@ class Request extends AbstractMessage implements RequestInterface
         $request->setMethod($matches['method']);
         $request->setUri($matches['uri']);
 
+        $parsedUri = parse_url($matches['uri']);
+        if (array_key_exists('query', $parsedUri)) {
+            $parsedQuery = array();
+            parse_str($parsedUri['query'], $parsedQuery);
+            $request->setQuery(new Parameters($parsedQuery));
+        }
+
         if (isset($matches['version'])) {
             $request->setVersion($matches['version']);
         }
@@ -109,11 +116,23 @@ class Request extends AbstractMessage implements RequestInterface
                 $isHeader = false;
                 continue;
             }
+
             if ($isHeader) {
+                if (preg_match("/[\r\n]/", $nextLine)) {
+                    throw new Exception\RuntimeException('CRLF injection detected');
+                }
                 $headers[] = $nextLine;
-            } else {
-                $rawBody[] = $nextLine;
+                continue;
             }
+
+
+            if (empty($rawBody)
+                && preg_match('/^[a-z0-9!#$%&\'*+.^_`|~-]+:$/i', $nextLine)
+            ) {
+                throw new Exception\RuntimeException('CRLF injection detected');
+            }
+
+            $rawBody[] = $nextLine;
         }
 
         if ($headers) {
@@ -279,7 +298,7 @@ class Request extends AbstractMessage implements RequestInterface
      * Return the Cookie header, this is the same as calling $request->getHeaders()->get('Cookie');
      *
      * @convenience $request->getHeaders()->get('Cookie');
-     * @return Header\Cookie
+     * @return Header\Cookie|bool
      */
     public function getCookie()
     {

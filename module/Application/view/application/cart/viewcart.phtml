@@ -1,0 +1,39 @@
+<div class="btn-group dropdown-cart">
+    <button type="button" class="btn btn-custom dropdown-toggle" data-toggle="dropdown">
+    <span class="cart-menu-icon" id="itemsCart"></span>
+    <?php echo $this->total_items ?> item(s) <span class="drop-price">- <?php echo "$".number_format($this->total_sum) ?></span>
+    </button>
+    <div class="dropdown-menu dropdown-cart-menu pull-right clearfix" role="menu">
+        <p class="dropdown-cart-description">Recently added item(s).</p>
+        <ul class="dropdown-cart-product-list">
+            <?php 
+            if (count($this->cart)> 0) {
+                foreach ($this->cart  as $token =>$producto) 
+                {
+                    echo "<li class='item clearfix'>
+                            <a style='cursor:pointer' onclick=\"usar_ajax('".$this->basePath()."/application/cart/delete-to-cart','#zoneCart','token=".$token."')\" title='Delete item' class='delete-item'><i class='fa fa-times'></i></a>
+                            <a href='#' title='Edit item' class='edit-item'><i class='fa fa-pencil'></i></a>
+                            <figure>
+                               <a href='product.html'><img src='".$producto->getImgUrl()."' alt='".$producto->getProduct()."'></a>
+                            </figure>
+                            <div class='dropdown-cart-details'>
+                               <p class='item-name'><a href='product.html'>".$producto->getProduct()." </a></p>
+                               <p>".$producto->getQty()."x<span class='item-price'>".number_format($producto->getPrice())."</span></p>
+                            </div>
+                        </li>";
+                }
+            }
+            ?>
+        </ul>
+        <ul class="dropdown-cart-total">
+            <li><span class="dropdown-cart-total-title">Total:</span><?php echo "$".number_format($this->total_sum) ?></li>
+        </ul>
+        <!-- .dropdown-cart-total -->
+        <div class="dropdown-cart-action">
+            <p><a href="<?php echo str_replace("/public", "", $this->basePath())  ?>/cart" class="btn btn-custom-2 btn-block">Cart</a></p>
+            <p><a href="checkout.html" class="btn btn-custom btn-block">Checkout</a></p>
+        </div>
+        <!-- End .dropdown-cart-action -->
+    </div>
+    <!-- End .dropdown-cart -->
+</div>
