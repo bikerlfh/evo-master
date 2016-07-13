@@ -3,6 +3,21 @@
  * Hecho por Luis Fernando Henriquez Arcinegas
  * */
 
+/* Funcion para buscar los productos en la tienda de forma paginada
+ * 
+ * @param {int} pageSize   => Tamaño de items que se van a visualizar por pagina
+ * @param {int} pageNumber => Número de la pagina actual
+ * @param {string} basePath 
+ * @returns {undefined}
+ */
+function buscarProductosEnTienda(pageSize,pageNumber,basePath)
+{
+    if (pageNumber == null) {
+        pageNumber = $.get("pageNumber");    
+    }
+    $(location).attr('href',basePath+"/buscar?pageSize="+pageSize+"&pageNumber="+pageNumber+"&filtro="+$('#filtro').val());
+}
+
 /* Funcion para mostrar una busqueda en un modal dinamico.
  * Este moda se crea al momento de invocar la fucion y se destuye al momento de cerrarlo.
  * @param {type} button: boton donde es llamada la busqueda

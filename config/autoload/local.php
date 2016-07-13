@@ -20,7 +20,7 @@ return array(
     'driver'    => 'pdo',
     'dsn'       => 'sqlsrv:database=evo;Server=localhost',
     'username'  => 'sa',
-    'password'  => '123'
+    'password'  => '1973'
     ),
     /*
     'db'=> array(

@@ -288,7 +288,9 @@ if (defined('RUNNING_FROM_ROOT')) {
                               <!-- End .dropdown-cart-menu-container -->
                               <form class="form-inline quick-search-form" role="form" method="get" name="bla"  action="<?php echo str_replace("/public","", $this->basePath()) ?>/buscar">
                                  <div class="form-group">
-                                     <input type="text" name="textobusqueda" id="textobusqueda" class="form-control" placeholder="Buscar en la tienda">
+                                     <!-- Campo para iniciar el tamaño de la pagina en 10 -->
+                                     <input type="hidden" name="pageSize" value="10">
+                                     <input type="text" name="filtro" id="filtro" class="form-control" placeholder="Buscar en la tienda">
                                  </div>
                                  <!-- End .form-inline -->
                                  <button type="submit" id="quick-search" class="btn btn-custom"></button>

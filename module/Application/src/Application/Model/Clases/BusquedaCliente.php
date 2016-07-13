@@ -17,6 +17,9 @@ use Zend\Db\Sql\TableIdentifier;
 class BusquedaCliente
 {
     private $adapter;
+    
+    public $pageCount = 0;
+    
     public function __construct(Adapter $adapter = null)
     {
         $this->adapter = $adapter;
@@ -52,7 +55,29 @@ class BusquedaCliente
         return $this->ejecutarSelect(new TableIdentifier("vConsultaProductoSimple", "Venta"),$where);
     }
     /******************************************************************************/
-    
+    public function busquedaProductoPaginada($pageSize,$pageNumber,$idMarca,$idCategoria,$filtro)
+    {
+        $stored = new StoredProcedure($this->adapter);
+        $stmt = $this->adapter->createStatement();
+        $stmt->prepare('DECLARE @pageCount INT;EXEC venta.BusquedaProductoPaginada ?,?,@pageCount OUT,?,?,?;SELECT @pageCount AS pageCount');
+        $stmt->getResource()->bindParam(1,$pageSize); 
+        $stmt->getResource()->bindParam(2,$pageNumber); 
+        $stmt->getResource()->bindParam(3,$idMarca); 
+        $stmt->getResource()->bindParam(4,$idCategoria); 
+        $stmt->getResource()->bindParam(5,$filtro); 
+        $result = $stmt->execute(); 
+        
+        $statement = $result->getResource();
+
+        // Result set 1
+        $resultSet1 = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $statement->nextRowSet(); // Avanza al segundo result set
+        $resultSet2 = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $this->pageCount =  $resultSet2[0]['pageCount'];
+
+        //$result = $stored->execProcedureReturnDatos("venta.BusquedaProductoPaginada ?,?,?,?,?,? ",array($pageSize,$pageNumber,$pageCount +" OUT" ,$idMarca,$idCategoria,$filtro));
+        return $resultSet1;
+    }
     /**********************************************************************
      * Metodos Privados
      **********************************************************************/

@@ -28,30 +28,46 @@ class BuscarController extends AbstractActionController
         $this->Categoria = new Entity\Categoria($this->dbAdapter);
         $this->Marca = new Entity\Marca($this->dbAdapter);
         $where = array();
+        $idMarca = null;
+        $idCategoria = null;
+        $filtro = null;
+        $pageSize = 50;
+        $pageNumber = 1;
         // Se recorren los parametros para generar el Where
         foreach ($this->params()->fromQuery() as $parametro => $value)
         {
-            
             switch($parametro)
             {
-                case "textobusqueda":
+                case "filtro":
+                    $filtro = $value;
                     //$where->like('nombre', "%".$value."%")->like('descripcionMarca', "%".$value."%");
                     $like =" LIKE '%".$value."%'";
                     $where = array(" nombre ".$like." OR descripcionMarca ".$like." OR descripcionCategoria ".$like);
                     break;
                 case "idMarca":
                     $where['idMarca']=$value;
+                    $idMarca = $value;
                     break;
                 case "idCategoria":
                     $where['idCategoria']=$value;
+                    $idCategoria = $value;
+                    break;
+                case "pageSize":
+                    $pageSize = $value;
+                    break;
+                case "pageNumber":
+                    $pageNumber = $value;
                     break;
             }
         }
-        $productos = $this->BusquedaCliente->vistaConsultaProducto($where);
+        //$productos = $this->BusquedaCliente->vistaConsultaProducto($where);
+        $productos = $this->BusquedaCliente->busquedaProductoPaginada($pageSize,$pageNumber,$idMarca,$idCategoria,$filtro);
         
         return new ViewModel(array('categorias'=>$this->Categoria->consultarTodoCategoriaCountNumeroProductos(),
                                    'marcas'=>$this->Marca->consultarTodoMarcaCountNumeroProductos(),
-                                   'productos'=>$productos));
+                                   'productos'=>$productos,
+                                   'pageCount'=>$this->BusquedaCliente->pageCount,
+                                   'pageNumber'=> $pageNumber));
     }
     
     private function consultarMessage($nameMensaje)
