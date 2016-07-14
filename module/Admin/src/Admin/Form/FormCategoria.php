@@ -66,7 +66,7 @@ class FormCategoria extends Form
                 'type' => 'text',
                 'placeholder'=>'Descripción',
                 'required'=>'required',
-                'maxlength'=>'20',
+                'maxlength'=>'50',
                 'class' => $this->cssClass['text']
             ),
         ));
