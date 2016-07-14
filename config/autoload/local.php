@@ -16,19 +16,14 @@ return array(
             'Zend\Db\Adapter'=>'Zend\Db\Adapter\AdapterServiceFactory',
         ),
     ),
+    
    'db'=> array(
     'driver'    => 'pdo',
     'dsn'       => 'sqlsrv:database=evo;Server=localhost',
     'username'  => 'sa',
-    'password'  => '1973'
+    'password'  => '123'
     ),
-    /*
-    'db'=> array(
-    'driver'    => 'pdo',
-    'dsn'       => 'sqlsrv:database=DB_9EB44A_evo;Server=SQL5024.Smarterasp.net',
-    'username'  => 'DB_9EB44A_evo_admin',
-    'password'  => 'laurame123'
-    ),*/
+    
     // <== Formatos de fechas, etc ==>
     'formats'=>array(
         'datetime'=>'d-m-Y H:m:i', //Y-m-d H:m:i
