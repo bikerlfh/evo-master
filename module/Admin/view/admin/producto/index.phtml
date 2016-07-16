@@ -7,6 +7,20 @@ if ($this->msg != null)
     echo "<script type='text/javascript'>".$this->msg."</script>";    
 }
 ?>
+<!-- Se agrega la libreria CKEditor -->
+<script type="text/javascript" src="<?php echo $this->basePath()?>/public/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        CKEDITOR.replace( 'descripcion', {
+            language: 'es',
+            //uiColor: '#181d20'
+        });
+        CKEDITOR.replace( 'especificacion', {
+            language: 'es',
+            //uiColor: '#181d20'
+        });
+    });
+</script>
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-bordered style-primary">
@@ -28,80 +42,84 @@ if ($this->msg != null)
     
     <div class="col-lg-12">
         <div class="box">
-            
             <div class="box-body">
                 <?php echo $this->form()->openTag($form); ?>
-                    <?php echo $this->formInput($form->get('idProducto'));?>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Marca </label>
-                        </div>
-                        <div class="col-lg-3 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idMarca'));?>                            
-                        </div>
-                        <div class="col-lg-1">
-                             <?php echo $this->formElement($form->get('btnBuscarMarca'));?>                            
-                        </div>
+                <?php echo $this->formInput($form->get('idProducto'));?>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Marca </label>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Categoria </label>
-                        </div>
-                        <div class="col-lg-3 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('idCategoria'));?>                            
-                        </div>
-                        <div class="col-lg-1">
-                             <?php echo $this->formElement($form->get('btnBuscarCategoria'));?>                            
-                        </div>
+                    <div class="col-lg-3 col-md-11 col-sm-9">
+                         <?php echo $this->formElement($form->get('idMarca'));?>                            
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Referencia</label>
-                        </div>
-                        <div class="col-lg-5 col-md-11 col-sm-9">
-                            <?php echo $this->formInput($form->get('referencia'));?>                            
-                        </div>
+                    <div class="col-lg-1">
+                         <?php echo $this->formElement($form->get('btnBuscarMarca'));?>                            
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Código</label>
-                        </div>
-                        <div class="col-lg-5 col-md-11 col-sm-9">
-                            <?php echo $this->formInput($form->get('codigo'));?>                            
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Categoria </label>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Nombre</label>
-                        </div>
-                        <div class="col-lg-5 col-md-11 col-sm-9">
-                            <?php echo $this->formInput($form->get('nombre'));?>                            
-                        </div>
+                    <div class="col-lg-3 col-md-11 col-sm-9">
+                         <?php echo $this->formElement($form->get('idCategoria'));?>                            
                     </div>
-                     <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Descripción </label>
-                        </div>
-                        <div class="col-lg-10 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('descripcion'));?>                            
-                        </div>
+                    <div class="col-lg-1">
+                         <?php echo $this->formElement($form->get('btnBuscarCategoria'));?>                            
                     </div>
-                     <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Especificación</label>
-                        </div>
-                        <div class="col-lg-10 col-md-11 col-sm-9">
-                             <?php echo $this->formElement($form->get('especificacion'));?>                            
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Referencia</label>
                     </div>
-                    <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
-                        <?php   
-                            echo $this->formElement($form->get('btnGuardar'));
-                            echo $this->formElement($form->get('btnModificar'));
-                            echo $this->formElement($form->get('btnEliminar'));
-                            echo $this->formElement($form->get('btnCancelar'));
-                        ?>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('referencia'));?>                            
                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Código</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('codigo'));?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Nombre</label>
+                    </div>
+                    <div class="col-lg-5 col-md-11 col-sm-9">
+                        <?php echo $this->formInput($form->get('nombre'));?>                            
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <div class="col-lg-1 col-md-2 col-sm-3">
+                        <label for="email1" class="control-label">Descripción </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-11 col-sm-9">
+                        <?php echo $this->formElement($form->get('descripcion'));?>                            
+                    </div>
+                </div>
+                <div class="form-group">
+                   <div class="col-lg-1 col-md-2 col-sm-3">
+                       <label for="email1" class="control-label">Especificación</label>
+                   </div>
+                   
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-11 col-sm-9">
+                        <?php echo $this->formElement($form->get('especificacion'));?>                            
+                   </div>
+                </div>
+                <div class="form-footer col-lg-offset-1 col-md-offset-2 col-sm-offset-3">
+                    <?php   
+                       echo $this->formElement($form->get('btnGuardar'));
+                       echo $this->formElement($form->get('btnModificar'));
+                       echo $this->formElement($form->get('btnEliminar'));
+                       echo $this->formElement($form->get('btnCancelar'));
+                    ?>
+                </div>
                 <?php echo $this->form()->closeTag(); ?>
             </div>
         </div><!--end .box -->
