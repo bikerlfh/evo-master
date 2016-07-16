@@ -26,7 +26,17 @@ function buscarProductosEnTienda(pageSize,pageNumber,basePath)
     }
     $(location).attr('href',basePath+"/buscar?pageSize="+pageSize+"&pageNumber="+pageNumber+"&filtro="+$('#filtro').val());
 }
-
+/* Agrega al carro un producto
+ * 
+ * @param {long} idSaldoInventario
+ * @param {decimal} cantidad
+ * @param {string} basePath
+ * @returns null
+ */
+function agregarProductoCart(idSaldoInventario, cantidad, basePath)
+{
+   usar_ajax(basePath + '/application/cart/addToCart','#zoneCart',"idSaldoInventario="+idSaldoInventario+"&qty="+cantidad);
+}
 /* Funcion para mostrar una busqueda en un modal dinamico.
  * Este moda se crea al momento de invocar la fucion y se destuye al momento de cerrarlo.
  * @param {type} button: boton donde es llamada la busqueda

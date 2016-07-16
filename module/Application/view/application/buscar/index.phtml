@@ -140,7 +140,7 @@
                                           </div>
                                           <h3 class='item-name'><a href='product.html'>".$producto['nombre']."</a></h3>
                                           <div class='item-action'>
-                                             <a href='#' class='item-add-btn'>
+                                             <a style='cursor:pointer' onclick=\"agregarProductoCart(".$producto['idSaldoInventario'].", 1, '".$this->basePath()."')\" class='item-add-btn'>
                                              <span class='icon-cart-text'>Add to Cart</span>
                                              </a>
                                           </div>
