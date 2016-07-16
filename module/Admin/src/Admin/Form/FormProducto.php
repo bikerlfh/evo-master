@@ -78,7 +78,7 @@ class FormProducto extends Form
                 'type' => 'text',
                 'placeholder'=>'Código',
                 'required'=>true,
-                'maxlength'=>'10',
+                'maxlength'=>'50',
                 'class' => $this->cssClass['text']
             ),
         ));
