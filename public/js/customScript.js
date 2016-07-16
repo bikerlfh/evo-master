@@ -15,6 +15,15 @@ function buscarProductosEnTienda(pageSize,pageNumber,basePath)
     if (pageNumber == null) {
         pageNumber = $.get("pageNumber");    
     }
+    var idMarca = $.get("idMarca");
+    var idCategoria = $.get("idCategoria");
+    var url = basePath+"/buscar?pageSize="+pageSize+"&pageNumber="+pageNumber+"&filtro="+$('#filtro').val();
+    if (idMarca != null) {
+        url += "&idMarca=" + idMarca;
+    }
+    if (idCategoria != null) {
+        url += "&idCategoria=" + idCategoria;
+    }
     $(location).attr('href',basePath+"/buscar?pageSize="+pageSize+"&pageNumber="+pageNumber+"&filtro="+$('#filtro').val());
 }
 

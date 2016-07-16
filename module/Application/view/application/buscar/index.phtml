@@ -1,34 +1,39 @@
+<!--link href="<?php echo $this->basePath(); ?>/public/css/animate.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<?php echo $this->basePath(); ?>/public/js/wow.js"></script-->
 <script type="text/javascript">
     var pageSize =  null;
     $(document).ready(function()
     {
-       $('#filtro').val($.getParameter('filtro',$(location).attr('href')).toString().replace('+',' ')); 
-       pageSize = $.getParameter('pageSize',$(location).attr('href'));
-       $(".btnPageSize").html(pageSize);
+        pageSize = $.getParameter('pageSize',$(location).attr('href'));
+        $(".btnPageSize").html(pageSize);
+        var filtro = $.getParameter('filtro',$(location).attr('href'));
+        if (filtro != null) {
+            $('#filtro').val(filtro.toString().replace('+',' ')); 
+        }
     });
 </script>
 
 <?php 
 /*
- *  Genera la paginación
+ *  Script para generar la paginación.
  */
     $pagination = "";
     $class = "active";
     // el numero de la pagina activa
-    $pageNumActive = $_GET['pageNumber'] == null? 1:$_GET['pageNumber'];
+    $pageNumActive = $_GET['pageNumber'] == null ? 1:$_GET['pageNumber'];
     // Se visualiza el boton de anterior si es necesario
     if($pageNumActive > 1){
-        $pagination = "<li><a onclick=\"buscarProductosEnTienda($('#btnPageSize').html(),".($pageNumActive-1).",'".$this->basePath()."')\"><i class='fa fa-angle-left'></i></a></li>";
+        $pagination = "<li><a style='cursor:pointer' onclick=\"buscarProductosEnTienda($('#btnPageSize').html(),".($pageNumActive-1).",'".$this->basePath()."')\"><i class='fa fa-angle-left'></i></a></li>";
     }
     for($i=1;$i<=$this->pageCount;$i++) {
         $class ="";
         if ($this->pageNumber == $i)
             $class = "active";
-        $pagination .= "<li class='".$class."'><a onclick=\"buscarProductosEnTienda($('#btnPageSize').html(),".$i.",'".$this->basePath()."')\">$i</a></li>";
+        $pagination .= "<li class='".$class."'><a style='cursor:pointer' onclick=\"buscarProductosEnTienda($('#btnPageSize').html(),".$i.",'".$this->basePath()."')\">$i</a></li>";
     }
     // Se visualiza el boton de siguiente si es necesario
     if ($pageNumActive < $this->pageCount) {
-        $pagination .= "<li><a onclick=\"buscarProductosEnTienda($('#btnPageSize').html(),".($pageNumActive+1).",'".$this->basePath()."')\"><i class='fa fa-angle-right'></i></a></li>";
+        $pagination .= "<li><a style='cursor:pointer' onclick=\"buscarProductosEnTienda($('#btnPageSize').html(),".($pageNumActive+1).",'".$this->basePath()."')\"><i class='fa fa-angle-right'></i></a></li>";
     }
 ?>
 <div class="row">
@@ -54,29 +59,24 @@
                 <div class="sort-box">
                     <span class="separator">sort by:</span>
                     <div class="btn-group select-dropdown">
-                        <button type="button" class="btn select-btn">Position</button>
+                        <button type="button" class="btn select-btn" id="btnSortBy">Más relevantes</button>
                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-angle-down"></i>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Date</a></li>
-                            <li><a href="#">Name</a></li>
+                            <li><a href="#">Menor Precio</a></li>
+                            <li><a href="#">Mayor Precio</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="view-box">
+                <!--div class="view-box">
                     <a href="category.html" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
                     <a href="category-list.html" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
                 </div><!-- End .view-box -->
 
                 </div><!-- End .toolbox-filter -->
                 <div class="toolbox-pagination clearfix">
-                <ul class="pagination">
-                    <?php 
-                        echo $pagination;
-                    ?>
-                </ul>
                 <div class="pull-right view-count-box hidden-xs">
                     <span class="separator">view:</span>
                     <div class="btn-group select-dropdown">
@@ -105,7 +105,7 @@
                         {
                             echo "<div class='col-md-4 col-sm-6 col-xs-12'>
                                     <div class='item item-hover'>
-                                        <div class'
+                                        <div 
                                             <figure class='item-image-container'>
                                                 <a href='".$this->basePath()."/producto/".$producto['idSaldoInventario']."'>
                                                     <img src='".$producto['urlImg']."' alt='item1' class='item-image'>
@@ -153,27 +153,7 @@
                <!-- End .row -->
             </div>
             <!-- End .category-item-container -->
-            <div class="pagination-container clearfix">
-                <div class="toolbox-filter clearfix">
-                    <div class="sort-box">
-                       <span class="separator">sort by:</span>
-                       <div class="btn-group select-dropdown">
-                          <button type="button" class="btn select-btn">Position</button>
-                          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                          <i class="fa fa-angle-down"></i>
-                          </button>
-                          <ul class="dropdown-menu" role="menu">
-                             <li><a href="#">Date</a></li>
-                             <li><a href="#">Name</a></li>
-                          </ul>
-                       </div>
-                    </div>
-                    <!--div class="view-box">
-                       <a href="category.html" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                       <a href="category-list.html" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
-                    </div>
-                    <!-- End .view-box -->
-                </div>
+            <div class="pagination-container">
                <div class="pull-right">
                   <ul class="pagination">
                         <?php 
@@ -181,21 +161,6 @@
                         ?>
                   </ul>
                </div>
-               <!-- End .pull-right -->
-                <div class="pull-right view-count-box hidden-xs">
-                    <span class="separator">view:</span>
-                    <div class="btn-group select-dropdown">
-                        <button type="button" class="btn select-btn btnPageSize" id="btnPageSize"></button>
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a onclick="buscarProductosEnTienda(10,1,'<?php echo $this->basePath()?>')">10</a></li>
-                            <li><a onclick="buscarProductosEnTienda(15,1,'<?php echo $this->basePath()?>')">15</a></li>
-                            <li><a onclick="buscarProductosEnTienda(30,1,'<?php echo $this->basePath()?>')">30</a></li>
-                       </ul>
-                    </div>
-                </div>
             </div>
             <!-- End pagination-container -->
          </div>
@@ -215,7 +180,7 @@
                            <ul class="category-filter-list jscrollpane">
                                <?php 
                                     foreach ($this->categorias as $value) {
-                                        echo "<li><a href=\"".$this->basePath()."/buscar?idCategoria=".$value['idCategoria']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
+                                        echo "<li><a href=\"".$this->basePath()."/buscar?pageSize=10&pageNumber=1&idCategoria=".$value['idCategoria']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
                                     }
                                 ?>
                            </ul>
@@ -237,7 +202,7 @@
                            <ul class="category-filter-list jscrollpane">
                                 <?php 
                                     foreach ($this->marcas as $value) {
-                                        echo "<li><a href=\"".$this->basePath()."/buscar?idMarca=".$value['idMarca']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
+                                        echo "<li><a href=\"".$this->basePath()."/buscar?pageSize=10&pageNumber=1&idMarca=".$value['idMarca']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
                                     }
                                 ?>
                            </ul>
