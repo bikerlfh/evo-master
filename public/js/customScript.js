@@ -37,6 +37,16 @@ function agregarProductoCart(idSaldoInventario, cantidad, basePath)
 {
    usar_ajax(basePath + '/application/cart/addToCart','#zoneCart',"idSaldoInventario="+idSaldoInventario+"&qty="+cantidad);
 }
+/* Elimina un producto del carrito
+ * 
+ * @param {String} token
+ * @param {String} basePath
+ * @returns {null}
+ */
+function eliminarProductoCart(token,basePath)
+{
+    usar_ajax(basePath + '/application/cart/delete-to-cart','#zoneCart',"token=" + token);
+}
 /* Funcion para mostrar una busqueda en un modal dinamico.
  * Este moda se crea al momento de invocar la fucion y se destuye al momento de cerrarlo.
  * @param {type} button: boton donde es llamada la busqueda

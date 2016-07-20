@@ -31,11 +31,16 @@ class CartController extends AbstractActionController
             $productoCargado = false;
             // Se valida si el producto ya esta en el carrito
             if (count($this->ShoppingCart()->cart()) > 0) {
-                foreach ($this->ShoppingCart()->cart() as $value) {
+                foreach ($this->ShoppingCart()->cart() as $token => $value) {
                     if($value->getId() == $idSaldoInventario)
                     {
-                        $value->setQty($value->getQty() + $data['qty']);
+                        $cantidad = $value->getQty() + $data['qty'];
+                        $value->setQty($cantidad);
                         $productoCargado = true;
+                        // si el producto no tiene cantidad se remueve del carro
+                         if ($cantidad <= 0) {
+                            $this->ShoppingCart()->remove($token);
+                        }
                         break;
                     }
                 }
