@@ -24,58 +24,57 @@
       <div class="col-md-12">
          <div class="row">
             <div class="col-md-12 col-sm-10 col-xs-12 main-content">
-               <header class="content-title">
-                  <h2 class="title">Ofertas Especiales</h2>
-                  <p class="title-desc">Save your money and time with our store. Here's the best part of our impressive assortment.</p>
-               </header>
-              
-               <div id="products-tabs-content" class="row">
-                    <?php
-                        foreach ($this->promociones as $promo) 
-                        {
-                            echo "<div class='col-md-3 col-sm-6 col-xs-12'>
-                                    <div class='item item-hover'>
-                                       <div class='item-image-wrapper'
-                                          <figure class='item-image-container'>
-                                             <a href='".$this->basePath()."/producto/".$promo['idSaldoInventario']."'>
-                                                <img src='".$promo['urlImg']."' alt='item1' class='item-image'>
-                                             </a>
-                                          </figure>
-                                          <div class='item-price-container'>
-                                             <span class='old-price'>$".number_format($promo['valorAnterior'])."</span>
-                                             <span class='item-price'>$".number_format($promo['valorPromocion'])."</span>
-                                          </div>
+            <?php
+                // Promociones
+                if (count($this->promociones) > 0) 
+                {
+                    echo "<header class='content-title'>
+                            <h2 class='title'>Ofertas Especiales</h2>
+                            <p class='title-desc'>Save your money and time with our store. Here's the best part of our impressive assortment.</p>
+                         </header>
 
-                                          <!--<span class='new-rect'>New</span>-->
-                                          <span class='discount-rect'>-".number_format($promo['procentajeDescuento'])."%</span>
-                                       </div>
+                        <div id='products-tabs-content' class='row'>";
 
-                                       <div class='item-meta-container'>
-                                          <div class='ratings-container'>
-                                             <div class='ratings'>
-                                                <div class='ratings-result' data-result='100'></div>
-                                             </div>
+                            foreach ($this->promociones as $promo) 
+                            {
+                                echo "<div class='col-md-3 col-sm-6 col-xs-12'>
+                                        <div class='item item-hover'>
+                                           <div class='item-image-wrapper'
+                                              <figure class='item-image-container'>
+                                                 <a href='".$this->basePath()."/producto/".$promo['idSaldoInventario']."'>
+                                                    <img src='".$promo['urlImg']."' alt='item1' class='item-image'>
+                                                 </a>
+                                              </figure>
+                                              <div class='item-price-container'>
+                                                 <span class='old-price'>$".number_format($promo['valorAnterior'])."</span>
+                                                 <span class='item-price'>$".number_format($promo['valorPromocion'])."</span>
+                                              </div>
 
-                                             <span class='ratings-amount'>
-                                             5 Reviews
-                                             </span>
-                                          </div>
+                                              <!--<span class='new-rect'>New</span>-->
+                                              <span class='discount-rect'>-".number_format($promo['procentajeDescuento'])."%</span>
+                                           </div>
+                                           <div class='item-meta-container'>
+                                              <div class='ratings-container'>
+                                                 <div class='ratings'>
+                                                    <div class='ratings-result' data-result='100'></div>
+                                                 </div>
 
-                                          <h3 class='item-name'><a href='".$this->basePath()."/producto/".$promo['idSaldoInventario']."'>".$promo['nombre']."</a></h3>
-                                          <div class='item-action'>
-                                             <a href='#' class='item-add-btn'>
-                                             <span class='icon-cart-text'>Add to Cart</span>
-                                             </a>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>";
-                        }
-                    ?>
-               </div>
-                
-                
-                <?php
+                                                 <span class='ratings-amount'>
+                                                 5 Reviews
+                                                 </span>
+                                              </div>
+                                              <h3 class='item-name'><a href='".$this->basePath()."/producto/".$promo['idSaldoInventario']."'>".$promo['nombre']."</a></h3>
+                                              <div class='item-action'>
+                                                    <a onclick=\"agregarProductoCart(".$promo['idSaldoInventario'].",1,'".$this->BasePath()."')\" class='item-add-btn'>
+                                                       <span class='icon-cart-text'>Add to Cart</span>
+                                                    </a>
+                                              </div>
+                                           </div>
+                                        </div>
+                                     </div>";
+                            }
+                    echo "</div>";
+                }
                 if(count($this->productosNuevos) >0)
                 {
                     echo "<header class='content-title'>
@@ -102,9 +101,10 @@
                                           <span class='new-rect'>New</span>
                                           <span class='discount-rect'>-".number_format($producto['procentajeDescuento'])."%</span>";
                                 }
-                                else 
+                                else {
                                     echo "<div class='item-price-container'><span class='item-price'>$".number_format($producto['valorVenta'])."</span></div>
-                                          <span class='new-rect'>New</span>";
+                                    <span class='new-rect'>New</span>";
+                                }
                         echo "      </div>
                                     <div class='item-meta-container'>
                                        <div class='ratings-container'>
@@ -117,8 +117,8 @@
                                        </div>
                                        <h3 class='item-name'><a href='".$this->basePath()."/producto/".$producto['idSaldoInventario']."'>".$producto['nombre']."</a></h3>
                                        <div class='item-action'>
-                                          <a href='#' class='item-add-btn'>
-                                          <span class='icon-cart-text'>Add to Cart</span>
+                                          <a onclick=\"agregarProductoCart(".$producto['idSaldoInventario'].",1,'".$this->BasePath()."')\" class='item-add-btn'>
+                                            <span class='icon-cart-text'>Add to Cart</span>
                                           </a>
                                        </div>
                                     </div>
@@ -179,9 +179,9 @@
                                        </div>
                                        <h3 class='item-name'><a href='".$this->basePath()."/producto/".$producto['idSaldoInventario']."'>".$producto['nombre']."</a></h3>
                                        <div class='item-action'>
-                                          <a href='#' class='item-add-btn'>
-                                          <span class='icon-cart-text'>Add to Cart</span>
-                                          </a>
+                                          <a onclick=\"agregarProductoCart(".$producto['idSaldoInventario'].",1,'".$this->BasePath()."')\" class='item-add-btn'>
+                                            <span class='icon-cart-text'>Add to Cart</span>
+                                         </a>
                                        </div>
                                     </div>
                                  </div>";
