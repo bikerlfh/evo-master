@@ -49,8 +49,8 @@ if ($this->msgError != null)
 <div class="row">
    <div class="col-md-12">
       <header class="content-title">
-         <h1 class="title">Register Account</h1>
-         <p class="title-desc">If you already have an account, please login at <a href="#">login page</a>.</p>
+         <h1 class="title">Registrar Cuenta</h1>
+         <p class="title-desc">Si usted ya tiene una cuenta, por favor ingrese aquí <a href="<?php echo $this->basePath()?>/login">login</a>.</p>
       </header>
       <div class="xs-margin"></div>
       <!-- space -->
@@ -58,14 +58,14 @@ if ($this->msgError != null)
          <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
                <fieldset>
-                  <h2 class="sub-title">YOUR PERSONAL DETAILS</h2>
+                  <h2 class="sub-title">TUS DATOS PERSONALES</h2>
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">First Name&#42;</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">Nombres&#42;</span></span>
                      <?php echo $this->formInput($form->get('nombre')); ?>
                   </div>
                   <!-- End .input-group -->
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">Last Name&#42;</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-user"></span><span class="input-text">Apellidos&#42;</span></span>
                      <?php echo $this->formInput($form->get('apellido')); ?>
                   </div>
                   <!-- End .input-group -->
@@ -74,18 +74,18 @@ if ($this->msgError != null)
                      <?php echo $this->formInput($form->get('email')); ?>
                   </div>
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-email"></span><span class="input-text">Identificación&#42;</span></span>
-                     <?php echo $this->formInput($form->get('nit')); ?>
-                  </div>
-                  <div class="input-group">
                      <span class="input-group-addon"><span class="input-icon input-icon-subject"></span><span class="input-text">Tipo Doc.&#42;</span></span>
                      <?php echo $this->formElement($form->get('idTipoDocumento')); ?>
+                  </div>
+                  <div class="input-group">
+                     <span class="input-group-addon"><span class="input-icon input-icon-email"></span><span class="input-text">Identificación&#42;</span></span>
+                     <?php echo $this->formInput($form->get('nit')); ?>
                   </div>
                   
                   <!-- End .input-group -->
                </fieldset>
                <fieldset>
-                  <h2 class="sub-title">YOUR PASSWORD</h2>
+                  <h2 class="sub-title">TU CONTRASEÑA</h2>
                   <div class="input-group">
                      <span class="input-group-addon"><span class="input-icon input-icon-password"></span><span class="input-text">Password&#42;</span></span>
                      <?php echo $this->formInput($form->get('clave1')); ?>
@@ -101,10 +101,10 @@ if ($this->msgError != null)
             <!-- End .col-md-6 -->
             <div class="col-md-6 col-sm-6 col-xs-12">
                <fieldset>
-                  <h2 class="sub-title">YOUR ADDRESS</h2>
+                  <h2 class="sub-title">TU DIRECCIÓN</h2>
                   <!-- End .input-group -->
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-country"></span><span class="input-text">Country*</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-country"></span><span class="input-text">Pais*</span></span>
                      <div class="large-selectbox clearfix">
                         <?php echo $this->formElement($form->get('idPais')); ?>
                      </div>
@@ -112,7 +112,7 @@ if ($this->msgError != null)
                   </div>
                   <!-- End .input-group -->
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-region"></span><span class="input-text">Region / State&#42;</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-region"></span><span class="input-text">Departamento&#42;</span></span>
                      <div class="large-selectbox clearfix" id="divDepartamento">
                         <select id="idDepartamento" name="idDepartamento" class="sbSelector"><option></option><select>
                      </div>
@@ -120,18 +120,18 @@ if ($this->msgError != null)
                   </div>
                   <!-- End .input-group -->
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-region"></span><span class="input-text">Region / State&#42;</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-region"></span><span class="input-text">Municipio&#42;</span></span>
                      <div class="large-selectbox clearfix" id="divMunicipio">
                          <select id="idMunicipio" name="idMunicipio" class="sbSelector"><option></option><select>
                      </div>
                      <!-- End .large-selectbox-->
                   </div>
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-address"></span><span class="input-text">Address &#42;</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-address"></span><span class="input-text">Dirección &#42;</span></span>
                      <?php echo $this->formInput($form->get('direccion')); ?>
                   </div>
                   <div class="input-group">
-                     <span class="input-group-addon"><span class="input-icon input-icon-phone"></span><span class="input-text">Telephone&#42;</span></span>
+                     <span class="input-group-addon"><span class="input-icon input-icon-phone"></span><span class="input-text">Telefono&#42;</span></span>
                      <?php echo $this->formInput($form->get('telefono')); ?>
                   </div>
                   <!-- End .input-group -->
@@ -142,20 +142,19 @@ if ($this->msgError != null)
          <!-- End .row -->
          <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
-                <fieldset class="half-margin">
+                <!--fieldset class="half-margin">
                     <h2 class="sub-title">NEWSLETTER</h2>
                     <div class="input-desc-box">
                        <span class="separator icon-box">&plus;</span>I wish to subscribe to the Venedor newsletter.
                     </div>
-                    <!-- End .input-desc -->
                     <div class="input-group custom-checkbox">
                        <input type="checkbox"> <span class="checbox-container">
                        <i class="fa fa-check"></i>
                        </span>
                        I have reed and agree to the <a href="#">Privacy Policy</a>.
                     </div>
-                    <!-- End .input-group -->
-                </fieldset>
+                  
+                </fieldset-->
                 <?php echo $this->formInput($form->get('btnGuardar'))?>
             </div>
             <!-- End .col-md-6 -->

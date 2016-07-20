@@ -1,34 +1,34 @@
 <div class="row">
    <div class="col-md-12">
       <header class="content-title">
-         <h1 class="title">Login or Create An Account</h1>
+         <h1 class="title">Ingresar o Crear una cuenta</h1>
          <div class="md-margin"></div>
          <!-- space -->
       </header>
       <div class="row">
          <div class="col-md-6 col-sm-6 col-xs-12">
-            <h2>New Customer</h2>
-            <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+            <h2>Nuevo Cliente</h2>
+            <p>Al crear una cuenta en nuestra tienda, usted será capaz de moverse a través del proceso de compra más rápidamente, almacenar múltiples direcciones de envío, ver y rastrear sus pedidos en su cuenta y más.</p>
             <div class="md-margin"></div>
             <!-- space -->
-            <a href="register-account.html" class="btn btn-custom-2">Create An Account</a>
+            <a href="<?php echo $this->basePath()?>/singup" class="btn btn-custom-2">Crear cuenta</a>
             <div class="lg-margin"></div>
             <!-- space -->
          </div>
          <!-- End .col-md-6 -->
          <div class="col-md-6 col-sm-6 col-xs-12">
-            <h2>Registered Customers</h2>
-            <p>If you have an account with us, please log in.</p>
+            <h2>Clientes Registrados</h2>
+            <p>Si usted tiene una cuenta con nosotros, por favor conectarse.</p>
             <div class="xs-margin"></div>
             <form id="login-form" method="post" action="<?php echo str_replace("/public", "",  $this->basePath())?>/application/login/login">
                <div class="input-group">
                   <span class="input-group-addon"><span class="input-icon input-icon-email"></span><span class="input-text">Email&#42;</span></span>
-                  <input type="text" id="email" name="email" required class="form-control input-lg" placeholder="Your Email">
+                  <input type="text" id="email" name="email" required class="form-control input-lg" placeholder="Email">
                </div>
                <!-- End .input-group -->
                <div class="input-group xs-margin">
                   <span class="input-group-addon"><span class="input-icon input-icon-password"></span><span class="input-text">Password&#42;</span></span>
-                  <input type="password" id="pass" name="pass" required class="form-control input-lg" placeholder="Your Password">
+                  <input type="password" id="pass" name="pass" required class="form-control input-lg" placeholder="Password">
                </div>
                <!-- End .input-group -->
                <span class="help-block text-right"><a href="#">Forgot your password?</a></span>
