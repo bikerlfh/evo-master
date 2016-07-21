@@ -27,21 +27,22 @@ class BusquedaCliente
     /************************** BUSQUEDAS*****************************************/
     public function busquedaPromociones()
     {
-        return $this->vistaConsultaProductoSimple(array("idPromocion IS NOT NULL "));
+        return $this->vistaConsultaProductoSimple(array("idPromocion IS NOT NULL ","cantidad > 0"));
     }
     public function busquedaProductosNuevos()
     {
-        return $this->vistaConsultaProductoSimple(array("fechaCreacionSaldoInventario >". date('Y-m-d', strtotime(date('Y-m-d H:i:s'). ' - 30 days'))));
+        return $this->vistaConsultaProductoSimple(array("fechaCreacionSaldoInventario >". date('Y-m-d', strtotime(date('Y-m-d H:i:s'). ' - 30 days')),"cantidad > 0"));
     }
     public function busquedaProductosMasVendidos($where = array())
     {
-        return $this->vistaConsultaProductoSimple(array("numeroVentas > 20"));
+        return $this->vistaConsultaProductoSimple(array("numeroVentas > 20","cantidad > 0"));
     }
     
     public function busquedaProductosSimilares($idProducto,$idCategoria)
     {
         $where = array('idProducto != '. $idProducto,
-                       'idCategoria = '.$idCategoria);
+                       'idCategoria = '.$idCategoria,
+                       'cantidad > 0');
         return $this->vistaConsultaProductoSimple($where);
     }
     
