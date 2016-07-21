@@ -97,7 +97,7 @@ class PedidoVentaController extends AbstractActionController {
         $id = $this->params()->fromQuery('idPedidoVenta', null);
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $this->form->remove('idEstadoPedido');
+            $this->form->remove('idEstadoPedidoVenta');
             $urlDocumentoPago = null;
             $returnCrud = $this->consultarMessage("errorAutorizacion");
             // Make certain to merge the files info!
