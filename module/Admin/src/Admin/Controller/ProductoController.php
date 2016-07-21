@@ -15,7 +15,8 @@ class ProductoController extends AbstractActionController {
     private $Producto;
     private $form;
     private $user_session;
-
+    
+    private $formats;
     public function __construct() {
         $this->user_session = new Container('user');
     }
@@ -41,6 +42,7 @@ class ProductoController extends AbstractActionController {
         $this->configurarBotonesFormulario(false);
         // Si se ha enviado parámetros por post, se evalua si se va a modificar o a guardar
         if (count($this->request->getPost()) > 0) {
+            $this->formats = $this->getServiceLocator()->get('Config')['formats'];
             try {
                 $datos = $this->request->getPost();
                 // Si se envia el id de la producto se modifica este.
@@ -52,7 +54,7 @@ class ProductoController extends AbstractActionController {
                 else {
                     $returnCrud = $this->consultarMessage("errorSave");
                     // se guarda la nueva producto
-                    if ($this->Producto->guardarProducto($datos['idMarca'], $datos['idCategoria'], $datos['codigo'], $datos['nombre'], $datos['referencia'], $datos['descripcion'], $datos['especificacion'], $this->user_session->idUsuario, date('Y-m-d H:i:s')))
+                    if ($this->Producto->guardarProducto($datos['idMarca'], $datos['idCategoria'], $datos['codigo'], $datos['nombre'], $datos['referencia'], $datos['descripcion'], $datos['especificacion'], $this->user_session->idUsuario, date($this->formats['datetime'])))
                         $returnCrud = $this->consultarMessage("okSave");
                 }
             } catch (\Exception $e) {
