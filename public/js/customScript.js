@@ -48,7 +48,7 @@ function eliminarProductoCart(token,basePath)
     usar_ajax(basePath + '/application/cart/delete-to-cart','#zoneCart',"token=" + token);
 }
 /* Funcion para mostrar una busqueda en un modal dinamico.
- * Este moda se crea al momento de invocar la fucion y se destuye al momento de cerrarlo.
+ * Este modal se crea al momento de invocar la funcion y se destuye al momento de cerrarlo.
  * @param {type} button: boton donde es llamada la busqueda
  * @param {type} url   : Url de la vista de la busqueda
  * @param {type} parametrosPost : data post
