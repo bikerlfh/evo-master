@@ -16,7 +16,19 @@ if ($this->validacion != null) {
     echo "<script type='text/javascript'>showMessageWarning('Validación','".$this->validacion."');</script>";  
 }
 ?>
- 
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        // Elimina las filas de la grilla al dar en el boton de cancelar
+        $("#btnCancelar").click(function()
+        {
+            $('.trPedido').each(function()
+            {
+               $(this).remove(); 
+            });
+        });
+    });
+</script>
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-bordered style-primary">
@@ -35,15 +47,6 @@ if ($this->validacion != null) {
                     </div>
                 </div>
             </div>
-            <!--
-            <div class="box-body style-white" style="display: none;">
-                <div class="col-md-1">
-                    <a href="#" class="btn btn-default  btn-labeled">
-                        <span><i class="fa fa-envelope"></i></span>
-                    </a>
-                </div>
-            </div>
-            -->
         </div>
     </div>
     <div class="col-lg-12">
@@ -103,7 +106,7 @@ if ($this->validacion != null) {
                                                 $i = 1;
                                                 foreach ($this->PedidoVentaPosicion as $posicion) 
                                                 {
-                                                    echo "<tr>"
+                                                    echo "<tr class='trPedido'>"
                                                     . "<td>$i</td>"
                                                     . "<td>".$posicion->getNombreProducto()."</td>"
                                                     . "<td>".$posicion->getNombreProveedor()."</td>"
@@ -114,6 +117,7 @@ if ($this->validacion != null) {
                                             }
                                             ?>
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
