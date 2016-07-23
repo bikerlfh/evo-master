@@ -135,7 +135,8 @@ class PedidoVentaPosicion extends AbstractTableGateway
                                         array())->
                             join(array('dbt'=>new TableIdentifier("DatoBasicoTercero","Tercero")),
                                        'proveedor.idDatoBasicoTercero = dbt.idDatoBasicoTercero',
-                                       array('nombreProveedor' => new Expression("CONVERT(VARCHAR,dbt.nit) + ' - ' + dbt.descripcion")));
+                                       array('nombreProveedor' => new Expression("CONVERT(VARCHAR,dbt.nit) + ' - ' + dbt.descripcion")))->
+                            where(array("idPedidoVentaPosicion"=>$idPedidoVentaPosicion));
 
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();

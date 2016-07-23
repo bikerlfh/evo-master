@@ -54,7 +54,7 @@ class PedidoVentaController extends AbstractActionController {
                     $PedidoVentaPosicion = new PedidoVentaPosicion($this->dbAdapter);
                     $PedidoVentaPosicion->setIdProducto($SaldoInventario->getIdProducto());
                     $PedidoVentaPosicion->setCantidad($cantidad);
-                    $PedidoVentaPosicion->setValorVenta($SaldoInventario->getValorVenta());
+                    $PedidoVentaPosicion->setValorVenta(($SaldoInventario->getValorVenta() * $cantidad));
                     $PedidoVentaPosicion->setIdSaldoInventario($SaldoInventario->getIdSaldoInventario());
                     $PedidoVentaPosicion->setIdUsuarioCreacion($this->user_session->idUsuario);
                     array_push($this->PedidoVenta->PedidoVentaPosicion, $PedidoVentaPosicion);
@@ -64,7 +64,7 @@ class PedidoVentaController extends AbstractActionController {
             try {
                 $returnCrud = $this->consultarMessage("errorSave");
 
-                /*                 * ******************* Se consulta el estado Solicitado**************************** */
+                /********************* Se consulta el estado Solicitado**************************** */
                 $estadoPedido = new EstadoPedidoVenta($this->dbAdapter);
                 $estadoPedido->consultarEstadoPedidoVentaPorcodigo("01");
 

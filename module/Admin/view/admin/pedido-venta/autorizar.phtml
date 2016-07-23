@@ -93,8 +93,7 @@ if ($this->validacion != null) {
                                                 <th>Producto</th>
                                                 <th>Proveedor</th>
                                                 <th>Cantidad</th>
-                                                <th>Valor Unitario</th>
-                                                <th>Valor Total</th>
+                                                <th>Valor Venta</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -109,8 +108,7 @@ if ($this->validacion != null) {
                                                     . "<td>".$posicion->getNombreProducto()."</td>"
                                                     . "<td>".$posicion->getNombreProveedor()."</td>"
                                                     . "<td>".number_format($posicion->getCantidad())."</td>"
-                                                    . "<td>$".number_format($posicion->getValorVenta())."</td>"
-                                                    . "<td>$".number_format($posicion->getCantidad() * $posicion->getValorVenta())."</td></tr>";
+                                                    . "<td>$".number_format($posicion->getValorVenta())."</td></tr>";
                                                     $i++;
                                                 }
                                             }

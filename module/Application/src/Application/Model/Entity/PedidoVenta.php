@@ -15,7 +15,7 @@ use Application\Model\Entity\EstadoPedidoVenta;
 class PedidoVenta extends AbstractTableGateway {
 
     private $idPedidoVenta;
-    private $numeroPedidoVenta;
+    private $numeroPedido;
     private $idCliente;
     private $idEstadoPedidoVenta;
     private $idViaPago;
@@ -90,11 +90,11 @@ class PedidoVenta extends AbstractTableGateway {
     }
 
     function getNumeroPedidoVenta() {
-        return $this->numeroPedidoVenta;
+        return $this->numeroPedido;
     }
 
     function setNumeroPedidoVenta($numeroPedidoVenta) {
-        $this->numeroPedidoVenta = $numeroPedidoVenta;
+        $this->numeroPedido = $numeroPedidoVenta;
     }
 
     function getNombreCliente() {
@@ -104,10 +104,11 @@ class PedidoVenta extends AbstractTableGateway {
     public function guardarPedidoVenta($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion) {
         $stored = new StoredProcedure($this->adapter);
         // Venta.GuardarPedidoVenta @idEstadoPedidoVenta smallint,@idCliente bigint,@urlDocumentoPago varchar,@idUsuarioCreacion bigint
-        $idPedidoVenta = $stored->execProcedureReturnDatos("Venta.GuardarPedidoVenta ?,?,?,?", array($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion))->current();
+        $resultado = $stored->execProcedureReturnDatos("Venta.GuardarPedidoVenta ?,?,?,?", array($idEstadoPedidoVenta, $idCliente, $urlDocumentoPago, $idUsuarioCreacion))->current();
         unset($stored);
-        if ($idPedidoVenta['idPedidoVenta'] > 0) {
-            $this->idPedidoVenta = $idPedidoVenta['idPedidoVenta'];
+        if ($resultado['idPedidoVenta'] > 0) {
+            $this->idPedidoVenta = $resultado['idPedidoVenta'];
+            $this->numeroPedido = $resultado['numeroPedido'];
             foreach ($this->PedidoVentaPosicion as $posicion) {
                 $posicion->setIdPedidoVenta($this->idPedidoVenta);
                 $resultado = $posicion->guardarPedidoVentaPosicion();
@@ -208,7 +209,7 @@ class PedidoVenta extends AbstractTableGateway {
 
     private function LlenarEntidad($result) {
         $this->idPedidoVenta = $result['idPedidoVenta'];
-        $this->numeroPedidoVenta = $result['numeroPedido'];
+        $this->numeroPedido = $result['numeroPedido'];
         $this->idCliente = $result['idCliente'];
         $this->idEstadoPedidoVenta = $result['idEstadoPedidoVenta'];
         $this->idViaPago = $result['idViaPago'];
