@@ -19,6 +19,7 @@ class PedidoVentaPosicion extends AbstractTableGateway
     private $idUsuarioCreacion;   
     
     private $nombreProducto;
+    private $nombreProveedor;
     
     public function __construct(Adapter $adapter = null)
     {
@@ -85,7 +86,9 @@ class PedidoVentaPosicion extends AbstractTableGateway
     function getNombreProducto() {
         return $this->nombreProducto;
     }
-
+    function getNombreProveedor(){
+        return $this->nombreProveedor;
+    }
         public function guardarPedidoVentaPosicion()
     {
         $stored = new StoredProcedure($this->adapter);
@@ -118,9 +121,21 @@ class PedidoVentaPosicion extends AbstractTableGateway
         $sql = new Sql($this->adapter);
         $select = $sql->select()->
                             from(array('pedido'=>$this->table))->
+                            columns(array("*"))->
+                            //columns(array("idPedidoVentaPosicion" => "pedido.idPedidoVentaPosicion",
+                                         // "pedido.idPedidoVenta","pedido.idSaldoInventario","p.nombreProducto","nombreProveedor","pedido.cantidad","pedido.idProducto","pedido.valorVenta","pedido.idUsuarioCreacion"))->
                             join(array('p'=> new TableIdentifier("Producto", "Producto")),
                                        'pedido.idProducto = p.idProducto', 
-                                       array('nombreProducto' => new Expression("p.codigo +' - '+ p.nombre")));
+                                       array('nombreProducto' => new Expression("p.codigo +' - '+ p.nombre")))->
+                            join(array('saldoInventario'=> new TableIdentifier("SaldoInventario","Inventario")),
+                                       'pedido.idSaldoInventario = saldoInventario.idSaldoInventario',
+                                        array())->
+                            join(array('proveedor' => new TableIdentifier("Proveedor","tercero")),
+                                       'saldoInventario.idProveedor = proveedor.idProveedor',
+                                        array())->
+                            join(array('dbt'=>new TableIdentifier("DatoBasicoTercero","Tercero")),
+                                       'proveedor.idDatoBasicoTercero = dbt.idDatoBasicoTercero',
+                                       array('nombreProveedor' => new Expression("CONVERT(VARCHAR,dbt.nit) + ' - ' + dbt.descripcion")));
 
         $results = $sql->prepareStatementForSqlObject($select)->execute();
         $resultsSet = new ResultSet();
@@ -149,10 +164,12 @@ class PedidoVentaPosicion extends AbstractTableGateway
         $this->idPedidoVentaPosicion=$result['idPedidoVentaPosicion'];
         $this->idPedidoVenta=$result['idPedidoVenta'];
         $this->idSaldoInventario = $result['idSaldoInventario'];
+        $this->nombreProducto = $result['nombreProducto'];
+        $this->nombreProveedor = $result['nombreProveedor'];
         $this->cantidad=$result['cantidad'];
         $this->idProducto=$result['idProducto'];
         $this->valorVenta=$result['valorVenta'];
-        $this->nombreProducto = $result['nombreProducto'];
         $this->idUsuarioCreacion=$result['idUsuarioCreacion'];
+        
     }
 }
