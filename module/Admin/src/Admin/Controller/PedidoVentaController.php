@@ -82,7 +82,7 @@ class PedidoVentaController extends AbstractActionController {
             } catch (\Exception $e) {
                 $returnCrud = $this->consultarMessage($e->getMessage(), true);
             }
-            return new ViewModel(array('form' => $this->form, 'msg' => $returnCrud, 'numeroPedido' => $this->PedidoVenta->getIdPedidoVenta()));
+            return new ViewModel(array('form' => $this->form, 'msg' => $returnCrud, 'numeroPedido' => $this->PedidoVenta->getNumeroPedidoVenta()));
         }
         return new ViewModel(array('form' => $this->form));
     }

@@ -95,16 +95,17 @@
                     <?php
                         foreach ($this->productos as $producto) 
                         {
-                            echo "<div class='col-md-4 col-sm-6 col-xs-12'>
+                            echo "
+                                <div class='col-md-4 col-sm-6 col-xs-12'>
                                     <div class='item item-hover'>
-                                        <div 
+                                        <div>
                                             <figure class='item-image-container'>
                                                 <a href='".$this->basePath()."/producto/".$producto['idSaldoInventario']."'>
                                                     <img src='".$producto['urlImg']."' alt='item1' class='item-image'>
                                                     <img src='".$producto['urlImg']."' alt='item1' class='item-image-hover'>
                                                 </a>
-                                            </figure>
-                                            ";
+                                            </figure>";
+                            // si es una promoción, se visualiza el valor de esta
                             if(isset($producto['idPromocion'])){
                                 echo "      <div class='item-price-container'>
                                                 <span class='old-price'>$".number_format($producto['valorAnterior'])."</span>
@@ -117,28 +118,25 @@
                                                 <span class='item-price'>$".number_format($producto['valorVenta'])."</span>
                                             </div>";
                             }
-                            echo "        
-                                          <!--<span class='new-rect'>New</span>-->
-                                       </div>
-
-                                       <div class='item-meta-container'>
-                                          <div class='ratings-container'>
-                                             <div class='ratings'>
-                                                <div class='ratings-result' data-result='100'></div>
-                                             </div>
-                                             <span class='ratings-amount'>
-                                             5 Reviews
-                                             </span>
-                                          </div>
-                                          <h3 class='item-name'><a href='product.html'>".$producto['nombre']."</a></h3>
-                                          <div class='item-action'>
-                                             <a style='cursor:pointer' onclick=\"agregarProductoCart(".$producto['idSaldoInventario'].", 1, '".$this->basePath()."')\" class='item-add-btn'>
-                                             <span class='icon-cart-text'>Add to Cart</span>
-                                             </a>
-                                          </div>
-                                       </div>
+                            echo "      </div>
+                                        <div class='item-meta-container'>
+                                            <div class='ratings-container'>
+                                               <div class='ratings'>
+                                                  <div class='ratings-result' data-result='100'></div>
+                                               </div>
+                                               <span class='ratings-amount'>
+                                               5 Reviews
+                                               </span>
+                                            </div>
+                                            <h3 class='item-name'><a href='product.html'>".$producto['nombre']."</a></h3>
+                                            <div class='item-action'>
+                                               <a style='cursor:pointer' onclick=\"agregarProductoCart(".$producto['idSaldoInventario'].", 1, '".$this->basePath()."')\" class='item-add-btn'>
+                                               <span class='icon-cart-text'>Add to Cart</span>
+                                               </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                 </div>";
+                                </div>";
                         }
                     ?>
                </div>
@@ -175,7 +173,6 @@
                         }
                     ?>
                 </div>
-
             </div>
         </div>
       </div>
