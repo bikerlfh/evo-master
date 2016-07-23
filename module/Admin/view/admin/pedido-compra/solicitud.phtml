@@ -16,7 +16,7 @@ if ($this->numeroPedido != null) {
     function AddRow()
     {
         numRows++;
-        var onClick="onclick=\"showBusquedaOnModal(this,'<?php echo $this->basePath()?>/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','')\"";
+        var onClick="onclick=\"if($('#idProveedor').val() == '') showMessaginfo('','Favor seleccionar el Proveedor'); else showBusquedaOnModal(this,'<?php echo $this->basePath()?>/admin/producto/buscar?campoId=idProducto"+numRows+"&campoNombre=nombreProducto"+numRows+"','')\"";
         var cadena ="<tr id='pedidoCompraPosicion"+numRows+"'>";
         cadena += "<td>"+numRows+"</td>";
         cadena += " <td><div class='col-lg-8 col-md-4 col-sm-4'>";
@@ -84,14 +84,6 @@ if ($this->numeroPedido != null) {
                       echo $this->formElement($form->get('idProveedor'));?>
                     <div class="form-group">
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Número Pedído</label>
-                        </div>
-                        <div class="col-lg-2 col-md-3 col-sm-4">
-                            <?php echo $this->formInput($form->get('numeroPedido'));?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
                             <label for="email1" class="control-label">Proveedor</label>
                         </div>
                         <div class="col-lg-3 col-md-4 col-sm-5">
@@ -100,17 +92,6 @@ if ($this->numeroPedido != null) {
                         </div>
                         <?php echo $this->formElement($form->get('btnBuscarProveedor'));?>  
                     </div>
-                    <!--
-                     <div class="form-group">
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <label for="email1" class="control-label">Documento Pago</label>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-5">
-                               
-                            <p class="help-block">Escanee el documento de pago.</p>
-                        </div>
-                    </div>
-                    -->
                     <div class="row">
         
                         <div class="col-lg-12">

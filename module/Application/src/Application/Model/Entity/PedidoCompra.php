@@ -65,7 +65,7 @@ class PedidoCompra extends AbstractTableGateway
                     return $resultado;
                 }
             }
-            $this->consultarPedidoCompraPorIdPedidoCompra($idPedidoCompra['idPedidoCompra']);
+            //->consultarPedidoCompraPorIdPedidoCompra($idPedidoCompra['idPedidoCompra']);
             return 'true';
         }
         return 'false';
