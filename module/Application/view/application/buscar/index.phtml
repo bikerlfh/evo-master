@@ -39,7 +39,7 @@
 <div class="row">
    <div class="col-md-12">
       <div class="row">
-         <div class="col-md-9 col-sm-8 col-xs-12 main-content">
+         <div class="col-md-10 col-sm-8 col-xs-12 main-content">
              
             <!--div id="category-header" class="category-banner">
                <img src="<?php echo $this->basePath() ?>/public/images/banner.png" alt="Category banner" class="img-responsive">
@@ -69,31 +69,23 @@
                         </ul>
                     </div>
                 </div>
-
-                <!--div class="view-box">
-                    <a href="category.html" class="active icon-button icon-grid"><i class="fa fa-th-large"></i></a>
-                    <a href="category-list.html" class="icon-button icon-list"><i class="fa fa-th-list"></i></a>
-                </div><!-- End .view-box -->
-
                 </div><!-- End .toolbox-filter -->
                 <div class="toolbox-pagination clearfix">
-                <div class="pull-right view-count-box hidden-xs">
-                    <span class="separator">view:</span>
-                    <div class="btn-group select-dropdown">
-                        <button type="button" class="btn select-btn btnPageSize" id="btnPageSize"></button>
-                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a onclick="buscarProductosEnTienda(10,1,'<?php echo $this->basePath()?>')">10</a></li>
-                            <li><a onclick="buscarProductosEnTienda(15,1,'<?php echo $this->basePath()?>')">15</a></li>
-                            <li><a onclick="buscarProductosEnTienda(30,1,'<?php echo $this->basePath()?>')">30</a></li>
-                       </ul>
+                    <div class="pull-right view-count-box hidden-xs">
+                        <span class="separator">view:</span>
+                        <div class="btn-group select-dropdown">
+                            <button type="button" class="btn select-btn btnPageSize" id="btnPageSize"></button>
+                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a onclick="buscarProductosEnTienda(10,1,'<?php echo $this->basePath()?>')">10</a></li>
+                                <li><a onclick="buscarProductosEnTienda(15,1,'<?php echo $this->basePath()?>')">15</a></li>
+                                <li><a onclick="buscarProductosEnTienda(30,1,'<?php echo $this->basePath()?>')">30</a></li>
+                           </ul>
+                        </div>
                     </div>
-                </div>
-
-                </div><!-- End .toolbox-pagination -->
-        							
+                </div><!-- End .toolbox-pagination -->						
             </div>
             <!-- End .category-toolbar -->
             <div class="md-margin"></div>
@@ -154,126 +146,38 @@
             </div>
             <!-- End .category-item-container -->
             <div class="pagination-container">
-               <div class="pull-right">
-                  <ul class="pagination">
-                        <?php 
-                            echo $pagination;
-                        ?>
-                  </ul>
-               </div>
+                <div class="pull-right">
+                    <ul class="pagination">
+                        <?php echo $pagination; ?>
+                    </ul>
+                </div>
             </div>
             <!-- End pagination-container -->
          </div>
          <!-- End .col-md-9 -->
-         <aside class="col-md-3 col-sm-4 col-xs-12 sidebar">
-            <div class="widget">
-               <div class="panel-group custom-accordion sm-accordion" id="category-filter">
-                  <div class="panel">
-                     <div class="accordion-header">
-                        <div class="accordion-title"><span>Categorias</span></div>
-                        <!-- End .accordion-title -->
-                        <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-1"></a>
-                     </div>
-                     <!-- End .accordion-header -->
-                     <div id="category-list-1" class="collapse in">
-                        <div class="panel-body">
-                           <ul class="category-filter-list jscrollpane">
-                               <?php 
-                                    foreach ($this->categorias as $value) {
-                                        echo "<li><a href=\"".$this->basePath()."/buscar?pageSize=10&pageNumber=1&idCategoria=".$value['idCategoria']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
-                                    }
-                                ?>
-                           </ul>
-                        </div>
-                        <!-- End .panel-body -->
-                     </div>
-                     <!-- #collapse -->
-                  </div>
-                  <!-- End .panel -->
-                  <div class="panel">
-                     <div class="accordion-header">
-                        <div class="accordion-title"><span>Marcas</span></div>
-                        <!-- End .accordion-title -->
-                        <a class="accordion-btn opened"  data-toggle="collapse" data-target="#category-list-2"></a>
-                     </div>
-                     <!-- End .accordion-header -->
-                     <div id="category-list-2" class="collapse in">
-                        <div class="panel-body">
-                           <ul class="category-filter-list jscrollpane">
-                                <?php 
-                                    foreach ($this->marcas as $value) {
-                                        echo "<li><a href=\"".$this->basePath()."/buscar?pageSize=10&pageNumber=1&idMarca=".$value['idMarca']."\">".$value['descripcion']." (".$value['numProducto'].")</a></li>";
-                                    }
-                                ?>
-                           </ul>
-                        </div>
-                        <!-- End .panel-body -->
-                     </div>
-                     <!-- #collapse -->
-                  </div>
-                  <!-- End .panel -->
-               </div>
-               <!-- .panel-group -->
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-12">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">Categorías</a>
+                    <?php 
+                        foreach ($this->categorias as $value) {
+                            echo " <a href=\"".$this->basePath()."/buscar?pageSize=10&pageNumber=1&idCategoria=".$value['idCategoria']."\" class='list-group-item'>".$value['descripcion']."</a>";
+                        }
+                    ?>
+                </div>
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">Marcas</a>
+
+                    <?php 
+                        foreach ($this->marcas as $value) {
+                            echo "<a href=\"".$this->basePath()."/buscar?pageSize=10&pageNumber=1&idMarca=".$value['idMarca']."\" class='list-group-item'>".$value['descripcion']."</a>";
+                        }
+                    ?>
+                </div>
+
             </div>
-            <!-- End .widget -->
-            <!--div class="widget featured">
-               <h3>Featured</h3>
-               <div class="featured-slider flexslider sidebarslider">
-                  <ul class="featured-list clearfix">
-                     <li>
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath() ?>/public/images/products/thumbnails/item5.jpg" alt="item5">
-                           </figure>
-                           <h5><a href="#">Jacket Suiting Blazer</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                           </div>
-                           <div class="featured-price">$40</div>
-                        </div>
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath() ?>/public/images/products/thumbnails/item1.jpg" alt="item1">
-                           </figure>
-                           <h5><a href="#">Gap Graphic Cuffed</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                           </div>
-                           <div class="featured-price">$18</div>
-                        </div>
-                        <div class="featured-product clearfix">
-                           <figure>
-                              <img src="<?php echo $this->basePath() ?>/public/images/products/thumbnails/item2.jpg" alt="item2">
-                           </figure>
-                           <h5><a href="#">Women's Lauren Dress</a></h5>
-                           <div class="ratings-container">
-                              <div class="ratings">
-                                 <div class="ratings-result" data-result="84"></div>
-                              </div>
-                           </div>
-                           <div class="featured-price">$30</div>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-            <!-- End .widget -->
-            <!--div class="widget banner-slider-container">
-               <div class="banner-slider flexslider">
-                  <ul class="banner-slider-list clearfix">
-                     <li><a href="#"><img src="<?php echo $this->basePath() ?>/public/images/banner1.jpg" alt="Banner 1"></a></li>
-                     <li><a href="#"><img src="<?php echo $this->basePath() ?>/public/images/banner2.jpg" alt="Banner 2"></a></li>
-                     <li><a href="#"><img src="<?php echo $this->basePath() ?>/public/images/banner3.jpg" alt="Banner 3"></a></li>
-                  </ul>
-               </div>
-            </div>
-            <!-- End .widget -->
-         </aside>
-         <!-- End .col-md-3 -->
+        </div>
       </div>
       <!-- End .row -->
    </div>

@@ -105,13 +105,19 @@ function showBusquedaOnModal(button,url,parametrosPost)
         }  
     }  
 })(jQuery);
-// Se activa del menu el formulario que este visible
-// y muestra mensajes del crud que se pasan por get
+/*
+ * Activa el item seleccionado de la busqueda
+ * @param {type} param
+ */
 $(document).ready(function()
 {   
-    //showBusqueda("/evo-master/admin/datobasicotercero/buscar","");
+    // Se marcan los parametros que se hallan seleccionado en la busqueda
+    var parametros = ["idCategoria","idMarca"];
+    parametros.forEach(marcarListGroupItemSeleccionado);
+    
+    //********** SOLO PARA EL MODULO ADMINISTRATIVO ****************/
     //********** activa el menu del formulario q esta visible************/
-    $(document).find('a').each(function() 
+    $(document).find('ul.main-menu').find("li").find("a").each(function() 
     {
         if($(location).attr("href").indexOf($(this).attr("href"))>-1)
         {
@@ -155,6 +161,23 @@ $(document).ready(function()
     }
 });
 
+/*
+ * Marca todas las a.list-group-item que han sido seleccionadas
+ * @param {type} item
+ * @returns {undefined}
+ */
+function marcarListGroupItemSeleccionado(item)
+{
+    $(document).find('a.list-group-item').each(function() 
+    {
+        if($.getParameter(item,$(location).attr("href")) != null){
+            if($.getParameter(item,$(this).attr("href")) == $.getParameter(item,$(location).attr("href"))){
+                $(this).attr("class","list-group-item disabled");
+                return;
+            }
+        }
+    });
+}
 function limpiarformulario(formulario){
     $("#btnGuardar").attr("type","submit");
     $("#btnModificar").attr("type","hidden");
